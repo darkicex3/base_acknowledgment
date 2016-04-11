@@ -1,0 +1,68 @@
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend
+{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+}
+
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.et_non_fixed_nav.et_transparent_nav #top-header, .et_fixed_nav #top-header
+{
+    top: 0;
+    right: 0;
+    left: 0;
+}
+
+.top-header
+{
+    background-color: #e44d26;
+    position: fixed;
+    height: 31px;
+    width: 100%;
+}
+
+.et_topmenu_container
+{
+    width: 90%;
+    margin: auto;
+}
+
+.sub-menu
+{
+    display: none;
+}
+
+#et-secondary-menu
+{
+    float: right;
+}
+
+#et-secondary-menu li
+{
+    list-style: none;
+    color: #ffffff;
+    font-style: italic;
+    font-size: 11pt;
+    text-decoration: none;
+    display: inline-block;
+    line-height: 31px;
+    vertical-align: middle;
+}
+
+a:link
+{
+    text-decoration:none;
+}
+
+#et-secondary-nav
+{
+
+}
