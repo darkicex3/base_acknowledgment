@@ -42,8 +42,6 @@ DEBUG = True
 # Application definition
 
 INSTALLED_APPS = [
-    'apps.news.apps.NewsConfig',
-    'apps.products.apps.ProductsConfig',
     'apps.core.apps.CoreConfig',
     'apps.prices.apps.PricesConfig',
     'apps.users.apps.UsersConfig',

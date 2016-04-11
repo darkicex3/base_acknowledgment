@@ -2,10 +2,10 @@
 
 import os, sys
 # add the hellodjango project path into the sys.path
-sys.path.append('/var/www/novostrat')
+sys.path.append('/var/www/base_acknowledgment')
 
 # add the virtualenv site-packages path to the sys.path
-sys.path.append('/var/www/novostrat/env/lib/python3.4/site-packages')
+sys.path.append('/var/www/base_acknowledgment/env/lib/python3.4/site-packages')
 
 # poiting to the project settings
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "project.settings")

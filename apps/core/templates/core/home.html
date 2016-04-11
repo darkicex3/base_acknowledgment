@@ -1,10 +1,248 @@
-{% extends "core/base.html"   %}
+{% extends "core/base.html" %}
 
-{% block title %}Novostrat - Home{% endblock %}
+{% block title %}Acknowledgment Base{% endblock %}
 
 {% block content %}
 
+        <link itemprop="url" href="http://www.demo.enginethemes.com/qaengine" style="display: none;">
+        <div class="clearfix"></div>
+        <div class="row select-category">
+            <div itemprop="mainEntityOfPage" class="col-md-6 col-xs-6 current-category">
+                <span itemprop="name">All articles</span>
+            </div>
+            <div class="col-md-6 col-xs-6">
+                <div class="select-categories-wrapper">
+                    <div class="outer-filter-wrapper">
+                        <div class="select-categories-filter">
+                            <span class="label-filter">Filter by</span>
+                            <div class="select-categories">
+                                <select name="cat" id="move_to_category" class="select-grey-bg chosen-select"
+                                        style="display: none;">
 
+                                    <option class="level-0"
+                                            value="http://www.demo.enginethemes.com/qaengine/blog/question-category/traval/">
+                                        Travel
+                                    </option>
+
+                                </select>
+                                <div class="chosen-container chosen-container-single chosen-container-single-nosearch"
+                                     style="width: 228px;" title="" id="move_to_category_chosen"><a
+                                        class="chosen-single" tabindex="-1"><span>Select Categories</span>
+                                    <div><b></b></div>
+                                </a>
+                                    <div class="chosen-drop">
+                                        <div class="chosen-search"><input type="text" autocomplete="off" readonly="">
+                                        </div>
+                                        <ul class="chosen-results"></ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="filter-by-select">
+                            <select class="filter-select-type chosen-select" name="" id="" style="display: none;">
+                                <option value="/qaengine/?qtype=all">All</option>
+                                <option value="/qaengine/?qtype=poll">Poll</option>
+                                <option value="/qaengine/?qtype=normal">Normal</option>
+                            </select>
+                            <div class="chosen-container chosen-container-single chosen-container-single-nosearch"
+                                 style="width: 69px;" title=""><a class="chosen-single" tabindex="-1"><span>All</span>
+                                <div><b></b></div>
+                            </a>
+                                <div class="chosen-drop">
+                                    <div class="chosen-search"><input type="text" autocomplete="off" readonly=""></div>
+                                    <ul class="chosen-results"></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- END SELECT-CATEGORY -->
+        <div class="row q-filter-waypoints collapse" id="q_filter_waypoints">
+            <div class="col-md-2 col-xs-2">
+                <button type="button" data-toggle="modal" class="action ask-question">
+                    <i class="fa fa-plus"></i> ASK A QUESTION
+                </button>
+            </div>
+            <div class="col-md-8 col-sm-10 col-xs-10">
+                <div class="row">
+                    <div class="col-md-2 hidden-xs hidden-sm">
+												<span class="q-f-title">
+							All articles						</span>
+                    </div><!-- END TITLE -->
+                    <div class="col-md-5 col-sm-6 col-xs-6">
+                        <ul class="q-f-sort">
+                            <li>
+                                <a class="active" href="http://www.demo.enginethemes.com/qaengine/">
+                                    Latest </a>
+                            </li>
+                            <li>
+                                <a class="" href="/qaengine/?sort=vote">
+                                    Votes </a>
+                            </li>
+                            <li>
+                                <a class="" href="/qaengine/?sort=unanswer">
+                                    Unanswered </a>
+                            </li>
+                        </ul><!-- END FILTER -->
+                    </div>
+                    <div class="col-md-5 col-sm-6 col-xs-6 categories-wrapper">
+                        <div class="select-categories-wrapper fixed">
+                            <span class="label-filter">Filter by</span>
+                            <div class="select-categories">
+                                <select class="select-grey-bg chosen-select" id="move_to_category"
+                                        style="display: none;">
+                                    <option>Filter by category</option>
+                                    <option value="http://www.demo.enginethemes.com/qaengine/blog/question-category/entertainment/">
+                                        Entertainment
+                                    </option>
+
+                                </select>
+                                <div class="chosen-container chosen-container-single chosen-container-single-nosearch"
+                                     style="width: 0px;" title="" id="move_to_category_chosen"><a class="chosen-single"
+                                                                                                  tabindex="-1"><span>Filter by category</span>
+                                    <div><b></b></div>
+                                </a>
+                                    <div class="chosen-drop">
+                                        <div class="chosen-search"><input type="text" autocomplete="off" readonly="">
+                                        </div>
+                                        <ul class="chosen-results"></ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- END SELECT CATEGORIES -->
+                        <div class="number-of-articles-wrapper fixed">
+                            <div class="number-of-articles">
+                                <select id="filter-numbers" class="select-grey-bg chosen-select" style="display: none;">
+                                    <option value="http://www.demo.enginethemes.com/qaengine/?numbers=20">20</option>
+                                    <option value="http://www.demo.enginethemes.com/qaengine/?numbers=15">15</option>
+                                    <option selected="" value="http://www.demo.enginethemes.com/qaengine/?numbers=12">
+                                        12
+                                    </option>
+                                    <option value="http://www.demo.enginethemes.com/qaengine/?numbers=10">10</option>
+                                    <option value="http://www.demo.enginethemes.com/qaengine/?numbers=5">5</option>
+                                </select>
+                                <div class="chosen-container chosen-container-single chosen-container-single-nosearch"
+                                     style="width: 0px;" title="" id="filter_numbers_chosen"><a class="chosen-single"
+                                                                                                tabindex="-1"><span>12</span>
+                                    <div><b></b></div>
+                                </a>
+                                    <div class="chosen-drop">
+                                        <div class="chosen-search"><input type="text" autocomplete="off" readonly="">
+                                        </div>
+                                        <ul class="chosen-results"></ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- END POSTS PER PAGE -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row question-filter" id="question_filter">
+            <div class="col-md-6 col-xs-6 sort-articles">
+                <ul>
+                    <li>
+                        <a class="active" href="http://www.demo.enginethemes.com/qaengine/">
+                            Latest </a>
+                    </li>
+                    <li>
+                        <a class="" href="http://www.demo.enginethemes.com/qaengine/?sort=vote">Votes</a>
+                    </li>
+                    <li>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-6 col-xs-6">
+                <div class="number-of-articles-wrapper">
+                    <span class="number-of-articles-text">Polls Per Page: </span>
+                    <div class="number-of-articles">
+                        <select id="filter-numbers" class="select-grey-bg chosen-select" style="display: none;">
+                            <option value="http://www.demo.enginethemes.com/qaengine/?numbers=20">20</option>
+                            <option value="http://www.demo.enginethemes.com/qaengine/?numbers=15">15</option>
+                            <option selected="" value="http://www.demo.enginethemes.com/qaengine/?numbers=12">12
+                            </option>
+                            <option value="http://www.demo.enginethemes.com/qaengine/?numbers=10">10</option>
+                            <option value="http://www.demo.enginethemes.com/qaengine/?numbers=5">5</option>
+                        </select>
+                        <div class="chosen-container chosen-container-single chosen-container-single-nosearch"
+                             style="width: 80px;" title="" id="filter_numbers_chosen"><a class="chosen-single"
+                                                                                         tabindex="-1"><span>12</span>
+                            <div><b></b></div>
+                        </a>
+                            <div class="chosen-drop">
+                                <div class="chosen-search"><input type="text" autocomplete="off" readonly=""></div>
+                                <ul class="chosen-results"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- END articles-FILTER -->
+
+        <div class="main-articles-list">
+            <ul id="main_articles_list">
+                <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem" class="question-item post-2212 poll type-poll status-publish format-standard hentry question_category-music" data-id="2212">
+    <div itemprop="item" itemscope="" itemtype="http://schema.org/Question">
+        <div class="col-md-8 col-xs-8 q-left-content">
+            <div class="q-ltop-content">
+                <h2 itemprop="name">
+                    <span class="mask-poll">Poll</span>
+                    <a itemprop="url" href="http://www.demo.enginethemes.com/qaengine/blog/poll/what-s-your-favorite-song/" class="question-title">What ‘s your favorite song?</a>
+                </h2>
+            </div>
+            <div class="q-lbtm-content">
+                <div itemprop="text" class="question-excerpt">
+                    <p>I’m a programmer, and student of Engineering… Which linux distribution would be most useful to me in terms of software, …</p>
+                </div>
+                <div class="question-cat">
+                    <ul class="question-tags">
+                                            </ul>
+                    <div class="clearfix"></div>
+                    <a itemprop="author" itemscope="" itemtype="http://schema.org/Person" href="http://www.demo.enginethemes.com/qaengine/blog/member/admin/">
+                    <span class="author-avatar">
+                        <img itemprop="image" src="http://enginethemes.com/demo/qaengine/wp-content/uploads/2015/01/12.jpg" class="avatar" alt="">                    </span>
+                        <span itemprop="name" class="author-name">admin</span>
+                    </a>
+                                        <span itemprop="dateCreated" datetime="on January 20, 2016" class="question-time">
+                    Asked on January 20, 2016 in                </span>
+                    <span class="question-category">
+                                    <a href="http://www.demo.enginethemes.com/qaengine/blog/question-category/music/">Music.</a>
+                                </span>                </div>
+            </div>
+        </div><!-- end left content -->
+        <div class="col-md-4 col-xs-4 q-right-content">
+            <ul class="question-statistic">
+                <li>
+                <span class="question-views">
+                    11                </span>
+                    views                </li>
+                <li>
+                <span itemprop="upvoteCount" class="question-votes">
+                    0                </span>
+                    votes                </li>
+            </ul>
+            <div class="pumping">
+                            </div>
+        </div><!-- end right content -->
+        <div class="clearfix"></div>
+    </div>
+</li>
+            </ul>
+        </div><!-- END MAIN-articles-LIST -->
+        <div class="row paginations home">
+            <div class="col-md-12">
+                <ul class="page-numbers">
+                    <li><span class="page-numbers current">1</span></li>
+                    <li><a class="page-numbers" href="http://www.demo.enginethemes.com/qaengine/?page=2">2</a></li>
+                    <li><a class="next page-numbers" href="http://www.demo.enginethemes.com/qaengine/?page=2">&gt;</a>
+                    </li>
+                </ul>
+            </div>
+        </div><!-- END MAIN-PAGINATIONS -->
+
+        <div class="clearfix"></div>
+    </div>
 
 {% endblock %}
 

@@ -1,0 +1,83 @@
+/*.left-sidebar .widget {*/
+    /*border-bottom: 1px solid #dadfea;*/
+/*}*/
+
+/*.left-sidebar {*/
+    /*border-right: 1px solid #dadfea;*/
+    /*min-height: 800px !important;*/
+    /*padding: 0 !important;*/
+/*}*/
+
+/*.left-sidebar, .right-sidebar, .main-content, .main-blog-fix {*/
+
+/*}*/
+
+/*.widget-btn {*/
+    /*height: 115px;*/
+    /*display: block;*/
+    /*padding: 35px 20px 0;*/
+/*}*/
+
+/*.widget-links ul li i, .widget-menus ul li a, .header-menu ul li a, .user-post-count .questions-count {*/
+    /*color: #78829d;*/
+/*}*/
+/*.widget-menus ul li a {*/
+    /*width: 100%;*/
+    /*text-decoration: none;*/
+    /*padding: 10px 0 10px 16px;*/
+    /*display: block;*/
+    /*color: #78829d;*/
+    /*border-left: 4px solid transparent;*/
+    /*-webkit-transition: all 0.3s ease;*/
+    /*-moz-transition: all 0.3s ease;*/
+    /*-o-transition: all 0.3s ease;*/
+    /*-ms-transition: all 0.3s ease;*/
+    /*transition: all 0.3s ease;*/
+/*}*/
+/*.widget a {*/
+    /*text-decoration: none;*/
+    /*color: #15a3f9;*/
+    /*font-size: 14px;*/
+    /*word-break: break-all;*/
+/*}*/
+/*a {*/
+    /*outline: none;*/
+    /*text-decoration: none !important;*/
+    /*color: #15a4fa;*/
+/*}*/
+
+/*.widget-links ul li, .widget-menus ul li {*/
+    /*display: block;*/
+/*}*/
+
+/*ul {*/
+    /*list-style: none;*/
+    /*padding: 0;*/
+    /*margin: 0;*/
+/*}*/
+
+/*.widget-menus ul li a:hover, .widget-menus ul li.current-menu-item a {*/
+    /*border-left: 4px solid #f39c12;*/
+    /*background: #f0f0f0;*/
+/*}*/
+
+/*.post-article, .modal-submit-questions .btn-submit-question, .question-main-content .vote-block span, .contact-block button, #run_setup_pump {*/
+    /*background: #3498db;*/
+/*}*/
+/*.header-avatar span.display_name, .header-avatar i, .post-article, .modal-submit-questions .btn-submit-question, .question-main-content .top-content span.answered, .paginations ul li a:hover, .paginations ul li a.current, .contact-block button {*/
+    /*color: #fff;*/
+/*}*/
+/*.post-article, .contact-block button, #run_pump_setup {*/
+    /*width: 100%;*/
+    /*height: 45px;*/
+    /*border: none;*/
+    /*color: #fff;*/
+    /*margin-top: 30px;*/
+    /*margin: 0 auto;*/
+    /*display: block;*/
+    /*font-weight: 700;*/
+    /*-moz-border-radius: 3px;*/
+    /*-webkit-border-radius: 3px;*/
+    /*border-radius: 3px;*/
+    /*background-color: #3397db;*/
+/*}*/

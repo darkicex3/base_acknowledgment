@@ -17,10 +17,8 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 urlpatterns = [
-    url(r'^flatc/', include('prices.urls', namespace='prices')),
-    url(r'^users/', include('users.urls', namespace='users')),
-    url(r'^', include('core.urls', namespace='core')),
-    url(r'^news/', include('news.urls', namespace='news')),
-    url(r'^products/', include('products.urls', namespace='products')),
+    url(r'^flatc/', include('apps.prices.urls', namespace='prices')),
+    url(r'^users/', include('apps.users.urls', namespace='users')),
+    url(r'^', include('apps.core.urls', namespace='core')),
     url(r'^admin/', admin.site.urls),
 ]
