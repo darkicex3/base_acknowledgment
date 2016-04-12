@@ -1,46 +1,66 @@
-<li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem" class="question-item post-2212 poll type-poll status-publish format-standard hentry question_category-music" data-id="2212">
-    <div itemprop="item" itemscope="" itemtype="http://schema.org/Question">
+<li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem"
+    class="article-item post-2212 poll type-poll status-publish format-standard hentry article_category-music"
+    data-id="2212">
+    <div itemprop="item" itemscope="" itemtype="http://schema.org/article">
         <div class="col-md-8 col-xs-8 q-left-content">
             <div class="q-ltop-content">
                 <h2 itemprop="name">
-                    <span class="mask-poll">Poll</span>
-                    <a itemprop="url" href="http://www.demo.enginethemes.com/qaengine/blog/poll/what-s-your-favorite-song/" class="question-title">What ‘s your favorite song?</a>
+                    <span class="mask-poll">Article</span>
+                    <a itemprop="url"
+                       href="/article/{{ article.id }}/"
+                       class="article-title">{{ article.title }}</a>
                 </h2>
             </div>
             <div class="q-lbtm-content">
-                <div itemprop="text" class="question-excerpt">
-                    <p>I’m a programmer, and student of Engineering… Which linux distribution would be most useful to me in terms of software, …</p>
+                <div itemprop="text" class="article-excerpt">
+                    <p>{{ article.excerpt }}</p>
                 </div>
-                <div class="question-cat">
-                    <ul class="question-tags">
-                                            </ul>
+                <div class="article-cat">
+                    <ul class="article-tags">
+                    </ul>
                     <div class="clearfix"></div>
-                    <a itemprop="author" itemscope="" itemtype="http://schema.org/Person" href="http://www.demo.enginethemes.com/qaengine/blog/member/admin/">
+                    <a itemprop="author" itemscope="" itemtype="http://schema.org/Person"
+                       href="http://www.demo.enginethemes.com/qaengine/blog/member/admin/">
                     <span class="author-avatar">
-                        <img itemprop="image" src="http://enginethemes.com/demo/qaengine/wp-content/uploads/2015/01/12.jpg" class="avatar" alt="">                    </span>
+                        <img itemprop="image"
+                             src="http://enginethemes.com/demo/qaengine/wp-content/uploads/2015/01/12.jpg"
+                             class="avatar" alt="">                    </span>
                         <span itemprop="name" class="author-name">admin</span>
                     </a>
-                                        <span itemprop="dateCreated" datetime="on January 20, 2016" class="question-time">
+                                        <span itemprop="dateCreated" datetime="on January 20, 2016"
+                                              class="article-time">
                     Asked on January 20, 2016 in                </span>
-                    <span class="question-category">
-                                    <a href="http://www.demo.enginethemes.com/qaengine/blog/question-category/music/">Music.</a>
-                                </span>                </div>
+                    <span class="article-category">
+                                    <a href="http://www.demo.enginethemes.com/qaengine/blog/article-category/music/">Music.</a>
+                                </span></div>
             </div>
         </div><!-- end left content -->
         <div class="col-md-4 col-xs-4 q-right-content">
-            <ul class="question-statistic">
+            <ul class="article-statistic">
                 <li>
-                <span class="question-views">
+                <span class="article-views">
                     11                </span>
-                    views                </li>
+                    views
+                </li>
                 <li>
-                <span itemprop="upvoteCount" class="question-votes">
+                <span itemprop="upvoteCount" class="article-votes">
                     0                </span>
-                    votes                </li>
+                    votes
+                </li>
             </ul>
             <div class="pumping">
-                            </div>
+            </div>
         </div><!-- end right content -->
         <div class="clearfix"></div>
     </div>
 </li>
+
+{% if latest_article_list %}
+    <ul>
+    {% for article in latest_article_list %}
+
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No articles are available.</p>
+{% endif %}

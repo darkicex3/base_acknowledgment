@@ -38,19 +38,33 @@
     </div><!-- logo -->
 
     <div class="col-md-8 col-xs-8">
-        <div class="header-search-wrapper">
-            <section class="buttonset">
-                {#                <button id="showLeftPush"><i class="fa fa-question"></i></button>#}
-                {#                <button id="showRightPush"><i class="fa fa-bar-chart-o"></i></button>#}
-            </section>
-            <form id="header_search" method="GET" action="#" class="disable-mobile">
-                <input id="searchbar" type="text" name="keyword" value="" placeholder="What are you looking for ?"
-                       autocomplete="off">
-                <i class="fa fa-search"></i>
-                <div id="search_preview" class="search-preview empty"></div>
-            </form>
-        </div><!-- search -->
-    </div>
+        <div class="dropdown">
+            <button class="search_section dropdown-toggle" type="button" aria-haspopup="true" aria-expanded="true"
+                    id="search_categories">
+                Categories
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="search_categories">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#">Separated link</a></li>
+            </ul>
+            <button class="search_section dropdown-toggle" type="button" aria-haspopup="true" aria-expanded="true"
+                    id="search_sorting">
+                Sorting
+                <span class="caret"></span>
+            </button>
+        </div>
+
+        <form id="search_bar" method="GET" action="#" class="disable-mobile">
+            <input class="search_section" type="text" name="keyword" value=""
+                   placeholder="What are you looking for ?"
+                   autocomplete="off">
+        </form>
+    </div><!-- search -->
+
 
     <div class="col-md-2 col-xs-2 btn-group">
         <a class="login-url" href="javascript:void(0)" data-toggle="modal">Login or Register</a>
@@ -65,7 +79,7 @@
         <button type="button" data-toggle="modal" class="action post-article">
             <i class="fa fa-plus"></i>Create article
         </button>
-    </div><!-- END BUTTON MODAL QUESTION -->
+    </div><!-- END BUTTON MODAL article -->
 
     <div class="widget widget-menus">
         <div class="menu-left-menu-container">
@@ -117,38 +131,15 @@
                 <a class="q-tag" href="http://www.demo.enginethemes.com/qaengine/blog/qa-tag/business-2/">business</a> x
                 5
             </li>
-            <li>
-                <a class="q-tag" href="http://www.demo.enginethemes.com/qaengine/blog/qa-tag/marketing-2/">marketing</a>
-                x 5
-            </li>
-            <li>
-                <a class="q-tag" href="http://www.demo.enginethemes.com/qaengine/blog/qa-tag/google/">google</a> x 4
-            </li>
-            <li>
-                <a class="q-tag"
-                   href="http://www.demo.enginethemes.com/qaengine/blog/qa-tag/technology-2/">technology</a> x 4
-            </li>
-            <li>
-                <a class="q-tag" href="http://www.demo.enginethemes.com/qaengine/blog/qa-tag/apps/">apps</a> x 4
-            </li>
-            <li>
-                <a class="q-tag"
-                   href="http://www.demo.enginethemes.com/qaengine/blog/qa-tag/billionaire/">billionaire</a> x 3
-            </li>
-            <li>
-                <a class="q-tag" href="http://www.demo.enginethemes.com/qaengine/blog/qa-tag/movie-2/">movie</a> x 2
-            </li>
-            <li>
-                <a class="q-tag" href="http://www.demo.enginethemes.com/qaengine/blog/qa-tag/glass/">glass</a> x 2
-            </li>
         </ul>
         <a href="http://www.demo.enginethemes.com/qaengine/tags-4/">See more tags</a>
     </div><!-- END widget-related-tags -->
+
     <div class="widget widget-hot-articles">
         <h3>HOT articles</h3>
         <ul>
             <li>
-                <a href="http://www.demo.enginethemes.com/qaengine/blog/question/what-are-the-best-mobile-apps-for-traveling/">
+                <a href="http://www.demo.enginethemes.com/qaengine/blog/article/what-are-the-best-mobile-apps-for-traveling/">
                     <span class="topic-avatar">
                     	<img itemprop="image"
                              src="http://enginethemes.com/demo/qaengine/wp-content/uploads/2015/01/12812.jpg"
@@ -156,292 +147,10 @@
                     <span class="topic-title">What are the best mobile apps for traveling?</span>
                 </a>
             </li>
-            <li>
-                <a href="http://www.demo.enginethemes.com/qaengine/blog/question/select-coordinates-which-fall-within-a-radius-of-a-central-point/">
-                    <span class="topic-avatar">
-                    	<img itemprop="image"
-                             src="http://enginethemes.com/demo/qaengine/wp-content/uploads/2015/01/12.jpg"
-                             class="avatar" alt="">                    </span>
-                    <span class="topic-title">Select coordinates which fall within a radius of a central point?</span>
-                </a>
-            </li>
-            <li>
-                <a href="http://www.demo.enginethemes.com/qaengine/blog/question/how-to-become-a-billionaire-in-the-next-5-years/">
-                    <span class="topic-avatar">
-                    	<img itemprop="image"
-                             src="http://enginethemes.com/demo/qaengine/wp-content/uploads/2015/01/12.jpg"
-                             class="avatar" alt="">                    </span>
-                    <span class="topic-title">How to become a billionaire in the next 5 years?</span>
-                </a>
-            </li>
-            <li>
-                <a href="http://www.demo.enginethemes.com/qaengine/blog/question/why-isnt-music-free/">
-                    <span class="topic-avatar">
-                    	<img itemprop="image"
-                             src="http://enginethemes.com/demo/qaengine/wp-content/uploads/2015/01/1282.jpg"
-                             class="avatar" alt="">                    </span>
-                    <span class="topic-title">Why isn't music free?</span>
-                </a>
-            </li>
-            <li>
-                <a href="http://www.demo.enginethemes.com/qaengine/blog/question/what-is-it-like-to-be-a-billionaire/">
-                    <span class="topic-avatar">
-                    	<img itemprop="image"
-                             src="http://enginethemes.com/demo/qaengine/wp-content/uploads/2015/01/12.jpg"
-                             class="avatar" alt="">                    </span>
-                    <span class="topic-title">What is it like to be a billionaire?</span>
-                </a>
-            </li>
-            <li>
-                <a href="http://www.demo.enginethemes.com/qaengine/blog/question/what-are-key-strategies-to-acquire-first-100k-users-with-zero-marketing-budget/">
-                    <span class="topic-avatar">
-                    	<img itemprop="image"
-                             src="http://enginethemes.com/demo/qaengine/wp-content/uploads/2015/01/128.jpg"
-                             class="avatar" alt="">                    </span>
-                    <span class="topic-title">What are key strategies to acquire first 100K users with zero marketing budget?</span>
-                </a>
-            </li>
-            <li>
-                <a href="http://www.demo.enginethemes.com/qaengine/blog/question/what-will-be-the-next-big-thing-after-facebook-and-twitter/">
-                    <span class="topic-avatar">
-                    	<img itemprop="image"
-                             src="http://enginethemes.com/demo/qaengine/wp-content/uploads/2015/01/128323.jpg"
-                             class="avatar" alt="">                    </span>
-                    <span class="topic-title">What will be the next big thing after Facebook and Twitter?</span>
-                </a>
-            </li>
-            <li>
-                <a href="http://www.demo.enginethemes.com/qaengine/blog/question/how-do-you-get-a-job-as-a-designer-without-going-to-design-school/">
-                    <span class="topic-avatar">
-                    	<img itemprop="image"
-                             src="http://enginethemes.com/demo/qaengine/wp-content/uploads/2015/01/12.jpg"
-                             class="avatar" alt="">                    </span>
-                    <span class="topic-title">How do you get a job as a designer without going to design school?</span>
-                </a>
-            </li>
         </ul>
     </div><!-- END widget-related-tags -->
-    <div class="widget user-widget">
-        <h3 class="widgettitle">TOP USERS (POINTS)</h3>
-        <div class="hot-user-question">
-            <ul>
-                <li>
-                    <span class="number">1</span>
-                    <span class="username ">
-                    	<a href="http://www.demo.enginethemes.com/qaengine/blog/member/tatthien/" title="56789">
-                    		tatthien                    	</a>
-                    </span>
-                                        <span class="points-count" title="56789 Point(s)">
-                    	<i class="fa fa-star"></i>
-                    	<span>56.8K</span>
-                    </span>
-                </li>
-                <li>
-                    <span class="number">2</span>
-                    <span class="username ">
-                    	<a href="http://www.demo.enginethemes.com/qaengine/blog/member/alex/" title="525">
-                    		Alex                    	</a>
-                    </span>
-                                        <span class="points-count" title="525 Point(s)">
-                    	<i class="fa fa-star"></i>
-                    	<span>525</span>
-                    </span>
-                </li>
-                <li>
-                    <span class="number">3</span>
-                    <span class="username ">
-                    	<a href="http://www.demo.enginethemes.com/qaengine/blog/member/marry/" title="184">
-                    		Marry                    	</a>
-                    </span>
-                                        <span class="points-count" title="184 Point(s)">
-                    	<i class="fa fa-star"></i>
-                    	<span>184</span>
-                    </span>
-                </li>
-                <li>
-                    <span class="number">4</span>
-                    <span class="username ">
-                    	<a href="http://www.demo.enginethemes.com/qaengine/blog/member/john/" title="131">
-                    		John                    	</a>
-                    </span>
-                                        <span class="points-count" title="131 Point(s)">
-                    	<i class="fa fa-star"></i>
-                    	<span>131</span>
-                    </span>
-                </li>
-                <li>
-                    <span class="number">5</span>
-                    <span class="username ">
-                    	<a href="http://www.demo.enginethemes.com/qaengine/blog/member/smith/" title="31">
-                    		Smith                    	</a>
-                    </span>
-                                        <span class="points-count" title="31 Point(s)">
-                    	<i class="fa fa-star"></i>
-                    	<span>31</span>
-                    </span>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <div class="widget user-widget">
-        <h3 class="widgettitle">TOP USERS (articles)</h3>
-        <div class="hot-user-question">
-            <ul>
-                <li>
-                    <span class="number">1</span>
-                    <span class="username ">
-                    	<a href="http://www.demo.enginethemes.com/qaengine/blog/member/alex/" title="4">
-                    		Alex                    	</a>
-                    </span>
-                                        <span class="articles-count" title="4 Question(s)">
-                    	<i class="fa fa-question-circle"></i>
-                    	<span>4</span>
-                    </span>
-                </li>
-                <li>
-                    <span class="number">2</span>
-                    <span class="username ">
-                    	<a href="http://www.demo.enginethemes.com/qaengine/blog/member/smith/" title="2">
-                    		Smith                    	</a>
-                    </span>
-                                        <span class="articles-count" title="2 Question(s)">
-                    	<i class="fa fa-question-circle"></i>
-                    	<span>2</span>
-                    </span>
-                </li>
-                <li>
-                    <span class="number">3</span>
-                    <span class="username ">
-                    	<a href="http://www.demo.enginethemes.com/qaengine/blog/member/john/" title="1">
-                    		John                    	</a>
-                    </span>
-                                        <span class="articles-count" title="1 Question(s)">
-                    	<i class="fa fa-question-circle"></i>
-                    	<span>1</span>
-                    </span>
-                </li>
-                <li>
-                    <span class="number">4</span>
-                    <span class="username ">
-                    	<a href="http://www.demo.enginethemes.com/qaengine/blog/member/marry/" title="1">
-                    		Marry                    	</a>
-                    </span>
-                                        <span class="articles-count" title="1 Question(s)">
-                    	<i class="fa fa-question-circle"></i>
-                    	<span>1</span>
-                    </span>
-                </li>
-                <li>
-                    <span class="number">5</span>
-                    <span class="username ">
-                    	<a href="http://www.demo.enginethemes.com/qaengine/blog/member/anntt/" title="0">
-                    		anntt                    	</a>
-                    </span>
-                                        <span class="articles-count" title="0 Question(s)">
-                    	<i class="fa fa-question-circle"></i>
-                    	<span>0</span>
-                    </span>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <div class="widget user-widget">
-        <h3 class="widgettitle">TOP USERS (ANSWERS)</h3>
-        <div class="hot-user-question">
-            <ul>
-                <li>
-                    <span class="number">1</span>
-                    <span class="username ">
-                    	<a href="http://www.demo.enginethemes.com/qaengine/blog/member/john/" title="4">
-                    		John                    	</a>
-                    </span>
-                                        <span class="answers-count" title="4 Answer(s)">
-                    	<i class="fa fa-comments"></i>
-                    	<span>4</span>
-                    </span>
-                </li>
-                <li>
-                    <span class="number">2</span>
-                    <span class="username ">
-                    	<a href="http://www.demo.enginethemes.com/qaengine/blog/member/marry/" title="4">
-                    		Marry                    	</a>
-                    </span>
-                                        <span class="answers-count" title="4 Answer(s)">
-                    	<i class="fa fa-comments"></i>
-                    	<span>4</span>
-                    </span>
-                </li>
-                <li>
-                    <span class="number">3</span>
-                    <span class="username ">
-                    	<a href="http://www.demo.enginethemes.com/qaengine/blog/member/alex/" title="3">
-                    		Alex                    	</a>
-                    </span>
-                                        <span class="answers-count" title="3 Answer(s)">
-                    	<i class="fa fa-comments"></i>
-                    	<span>3</span>
-                    </span>
-                </li>
-                <li>
-                    <span class="number">4</span>
-                    <span class="username ">
-                    	<a href="http://www.demo.enginethemes.com/qaengine/blog/member/smith/" title="3">
-                    		Smith                    	</a>
-                    </span>
-                                        <span class="answers-count" title="3 Answer(s)">
-                    	<i class="fa fa-comments"></i>
-                    	<span>3</span>
-                    </span>
-                </li>
-                <li>
-                    <span class="number">5</span>
-                    <span class="username ">
-                    	<a href="http://www.demo.enginethemes.com/qaengine/blog/member/anntt/" title="0">
-                    		anntt                    	</a>
-                    </span>
-                                        <span class="answers-count" title="0 Answer(s)">
-                    	<i class="fa fa-comments"></i>
-                    	<span>0</span>
-                    </span>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <div class="widget user-widget">
-        <h3 class="widgettitle">TOP USERS (LATEST)</h3>
-        <div class="hot-user-question">
-            <ul>
-                <li>
-                    <span class="number">1</span>
-                    <span class="username latest">
-                    	<a href="http://www.demo.enginethemes.com/qaengine/blog/member/cem-ozturk/" title="">
-                    		cem ozturk                    	</a>
-                    </span>
-                </li>
-                <li>
-                    <span class="number">2</span>
-                    <span class="username latest">
-                    	<a href="http://www.demo.enginethemes.com/qaengine/blog/member/tatthien/" title="">
-                    		tatthien                    	</a>
-                    </span>
-                </li>
-                <li>
-                    <span class="number">3</span>
-                    <span class="username latest">
-                    	<a href="http://www.demo.enginethemes.com/qaengine/blog/member/nana/" title="">
-                    		nana                    	</a>
-                    </span>
-                </li>
-                <li>
-                    <span class="number">4</span>
-                    <span class="username latest">
-                    	<a href="http://www.demo.enginethemes.com/qaengine/blog/member/anntt/" title="">
-                    		anntt                    	</a>
-                    </span>
-                </li>
-            </ul>
-        </div>
-    </div>
+
+
 </div>
 
 <div class="footer-container">
@@ -580,6 +289,7 @@
     </div>
 </div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="{% static 'core/js/bootstrap.min.js' %}"></script>
 
 {% load staticfiles %}
 <script src="{% static 'core/js/main.js' %}"></script>
