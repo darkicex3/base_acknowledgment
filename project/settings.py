@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'apps.core.apps.CoreConfig',
     'apps.prices.apps.PricesConfig',
     'apps.users.apps.UsersConfig',
+    'apps.article.apps.ArticleConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
