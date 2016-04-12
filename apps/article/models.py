@@ -15,8 +15,9 @@ class Category(MPTTModel):
     def __str__(self):
         return self.name or self.code or ''
 
+DEFAULT_CATEGORY_ID = 1
 class Article(models.Model):
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, default=DEFAULT_CATEGORY_ID)
     title = models.CharField(max_length=200)
     content = models.CharField(max_length=1000000)
 
