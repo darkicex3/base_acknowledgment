@@ -19,6 +19,8 @@
     <link rel="stylesheet" href="{% static 'core/css/aside_bar.css' %}">
     <link rel="stylesheet" href="{% static 'core/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'core/css/bootstrap-theme.min.css' %}">
+    <link rel="stylesheet" href="{% static 'core/vendor/webui-popover/src/jquery.webui-popover.css' %}">
+    <link rel="stylesheet" href="{% static 'core/vendor/webui-popover/src/jquery.webui-popover.less' %}">
 
     <script src="{% static 'core/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js' %}"></script>
 
@@ -38,28 +40,11 @@
     </div><!-- logo -->
 
     <div class="col-md-8 col-xs-8">
-        <div class="dropdown">
-            <button class="search_section dropdown-toggle" type="button" aria-haspopup="true" aria-expanded="true"
-                    id="search_categories">
-                Categories
-                <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="search_categories">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#">Separated link</a></li>
-            </ul>
-            <button class="search_section dropdown-toggle" type="button" aria-haspopup="true" aria-expanded="true"
-                    id="search_sorting">
-                Sorting
-                <span class="caret"></span>
-            </button>
-        </div>
+        <button class="search_section" type="button" id="search_categories">Categories</button>
+        <button class="search_section" type="button" id="search_sorting">Sorting</button>
 
         <form id="search_bar" method="GET" action="#" class="disable-mobile">
-            <input class="search_section" type="text" name="keyword" value=""
+            <input class="search_section" id="search_field" type="text" name="keyword" value=""
                    placeholder="What are you looking for ?"
                    autocomplete="off">
         </form>
@@ -288,7 +273,17 @@
         </div>
     </div>
 </div>
+<script>
+    {#{% url 'core:get_sorting_methods' %}#}
+    GET_SORTING_METHODS = "";
+    GET_CATEGORIES = "";
+    GET_MASTER_CONTENT = "";
+    GET_ARTICLES = ""; {# ?favorites, ?sort_by...,  #}
+    GET_SIDE_BAR_MENU = "";
+    GET_TAGS = ""; {# ?most_used, ?sort_by...,  #}
+</script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="{% static 'core/vendor/webui-popover/src/jquery.webui-popover.js' %}"></script>
 <script src="{% static 'core/js/bootstrap.min.js' %}"></script>
 
 {% load staticfiles %}
