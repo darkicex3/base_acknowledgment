@@ -20,7 +20,19 @@ jQuery(document).ready(function ($) {
                             return html;
                         }, placement:'bottom', animation: 'pop', trigger: 'hover'});
     
-    $('#search_field').onclick(function () {
-        
-    })
+    $('#search_field').click(function () {
+        $('header').css('min-height','200px')
+    });
+
+    $(document).mouseup(function (e)
+    {
+        var container = $('header');
+
+        if (!container.is(e.target) // if the target of the click isn't the container...
+            && container.has(e.target).length === 0) // ... nor a descendant of the container
+        {
+            container.css('min-height','80px');
+        }
+    });
+
 });
