@@ -48,10 +48,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sessions',
-    'django.contrib.sites',
 
     'django_mptt_admin',
+    'elasticsearch',
+    'urllib3',
     'haystack',
+
 
     'apps.core.apps.CoreConfig',
     'apps.prices.apps.PricesConfig',
