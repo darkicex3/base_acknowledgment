@@ -42,23 +42,30 @@ DEBUG = True
 # Application definition
 
 INSTALLED_APPS = [
-    'apps.core.apps.CoreConfig',
-    'apps.prices.apps.PricesConfig',
-    'apps.users.apps.UsersConfig',
-    'apps.article.apps.ArticleConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.humanize',
-    'django_markup',
     'django.contrib.sessions',
     'django.contrib.sites',
-    'django.contrib.syndication',
+
     'django_mptt_admin',
-    'textile'
+    'haystack',
+
+    'apps.core.apps.CoreConfig',
+    'apps.prices.apps.PricesConfig',
+    'apps.users.apps.UsersConfig',
+    'apps.article.apps.ArticleConfig',
 ]
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+        'URL': 'http://127.0.0.1:8000/',
+        'INDEX_NAME': 'haystack',
+    },
+}
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',

@@ -50,10 +50,7 @@ class Article(models.Model):
                                           related_name='followups')
     related_articles = models.ManyToManyField('self', blank=True)
 
-    publish_date = models.DateTimeField(default=datetime.datetime.now(), help_text=publish_date_help)
-    expiration_date = models.DateTimeField(blank=True, null=True,   help_text=expiration_date)
+    publish_date = models.DateTimeField(default=datetime.datetime.now, help_text=publish_date_help)
+    expiration_date = models.DateTimeField(blank=True, null=True,  help_text=expiration_date)
 
     is_active = models.BooleanField(default=True, blank=True)
-
-
-
