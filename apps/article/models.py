@@ -65,8 +65,8 @@ class Article(models.Model):
 
     IS_ACTIVE = False
 
-    is_active = models.BooleanField(default=IS_ACTIVE, editable=False)
-    feedback = models.ForeignKey(Feedback, on_delete=models.CASCADE, editable=False, default=DEFAULT_FEEDBACK_ID)
+    is_active = models.BooleanField(default=IS_ACTIVE)
+    feedback = models.ForeignKey(Feedback, on_delete=models.CASCADE, default=DEFAULT_FEEDBACK_ID)
 
     author = models.ForeignKey(User, on_delete=models.CASCADE, default=DEFAULT_AUTHOR_ID)
     publish_date = models.DateTimeField(default=datetime.datetime.now, help_text=publish_date_help)

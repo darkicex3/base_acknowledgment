@@ -57,7 +57,7 @@ jQuery(document).ready(function ($) {
         e.preventDefault();
         data = (this).serializeArray();
         data.push({name: "csrfmiddlewaretoken", value: getCookie('csrftoken')});
-        $.post('{% url 'articles:ajax_search_view' %}')
+        $.post('{% url 'articles:ajax_search_view' %}', data)
     });
 });
 </script>

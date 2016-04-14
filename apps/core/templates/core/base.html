@@ -276,7 +276,7 @@
 <script>
     {#{% url 'core:get_sorting_methods' %}#}
     GET_SORTING_METHODS = "";
-    GET_CATEGORIES = "";
+    GET_CATEGORIES = "{% url 'articles:get_categories_view' %}";
     GET_MASTER_CONTENT = "";
     GET_ARTICLES = ""; {# ?favorites, ?sort_by...,  #}
     GET_SIDE_BAR_MENU = "";
