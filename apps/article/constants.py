@@ -1,5 +1,6 @@
 DEFAULT_CATEGORY_ID = 1
 DEFAULT_AUTHOR_ID = 1
+DEFAULT_FEEDBACK_ID = 1
 
 description_help = "If omitted, the description will be determined by the first bit of the article's content."
 keywords_help = "If omitted, the keywords will be the same as the article tags."
@@ -8,3 +9,9 @@ auto_tag_help = "Check this if you want to automatically assign any existing tag
 followup_for_help = "Select any other articles that this article follows up on."
 publish_date_help = "The date and time this article shall appear online."
 expiration_date = "Leave blank if the article does not expire."
+
+
+INJURIES = ""
+NEGATIVE_WORDS = ""
+MSG_VIEW_ALERT = ""
+MSG_USELESS_ALERT = ""

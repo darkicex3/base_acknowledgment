@@ -6,6 +6,8 @@ class CategoryIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True, use_template=True)
     name = indexes.CharField(model_attr='name')
 
+    content_auto = indexes.EdgeNgramField(model_attr='name')
+
     def get_model(self):
         return Category
 
@@ -19,6 +21,8 @@ class TagIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True, use_template=True)
     name = indexes.CharField(model_attr='name')
 
+    content_auto = indexes.EdgeNgramField(model_attr='name')
+
     def get_model(self):
         return Tag
 
@@ -31,7 +35,7 @@ class ArticleIndex(indexes.SearchIndex, indexes.Indexable):
 
     text = indexes.CharField(document=True, use_template=True)
     title = indexes.CharField(model_attr='title')
-    author = indexes.CharField(model_attr='user')
+    author = indexes.CharField(model_attr='author')
 
     keywords = indexes.CharField(model_attr='keywords')
     description = indexes.CharField(model_attr='description')
@@ -39,6 +43,10 @@ class ArticleIndex(indexes.SearchIndex, indexes.Indexable):
 
     publish_date = indexes.DateTimeField(model_attr='publish_date')
     expiration_date = indexes.DateTimeField(model_attr='expiration_date')
+
+    content_auto_name = indexes.EdgeNgramField(model_attr='name')
+    content_auto_content = indexes.EdgeNgramField(model_attr='content')
+    content_auto_description = indexes.EdgeNgramField(model_attr='description')
 
     def get_model(self):
         return Article

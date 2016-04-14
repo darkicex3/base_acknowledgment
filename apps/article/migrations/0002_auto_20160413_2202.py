@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import migrations, models
+import apps.article.models
 from django.conf import settings
 import datetime
 
@@ -15,11 +16,29 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
+            name='Feedback',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
+                ('alert_useless_actived', models.BooleanField(default=False)),
+                ('max_useless', models.IntegerField(null=True)),
+                ('alert_view_actived', models.BooleanField(default=False)),
+                ('min_view', models.IntegerField(null=True)),
+                ('useless', models.IntegerField(default=0)),
+                ('useful', models.IntegerField(default=0)),
+                ('favorite', models.IntegerField(default=0)),
+                ('view', models.IntegerField(default=0)),
+                ('comment', models.TextField(max_length=100)),
+            ],
+            options={
+                'verbose_name': 'Feedback',
+                'verbose_name_plural': 'Manage Feedbacks',
+            },
+        ),
+        migrations.CreateModel(
             name='Tag',
             fields=[
-                ('id', models.AutoField(serialize=False, primary_key=True, auto_created=True, verbose_name='ID')),
-                ('name', models.CharField(max_length=64, unique=True)),
-                ('slug', models.CharField(null=True, max_length=64, blank=True, unique=True)),
+                ('id', models.AutoField(verbose_name='ID', primary_key=True, serialize=False, auto_created=True)),
+                ('name', models.CharField(unique=True, max_length=64)),
             ],
             options={
                 'verbose_name_plural': 'Tags',
@@ -53,11 +72,6 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='article',
-            name='auto_tag',
-            field=models.BooleanField(help_text='Check this if you want to automatically assign any existing tags to this article based on its content.', default=True),
-        ),
-        migrations.AddField(
-            model_name='article',
             name='description',
             field=models.TextField(help_text="If omitted, the description will be determined by the first bit of the article's content.", blank=True),
         ),
@@ -68,13 +82,8 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='article',
-            name='followup_for',
-            field=models.ManyToManyField(to='article.Article', help_text='Select any other articles that this article follows up on.', blank=True, related_name='followups'),
-        ),
-        migrations.AddField(
-            model_name='article',
             name='is_active',
-            field=models.BooleanField(default=True),
+            field=models.BooleanField(default=False, editable=False),
         ),
         migrations.AddField(
             model_name='article',
@@ -84,12 +93,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='article',
             name='publish_date',
-            field=models.DateTimeField(help_text='The date and time this article shall appear online.', default=datetime.datetime.now),
+            field=models.DateTimeField(default=datetime.datetime.now, help_text='The date and time this article shall appear online.'),
         ),
         migrations.AddField(
             model_name='article',
-            name='related_articles',
-            field=models.ManyToManyField(to='article.Article', blank=True, related_name='_article_related_articles_+'),
+            name='thumbnail',
+            field=models.FileField(null=True, upload_to=apps.article.models.get_upload_filename),
         ),
         migrations.AlterField(
             model_name='article',
@@ -106,6 +115,11 @@ class Migration(migrations.Migration):
         ),
         migrations.DeleteModel(
             name='Tags',
+        ),
+        migrations.AddField(
+            model_name='article',
+            name='feedback',
+            field=models.ForeignKey(to='article.Feedback', editable=False, default=1),
         ),
         migrations.AddField(
             model_name='article',
