@@ -19,6 +19,9 @@ class Category(MPTTModel):
     name = models.CharField(max_length=50, blank=True, null=True)
     parent = TreeForeignKey('self', null=True, blank=True, related_name='children')
 
+    def get_previous_parent(self):
+        return self.parent.parent
+
     def __str__(self):
         return self.name or ''
 

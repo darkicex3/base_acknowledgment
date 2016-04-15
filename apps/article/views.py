@@ -31,14 +31,19 @@ class GetCategoriesView(View):
 
         context = {}
         node_id = self.request.GET.get('node_id')
+        previous = self.request.GET.get('previous')
 
         print(node_id)
 
         if node_id is None:
             categories = Category.objects.all().filter(level=0)
-        else :
-            node_category = Category.objects.all().filter(pk=node_id)
-            categories = node_category.get_descendants()
+        else:
+            node_category = Category.objects.all().get(pk=node_id)
+            if previous == 'false' :
+                print(previous)
+                categories = node_category.get_children()
+            else:
+                categories = node_category.get_previous_parent().get_children()
 
         for category in categories: context.update({category.id: str(category.name)})
 

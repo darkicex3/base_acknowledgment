@@ -12,18 +12,9 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-
-    <link rel="stylesheet" href="{% static 'core/css/header.css' %}">
-    <link rel="stylesheet" href="{% static 'core/css/main.css' %}">
-    <link rel="stylesheet" href="{% static 'core/css/aside_bar.css' %}">
     <link rel="stylesheet" href="{% static 'core/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'core/css/bootstrap-theme.min.css' %}">
-    <link rel="stylesheet" href="{% static 'core/vendor/webui-popover/src/jquery.webui-popover.css' %}">
-    <link rel="stylesheet" href="{% static 'core/vendor/webui-popover/src/jquery.webui-popover.less' %}">
-
-    <script src="{% static 'core/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js' %}"></script>
-
+    <link rel="stylesheet" href="{% static 'core/css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'core/vendor/../../static/core/js/vendor/webui-popover/src/jquery.webui-popover.css' %}">
 
     <title>Teledirect - {% block title %}{% endblock %}</title>
 </head>
@@ -54,98 +45,111 @@
     <div class="col-md-2 col-xs-2 btn-group">
         <a class="login-url" href="javascript:void(0)" data-toggle="modal">Login or Register</a>
     </div><!-- avatar -->
-
-    <div id="sub_categories" style="width: 100%; display: block"></div>
 </header>
 
-
-
-<div class="col-md-12 col-xs-12" id="header_sidebar"></div>
-
-<div class="col-md-2 disable-mobile left-sidebar">
-
-    <div class="widget widget-btn">
-        <button type="button" data-toggle="modal" class="action post-article">
-            <i class="fa fa-plus"></i>Create article
-        </button>
-    </div><!-- END BUTTON MODAL article -->
-
-    <div class="widget widget-menus">
-        <div class="menu-left-menu-container">
-            <ul id="menu-left-menu-1" class="menu">
-                <li class="fa-articles"><a href="#"><i class="fa fa-articles"></i>Articles</a></li>
-                <li class="fa-tags"><a href="#"><i class="fa fa-tags"></i>Tags</a></li>
-                <li class="fa-th-list"><a href="#"><i class="fa fa-th-list"></i>Categories</a></li>
-                <li class="fa-favorites"><a href="#"><i class="fa fa-trophy"></i>Favorites</a></li>
-            </ul>
+<div class="app_content">
+    <div class="Categories Module SearchGuidesBar" data-component-type="47" style="display: none">
+        <div class="guidesWrapper centeredWithinWrapper">
+            <div class="guidesSlider">
+            </div>
+            <a unselectable="on" class="navigator left" style="display: none;">
+                <em></em>
+            </a>
+            <a unselectable="on" class="navigator right" style="display: inline;">
+                <em></em>
+            </a>
         </div>
-    </div><!-- END LEFT MENU -->
-
-    <div class="clearfix"></div>
-
-    <!-- END / SOCIAL LINKs -->
-    <div class="copyright">
-        ©2016 Teledirect Pte Ltd <br>
-        <a href="#">Terms & Privacy</a>
     </div>
-</div>
 
 
-<div itemtype="http://schema.org/ItemList" class="col-md-8 main-content">
-    {% block content %}
-        <!-- CONTENT -->
-    {% endblock %}
-</div>
+    <div class="col-md-12 col-xs-12" id="header_sidebar" style="display: none"></div>
+
+    <div class="col-md-2 disable-mobile left-sidebar" style="display: none">
+
+        <div class="widget widget-btn">
+            <button type="button" data-toggle="modal" class="action post-article">
+                <i class="fa fa-plus"></i>Create article
+            </button>
+        </div><!-- END BUTTON MODAL article -->
+
+        <div class="widget widget-menus">
+            <div class="menu-left-menu-container">
+                <ul id="menu-left-menu-1" class="menu">
+                    <li class="fa-articles"><a href="#"><i class="fa fa-articles"></i>Articles</a></li>
+                    <li class="fa-tags"><a href="#"><i class="fa fa-tags"></i>Tags</a></li>
+                    <li class="fa-th-list"><a href="#"><i class="fa fa-th-list"></i>Categories</a></li>
+                    <li class="fa-favorites"><a href="#"><i class="fa fa-trophy"></i>Favorites</a></li>
+                </ul>
+            </div>
+        </div><!-- END LEFT MENU -->
+
+        <div class="clearfix"></div>
+
+        <!-- END / SOCIAL LINKs -->
+        <div class="copyright">
+            ©2016 Teledirect Pte Ltd <br>
+            <a href="#">Terms & Privacy</a>
+        </div>
+    </div>
 
 
-<div class="col-md-2 disable-mobile right-sidebar">
-    <div class="widget widget-statistic">
-        <ul>
-            <li class="articles-count">
-                <p>articles</p>
-                <p>
-                    <span>13</span>
-                </p></li>
-            <li class="members-count">
-                <p>Members</p>
-                <p>
-                    <span>10</span>
-                </p></li>
-        </ul>
-    </div><!-- END widget-statistic -->
-    <div class="widget widget-related-tags">
-        <h3>MOST USED TAGS</h3>
-        <ul>
-            <li>
-                <a class="q-tag" href="http://www.demo.enginethemes.com/qaengine/blog/qa-tag/business-2/">business</a> x
-                5
-            </li>
-        </ul>
-        <a href="http://www.demo.enginethemes.com/qaengine/tags-4/">See more tags</a>
-    </div><!-- END widget-related-tags -->
+    <div class="col-md-8 main-content" style="display: none">
+        {% block content %}
+            <!-- CONTENT -->
+        {% endblock %}
+    </div>
 
-    <div class="widget widget-hot-articles">
-        <h3>HOT articles</h3>
-        <ul>
-            <li>
-                <a href="http://www.demo.enginethemes.com/qaengine/blog/article/what-are-the-best-mobile-apps-for-traveling/">
+
+    <div class="col-md-2 disable-mobile right-sidebar" style="display: none">
+        <div class="widget widget-statistic">
+            <ul>
+                <li class="articles-count">
+                    <p>articles</p>
+                    <p>
+                        <span>13</span>
+                    </p></li>
+                <li class="members-count">
+                    <p>Members</p>
+                    <p>
+                        <span>10</span>
+                    </p></li>
+            </ul>
+        </div><!-- END widget-statistic -->
+        <div class="widget widget-related-tags">
+            <h3>MOST USED TAGS</h3>
+            <ul>
+                <li>
+                    <a class="q-tag"
+                       href="">business</a> x
+                    5
+                </li>
+            </ul>
+            <a href="">See more tags</a>
+        </div><!-- END widget-related-tags -->
+
+        <div class="widget widget-hot-articles">
+            <h3>HOT articles</h3>
+            <ul>
+                <li>
+                    <a href="">
                     <span class="topic-avatar">
                     	<img itemprop="image"
-                             src="http://enginethemes.com/demo/qaengine/wp-content/uploads/2015/01/12812.jpg"
+                             src=""
                              class="avatar" alt="">                    </span>
-                    <span class="topic-title">What are the best mobile apps for traveling?</span>
-                </a>
-            </li>
-        </ul>
-    </div><!-- END widget-related-tags -->
+                        <span class="topic-title">What are the best mobile apps for traveling?</span>
+                    </a>
+                </li>
+            </ul>
+        </div><!-- END widget-related-tags -->
 
 
-</div>
+    </div>
 
-<div class="footer-container">
-    <footer class="wrapper">
-        <!-- FOOTER -->
-    </footer>
+    <div class="footer-container" style="display: none">
+        <footer class="wrapper">
+            <!-- FOOTER -->
+        </footer>
+    </div>
 </div>
 
 
@@ -205,7 +209,7 @@
                             <li class="gp"><a id="signinButton" href="#" class="sc-icon color-google gplus_login_btn"><i
                                     class="fa fa-google-plus-square"></i></a></li>
                             <!-- twitter plus login -->
-                            <li class="tw"><a href="http://www.demo.enginethemes.com/qaengine?action=twitterauth"
+                            <li class="tw"><a href=""
                                               class="sc-icon color-twitter"><i class="fa fa-twitter-square"></i></a>
                             </li>
                             <!-- facebook plus login -->
@@ -242,7 +246,7 @@
                             <div class="g-recaptcha" data-sitekey="6LeS8wYTAAAAAKL7TOlfNCX7RMB9SiUDSZdKI606">
                                 <div>
                                     <div style="width: 304px; height: 78px;">
-                                        <iframe src="https://www.google.com/recaptcha/api2/anchor?k=6LeS8wYTAAAAAKL7TOlfNCX7RMB9SiUDSZdKI606&amp;co=aHR0cDovL3d3dy5kZW1vLmVuZ2luZXRoZW1lcy5jb206ODA.&amp;hl=en&amp;v=r20160404124926&amp;size=normal&amp;cb=5hcjkrfljfhh"
+                                        <iframe src=""
                                                 title="recaptcha widget" width="304" height="78" role="presentation"
                                                 frameborder="0" scrolling="no" name="undefined"></iframe>
                                     </div>
@@ -262,8 +266,8 @@
 
                     <p class="policy-sign-up">
                         By clicking "Sign up" you indicate that you have read and agree to the <a target="_blank"
-                                                                                                  href="http://www.demo.enginethemes.com/qaengine/term/">privacy
-                        policy</a> and <a target="_blank" href="http://www.demo.enginethemes.com/qaengine/term/">terms
+                                                                                                  href="">privacy
+                        policy</a> and <a target="_blank" href="">terms
                         of service.</a></p>
                 </form>
 
@@ -282,16 +286,17 @@
     GET_SORTING_METHODS = "";
     GET_CATEGORIES = "/article/get_categories/";
     GET_MASTER_CONTENT = "";
-    GET_ARTICLES = ""; {# ?favorites, ?sort_by...,  #}
+    GET_ARTICLES = "";
+    {# ?favorites, ?sort_by...,  #}
     GET_SIDE_BAR_MENU = "";
-    GET_TAGS = ""; {# ?most_used, ?sort_by...,  #}
+    GET_TAGS = "";
+    {# ?most_used, ?sort_by...,  #}
 </script>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script src="{% static 'core/vendor/webui-popover/src/jquery.webui-popover.js' %}"></script>
-<script src="{% static 'core/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'core/js/vendor/jquery-1.11.2.min.js' %}"></script>
+<script src="{% static 'core/js/webui-popover/src/jquery.webui-popover.js' %}"></script>
+<script src="{% static 'core/js/vendor/bootstrap.min.js' %}"></script>
 
 {% load staticfiles %}
 <script src="{% static 'core/js/main.js' %}"></script>
-
 </body>
 </html>
