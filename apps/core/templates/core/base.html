@@ -14,7 +14,7 @@
 
     <link rel="stylesheet" href="{% static 'core/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'core/css/main.css' %}">
-    <link rel="stylesheet" href="{% static 'core/vendor/../../static/core/js/vendor/webui-popover/src/jquery.webui-popover.css' %}">
+    <link rel="stylesheet" href="{% static 'core/js/vendor/webui-popover/src/jquery.webui-popover.css' %}">
 
     <title>Teledirect - {% block title %}{% endblock %}</title>
 </head>
@@ -282,18 +282,17 @@
     </div>
 </div>
 <script>
-    {#{% url 'core:get_sorting_methods' %}#}
     GET_SORTING_METHODS = "";
     GET_CATEGORIES = "/article/get_categories/";
     GET_MASTER_CONTENT = "";
     GET_ARTICLES = "";
-    {# ?favorites, ?sort_by...,  #}
     GET_SIDE_BAR_MENU = "";
     GET_TAGS = "";
-    {# ?most_used, ?sort_by...,  #}
 </script>
 <script src="{% static 'core/js/vendor/jquery-1.11.2.min.js' %}"></script>
-<script src="{% static 'core/js/webui-popover/src/jquery.webui-popover.js' %}"></script>
+<script src="{% static 'core/js/vendor/jquery-ui-1.11.4.custom/jquery-ui.min.js' %}"></script>
+<script src="{% static 'core/js/vendor/webui-popover/src/jquery.webui-popover.js' %}"></script>
+
 <script src="{% static 'core/js/vendor/bootstrap.min.js' %}"></script>
 
 {% load staticfiles %}

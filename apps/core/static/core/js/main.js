@@ -15,7 +15,7 @@ jQuery(document).ready(function ($) {
             }
             html += '</ul>';
             return html;
-        }, placement: 'bottom', animation: 'pop', trigger: 'click'
+        }, placement: 'bottom-right', animation: 'pop', trigger: 'click', width:300,height:200
     });
 
     $('#search_sorting').webuiPopover({
@@ -117,5 +117,9 @@ jQuery(document).ready(function ($) {
             !popover.is(e.target) && popover.has(e.target).length === 0)
             container.slideUp(slideSpeed);
     });
+
+    //Autocomplete
+
+    
 
 });
