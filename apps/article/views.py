@@ -27,12 +27,19 @@ class SearchAjaxView(View):
 
 
 class GetCategoriesView(View):
-
     def get(self, *args, **kwargs):
 
         context = {}
+        node_id = self.request.GET.get('node_id')
 
-        categories = Category.objects.all().filter(level=0)
-        for category in categories: context.update({category.id:str(category.name)})
+        print(node_id)
+
+        if node_id is None:
+            categories = Category.objects.all().filter(level=0)
+        else :
+            node_category = Category.objects.all().filter(pk=node_id)
+            categories = node_category.get_descendants()
+
+        for category in categories: context.update({category.id: str(category.name)})
 
         return JsonResponse(context)

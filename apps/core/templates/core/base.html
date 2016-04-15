@@ -54,7 +54,11 @@
     <div class="col-md-2 col-xs-2 btn-group">
         <a class="login-url" href="javascript:void(0)" data-toggle="modal">Login or Register</a>
     </div><!-- avatar -->
+
+    <div id="sub_categories" style="width: 100%; display: block"></div>
 </header>
+
+
 
 <div class="col-md-12 col-xs-12" id="header_sidebar"></div>
 
@@ -276,7 +280,7 @@
 <script>
     {#{% url 'core:get_sorting_methods' %}#}
     GET_SORTING_METHODS = "";
-    GET_CATEGORIES = "{% url 'articles:get_categories_view' %}";
+    GET_CATEGORIES = "/article/get_categories/";
     GET_MASTER_CONTENT = "";
     GET_ARTICLES = ""; {# ?favorites, ?sort_by...,  #}
     GET_SIDE_BAR_MENU = "";

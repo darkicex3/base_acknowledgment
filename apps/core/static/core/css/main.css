@@ -19,6 +19,24 @@
     color: #8b97b1;
 }
 
+.webui-popover-content li {
+    color: #8c97b2;
+    font-weight: 500 !important;
+    font-size: 13pt;
+    padding: 10px;
+    cursor: pointer;
+
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.webui-popover-content li:hover {
+    color: #e73f2e;
+}
+
 body {
     color: #6f7d95;
     background-color: #f2f2f2;
@@ -333,6 +351,8 @@ ul {
     background: #f3f3f3;
     border-radius: 5px 0 0 5px;
 }
+
+
 
 #search_bar {
     overflow: hidden;
