@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="{% static 'core/css/main.css' %}">
     <link rel="stylesheet" href="{% static 'core/js/vendor/webui-popover/src/jquery.webui-popover.css' %}">
 
+    <link href='https://fonts.googleapis.com/css?family=PT+Sans+Caption:400,700' rel='stylesheet' type='text/css'>
+
     <title>Teledirect - {% block title %}{% endblock %}</title>
 </head>
 <body>
@@ -23,14 +25,14 @@
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-<header id="header">
+<header class="shadow_material" id="header">
     <div class="col-md-2 col-xs-2" id="logo">
         <a href="#">
-            <img src="{% static 'core/img/logo1.jpg' %}" style="width: 100%">
+            <img src="{% static 'core/img/logo1.png' %}" style="width: 100%">
         </a>
     </div><!-- logo -->
 
-    <div class="col-md-8 col-xs-8">
+    <div class="col-md-8 col-xs-8" id="colSearchBar">
         <button class="search_section" type="button" id="search_categories">Categories</button>
         <button class="search_section" type="button" id="search_sorting">Sorting</button>
 
@@ -55,16 +57,16 @@
             <a unselectable="on" class="navigator left" style="display: none;">
                 <em></em>
             </a>
-            <a unselectable="on" class="navigator right" style="display: inline;">
+            <a unselectable="on" class="navigator right" style="display: none;">
                 <em></em>
             </a>
         </div>
     </div>
 
 
-    <div class="col-md-12 col-xs-12" id="header_sidebar" style="display: none"></div>
+    <div class="col-md-12 col-xs-12" id="header_sidebar" style=""></div>
 
-    <div class="col-md-2 disable-mobile left-sidebar" style="display: none">
+    <div class="col-md-2 disable-mobile left-sidebar" style="">
 
         <div class="widget widget-btn">
             <button type="button" data-toggle="modal" class="action post-article">
@@ -93,56 +95,10 @@
     </div>
 
 
-    <div class="col-md-8 main-content" style="display: none">
+    <div class="col-md-12 main-content">
         {% block content %}
             <!-- CONTENT -->
         {% endblock %}
-    </div>
-
-
-    <div class="col-md-2 disable-mobile right-sidebar" style="display: none">
-        <div class="widget widget-statistic">
-            <ul>
-                <li class="articles-count">
-                    <p>articles</p>
-                    <p>
-                        <span>13</span>
-                    </p></li>
-                <li class="members-count">
-                    <p>Members</p>
-                    <p>
-                        <span>10</span>
-                    </p></li>
-            </ul>
-        </div><!-- END widget-statistic -->
-        <div class="widget widget-related-tags">
-            <h3>MOST USED TAGS</h3>
-            <ul>
-                <li>
-                    <a class="q-tag"
-                       href="">business</a> x
-                    5
-                </li>
-            </ul>
-            <a href="">See more tags</a>
-        </div><!-- END widget-related-tags -->
-
-        <div class="widget widget-hot-articles">
-            <h3>HOT articles</h3>
-            <ul>
-                <li>
-                    <a href="">
-                    <span class="topic-avatar">
-                    	<img itemprop="image"
-                             src=""
-                             class="avatar" alt="">                    </span>
-                        <span class="topic-title">What are the best mobile apps for traveling?</span>
-                    </a>
-                </li>
-            </ul>
-        </div><!-- END widget-related-tags -->
-
-
     </div>
 
     <div class="footer-container" style="display: none">
@@ -152,135 +108,6 @@
     </div>
 </div>
 
-
-<!-- MODAL -->
-<div class="modal fade modal-submit-articles" id="reset_password" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i>
-                </button>
-                <h4 class="modal-title modal-title-sign-in" id="myModalLabel">Reset Password</h4>
-            </div>
-            <div class="modal-body">
-
-                <form id="resetpass_form" class="form_modal_style">
-                    <input type="hidden" id="user_login" name="user_login" value="">
-                    <input type="hidden" id="user_key" name="user_key" value="">
-                    <label>Enter your new password here</label>
-                    <input type="password" class="name_user" name="new_password" id="new_password">
-                    <input type="password" class="name_user" name="re_new_password" id="re_new_password">
-                    <input type="submit" name="submit" value="Reset" class="btn-submit">
-                </form>
-
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="modal fade modal-submit-articles" id="login_register" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i>
-                </button>
-                <h4 class="modal-title modal-title-sign-in" id="myModalLabel">Sign In</h4>
-            </div>
-            <div class="modal-body">
-                <form id="signin_form" class="form_modal_style">
-                    <label for="username">
-                        Username or Email </label>
-                    <input type="text" class="email_user" name="username" id="username">
-
-                    <label for="password">
-                        Password </label>
-                    <input type="password" class="password_user" id="password" name="password">
-                    <div class="clearfix"></div>
-                    <input type="submit" name="submit" value="Sign in" class="btn-submit">
-                    <a href="javascript:void(0)" class="link_forgot_pass">Forgot password</a>
-                    <div class="submit-block">
-                        <a href="javascript:void(0)" class="link_sign_up">Sign up here</a><span>or sign in with</span>
-
-                        <ul class="social-icon clearfix">
-                            <!-- google plus login -->
-                            <li class="gp"><a id="signinButton" href="#" class="sc-icon color-google gplus_login_btn"><i
-                                    class="fa fa-google-plus-square"></i></a></li>
-                            <!-- twitter plus login -->
-                            <li class="tw"><a href=""
-                                              class="sc-icon color-twitter"><i class="fa fa-twitter-square"></i></a>
-                            </li>
-                            <!-- facebook plus login -->
-                            <li class="fb"><a href="#" id="facebook_auth_btn"
-                                              class="sc-icon color-facebook facebook_auth_btn"><i
-                                    class="fa fa-facebook-square"></i></a></li>
-                        </ul>
-                    </div>
-
-                </form>
-
-                <form id="signup_form" class="form_modal_style">
-                    <label for="username">
-                        Username </label>
-                    <input type="text" class="name_user" name="username" id="username">
-
-                    <label for="email">
-                        Email </label>
-                    <input type="text" class="email_user" name="email" id="email">
-
-                    <label for="password1">
-                        Password </label>
-                    <input type="password" class="password_user_signup" id="password1" name="password">
-
-                    <label for="re_password">
-                        Retype Password </label>
-                    <input type="password" class="repeat_password_user_signup" id="re_password" name="re_password">
-
-
-                    <div class="clearfix"></div>
-                    <div class="gg-captcha">
-                        <!-- reCaptcha -->
-                        <div class="captcha-wrapper">
-                            <div class="g-recaptcha" data-sitekey="6LeS8wYTAAAAAKL7TOlfNCX7RMB9SiUDSZdKI606">
-                                <div>
-                                    <div style="width: 304px; height: 78px;">
-                                        <iframe src=""
-                                                title="recaptcha widget" width="304" height="78" role="presentation"
-                                                frameborder="0" scrolling="no" name="undefined"></iframe>
-                                    </div>
-                                    <textarea id="g-recaptcha-response" name="g-recaptcha-response"
-                                              class="g-recaptcha-response"
-                                              style="width: 250px; height: 40px; border: 1px solid #c1c1c1; margin: 10px 25px; padding: 0px; resize: none;  display: none; "></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-                        <!-- reCaptcha / End -->
-                    </div>
-                    <input type="submit" name="submit" value="Sign up" class="btn-submit">
-                    <a href="javascript:void(0)" class="link_sign_in">Sign in</a>
-
-                    <div class="clearfix"></div>
-
-                    <p class="policy-sign-up">
-                        By clicking "Sign up" you indicate that you have read and agree to the <a target="_blank"
-                                                                                                  href="">privacy
-                        policy</a> and <a target="_blank" href="">terms
-                        of service.</a></p>
-                </form>
-
-                <form id="forgotpass_form" class="form_modal_style collapse">
-                    <label>Enter your email here</label>
-                    <input type="text" class="name_user" name="email" id="email">
-                    <input type="submit" name="submit" value="Send" class="btn-submit">
-                </form>
-
-            </div>
-        </div>
-    </div>
-</div>
 <script>
     GET_SORTING_METHODS = "";
     GET_CATEGORIES = "/article/get_categories/";

@@ -1,0 +1,128 @@
+<!-- MODAL -->
+<div class="modal fade modal-submit-articles" id="reset_password" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i>
+                </button>
+                <h4 class="modal-title modal-title-sign-in" id="myModalLabel">Reset Password</h4>
+            </div>
+            <div class="modal-body">
+
+                <form id="resetpass_form" class="form_modal_style">
+                    <input type="hidden" id="user_login" name="user_login" value="">
+                    <input type="hidden" id="user_key" name="user_key" value="">
+                    <label>Enter your new password here</label>
+                    <input type="password" class="name_user" name="new_password" id="new_password">
+                    <input type="password" class="name_user" name="re_new_password" id="re_new_password">
+                    <input type="submit" name="submit" value="Reset" class="btn-submit">
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade modal-submit-articles" id="login_register" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i>
+                </button>
+                <h4 class="modal-title modal-title-sign-in" id="myModalLabel">Sign In</h4>
+            </div>
+            <div class="modal-body">
+                <form id="signin_form" class="form_modal_style">
+                    <label for="username">
+                        Username or Email </label>
+                    <input type="text" class="email_user" name="username" id="username">
+
+                    <label for="password">
+                        Password </label>
+                    <input type="password" class="password_user" id="password" name="password">
+                    <div class="clearfix"></div>
+                    <input type="submit" name="submit" value="Sign in" class="btn-submit">
+                    <a href="javascript:void(0)" class="link_forgot_pass">Forgot password</a>
+                    <div class="submit-block">
+                        <a href="javascript:void(0)" class="link_sign_up">Sign up here</a><span>or sign in with</span>
+
+                        <ul class="social-icon clearfix">
+                            <!-- google plus login -->
+                            <li class="gp"><a id="signinButton" href="#" class="sc-icon color-google gplus_login_btn"><i
+                                    class="fa fa-google-plus-square"></i></a></li>
+                            <!-- twitter plus login -->
+                            <li class="tw"><a href=""
+                                              class="sc-icon color-twitter"><i class="fa fa-twitter-square"></i></a>
+                            </li>
+                            <!-- facebook plus login -->
+                            <li class="fb"><a href="#" id="facebook_auth_btn"
+                                              class="sc-icon color-facebook facebook_auth_btn"><i
+                                    class="fa fa-facebook-square"></i></a></li>
+                        </ul>
+                    </div>
+
+                </form>
+
+                <form id="signup_form" class="form_modal_style">
+                    <label for="username">
+                        Username </label>
+                    <input type="text" class="name_user" name="username" id="username">
+
+                    <label for="email">
+                        Email </label>
+                    <input type="text" class="email_user" name="email" id="email">
+
+                    <label for="password1">
+                        Password </label>
+                    <input type="password" class="password_user_signup" id="password1" name="password">
+
+                    <label for="re_password">
+                        Retype Password </label>
+                    <input type="password" class="repeat_password_user_signup" id="re_password" name="re_password">
+
+
+                    <div class="clearfix"></div>
+                    <div class="gg-captcha">
+                        <!-- reCaptcha -->
+                        <div class="captcha-wrapper">
+                            <div class="g-recaptcha" data-sitekey="6LeS8wYTAAAAAKL7TOlfNCX7RMB9SiUDSZdKI606">
+                                <div>
+                                    <div style="width: 304px; height: 78px;">
+                                        <iframe src=""
+                                                title="recaptcha widget" width="304" height="78" role="presentation"
+                                                frameborder="0" scrolling="no" name="undefined"></iframe>
+                                    </div>
+                                    <textarea id="g-recaptcha-response" name="g-recaptcha-response"
+                                              class="g-recaptcha-response"
+                                              style="width: 250px; height: 40px; border: 1px solid #c1c1c1; margin: 10px 25px; padding: 0px; resize: none;  display: none; "></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <!-- reCaptcha / End -->
+                    </div>
+                    <input type="submit" name="submit" value="Sign up" class="btn-submit">
+                    <a href="javascript:void(0)" class="link_sign_in">Sign in</a>
+
+                    <div class="clearfix"></div>
+
+                    <p class="policy-sign-up">
+                        By clicking "Sign up" you indicate that you have read and agree to the <a target="_blank"
+                                                                                                  href="">privacy
+                        policy</a> and <a target="_blank" href="">terms
+                        of service.</a></p>
+                </form>
+
+                <form id="forgotpass_form" class="form_modal_style collapse">
+                    <label>Enter your email here</label>
+                    <input type="text" class="name_user" name="email" id="email">
+                    <input type="submit" name="submit" value="Send" class="btn-submit">
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

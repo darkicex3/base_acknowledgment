@@ -34,7 +34,8 @@ class Tag(models.Model):
     name = models.CharField(max_length=64, unique=True)
 
     def __str__(self):
-       return self.name
+        return self.name
+
 
 class Feedback(models.Model):
     class Meta:
@@ -73,25 +74,24 @@ class Article(models.Model):
 
     author = models.ForeignKey(User, on_delete=models.CASCADE, default=DEFAULT_AUTHOR_ID)
     publish_date = models.DateTimeField(default=datetime.datetime.now, help_text=publish_date_help)
-    expiration_date = models.DateTimeField(blank=True, null=True,  help_text=expiration_date)
+    expiration_date = models.DateTimeField(blank=True, null=True, help_text=expiration_date)
 
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True, help_text=description_help)
     content = models.TextField(default='')
-    thumbnail = models.FileField(null=True ,upload_to=get_upload_filename)
+    thumbnail = models.FileField(null=True, upload_to=get_upload_filename)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, default=DEFAULT_CATEGORY_ID)
 
     keywords = models.TextField(blank=True, help_text=keywords_help)
     tags = models.ManyToManyField(Tag, help_text=tags_help, blank=True)
 
-
-
     # auto_tag = models.BooleanField(default=True, blank=True, help_text=auto_tag_help)
-    # followup_for = models.ManyToManyField('self', symmetrical=False, blank=True, help_text=followup_for_help,related_name='followups')
+    # followup_for = models.ManyToManyField('self', symmetrical=False, blank=True, help_text=followup_for_help,related_
+    # name='followups')
     # related_articles = models.ManyToManyField('self', blank=True)
 
     def __str__(self):
-       return self.title
+        return self.title
 
     def active_article(self):
         if self.publish_date >= datetime.datetime.now() and datetime.datetime.now() < self.expiration_date:
@@ -102,7 +102,7 @@ class Article(models.Model):
         if self.feedback.alert_view_actived:
             if self.feedback.view < self.feedback.min_view:
                 context['alert_view'] = MSG_VIEW_ALERT
-            else :
+            else:
                 context['alert_view'] = ''
 
         if self.feedback.alert_useless_actived:
@@ -112,7 +112,3 @@ class Article(models.Model):
                 context['alert_useless'] = ''
 
         return context
-
-
-
-

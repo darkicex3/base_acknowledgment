@@ -3,6 +3,12 @@ jQuery(document).ready(function ($) {
     // window.nbClickRight = "This is global!";
     // window.nbClickRight = "This is global!";
     window.slideSpeed = 200;
+    window.sizeSearchBar = $('#colSearchBar').width();
+
+    $(window).resize(function () {
+        window.sizeSearchBar = $('#colSearchBar').width();
+    });
+
 
     $('#search_categories').webuiPopover({
         type: 'async',
@@ -15,7 +21,9 @@ jQuery(document).ready(function ($) {
             }
             html += '</ul>';
             return html;
-        }, placement: 'bottom-right', animation: 'pop', trigger: 'click', width:300,height:200
+        }, placement: 'bottom-right', animation: 'pop', trigger: 'click',height:200
+    }).click(function () {
+        $('#webuiPopover0').css('width', window.sizeSearchBar);
     });
 
     $('#search_sorting').webuiPopover({
@@ -61,50 +69,56 @@ jQuery(document).ready(function ($) {
                 for (var key in data) {
                     html +=
                         '<li><span id="key" hidden="hidden">' + key + '</span>' +
-                        '<a href="#">' +
-                            '<div class="guideImgMask"></div>' +
-                            '<img src="" class="guideImg loaded fade" style="background-color: #b57328 !important;' +
-                                                                    '" onload="P.lazy.onImageLoad(this)"' +
-                                 'alt="Search for fruit salad">' +
-                            '<span class="guideText">'+ data[key] +'</span>' +
+                        '<a class="guideContainer" ' +
+                        'data-image-url="https://s-media-cache-ak0.pinimg.com/111x55_sf-76/82/b3/f9/82b3f95c01379be38f1cab0d7cbe89a7.jpg" ' +
+                        'data-term="ideas" ' +
+                        'data-term-position="1" ' +
+                        'data-dominant-color="#bdaf9c" ' +
+                        'data-guide-index="0" ' +
+                        'data-element-type="226" ' +
+                        'data-aux="" title="">' +
+                            '<div class="guideImgMask"><span class="guideText">'+ data[key] +'</span></div>' +
+                            // '<img src="https://s-media-cache-ak0.pinimg.com/111x55_sf-76/82/b3/f9/82b3f95c01379be38f1cab0d7cbe89a7.jpg" ' +
+                            // 'class="guideImg loaded fade" ' +
+                            // 'style="  background-color: #bdaf9c;' +
+                            // '"onload="P.lazy.onImageLoad(this)" ' +
+                            //  'alt="Search for fruit salad">' +
                         '</a></li>'
                 }
                 html += '</ul>';
-                //render the content
-                $('.right').click(function () {
-                    $('.left').show();
-                    selector = $('.guidesContainer');
-                    var position = selector.position();
-                    var r=position.left-$(window).width();
-                    selector.animate({
-                        'left': ''+r+'px'
-                    });
-                });
-
-                $('.left').click(function () {
-                    selector = $('.guidesContainer');
-                    var position = selector.position();
-                    var l=position.left+$(window).width();
-                    if(l<=0)
-                    {
-                        selector.animate({
-                            'left': ''+l+'px'
-                        });
-                    } else if(l>0) {
-                        $('.left').hide();
-                    }
-                });
-
-                selector = $('.guidesContainer');
-                //Here we are getting the number of the divs with class contentContainer inside the div container
-                var length = selector.children('.guidesContainer li').length;
-                //Here we are setting the % width depending on the number of the child divs
-                selector.width(length*100 +'%');
 
                 $('.guidesSlider').empty().append(html);
             }
         );
     });
+
+    //render the content
+    $('.right').click(function () {
+        selector = $('.guidesContainer');
+        var position = selector.position();
+        var r=position.left-$(window).width();
+        selector.animate({
+            'left': ''+r+'px'
+        });
+    });
+
+    $('.left').click(function () {
+        console.log("Container :" + pos2.left);
+        console.log("First Child :" + pos1.left);
+
+        selector = $('.guidesContainer');
+        var position = selector.position();
+        var l=position.left+$(window).width();
+        selector.animate({
+            'left': ''+l+'px'
+        });
+    });
+
+    selector = $('.guidesContainer');
+    //Here we are getting the number of the divs with class contentContainer inside the div container
+    var length = selector.children('.guidesContainer li').length;
+    //Here we are setting the % width depending on the number of the child divs
+    selector.width(length*100 +'%');
 
 
     $(document).mouseup(function (e) {
@@ -118,8 +132,59 @@ jQuery(document).ready(function ($) {
             container.slideUp(slideSpeed);
     });
 
-    //Autocomplete
+
+    //AFFICHAGE DES ARTICLES (ALL) *************************************************************************************
 
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 });
