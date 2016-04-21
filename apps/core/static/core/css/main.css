@@ -277,8 +277,8 @@ a#author {
 
 .SearchGuidesBar .guidesWrapper .guidesSlider .guidesContainer li {
     float: left;
-    margin: 15px 0;
-    width: 125px;
+    margin: 15px 12px;
+    width: 111px;
     height: 55px;
 }
 
@@ -699,8 +699,8 @@ a.login-url {
 .left-sidebar {
     background-color: #fff;
     background-clip: inherit;
-    margin-top: -1px;
     padding: 0;
+    margin: 20px;
     width: 288px;
     height: 100%;
     position: fixed;
@@ -811,7 +811,7 @@ a.login-url {
     padding: 10px 0 10px 16px;
     display: block;
     color: #78829d;
-    border-left: 4px solid transparent;
+    border-left: 2px solid transparent;
     /*TRANSISTIONS*/
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
@@ -822,7 +822,7 @@ a.login-url {
 
 .widget-menus ul li a:hover,
 .widget-menus ul li.current-menu-item a {
-    border-left: 4px solid #d72f22;
+    border-left: #e74c3c 2px solid;
     background: #f0f0f0;
 }
 

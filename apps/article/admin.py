@@ -8,7 +8,7 @@ class CategoryAdmin(DjangoMpttAdmin):
 
 
 admin.site.register(Category, CategoryAdmin)
-admin.site.register(Article)
+admin.site.register(Article, save_as=True)
 admin.site.register(Tag)
 admin.site.register(Feedback)
 

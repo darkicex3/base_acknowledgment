@@ -132,10 +132,42 @@ jQuery(document).ready(function ($) {
             container.slideUp(slideSpeed);
     });
 
+    //DRAG N DROP -- SHORTCUTS -- ARTICLES
 
-    //AFFICHAGE DES ARTICLES (ALL) *************************************************************************************
+        var transferred = false;
+    $('.mini-article').draggable({
+        connectToSortable: '.droppable_bucket',
+        helper: 'clone',
+        start: function(event, ui)
+        {
+            $(this).hide();
+        },
+        stop: function(event, ui)
+        {
+            if(!transferred)
+                $(this).show();
+            else
+            {
+                $(this).remove();
+                transferred = false;
+            }
+        }
+    });
 
-    
+    //DRAG N DROP -- REORGANIZE SHORTCUTS
+    //AFFICHAGE DES ARTICLES -- SORTING
+    $('.static_category').click(function () {
+        var category = $(this).attr('id');
+        alert(category);
+
+        // $.get(GET_ARTICLES,
+        //     //dictionnary for the view
+        //     {'get_articles_by':category},
+        //     //function which create a list of categories with parent id = node_id
+        // );
+    });
+
+
 
 
 

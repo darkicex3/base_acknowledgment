@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="{% static 'core/js/vendor/webui-popover/src/jquery.webui-popover.css' %}">
 
     <link href='https://fonts.googleapis.com/css?family=PT+Sans+Caption:400,700' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <title>Teledirect - {% block title %}{% endblock %}</title>
 </head>
@@ -66,32 +67,10 @@
 
     <div class="col-md-12 col-xs-12" id="header_sidebar" style=""></div>
 
-    <div class="col-md-2 disable-mobile left-sidebar" style="">
+    <div class="col-md-2 disable-mobile left-sidebar shadow_material" style="">
+        {% block menu_sidebar %}
 
-        <div class="widget widget-btn">
-            <button type="button" data-toggle="modal" class="action post-article">
-                <i class="fa fa-plus"></i>Create article
-            </button>
-        </div><!-- END BUTTON MODAL article -->
-
-        <div class="widget widget-menus">
-            <div class="menu-left-menu-container">
-                <ul id="menu-left-menu-1" class="menu">
-                    <li class="fa-articles"><a href="#"><i class="fa fa-articles"></i>Articles</a></li>
-                    <li class="fa-tags"><a href="#"><i class="fa fa-tags"></i>Tags</a></li>
-                    <li class="fa-th-list"><a href="#"><i class="fa fa-th-list"></i>Categories</a></li>
-                    <li class="fa-favorites"><a href="#"><i class="fa fa-trophy"></i>Favorites</a></li>
-                </ul>
-            </div>
-        </div><!-- END LEFT MENU -->
-
-        <div class="clearfix"></div>
-
-        <!-- END / SOCIAL LINKs -->
-        <div class="copyright">
-            ©2016 Teledirect Pte Ltd <br>
-            <a href="#">Terms & Privacy</a>
-        </div>
+        {% endblock %}
     </div>
 
 
@@ -110,7 +89,11 @@
 
 <script>
     GET_SORTING_METHODS = "";
-    GET_CATEGORIES = "/article/get_categories/";
+
+    GET_CATEGORIES = "{% url 'articles:get_categories_view' %}";
+    GET_ARTICLES = "{% url 'articles:get_article_view' %}";
+    GET_ARTICLES = "{% url 'articles:sort_article_view' %}";
+
     GET_MASTER_CONTENT = "";
     GET_ARTICLES = "";
     GET_SIDE_BAR_MENU = "";

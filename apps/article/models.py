@@ -1,5 +1,7 @@
 from django.contrib.auth.models import User
+from django.contrib import auth
 from six import python_2_unicode_compatible
+from haystack.query import SearchQuerySet
 from mptt.models import TreeForeignKey, MPTTModel
 from django.db import models
 from .constants import *
@@ -18,6 +20,7 @@ class Category(MPTTModel):
 
     name = models.CharField(max_length=50, blank=True, null=True)
     parent = TreeForeignKey('self', null=True, blank=True, related_name='children')
+    article = TreeForeignKey(Article)
 
     def get_previous_parent(self):
         return self.parent.parent
@@ -49,17 +52,22 @@ class Feedback(models.Model):
     alert_view_actived = models.BooleanField(default=False)
     min_view = models.IntegerField(null=True)
 
-    # active_alert_comment = models.BooleanField(default=False)
-    # negative_keywords = models.TextField(default=NEGATIVE_WORDS)
-    #
-    # active_injuries_control = models.BooleanField(default=True)
-    # injuries_keywords = models.TextField(default=INJURIES)
 
-    useless = models.IntegerField(default=0)
-    useful = models.IntegerField(default=0)
-    favorite = models.IntegerField(default=0)
-    view = models.IntegerField(default=0)
-    comment = models.TextField(max_length=100)
+class UserArticle (models.Model):
+    class Meta:
+        verbose_name = 'User Article'
+        verbose_name_plural = 'User\'s Articles'
+        app_label = 'article'
+
+    user_id = models.IntegerField(default=0)
+    article_id = models.IntegerField(default=0)
+    favorites = models.BooleanField(default=False)
+    visited = models.BooleanField(default=False)
+    searched = models.BooleanField(default=False)
+
+    date_visited = models.DateTimeField(default=datetime.datetime.now)
+    date_searched = models.DateTimeField(default=datetime.datetime.now)
+    date_added = models.DateTimeField(default=datetime.datetime.now)
 
 
 class Article(models.Model):
@@ -72,6 +80,10 @@ class Article(models.Model):
     is_active = models.BooleanField(default=IS_ACTIVE)
     feedback = models.ForeignKey(Feedback, on_delete=models.CASCADE, default=DEFAULT_FEEDBACK_ID)
 
+    useful_counter = models.IntegerField(default=0)
+    favorite_counter = models.IntegerField(default=0)
+    view_counter = models.IntegerField(default=0)
+
     author = models.ForeignKey(User, on_delete=models.CASCADE, default=DEFAULT_AUTHOR_ID)
     publish_date = models.DateTimeField(default=datetime.datetime.now, help_text=publish_date_help)
     expiration_date = models.DateTimeField(blank=True, null=True, help_text=expiration_date)
@@ -79,7 +91,7 @@ class Article(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True, help_text=description_help)
     content = models.TextField(default='')
-    thumbnail = models.FileField(null=True, upload_to=get_upload_filename)
+    # thumbnail = models.FileField(null=True, upload_to=get_upload_filename)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, default=DEFAULT_CATEGORY_ID)
 
     keywords = models.TextField(blank=True, help_text=keywords_help)
@@ -112,3 +124,35 @@ class Article(models.Model):
                 context['alert_useless'] = ''
 
         return context
+
+
+def get_related_favorites(self):
+    q = SearchQuerySet().all().filter(user_id=self.id).filter(favorites=True).order_by('date_added')
+    result = []
+    for i in q:
+        result.append(Article.objects.get(pk=i.article_id))
+
+    return result
+
+
+def get_related_articles_viewed(self):
+    q = SearchQuerySet().all().filter(user_id=self.id).filter(viewed=True).order_by('date_viewed')
+    result = []
+    for i in q:
+        result.append(Article.objects.all().filter().get(pk=i.article_id))
+
+    return result
+
+
+def get_related_articles_visited(self):
+    q = SearchQuerySet().all().filter(user_id=self.id).filter(searched=True).order_by('date_searched')
+    result = []
+    for i in q:
+        result.append(Article.objects.all().filter().get(pk=i.article_id))
+
+    return result
+
+auth.models.User.add_to_class('get_related_favorites', get_related_favorites)
+auth.models.User.add_to_class('get_related_articles_viewed', get_related_favorites)
+auth.models.User.add_to_class('get_related_articles_visited', get_related_favorites)
+
