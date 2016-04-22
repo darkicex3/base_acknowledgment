@@ -88,16 +88,21 @@
 </div>
 
 <script>
+    GET_ARTICLES_BY_STATIC_SHORTCUTS =  "{% url 'articles:get_article_by_static_shortcuts' %}";
     GET_SORTING_METHODS = "";
-
-    GET_CATEGORIES = "{% url 'articles:get_categories_view' %}";
-    GET_ARTICLES = "{% url 'articles:get_article_view' %}";
-    GET_ARTICLES = "{% url 'articles:sort_article_view' %}";
-
-    GET_MASTER_CONTENT = "";
-    GET_ARTICLES = "";
-    GET_SIDE_BAR_MENU = "";
+    GET_CATEGORIES =                    "{% url 'articles:get_categories_view' %}";
+    GET_ARTICLES_FROM_SHORTCUT =        "{% url 'articles:show_article_from_shorcuts' %}";
+    GET_SHORTCUTS =                     "{% url 'contents:manage_sidebar_shortcuts_showing_view' %}";
+    GET_POLLS = "";
     GET_TAGS = "";
+
+    SORT_ARTICLES =                     "{% url 'articles:sort_article_view' %}";
+    ADD_ARTICLE_TO_SHORTCUT =           "{% url 'articles:add_article_to_shortcut' %}";
+    CREATE_SHORTCUT =                   "{% url 'articles:create_shortcut' %}";
+    EDIT_SHORTCUTS =                    "{% url 'contents:manage_sidebar_shortcuts_editing_view' %}";
+    INSERT_SHORTCUTS =                  "{% url 'contents:manage_sidebar_shortcuts_inserting_view' %}";
+
+
 </script>
 <script src="{% static 'core/js/vendor/jquery-1.11.2.min.js' %}"></script>
 <script src="{% static 'core/js/vendor/jquery-ui-1.11.4.custom/jquery-ui.min.js' %}"></script>

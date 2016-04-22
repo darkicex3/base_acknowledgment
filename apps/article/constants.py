@@ -15,3 +15,9 @@ INJURIES = ""
 NEGATIVE_WORDS = ""
 MSG_VIEW_ALERT = ""
 MSG_USELESS_ALERT = ""
+
+STATUS_CHOICES = (
+    ('d', 'Draft'),
+    ('p', 'Published'),
+    ('w', 'Withdrawn'),
+)

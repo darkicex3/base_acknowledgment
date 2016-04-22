@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from apps.article.models import Category, Article
+from apps.article.models import Category, Article, Shortcut, UserArticle
 from django.shortcuts import render_to_response
 from django.views.generic import View
 from haystack.query import SearchQuerySet
@@ -27,7 +27,7 @@ class SearchAjaxView(View):
 
 
 class GetCategoriesView(View):
-    def get(self):
+    def get(self, *args, **kwargs):
 
         context = {}
         node_id = self.request.GET.get('node_id')
@@ -50,48 +50,149 @@ class GetCategoriesView(View):
         return JsonResponse(context)
 
 
-class GetArticlesView(View):
-    def get(self):
+class SetLikedView(View):
+    def get(self, *args, **kwargs):
+        context = {}
+        article_id = self.request.GET.get('shortcut_id')
+        current_user = self.request.user
+
+        p = UserArticle.objects.all().get(user_id=current_user.id, article_id=article_id)
+        if not p:
+            if UserArticle.objects.create(user_id=current_user.id, article_id=article_id, favorites=True):
+                context.update({'success': True})
+        else:
+            p.favorites = True
+            context.update({'success': True})
+
+        return JsonResponse(context)
+
+
+# class SetUsefulView(View):                                TODODODODODO
+#     def get(self, *args, **kwargs):
+#         context = {}
+#         article_id = self.request.GET.get('shortcut_id')
+#         current_user = self.request.user
+#
+#         return JsonResponse(context)
+#
+#
+# class SetVisitedView(View):                               TODODODODODO
+#     def get(self, *args, **kwargs):
+#         context = {}
+#         article_id = self.request.GET.get('shortcut_id')
+#         current_user = self.request.user
+#
+#         return JsonResponse(context)
+#
+#
+# class SetSearchedView(View):                              TODODODODODO
+#     def get(self, *args, **kwargs):
+#         context = {}
+#         article_id = self.request.GET.get('shortcut_id')
+#         current_user = self.request.user
+#
+#         return JsonResponse(context)
+
+
+class CreateShortcutView(View):
+    def get(self, *args, **kwargs):
+
+        context = {}
+        shortcut_name = self.request.GET.get('shortcut_name')
+        shortcut = Shortcut.objects.create(name=shortcut_name)
+
+        if shortcut:
+            context['success'] = True
+
+        return JsonResponse(context)
+
+
+class AddArticleToShortcutView(View):
+    def get(self, *args, **kwargs):
+
+        context = {}
+        article_id = self.request.GET.get('article_id')
+        shortcut_id = self.request.GET.get('shortcut_id')
+
+        article = Article.objects.get(pk=article_id)
+        shortcut = Shortcut.objects.get(pk=shortcut_id)
+
+        if shortcut.articles.add(article):
+            context['success'] = True
+
+        return JsonResponse(context)
+
+
+class ShowArticleFromShortcutView(View):
+    def get(self, *args, **kwargs):
+
+        context = {}
+        shortcut_id = self.request.GET.get('shortcut_id')
+        shortcut = Shortcut.objects.get(pk=shortcut_id)
+
+        for article in shortcut.articles:
+            context.update({article.id: {
+                'title': article.title,
+                'author': article.author,
+                'desc': article.description,
+                'pub_date': article.publish_date,
+                'useful': article.useful_counter,
+                'viewed': article.view_counter,
+                'loved': article.favorite_counter
+            }})
+
+        return JsonResponse(context)
+
+
+class GetArticlesByStaticShortcutsView(View):
+    def get(self, *args, **kwargs):
 
         context = {}
         get_by = self.request.GET.get('get_articles_by')
         current_user = self.request.user
 
-        if get_by == 'home':
-            articles = SearchQuerySet().order_by('publish_date')
-        elif get_by == 'most_used':
-            articles = SearchQuerySet().order_by('useful_counter')
-        elif get_by == 'most_viewed':
-            articles = SearchQuerySet().order_by('view_counter')
-        elif get_by == 'most_loved':
-            articles = SearchQuerySet().order_by('favorite_counter')
-        elif get_by == 'favorites':
+        if get_by == 'Home':
+            articles = SearchQuerySet().models(Article).order_by('-publish_date').exclude(status='d')
+        elif get_by == 'Most Used':
+            articles = SearchQuerySet().models(Article).order_by('-useful_counter')
+        elif get_by == 'Most Viewed':
+            articles = SearchQuerySet().models(Article).order_by('-view_counter')
+        elif get_by == 'Most Loved':
+            articles = SearchQuerySet().models(Article).order_by('-favorite_counter')
+        elif get_by == 'Favorites':
             articles = current_user.get_related_favorite()
-        elif get_by == 'viewed':
+        elif get_by == 'Historic':
             articles = current_user.get_related_articles_viewed()
-        elif get_by == 'last_update':
+        elif get_by == 'Last Update':
             return 0
-        elif get_by == 'recent':
+        elif get_by == 'Recent':
             articles = SearchQuerySet().all().order_by('publish_date')
         else:
             context['error'] = True
             return JsonResponse(context)
 
-        for article in articles: context.update({article.id: {
-            'title':    article.title,
-            'author':   article.author,
-            'desc':     article.description,
-            'pub_date': article.publish_date,
-            'useful':   article.useful_counter,
-            'viewed':   article.view_counter,
-            'loved':    article.favorite_counter
-        }})
+        key = 0
+        for article in articles:
+
+            key += 1
+            context.update({key: {
+                'id':       article.id,
+                'title':    article.title,
+                'author':   article.author,
+                'desc':     article.description,
+                'pub_date': article.publish_date,
+                'useful':   article.useful_counter,
+                'viewed':   article.view_counter,
+                'loved':    article.favorite_counter,
+                'ok': 'ok',
+                'tags': '#Company #Work #Public'
+            }})
 
         return JsonResponse(context)
 
 
 class SortArticlesView(View):
-    def get(self):
+    def get(self, *args, **kwargs):
 
         context = {}
 

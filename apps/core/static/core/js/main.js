@@ -49,7 +49,7 @@ jQuery(document).ready(function ($) {
 
         //show categories section
         $('.Categories').slideDown(slideSpeed);
-        
+
         //hide popover
         $('#search_categories').webuiPopover('hide');
 
@@ -114,7 +114,7 @@ jQuery(document).ready(function ($) {
         });
     });
 
-    selector = $('.guidesContainer');
+    var selector = $('.guidesContainer');
     //Here we are getting the number of the divs with class contentContainer inside the div container
     var length = selector.children('.guidesContainer li').length;
     //Here we are setting the % width depending on the number of the child divs
@@ -134,38 +134,112 @@ jQuery(document).ready(function ($) {
 
     //DRAG N DROP -- SHORTCUTS -- ARTICLES
 
-        var transferred = false;
-    $('.mini-article').draggable({
-        connectToSortable: '.droppable_bucket',
-        helper: 'clone',
-        start: function(event, ui)
-        {
-            $(this).hide();
-        },
-        stop: function(event, ui)
-        {
-            if(!transferred)
-                $(this).show();
-            else
-            {
-                $(this).remove();
-                transferred = false;
+    //     var transferred = false;
+    // $('.mini-article').draggable({
+    //     connectToSortable: '.droppable_bucket',
+    //     helper: 'clone',
+    //     start: function(event, ui)
+    //     {
+    //         $(this).hide();
+    //     },
+    //     stop: function(event, ui)
+    //     {
+    //         if(!transferred)
+    //             $(this).show();
+    //         else
+    //         {
+    //             $(this).remove();
+    //             transferred = false;
+    //         }
+    //     }
+    // });
+
+
+    //AFFICHAGE DES SHORTCUTS
+    $.get(GET_SHORTCUTS,
+        function (data) {
+            var html = ''
+            for (var key in data) {
+                html += shortcut(key, data[key]['name']);
             }
+            $('.base_menu').append(html);
         }
+    );
+
+
+    $.get(GET_ARTICLES_BY_STATIC_SHORTCUTS,
+        {'get_articles_by':'Home'},
+        function (data) {
+                var html = '';
+                for (var key in data) {
+                    console.log(data[key]);
+                    html += mini_article(key, data[key]['title'], data[key]['author'], data[key]['desc'],
+                        data[key]['ok'], data[key]['pub_date'], data[key]['useful'], data[key]['loved'], data[key]['tags'])
+                }
+            $('#feed').append(html);
+        }
+    );
+
+    $('body').on('click', '#favorite', function (event) {
+        alert('cacacacacac');
+        $.get(//URL SET_FAVORITE_TO_DO
+
+        )
     });
 
-    //DRAG N DROP -- REORGANIZE SHORTCUTS
-    //AFFICHAGE DES ARTICLES -- SORTING
-    $('.static_category').click(function () {
+    $('body').on('click', '#note', function (event) {
+        alert('cacacacacacuse');
+        $.get(
+
+        )
+    });
+
+    $('body').on('click', '.static_category', function (event) {
         var category = $(this).attr('id');
-        alert(category);
+        $.get(GET_ARTICLES_BY_STATIC_SHORTCUTS,
+            {'get_articles_by':category},
+            function (data) {
 
-        // $.get(GET_ARTICLES,
-        //     //dictionnary for the view
-        //     {'get_articles_by':category},
-        //     //function which create a list of categories with parent id = node_id
-        // );
+                    var html = '';
+                    for (var key in data) {
+                        html += mini_article(data[key]['id'], data[key]['title'], data[key]['author'], data[key]['desc'],
+                            data[key]['ok'], data[key]['pub_date'], data[key]['useful'], data[key]['loved'], data[key]['tags'])
+                    }
+                $('#feed').empty().append(html);
+            }
+        );
     });
+
+
+    function mini_article(key, title, author, content, verified_article, date_publish, useful_counter, favorite_counter, tags) {
+        if (verified_article == 'ok') {
+            var img = '<img src="http://darkicex3.alwaysdata.net/ibk/secure.png" alt="Verified article" width="17px">'
+        } else {
+            var img = '<img src="http://darkicex3.alwaysdata.net/ibk/unsecure.png" alt="Unverified article" width="17px">'
+        }
+        console.log(favorite_counter);
+        return      '<div class="shadow_material shadow_material_hover mini-article">' +
+                        '<span id="key" hidden="hidden">' + key + '</span>' +
+                        '<header>' +
+                            '<a id="title">' + title + '</a>' +
+                            '<a id="secure">'+ img +'</a>' +
+                            '<a id="author">' + author + '</a>' +
+                        '</header>' +
+                        '<div class="content"><p>' + content + '</p></div>' +
+                        '<footer>'+
+                            '<p id="pub_date"><img' +
+                                'src="http://darkicex3.alwaysdata.net/ibk/ic_schedule_black_48dp_2x.png" width="20px"' +
+                                'alt="publish date">'+ date_publish + '</p>' +
+                            '<p id="note" style="color: #95a5a6"><img src="http://darkicex3.alwaysdata.net/ibk/ic_thumb_up_black_48dp_2x.png" width="20px" alt="notation">' + useful_counter + '</p>' +
+                            '<p id="favorite" style="color: #95a5a6"><img src="http://darkicex3.alwaysdata.net/ibk/ic_favorite_border_black_48dp_2x.png" width="20px">' + favorite_counter + '</p>' +
+                            '<p style="color: #95a5a6"><img src="http://darkicex3.alwaysdata.net/ibk/ic_bookmark_black_48dp_2x.png" width="20px">' + tags + '</p>' +
+                        '</footer>' +
+                    '</div>'
+    }
+    
+    function shortcut(key, name) {
+        return '<span id="' + key + '" hidden="hidden">' + key + '</span>' + '<li id="' + name + '"class="static_category"><a><i class="fa fa-trophy"></i>' + name + '</a></li>'
+    }
 
 
 

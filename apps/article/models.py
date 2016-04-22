@@ -20,7 +20,6 @@ class Category(MPTTModel):
 
     name = models.CharField(max_length=50, blank=True, null=True)
     parent = TreeForeignKey('self', null=True, blank=True, related_name='children')
-    article = TreeForeignKey(Article)
 
     def get_previous_parent(self):
         return self.parent.parent
@@ -75,9 +74,7 @@ class Article(models.Model):
         verbose_name_plural = 'Articles'
         app_label = 'article'
 
-    IS_ACTIVE = False
-
-    is_active = models.BooleanField(default=IS_ACTIVE)
+    status = models.CharField(max_length=1, choices=STATUS_CHOICES, default=STATUS_CHOICES[0])
     feedback = models.ForeignKey(Feedback, on_delete=models.CASCADE, default=DEFAULT_FEEDBACK_ID)
 
     useful_counter = models.IntegerField(default=0)
@@ -124,6 +121,21 @@ class Article(models.Model):
                 context['alert_useless'] = ''
 
         return context
+
+
+class Shortcut(models.Model):
+    class Meta:
+        verbose_name = 'Shortcut'
+        verbose_name_plural = 'Shortcuts'
+
+    name = models.CharField(max_length=300, unique=True)
+    articles = models.ManyToManyField(Article, help_text=tags_help, blank=True)
+    activated = models.BooleanField(default=True)
+    static = models.BooleanField(default=False)
+    click_counter = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.name
 
 
 def get_related_favorites(self):

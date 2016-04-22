@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'apps.prices.apps.PricesConfig',
     'apps.users.apps.UsersConfig',
     'apps.article.apps.ArticleConfig',
+    'apps.content.apps.ContentConfig',
 ]
 
 HAYSTACK_CONNECTIONS = {
