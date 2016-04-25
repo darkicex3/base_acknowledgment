@@ -19,16 +19,13 @@ class LoginView(View):
         username = self.request.POST.get('username')
         password = self.request.POST.get('password')
 
+        print(username)
+        print(password)
+
         user = authenticate(username=username, password=password)
 
-        x_forwarded_for = self.request.META.get('HTTP_X_FORWARDED_FOR')
-        if x_forwarded_for:
-            ip = x_forwarded_for.split(',')[0]
-        else:
-            ip = self.request.META.get('REMOTE_ADDR')
+        print(user)
 
-
-        # if ip in auth_ip.AUTHORIZED_IP:
         if user is not None:
             if user.is_active:
                 login(self.request, user)
@@ -44,10 +41,6 @@ class LoginView(View):
             context['error_msg'] = 'Invalid username/password.'
 
         return JsonResponse(context)
-        # else:
-        #     context['success'] = False
-        #     context['error_msg'] = 'You are trying to access a restricted area, you will redirect and your ip address'\
-        #                            'will be signal to administrator.'
 
 
 class LogoutView(View):
@@ -116,6 +109,7 @@ class RegisterView(View):
             context['success'] = False
             context['error_msg'] = 'Invalid email'
             return JsonResponse(context)
+
 
 class LoginRequired(View):
 

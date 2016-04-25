@@ -1,7 +1,5 @@
 jQuery(document).ready(function ($) {
-
-    // window.nbClickRight = "This is global!";
-    // window.nbClickRight = "This is global!";
+    
     window.slideSpeed = 200;
     window.sizeSearchBar = $('#colSearchBar').width();
 
@@ -9,6 +7,10 @@ jQuery(document).ready(function ($) {
         window.sizeSearchBar = $('#colSearchBar').width();
     });
 
+    // $('.login-url').webuiPopover({
+    //     url:'#login_register',
+    //     placement: 'bottom-left', animation: 'pop', trigger: 'click', width:300
+    // });
 
     $('#search_categories').webuiPopover({
         type: 'async',
@@ -213,9 +215,9 @@ jQuery(document).ready(function ($) {
 
     function mini_article(key, title, author, content, verified_article, date_publish, useful_counter, favorite_counter, tags) {
         if (verified_article == 'ok') {
-            var img = '<img src="http://darkicex3.alwaysdata.net/ibk/secure.png" alt="Verified article" width="17px">'
+            var img = '<img class="verif" src="http://darkicex3.alwaysdata.net/ibk/secure.png" alt="Verified article" width="12px" style="">'
         } else {
-            var img = '<img src="http://darkicex3.alwaysdata.net/ibk/unsecure.png" alt="Unverified article" width="17px">'
+            var img = '<img class="un verif" src="http://darkicex3.alwaysdata.net/ibk/unsecure.png" alt="Unverified article" width="12px" style="">'
         }
         console.log(favorite_counter);
         return      '<div class="shadow_material shadow_material_hover mini-article">' +
@@ -227,12 +229,10 @@ jQuery(document).ready(function ($) {
                         '</header>' +
                         '<div class="content"><p>' + content + '</p></div>' +
                         '<footer>'+
-                            '<p id="pub_date"><img' +
-                                'src="http://darkicex3.alwaysdata.net/ibk/ic_schedule_black_48dp_2x.png" width="20px"' +
-                                'alt="publish date">'+ date_publish + '</p>' +
+                            '<p id="pub_date"><img src="http://darkicex3.alwaysdata.net/ibk/ic_schedule_black_48dp_2x.png" width="20px" alt="publish date">'+ date_publish + '</p>' +
                             '<p id="note" style="color: #95a5a6"><img src="http://darkicex3.alwaysdata.net/ibk/ic_thumb_up_black_48dp_2x.png" width="20px" alt="notation">' + useful_counter + '</p>' +
-                            '<p id="favorite" style="color: #95a5a6"><img src="http://darkicex3.alwaysdata.net/ibk/ic_favorite_border_black_48dp_2x.png" width="20px">' + favorite_counter + '</p>' +
-                            '<p style="color: #95a5a6"><img src="http://darkicex3.alwaysdata.net/ibk/ic_bookmark_black_48dp_2x.png" width="20px">' + tags + '</p>' +
+                            '<p id="favorite" style="color: #95a5a6;margin-left: 20px;"><img src="http://darkicex3.alwaysdata.net/ibk/ic_favorite_border_black_48dp_2x.png" width="20px">' + favorite_counter + '</p>' +
+                            '<p style="color: #95a5a6; float: right;"><img src="http://darkicex3.alwaysdata.net/ibk/ic_bookmark_black_48dp_2x.png" width="20px">' + tags + '</p>' +
                         '</footer>' +
                     '</div>'
     }

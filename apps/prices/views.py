@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from django.views.generic import View
 from apps.prices.models import Product, Customer, Offer
 
+
 class CreateProductView(View):
 
     def post(self, *args, **kwargs):
@@ -184,6 +185,7 @@ class UpdateDataView(View):
         context['money_waiting'] = money_waiting
 
         return JsonResponse(context)
+
 
 class AuthenticationForm(FormView):
     template_name = 'prices/index.html'

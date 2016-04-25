@@ -26,6 +26,8 @@
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
+{% include "core/modal.html" %}
+
 <header class="shadow_material" id="header">
     <div class="col-md-2 col-xs-2" id="logo">
         <a href="#">
@@ -46,7 +48,7 @@
 
 
     <div class="col-md-2 col-xs-2 btn-group">
-        <a class="login-url" href="javascript:void(0)" data-toggle="modal">Login or Register</a>
+        <a class="logout login-url">Sign Out</a>
     </div><!-- avatar -->
 </header>
 
@@ -88,6 +90,11 @@
 </div>
 
 <script>
+    AJAX_LOGIN = "{% url 'users:login_view' %}";
+    AJAX_REGISTER = "{% url 'users:register_view' %}";
+    AJAX_LOGOUT = "{% url 'users:logout_view' %}";
+    AJAX_ISCO = "{% url 'users:is_connected_view' %}";
+
     GET_ARTICLES_BY_STATIC_SHORTCUTS =  "{% url 'articles:get_article_by_static_shortcuts' %}";
     GET_SORTING_METHODS = "";
     GET_CATEGORIES =                    "{% url 'articles:get_categories_view' %}";
@@ -112,5 +119,11 @@
 
 {% load staticfiles %}
 <script src="{% static 'core/js/main.js' %}"></script>
+<script src="{% static 'core/js/animation.js' %}"></script>
+<script src="{% static 'core/js/get_cookies.js' %}"></script>
+<script src="{% static 'core/js/on_login.js' %}"></script>
+<script src="{% static 'core/js/on_refresh.js' %}"></script>
+<script src="{% static 'core/js/on_logout.js' %}"></script>
+<script src="{% static 'core/js/ajax.js' %}"></script>
 </body>
 </html>

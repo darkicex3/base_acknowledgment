@@ -1,4 +1,27 @@
 /* ---------------------------------------- */
+/* ANIMATIONS                               */
+/* ---------------------------------------- */
+
+ul li {
+	list-style-type: none;
+	position: relative;
+	overflow: hidden;
+}
+
+.ink {
+	display: block; position: absolute;
+	background: #e74c3c;
+	border-radius: 100%;
+	transform: scale(0);
+}
+
+.ink.animate {animation: ripple 0.6s linear;}
+@keyframes ripple {
+	/*scale the element to 250% to safely cover the entire link and fade it out*/
+	100% {opacity: 0; transform: scale(2.5);}
+}
+
+/* ---------------------------------------- */
 /* G E N E R A L  S T Y L E                 */
 /* ---------------------------------------- */
 
@@ -138,14 +161,13 @@ ul {
 }
 
 a#title {
-    font-size: 19pt;
-    color: #bdc3c7 !important;
+    font-size: 15pt;
+    color: #2ecc71 !important;
 }
 
 a#secure {
     float: right;
-    top: 18px;
-    right: 13px;
+    position: absolute;
 }
 
 a#author {
@@ -671,6 +693,60 @@ ul.dropdown-profile li:hover a {
     background: #fff;
 }
 
+.form_tbk{
+    padding: 15px;
+    width:100%;
+    height: 45px;
+    border: none;
+    background-color: transparent;
+    font-weight: bold;
+    color: #34495e;
+}
+
+.user_profile {
+    padding: 10px;
+    width: 100%;
+    height: 90px;
+    border-left: #e74c3c 2px solid;
+}
+
+#detail_profile{
+    height:100%;
+    margin-left: 30px;
+    float: left;
+}
+
+#img_profile {
+    float: left;
+    border-radius: 50px;
+    height: 70px;
+    width: 70px;
+    background-image: url('http://orojackson.com/styles/general/logo.og.png');
+    background-size: cover;
+}
+
+.verif {
+    float: right;
+    display: none;
+}
+
+
+.user_profile .img_user {
+    border-radius: 50px;
+    background-color: #ededed;
+}
+
+
+
+.login_button {
+    width:100%;
+    height: 45px;
+    background-color: #ecf0f1;
+    border: none;
+    border-radius: 3px;
+    font-weight: bold;
+}
+
 a.login-url {
     display: block;
     text-align: center;
@@ -685,6 +761,10 @@ a.login-url {
     -webkit-border-radius: 3px;
     border-radius: 3px;
     background-color: #c0392b;
+}
+
+a.login-url:active, .login_button:active{
+    box-shadow: inset 0 3px 5px rgba(0,0,0,0.125);
 }
 
 .must-log-in a.login-url, .et-comment-reply a.login-url {
@@ -811,6 +891,7 @@ a.login-url {
     padding: 10px 0 10px 16px;
     display: block;
     color: #78829d;
+    cursor: pointer;
     border-left: 2px solid transparent;
     /*TRANSISTIONS*/
     -webkit-transition: all 0.3s ease;
@@ -823,7 +904,6 @@ a.login-url {
 .widget-menus ul li a:hover,
 .widget-menus ul li.current-menu-item a {
     border-left: #e74c3c 2px solid;
-    background: #f0f0f0;
 }
 
 .widget-menus ul li a:hover {

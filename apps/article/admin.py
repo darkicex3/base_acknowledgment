@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django_mptt_admin.admin import DjangoMpttAdmin
-from apps.article.models import Category, Tag, Article, Feedback, Shortcut
+from apps.article.models import Category, Tag, Article, Feedback, Shortcut, UserArticle
 
 
 class CategoryAdmin(DjangoMpttAdmin):
@@ -8,24 +8,30 @@ class CategoryAdmin(DjangoMpttAdmin):
 
 
 def make_published(modeladmin, request, queryset):
-    queryset.update(status='p')
+    for o in queryset:
+        o.status = 'p'
+        o.save()
 make_published.short_description = "Mark selected as published"
 
 
 def make_draft(modeladmin, request, queryset):
-    queryset.update(status='d')
+    for o in queryset:
+        o.status = 'd'
+        o.save()
 make_draft.short_description = "Mark selected as draft"
 
 
 def make_withdrawn(modeladmin, request, queryset):
-    queryset.update(status='w')
+    for o in queryset:
+        o.status = 'w'
+        o.save()
 make_withdrawn.short_description = "Mark selected as withdrawn"
 
 
 def duplicate_event(modeladmin, request, queryset):
-    for object in queryset:
-        object.id = None
-        object.save()
+    for o in queryset:
+        o.id = None
+        o.save()
 duplicate_event.short_description = "Duplicate selected record"
 
 
@@ -36,12 +42,16 @@ deleteall.short_description = "Delete all selected > 999 record"
 
 
 def make_activated(modeladmin, request, queryset):
-    queryset.update(activated=True)
+    for o in queryset:
+        o.activated = True
+        o.save()
 make_activated.short_description = "Mark selected as activated"
 
 
 def make_desactivated(modeladmin, request, queryset):
-    queryset.update(activated=False)
+    for o in queryset:
+        o.activated = False
+        o.save()
 make_desactivated.short_description = "Mark selected as desactivated"
 
 
@@ -62,5 +72,6 @@ admin.site.register(Article, ArticleAdmin)
 admin.site.register(Tag)
 admin.site.register(Feedback)
 admin.site.register(Shortcut, ShortcutAdmin)
+admin.site.register(UserArticle)
 
 

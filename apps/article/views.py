@@ -130,12 +130,12 @@ class ShowArticleFromShortcutView(View):
         shortcut_id = self.request.GET.get('shortcut_id')
         shortcut = Shortcut.objects.get(pk=shortcut_id)
 
-        for article in shortcut.articles:
+        for article in shortcut.articles.exclude(status='w').exclude(status='d'):
             context.update({article.id: {
                 'title': article.title,
                 'author': article.author,
                 'desc': article.description,
-                'pub_date': article.publish_date,
+                'pub_date': article.publish_date.strftime("%d %B %Y %H:%M"),
                 'useful': article.useful_counter,
                 'viewed': article.view_counter,
                 'loved': article.favorite_counter
@@ -148,19 +148,22 @@ class GetArticlesByStaticShortcutsView(View):
     def get(self, *args, **kwargs):
 
         context = {}
+        articles = []
         get_by = self.request.GET.get('get_articles_by')
         current_user = self.request.user
 
         if get_by == 'Home':
-            articles = SearchQuerySet().models(Article).order_by('-publish_date').exclude(status='d')
+            articles = SearchQuerySet().models(Article).order_by('-publish_date').exclude(status='d').exclude(status='w')
         elif get_by == 'Most Used':
-            articles = SearchQuerySet().models(Article).order_by('-useful_counter')
+            articles = SearchQuerySet().models(Article).order_by('-useful_counter').exclude(status='d').exclude(status='w')
         elif get_by == 'Most Viewed':
-            articles = SearchQuerySet().models(Article).order_by('-view_counter')
+            articles = SearchQuerySet().models(Article).order_by('-view_counter').exclude(status='d').exclude(status='w')
         elif get_by == 'Most Loved':
-            articles = SearchQuerySet().models(Article).order_by('-favorite_counter')
+            articles = SearchQuerySet().models(Article).order_by('-favorite_counter').exclude(status='d').exclude(status='w')
         elif get_by == 'Favorites':
-            articles = current_user.get_related_favorite()
+            ids = current_user.get_related_favorites()
+            for i in ids:
+                articles.append(Article.objects.get(id=i, status='p'))
         elif get_by == 'Historic':
             articles = current_user.get_related_articles_viewed()
         elif get_by == 'Last Update':
@@ -172,15 +175,19 @@ class GetArticlesByStaticShortcutsView(View):
             return JsonResponse(context)
 
         key = 0
+
         for article in articles:
+            print(article.id)
+            print(article.title)
+            print(str(article.author))
 
             key += 1
             context.update({key: {
                 'id':       article.id,
                 'title':    article.title,
-                'author':   article.author,
+                'author':   str(article.author),
                 'desc':     article.description,
-                'pub_date': article.publish_date,
+                'pub_date': article.publish_date.strftime("%d %B %Y %H:%M"),
                 'useful':   article.useful_counter,
                 'viewed':   article.view_counter,
                 'loved':    article.favorite_counter,

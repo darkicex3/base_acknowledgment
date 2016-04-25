@@ -24,8 +24,7 @@
     </div>
 </div>
 
-
-<div class="modal fade modal-submit-articles" id="login_register" role="dialog" aria-labelledby="myModalLabel"
+<div class="modal fade modal-submit-articles" data-backdrop="static" data-keyboard="false" id="login_register" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -45,83 +44,33 @@
                     <input type="password" class="password_user" id="password" name="password">
                     <div class="clearfix"></div>
                     <input type="submit" name="submit" value="Sign in" class="btn-submit">
-                    <a href="javascript:void(0)" class="link_forgot_pass">Forgot password</a>
-                    <div class="submit-block">
-                        <a href="javascript:void(0)" class="link_sign_up">Sign up here</a><span>or sign in with</span>
-
-                        <ul class="social-icon clearfix">
-                            <!-- google plus login -->
-                            <li class="gp"><a id="signinButton" href="#" class="sc-icon color-google gplus_login_btn"><i
-                                    class="fa fa-google-plus-square"></i></a></li>
-                            <!-- twitter plus login -->
-                            <li class="tw"><a href=""
-                                              class="sc-icon color-twitter"><i class="fa fa-twitter-square"></i></a>
-                            </li>
-                            <!-- facebook plus login -->
-                            <li class="fb"><a href="#" id="facebook_auth_btn"
-                                              class="sc-icon color-facebook facebook_auth_btn"><i
-                                    class="fa fa-facebook-square"></i></a></li>
-                        </ul>
-                    </div>
-
+                    <a href="javascript:void(0)" class="link_forgot_pass" data-toggle="modal" data-target="#reset_password">Forgot password</a>
                 </form>
+            </div>
+        </div>
+    </div>
+</div>
 
-                <form id="signup_form" class="form_modal_style">
-                    <label for="username">
-                        Username </label>
-                    <input type="text" class="name_user" name="username" id="username">
-
-                    <label for="email">
-                        Email </label>
-                    <input type="text" class="email_user" name="email" id="email">
-
-                    <label for="password1">
-                        Password </label>
-                    <input type="password" class="password_user_signup" id="password1" name="password">
-
-                    <label for="re_password">
-                        Retype Password </label>
-                    <input type="password" class="repeat_password_user_signup" id="re_password" name="re_password">
-
-
-                    <div class="clearfix"></div>
-                    <div class="gg-captcha">
-                        <!-- reCaptcha -->
-                        <div class="captcha-wrapper">
-                            <div class="g-recaptcha" data-sitekey="6LeS8wYTAAAAAKL7TOlfNCX7RMB9SiUDSZdKI606">
-                                <div>
-                                    <div style="width: 304px; height: 78px;">
-                                        <iframe src=""
-                                                title="recaptcha widget" width="304" height="78" role="presentation"
-                                                frameborder="0" scrolling="no" name="undefined"></iframe>
-                                    </div>
-                                    <textarea id="g-recaptcha-response" name="g-recaptcha-response"
-                                              class="g-recaptcha-response"
-                                              style="width: 250px; height: 40px; border: 1px solid #c1c1c1; margin: 10px 25px; padding: 0px; resize: none;  display: none; "></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-                        <!-- reCaptcha / End -->
-                    </div>
-                    <input type="submit" name="submit" value="Sign up" class="btn-submit">
-                    <a href="javascript:void(0)" class="link_sign_in">Sign in</a>
-
-                    <div class="clearfix"></div>
-
-                    <p class="policy-sign-up">
-                        By clicking "Sign up" you indicate that you have read and agree to the <a target="_blank"
-                                                                                                  href="">privacy
-                        policy</a> and <a target="_blank" href="">terms
-                        of service.</a></p>
+<!-- Modal -->
+<div class="modal fade" id="modal_change_img" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+                    <p>
+                        <input id="id_image" type="file" class="" name="image">
+                    </p>
+                    <input type="submit" value="Submit"/>
                 </form>
-
-                <form id="forgotpass_form" class="form_modal_style collapse">
-                    <label>Enter your email here</label>
-                    <input type="text" class="name_user" name="email" id="email">
-                    <input type="submit" name="submit" value="Send" class="btn-submit">
-                </form>
-
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>

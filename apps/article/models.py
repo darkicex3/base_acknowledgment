@@ -5,7 +5,7 @@ from haystack.query import SearchQuerySet
 from mptt.models import TreeForeignKey, MPTTModel
 from django.db import models
 from .constants import *
-import datetime
+import datetime, calendar
 
 
 def get_upload_filename(instance, filename):
@@ -139,10 +139,15 @@ class Shortcut(models.Model):
 
 
 def get_related_favorites(self):
-    q = SearchQuerySet().all().filter(user_id=self.id).filter(favorites=True).order_by('date_added')
+    print(self.id)
+    q = SearchQuerySet().all().models(UserArticle).filter(user_id=self.id).filter(favorites=True).order_by('date_added')
+    print(q)
+    if q is None:
+        return None
+
     result = []
     for i in q:
-        result.append(Article.objects.get(pk=i.article_id))
+        result.append(i.article_id)
 
     return result
 
