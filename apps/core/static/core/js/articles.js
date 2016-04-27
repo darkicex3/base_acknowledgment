@@ -24,7 +24,7 @@ function mini_article(key, title, author, description, verified_article, date_pu
         '<a id="secure">' + img + '</a>' +
         // '<a id="author">' + author + '</a>' +
         '</header>' +
-        '<div class="content"><p>' + content + '</p></div>' +
+        '<div class="content"><p>' + description + '</p></div>' +
         '<footer>' +
         '<p id="pub_date"><i class="material-icons md-18 width18 color_base bold">schedule</i>' + date_publish + '</p>' +
         '<p id="note" style="color: #95a5a6"><i class="material-icons md-18 width18 color_base">thumb_up</i>' + useful_counter + '</p>' +
