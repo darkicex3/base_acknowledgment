@@ -4,13 +4,13 @@
 
 /* Rules for sizing the icon. */
 .material-icons.md-18 { font-size: 18px; }
-.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-24 { font-size: 23px; }
 .material-icons.md-36 { font-size: 36px; }
 .material-icons.md-48 { font-size: 48px; }
 
 
 .material-icons.md-18.width18 { width: 18px; }
-.material-icons.md-24.width24 { width: 24px; }
+.material-icons.md-24.width24 { width: 23px; }
 .material-icons.md-36.width36 { width: 36px; }
 .material-icons.md-48.width48 { width: 48px; }
 
@@ -37,6 +37,13 @@
     color: #000;
 }
 
+.error_message {
+    width: 588px;
+    font-size: 20pt;
+}
+
+.base_menu .ui-selected { border-left: #e74c3c 5px solid; transition: all 100ms}
+
 ul li {
 	list-style-type: none;
 	position: relative;
@@ -54,6 +61,80 @@ ul li {
 @keyframes ripple {
 	/*scale the element to 250% to safely cover the entire link and fade it out*/
 	100% {opacity: 0; transform: scale(2.5);}
+}
+
+/* ---------------------------------------- */
+/* ARTICLE                                  */
+/* ---------------------------------------- */
+
+.article {
+    background-color: #fff;
+    height: 5000px;
+}
+
+.action-article {
+    display: block;
+    width: 140px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.bookmark {
+    position: absolute;
+    top: 217px;
+    left: 10px;
+    width: 800px;
+}
+
+.stat-article {
+    padding:15px;
+    width:50%;
+    margin: auto;
+}
+
+.stat-article i {
+    margin-left: 30px;
+}
+
+.stat-article .face {
+    margin: 0;
+}
+
+.info-article {
+    width: 24px;
+    float: right;
+    position: relative;
+    top: -173px;
+}
+
+.article-title {
+    margin-top: 35px;
+    font-size: 22pt;
+    display: block;
+    text-align: center;
+}
+
+.header-article {
+    padding: 15px;
+    height: 250px;
+    background-color: #ecf0f1;
+}
+
+.header-article a {
+    color: #fff;
+}
+
+.content-article {
+
+}
+
+.glossary-article {
+
+}
+
+.footer-article {
+
 }
 
 /* ---------------------------------------- */

@@ -9,12 +9,12 @@ function get_shortcuts() {
             for (var key in data) {
                 html += shortcut(key, data[key]['name'], data[key]['icon']);
             }
-            $('.base_menu').append(html);
+            $('.base_menu').append(html).selectable();
         }
     );
 }
 
 function shortcut(key, name, icon) {
-    return '<span id="' + key + '" hidden="hidden">' + key + '</span>' + '<li id="' + name + '"class="static_category">'+
+    return '<span id="' + key + '" hidden="hidden">' + key + '</span>' + '<li id="' + name + '"class="static_category ui-widget-content">'+
         '<a><i class="material-icons md-24 width24" style="color:#00adef">' + icon + '</i>' + name + '</a></li>'
 }

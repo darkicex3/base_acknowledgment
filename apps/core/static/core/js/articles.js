@@ -2,7 +2,7 @@
  * Created by maxbook on 27/04/16.
  */
 
-function mini_article(key, title, author, content, verified_article, date_publish, useful_counter, favorite_counter, tags, favorite) {
+function mini_article(key, title, author, description, verified_article, date_publish, useful_counter, favorite_counter, tags, favorite) {
     // Verified if article was liked by the current user
     if (favorite == 'ok')
         var color = 'color_liked';
@@ -34,6 +34,10 @@ function mini_article(key, title, author, content, verified_article, date_publis
         '</div>'
 }
 
+function article(key, title, author, content, verified_article, date_publish, useful_counter, favorite_counter, tags, favorite) {
+
+}
+
 function get_articles(category, element) {
     if (typeof category == 'undefined')
         category = element.attr('id');
@@ -43,7 +47,7 @@ function get_articles(category, element) {
 
         function (data) {
             if (typeof (data['msg']) != 'undefined') {
-                var html = data['msg'];
+                var html = '<div style="width: 588px;font-size:20pt;">'+ data['msg'] + '</div>';
             } else {
                 var html = '';
                 for (var key in data) {
@@ -76,5 +80,22 @@ function action_acticle(element) {
 
             $.get(SET_FAVORITE, {'liked': liked, 'article_id': article_id}, function (data) {});
         });
+}
+
+function show_article(element) {
+    var id = element.find('.key').attr('id');
+
+    $.get(show_article, {'article_id': id},
+        function (data) {
+
+            for (var key in data) {
+                html += mini_article(data[key]['id'], data[key]['title'], data[key]['author'], data[key]['desc'],
+                    data[key]['ok'], data[key]['pub_date'], data[key]['useful'], data[key]['loved'], data[key]['tags'], data[key]['favorites'])
+            }
+
+            $('#feed').empty().append(html);
+        }
+
+    )
 }
 
