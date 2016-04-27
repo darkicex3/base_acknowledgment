@@ -17,4 +17,11 @@ jQuery(document).ready(function ($) {
         on_logout();
     });
 
+    $('#avatar_form').submit(function (e) {
+        e.preventDefault();
+        change_avatar($(this).serializeArray());
+    });
+
+
+
 });

@@ -3,6 +3,7 @@ from apps.article.models import Category, Article, Shortcut, UserArticle
 from django.shortcuts import render_to_response
 from django.views.generic import View
 from haystack.query import SearchQuerySet
+from django.core.exceptions import ObjectDoesNotExist
 
 
 class SearchAjaxView(View):
@@ -33,14 +34,11 @@ class GetCategoriesView(View):
         node_id = self.request.GET.get('node_id')
         previous = self.request.GET.get('previous')
 
-        print(node_id)
-
         if node_id is None:
             categories = Category.objects.all().filter(level=0)
         else:
             node_category = Category.objects.all().get(pk=node_id)
             if previous == 'false':
-                print(previous)
                 categories = node_category.get_children()
             else:
                 categories = node_category.get_previous_parent().get_children()
@@ -53,16 +51,28 @@ class GetCategoriesView(View):
 class SetLikedView(View):
     def get(self, *args, **kwargs):
         context = {}
-        article_id = self.request.GET.get('shortcut_id')
+
+        article_id = self.request.GET.get('article_id')
+        liked = self.request.GET.get('liked')
         current_user = self.request.user
 
-        p = UserArticle.objects.all().get(user_id=current_user.id, article_id=article_id)
-        if not p:
-            if UserArticle.objects.create(user_id=current_user.id, article_id=article_id, favorites=True):
-                context.update({'success': True})
-        else:
-            p.favorites = True
-            context.update({'success': True})
+        print(article_id)
+        print(current_user)
+        print(liked)
+
+        try:
+            p = UserArticle.objects.all().get(user_id=current_user.id, article_id=article_id)
+
+            if liked == 'true':
+                p.favorites = True
+            else:
+                p.favorites = False
+
+            p.save()
+
+        except ObjectDoesNotExist:
+            if liked == 'true':
+                UserArticle.objects.create(user_id=current_user.id, article_id=article_id, favorites=True)
 
         return JsonResponse(context)
 
@@ -153,23 +163,60 @@ class GetArticlesByStaticShortcutsView(View):
         current_user = self.request.user
 
         if get_by == 'Home':
-            articles = SearchQuerySet().models(Article).order_by('-publish_date').exclude(status='d').exclude(status='w')
+            try:
+                articles = SearchQuerySet().models(Article).order_by('-publish_date').exclude(status='d').exclude(status='w')
+            except ObjectDoesNotExist:
+                context.update({'msg': 'You don\'t have any articles ;('})
+                return JsonResponse(context)
         elif get_by == 'Most Used':
-            articles = SearchQuerySet().models(Article).order_by('-useful_counter').exclude(status='d').exclude(status='w')
+            try:
+                articles = SearchQuerySet().models(Article).order_by('-useful_counter').exclude(status='d').exclude(status='w')
+            except ObjectDoesNotExist:
+                context.update({'msg': 'You don\'t have any articles ;('})
+                return JsonResponse(context)
         elif get_by == 'Most Viewed':
-            articles = SearchQuerySet().models(Article).order_by('-view_counter').exclude(status='d').exclude(status='w')
+            try:
+                articles = SearchQuerySet().models(Article).order_by('-view_counter').exclude(status='d').exclude(status='w')
+            except ObjectDoesNotExist:
+                context.update({'msg': 'You don\'t have any articles ;('})
+                return JsonResponse(context)
         elif get_by == 'Most Loved':
-            articles = SearchQuerySet().models(Article).order_by('-favorite_counter').exclude(status='d').exclude(status='w')
+            try:
+                articles = SearchQuerySet().models(Article).order_by('-favorite_counter').exclude(status='d').exclude(status='w')
+            except ObjectDoesNotExist:
+                context.update({'msg': 'You don\'t have any articles ;('})
+                return JsonResponse(context)
         elif get_by == 'Favorites':
-            ids = current_user.get_related_favorites()
-            for i in ids:
-                articles.append(Article.objects.get(id=i, status='p'))
+            try:
+                ids = current_user.get_related_favorites()
+                print(ids)
+                for i in ids:
+                    articles.append(Article.objects.get(id=i, status='p'))
+                p = articles[0]
+            except ObjectDoesNotExist:
+                context.update({'msg': 'You don\'t have favorites ;('})
+                return JsonResponse(context)
+            except IndexError:
+                context.update({'msg': 'You don\'t have favorites ;('})
+                return JsonResponse(context)
         elif get_by == 'Historic':
-            articles = current_user.get_related_articles_viewed()
+            try:
+                articles = current_user.get_related_articles_viewed()
+            except ObjectDoesNotExist:
+                context.update({'msg': 'You don\'t visit an article for the moment ;('})
+                return JsonResponse(context)
         elif get_by == 'Last Update':
-            return 0
+            try:
+                articles = SearchQuerySet().models(Article).order_by('updated_at').exclude(status='d').exclude(status='w')
+            except ObjectDoesNotExist:
+                context.update({'msg': 'There isn\'t updates for the moment ;('})
+                return JsonResponse(context)
         elif get_by == 'Recent':
-            articles = SearchQuerySet().all().order_by('publish_date')
+            try:
+                articles = SearchQuerySet().all().order_by('publish_date')
+            except ObjectDoesNotExist:
+                context.update({'msg': 'There isn\'t recent update for the moment ;('})
+                return JsonResponse(context)
         else:
             context['error'] = True
             return JsonResponse(context)
@@ -177,13 +224,18 @@ class GetArticlesByStaticShortcutsView(View):
         key = 0
 
         for article in articles:
-            print(article.id)
-            print(article.title)
-            print(str(article.author))
+
+            try:
+                UserArticle.objects.get(user_id=current_user.id, article_id=article.pk, favorites=True)
+                favorites = "ok"
+            except ObjectDoesNotExist:
+                favorites = "ko"
+
+            print(favorites)
 
             key += 1
             context.update({key: {
-                'id':       article.id,
+                'id':       article.pk,
                 'title':    article.title,
                 'author':   str(article.author),
                 'desc':     article.description,
@@ -192,7 +244,8 @@ class GetArticlesByStaticShortcutsView(View):
                 'viewed':   article.view_counter,
                 'loved':    article.favorite_counter,
                 'ok': 'ok',
-                'tags': '#Company #Work #Public'
+                'tags': '#Company #Work #Public',
+                'favorites': favorites
             }})
 
         return JsonResponse(context)

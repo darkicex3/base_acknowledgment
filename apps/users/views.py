@@ -30,6 +30,8 @@ class LoginView(View):
             if user.is_active:
                 login(self.request, user)
                 context['success'] = True
+                context.update({'username': user.username})
+                context.update({'points': '34567'})
                 return JsonResponse(context)
             else:
                 # Return a 'disabled account' error message
@@ -116,8 +118,10 @@ class LoginRequired(View):
     def get(self, *args, **kwargs):
 
         context = {}
-        if not self.request.user.is_authenticated():
+        if self.request.user.is_authenticated():
             context['success'] = True
+            context.update({'username': self.request.user.username})
+            context.update({'points': '34567'})
             return JsonResponse(context)
 
         context['success'] = False
@@ -126,8 +130,10 @@ class LoginRequired(View):
     def post(self, *args, **kwargs):
         context = {}
 
-        if not self.request.user.is_authenticated():
+        if self.request.user.is_authenticated():
             context['success'] = True
+            context.update({'username': self.request.user.username})
+            context.update({'points': '34567'})
             return JsonResponse(context)
 
         context['success'] = False

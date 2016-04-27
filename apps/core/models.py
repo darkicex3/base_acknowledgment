@@ -3,5 +3,4 @@ from django.db import models
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User)
-    avatar = models.ImageField()
+    avatar = models.ImageField(upload_to='avatar_img')

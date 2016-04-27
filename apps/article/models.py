@@ -74,24 +74,25 @@ class Article(models.Model):
         verbose_name_plural = 'Articles'
         app_label = 'article'
 
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default=STATUS_CHOICES[0])
     feedback = models.ForeignKey(Feedback, on_delete=models.CASCADE, default=DEFAULT_FEEDBACK_ID)
 
-    useful_counter = models.IntegerField(default=0)
-    favorite_counter = models.IntegerField(default=0)
-    view_counter = models.IntegerField(default=0)
+    useful_counter = models.IntegerField(default=0, editable=False)
+    favorite_counter = models.IntegerField(default=0, editable=False)
+    view_counter = models.IntegerField(default=0, editable=False)
 
     author = models.ForeignKey(User, on_delete=models.CASCADE, default=DEFAULT_AUTHOR_ID)
     publish_date = models.DateTimeField(default=datetime.datetime.now, help_text=publish_date_help)
     expiration_date = models.DateTimeField(blank=True, null=True, help_text=expiration_date)
 
-    title = models.CharField(max_length=100)
-    description = models.TextField(blank=True, help_text=description_help)
+    title = models.CharField(max_length=255)
+    description = models.CharField(max_length=255, help_text=description_help)
     content = models.TextField(default='')
     # thumbnail = models.FileField(null=True, upload_to=get_upload_filename)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, default=DEFAULT_CATEGORY_ID)
-
-    keywords = models.TextField(blank=True, help_text=keywords_help)
     tags = models.ManyToManyField(Tag, help_text=tags_help, blank=True)
 
     # auto_tag = models.BooleanField(default=True, blank=True, help_text=auto_tag_help)
@@ -99,8 +100,8 @@ class Article(models.Model):
     # name='followups')
     # related_articles = models.ManyToManyField('self', blank=True)
 
-    def __str__(self):
-        return self.title
+    # def __str__(self):
+    #     return self.title
 
     def active_article(self):
         if self.publish_date >= datetime.datetime.now() and datetime.datetime.now() < self.expiration_date:
@@ -129,6 +130,7 @@ class Shortcut(models.Model):
         verbose_name_plural = 'Shortcuts'
 
     name = models.CharField(max_length=300, unique=True)
+    icon = models.CharField(max_length=500, default="Your Icon", help_text="Add an icon to your shortcut !")
     articles = models.ManyToManyField(Article, help_text=tags_help, blank=True)
     activated = models.BooleanField(default=True)
     static = models.BooleanField(default=False)
@@ -139,9 +141,7 @@ class Shortcut(models.Model):
 
 
 def get_related_favorites(self):
-    print(self.id)
-    q = SearchQuerySet().all().models(UserArticle).filter(user_id=self.id).filter(favorites=True).order_by('date_added')
-    print(q)
+    q = SearchQuerySet().filter(user_id=self.id).filter(favorites=True).order_by('date_added')
     if q is None:
         return None
 

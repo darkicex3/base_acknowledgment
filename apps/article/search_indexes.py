@@ -62,7 +62,6 @@ class ArticleIndex(indexes.SearchIndex, indexes.Indexable):
     favorite_counter = indexes.IntegerField(model_attr='favorite_counter')
     view_counter = indexes.IntegerField(model_attr='view_counter')
 
-    keywords = indexes.CharField(model_attr='keywords')
     description = indexes.CharField(model_attr='description')
     content = indexes.CharField(model_attr='content')
 

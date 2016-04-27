@@ -6,6 +6,7 @@ from apps.article import views
 urlpatterns = [
     url(r'^search/', include('haystack.urls')),
     url(r'^search_ajax/', views.SearchAjaxView.as_view(), name='ajax_search_view'),
+    url(r'^set_favorites/', views.SetLikedView.as_view(), name='set_liked_view'),
     url(r'^get_categories/', views.GetCategoriesView.as_view(), name='get_categories_view'),
     url(r'^get_articles/', views.GetArticlesByStaticShortcutsView.as_view(), name='get_article_by_static_shortcuts'),
     url(r'^sort_articles/', views.SortArticlesView.as_view(), name='sort_article_view'),

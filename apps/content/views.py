@@ -15,6 +15,7 @@ class ManageSidebarShortcutsShowingView(View):
                 context.update({shortcut.id: {
                     'name': shortcut.name,
                     'state': shortcut.activated,
+                    'icon': shortcut.icon
                 }})
 
         return JsonResponse(context)

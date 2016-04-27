@@ -89,12 +89,13 @@
     </div>
 </div>
 
+{% load staticfiles %}
 <script>
+    SET_FAVORITE = "{% url 'articles:set_liked_view' %}";
     AJAX_LOGIN = "{% url 'users:login_view' %}";
     AJAX_REGISTER = "{% url 'users:register_view' %}";
     AJAX_LOGOUT = "{% url 'users:logout_view' %}";
     AJAX_ISCO = "{% url 'users:is_connected_view' %}";
-
     GET_ARTICLES_BY_STATIC_SHORTCUTS =  "{% url 'articles:get_article_by_static_shortcuts' %}";
     GET_SORTING_METHODS = "";
     GET_CATEGORIES =                    "{% url 'articles:get_categories_view' %}";
@@ -102,28 +103,29 @@
     GET_SHORTCUTS =                     "{% url 'contents:manage_sidebar_shortcuts_showing_view' %}";
     GET_POLLS = "";
     GET_TAGS = "";
-
     SORT_ARTICLES =                     "{% url 'articles:sort_article_view' %}";
     ADD_ARTICLE_TO_SHORTCUT =           "{% url 'articles:add_article_to_shortcut' %}";
     CREATE_SHORTCUT =                   "{% url 'articles:create_shortcut' %}";
     EDIT_SHORTCUTS =                    "{% url 'contents:manage_sidebar_shortcuts_editing_view' %}";
     INSERT_SHORTCUTS =                  "{% url 'contents:manage_sidebar_shortcuts_inserting_view' %}";
-
-
+    CHANGE_AVATAR =                     "{% url 'core:change_avatar_view' %}";
 </script>
+
+
 <script src="{% static 'core/js/vendor/jquery-1.11.2.min.js' %}"></script>
 <script src="{% static 'core/js/vendor/jquery-ui-1.11.4.custom/jquery-ui.min.js' %}"></script>
 <script src="{% static 'core/js/vendor/webui-popover/src/jquery.webui-popover.js' %}"></script>
-
 <script src="{% static 'core/js/vendor/bootstrap.min.js' %}"></script>
 
-{% load staticfiles %}
 <script src="{% static 'core/js/main.js' %}"></script>
-<script src="{% static 'core/js/animation.js' %}"></script>
+<script src="{% static 'core/js/articles.js' %}"></script>
 <script src="{% static 'core/js/get_cookies.js' %}"></script>
-<script src="{% static 'core/js/on_login.js' %}"></script>
-<script src="{% static 'core/js/on_refresh.js' %}"></script>
-<script src="{% static 'core/js/on_logout.js' %}"></script>
-<script src="{% static 'core/js/ajax.js' %}"></script>
+<script src="{% static 'core/js/authentication.js' %}"></script>
+<script src="{% static 'core/js/avatar.js' %}"></script>
+<script src="{% static 'core/js/shortcuts.js' %}"></script>
+<script src="{% static 'core/js/categories.js' %}"></script>
+<script src="{% static 'core/js/initialize.js' %}"></script>
+<script src="{% static 'core/js/animation.js' %}"></script>
+
 </body>
 </html>

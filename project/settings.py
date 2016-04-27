@@ -19,7 +19,7 @@ ROOT_DIR = os.path.dirname(PROJECT_DIR)
 APPS_DIR = os.path.realpath(os.path.join(ROOT_DIR, 'apps'))
 sys.path.append(APPS_DIR)
 
-STATIC_ROOT = '/var/www/novostrat/static'
+STATIC_ROOT = '../base_acknowledgment/project/static'
 
 STATICFILES_FINDERS = (
                        'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -61,6 +61,8 @@ INSTALLED_APPS = [
     'apps.article.apps.ArticleConfig',
     'apps.content.apps.ContentConfig',
 ]
+
+INSTALLED_APPS += ('django_summernote', )
 
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 

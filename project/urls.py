@@ -17,6 +17,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 urlpatterns = [
+    url(r'^summernote/', include('django_summernote.urls')),
     url(r'^content/', include('apps.content.urls', namespace='contents')),
     url(r'^article/', include('apps.article.urls', namespace='articles')),
     url(r'^flatc/', include('apps.prices.urls', namespace='prices')),
