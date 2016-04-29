@@ -7,8 +7,6 @@ class CategoryIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True, use_template=True)
     name = indexes.CharField(model_attr='name')
 
-    content_auto = indexes.EdgeNgramField(model_attr='name')
-
     def get_model(self):
         return Category
 
@@ -40,8 +38,6 @@ class TagIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True, use_template=True)
     name = indexes.CharField(model_attr='name')
 
-    content_auto = indexes.EdgeNgramField(model_attr='name')
-
     def get_model(self):
         return Tag
 
@@ -64,16 +60,20 @@ class ArticleIndex(indexes.SearchIndex, indexes.Indexable):
 
     description = indexes.CharField(model_attr='description')
     content = indexes.CharField(model_attr='content')
+    categories = indexes.MultiValueField()
 
     publish_date = indexes.DateTimeField(model_attr='publish_date')
 
-    content_auto_name = indexes.EdgeNgramField(model_attr='title')
-    content_auto_content = indexes.EdgeNgramField(model_attr='content')
-    content_auto_description = indexes.EdgeNgramField(model_attr='description')
+    content_auto = indexes.EdgeNgramField(model_attr='title')
+    # content_auto_content = indexes.EdgeNgramField(model_attr='content')
+    # content_auto_description = indexes.EdgeNgramField(model_attr='description')
+
+    def prepare_categories(self, obj):
+        return [category.pk for category in obj.categories.all()]
 
     def get_model(self):
         return Article
 
     def index_queryset(self, using=None):
         """Used when the entire index for model is updated."""
-        return self.get_model().objects.filter(publish_date__lte=datetime.datetime.now())
+        return self.get_model().objects.all()

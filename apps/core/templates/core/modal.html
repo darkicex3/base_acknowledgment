@@ -11,6 +11,7 @@
             <div class="modal-body">
 
                 <form id="resetpass_form" class="form_modal_style">
+                    {% csrf_token %}
                     <input type="hidden" id="user_login" name="user_login" value="">
                     <input type="hidden" id="user_key" name="user_key" value="">
                     <label>Enter your new password here</label>
@@ -35,6 +36,7 @@
             </div>
             <div class="modal-body">
                 <form id="signin_form" class="form_modal_style">
+                    {% csrf_token %}
                     <label for="username">
                         Username or Email </label>
                     <input type="text" class="email_user" name="username" id="username">
@@ -62,6 +64,7 @@
             </div>
             <div class="modal-body">
                 <form id="avatar_form" class="form_modal_style">
+                    {% csrf_token %}
                     <label for="image">
                         Choose Your Avatar</label>
                     <input id="image" type="file" class="" name="image">

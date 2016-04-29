@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django_mptt_admin.admin import DjangoMpttAdmin
 from django_summernote.admin import SummernoteModelAdmin
+from django.contrib import admin
+from attachments.admin import AttachmentInlines
 from apps.article.models import Category, Tag, Article, Feedback, Shortcut, UserArticle
 
 
@@ -56,15 +58,24 @@ def make_desactivated(modeladmin, request, queryset):
 make_desactivated.short_description = "Mark selected as desactivated"
 
 
-class ArticleAdmin(SummernoteModelAdmin):
-    list_display = ['title', 'publish_date', 'updated_at',  'useful_counter', 'favorite_counter', 'view_counter',
+def reset_counter(modeladmin, request, queryset):
+    for o in queryset:
+        o.useful_counter = 0
+        o.favorite_counter = 0
+        o.save()
+make_published.short_description = "Mark selected as published"
+
+
+class ArticleAdmin(SummernoteModelAdmin, admin.ModelAdmin):
+    list_display = ['title', 'publish_date', 'modified',  'useful_counter', 'favorite_counter', 'view_counter',
                     'status']
     list_editable = ['status']
-    list_filter = ['updated_at', 'publish_date', 'status']
+    list_filter = ['modified', 'publish_date', 'status']
     search_fields = ['title', 'content', 'description']
+    inlines = (AttachmentInlines,)
 
     ordering = ['title']
-    actions = [make_published, make_draft, make_withdrawn, duplicate_event, deleteall]
+    actions = [make_published, make_draft, make_withdrawn, duplicate_event, deleteall, reset_counter]
 
 
 class ShortcutAdmin(admin.ModelAdmin):

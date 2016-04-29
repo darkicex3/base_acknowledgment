@@ -6,6 +6,7 @@ from mptt.models import TreeForeignKey, MPTTModel
 from django.db import models
 from .constants import *
 import datetime, calendar
+from django.utils import timezone
 
 
 def get_upload_filename(instance, filename):
@@ -63,6 +64,8 @@ class UserArticle (models.Model):
     favorites = models.BooleanField(default=False)
     visited = models.BooleanField(default=False)
     searched = models.BooleanField(default=False)
+    readed = models.BooleanField(default=False)
+    useful = models.BooleanField(default=False)
 
     date_visited = models.DateTimeField(default=datetime.datetime.now)
     date_searched = models.DateTimeField(default=datetime.datetime.now)
@@ -74,38 +77,35 @@ class Article(models.Model):
         verbose_name_plural = 'Articles'
         app_label = 'article'
 
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(editable=False)
+    modified = models.DateTimeField(editable=False)
 
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default=STATUS_CHOICES[0])
-    feedback = models.ForeignKey(Feedback, on_delete=models.CASCADE, default=DEFAULT_FEEDBACK_ID)
+    feedback = models.ForeignKey(Feedback, on_delete=models.CASCADE, default=DEFAULT_FEEDBACK_ID, editable=False)
 
     useful_counter = models.IntegerField(default=0, editable=False)
     favorite_counter = models.IntegerField(default=0, editable=False)
     view_counter = models.IntegerField(default=0, editable=False)
 
     author = models.ForeignKey(User, on_delete=models.CASCADE, default=DEFAULT_AUTHOR_ID)
-    publish_date = models.DateTimeField(default=datetime.datetime.now, help_text=publish_date_help)
+    publish_date = models.DateTimeField(help_text=publish_date_help)
     expiration_date = models.DateTimeField(blank=True, null=True, help_text=expiration_date)
 
-    title = models.CharField(max_length=255)
-    description = models.CharField(max_length=255, help_text=description_help)
+    title = models.CharField(max_length=255, default='')
+    description = models.TextField(help_text=description_help, default='')
     content = models.TextField(default='')
-    # thumbnail = models.FileField(null=True, upload_to=get_upload_filename)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, default=DEFAULT_CATEGORY_ID)
+    categories = models.ManyToManyField(Category, help_text=tags_help, blank=True)
     tags = models.ManyToManyField(Tag, help_text=tags_help, blank=True)
 
-    # auto_tag = models.BooleanField(default=True, blank=True, help_text=auto_tag_help)
-    # followup_for = models.ManyToManyField('self', symmetrical=False, blank=True, help_text=followup_for_help,related_
-    # name='followups')
-    # related_articles = models.ManyToManyField('self', blank=True)
-
-    # def __str__(self):
-    #     return self.title
-
     def active_article(self):
-        if self.publish_date >= datetime.datetime.now() and datetime.datetime.now() < self.expiration_date:
+        if self.publish_date >= timezone.now() and timezone.now() < self.expiration_date:
             self.IS_ACTIVE = True
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.created = timezone.now()
+        self.modified = timezone.now()
+        return super(Article, self).save(*args, **kwargs)
 
     def get_feedback_alert(self):
         context = {}
@@ -122,6 +122,9 @@ class Article(models.Model):
                 context['alert_useless'] = ''
 
         return context
+
+    def __str__(self):
+        return self.title
 
 
 class Shortcut(models.Model):

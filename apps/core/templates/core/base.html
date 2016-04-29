@@ -18,6 +18,7 @@
 
     <link href='https://fonts.googleapis.com/css?family=PT+Sans+Caption:400,700' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=EB+Garamond' rel='stylesheet' type='text/css'>
 
     <title>Teledirect - {% block title %}{% endblock %}</title>
 </head>
@@ -31,7 +32,7 @@
 <header class="shadow_material" id="header">
     <div class="col-md-2 col-xs-2" id="logo">
         <a href="#">
-            <img src="{% static 'core/img/logo1.png' %}" style="width: 100%">
+            <img src="{% static 'core/img/logo1.jpg' %}" style="width: 100%">
         </a>
     </div><!-- logo -->
 
@@ -39,10 +40,10 @@
         <button class="search_section" type="button" id="search_categories">Categories</button>
         <button class="search_section" type="button" id="search_sorting">Sorting</button>
 
-        <form id="search_bar" method="GET" action="#" class="disable-mobile">
-            <input class="search_section" id="search_field" type="text" name="keyword" value=""
-                   placeholder="What are you looking for ?"
-                   autocomplete="off">
+        <form id="search_bar" method="POST" action="{% url 'articles:ajax_search_view' %}">
+            {% csrf_token %}
+            <input class="search_section" id="search_field" type="text" name="q" value=""
+                   placeholder="What are you looking for ?">
         </form>
     </div><!-- search -->
 
@@ -77,6 +78,10 @@
 
 
     <div class="col-md-12 main-content">
+        {% for article in articles %}
+            <li><a>{{ article.object.title }}CACACACACACACCA</a></li>
+        {% endfor %}
+
         {% block content %}
             <!-- CONTENT -->
         {% endblock %}
@@ -91,7 +96,12 @@
 
 {% load staticfiles %}
 <script>
+    SET_USEFUL = "{% url 'articles:set_useful_view' %}";
     SET_FAVORITE = "{% url 'articles:set_liked_view' %}";
+    SET_VISITED = "{% url 'articles:set_visited_view' %}";
+    SET_SEARCHED = "{% url 'articles:set_searched_view' %}";
+    SET_READ = "{% url 'articles:set_read_view' %}";
+
     AJAX_LOGIN = "{% url 'users:login_view' %}";
     AJAX_REGISTER = "{% url 'users:register_view' %}";
     AJAX_LOGOUT = "{% url 'users:logout_view' %}";
@@ -100,6 +110,7 @@
     GET_SORTING_METHODS = "";
     GET_CATEGORIES =                    "{% url 'articles:get_categories_view' %}";
     GET_ARTICLES_FROM_SHORTCUT =        "{% url 'articles:show_article_from_shorcuts' %}";
+    SHOW_ARTICLE =                      "{% url 'articles:ShowArticle' %}";
     GET_SHORTCUTS =                     "{% url 'contents:manage_sidebar_shortcuts_showing_view' %}";
     GET_POLLS = "";
     GET_TAGS = "";

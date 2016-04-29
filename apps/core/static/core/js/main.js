@@ -1,37 +1,38 @@
 jQuery(document).ready(function ($) {
 
-    $(".base_menu").mousedown(function (evt) {
-            evt.stopImmediatePropagation();
-            return false;
-    });
-    $(".base_menu").selectable();
-
     get_shortcuts();
+    get_articles('Home', $(this));
+    action_acticle('#favorite', 'favorite', 'favorite_border', SET_FAVORITE, 'favorite');
+    action_acticle('#note', 'useful', 'color_bigup', SET_USEFUL, '');
 
 
-    // ARTICLES
     $('body').on('click', '.static_category', function (e) {
         get_articles(undefined, $(this));
     });
 
-    get_articles('Home', $(this));
-    action_acticle('#favorite');
-    action_acticle('#note');
+    $('body').on('click', '.guideText', function (e) {
+        get_articles(undefined, $(this), 'tags');
+    });
 
-    $('body').on('click', '.mini-article', function (e) {
+    $('body').on('click', '.feedback', function (e) {
+        read($(this), SET_READ);
+    });
+
+    $('body').on('click', '.mini-article header', function (e) {
         show_article($(this));
     });
 
-    var menu_width = $('.left-sidebar').width() + 60;
-    console.log(menu_width);
-    var window_width = $(window).width();
-    console.log(window_width);
-    var article_width = window_width - menu_width;
-    console.log(article_width);
+    $(window).resize(function (e) {
+        resize_article();
+    });
 
-    $('.article').css({'width': article_width})
-
-
-
+    $('body').on('click', '.bookmarkLink', function (e) {
+        var text = $(this).text();
+        console.log(text);
+        $('#search_bar input').attr('placeholder','').empty().css('background', '#3498db').css('font-size','18pt').css('color', '#fff !important').val(text);
+        $('#search_categories').empty().css('background', '#3498db');
+        $('#search_sorting').empty().css('background', '#3498db');
+        get_articles(undefined, $(this), 'tags');
+    });
 
 });

@@ -13,6 +13,29 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 
 import os
 import sys
+import logging
+import copy
+from django.utils.log import DEFAULT_LOGGING
+
+
+LOGGING = copy.deepcopy(DEFAULT_LOGGING)
+LOGGING['filters']['suppress_deprecated'] = {
+    '()': 'project.settings.SuppressDeprecated'
+}
+LOGGING['handlers']['console']['filters'].append('suppress_deprecated')
+
+
+class SuppressDeprecated(logging.Filter):
+    def filter(self, record):
+        warnings_to_suppress = [
+            'RemovedInDjango18Warning',
+            'RemovedInDjango110Warning',
+            'RemovedInDjango19Warning',
+            'RuntimeWarning'
+        ]
+        # Return false to suppress message.
+        return not any([warn in record.getMessage() for warn in warnings_to_suppress])
+
 
 PROJECT_DIR = os.path.dirname(os.path.realpath(__file__))
 ROOT_DIR = os.path.dirname(PROJECT_DIR)
@@ -53,10 +76,10 @@ INSTALLED_APPS = [
     'elasticsearch',
     'urllib3',
     'haystack',
+    'attachments',
 
 
     'apps.core.apps.CoreConfig',
-    'apps.prices.apps.PricesConfig',
     'apps.users.apps.UsersConfig',
     'apps.article.apps.ArticleConfig',
     'apps.content.apps.ContentConfig',
