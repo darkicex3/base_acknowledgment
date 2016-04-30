@@ -42,11 +42,11 @@ function get_articles(category, element, tags) {
     );
 }
 
-function resize_article() {
+function resize_article(element) {
     var menu_width = $('.left-sidebar').width() + 60;
     var window_width = $(window).width();
     var article_width = window_width - menu_width;
-    $('.article').css({'width': article_width});
+    $(element).css({'width': article_width});
     $('.content-article p').css({'font-family': '\'EB Garamond\' !important'});
 }
 
@@ -79,7 +79,7 @@ function show_article(element) {
                                 data['attachements']);
 
             $('#feed').empty().append(html);
-            resize_article();
+            resize_article('.article');
         }
     )
 }

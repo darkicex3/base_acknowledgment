@@ -76,11 +76,6 @@ jQuery(document).ready(function ($) {
                         'data-element-type="226" ' +
                         'data-aux="" title="">' +
                         '<div class="guideImgMask"><span class="guideText">' + data[key] + '</span></div>' +
-                        // '<img src="https://s-media-cache-ak0.pinimg.com/111x55_sf-76/82/b3/f9/82b3f95c01379be38f1cab0d7cbe89a7.jpg" ' +
-                        // 'class="guideImg loaded fade" ' +
-                        // 'style="  background-color: #bdaf9c;' +
-                        // '"onload="P.lazy.onImageLoad(this)" ' +
-                        //  'alt="Search for fruit salad">' +
                         '</a></li>'
                 }
                 html += '</ul>';
