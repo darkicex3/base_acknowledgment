@@ -29,21 +29,27 @@ class Category(MPTTModel):
         return self.name or ''
 
 
-class Tag(models.Model):
+@python_2_unicode_compatible
+class Comment(MPTTModel):
     class Meta:
-        verbose_name_plural = 'Tags'
+        verbose_name_plural = 'Comments'
         app_label = 'article'
 
-    name = models.CharField(max_length=64, unique=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, default=DEFAULT_AUTHOR_ID)
+    comment = models.CharField(max_length=50, blank=True, null=True)
+    parent = TreeForeignKey('self', null=True, blank=True, related_name='children')
+
+    def get_previous_parent(self):
+        return self.parent.parent
 
     def __str__(self):
-        return self.name
+        return self.name or ''
 
 
-class Feedback(models.Model):
+class FeedbackManager(models.Model):
     class Meta:
-        verbose_name = 'Feedback'
-        verbose_name_plural = 'Manage Feedbacks'
+        verbose_name = 'Feedback Manager'
+        verbose_name_plural = 'Feedback Manager'
         app_label = 'article'
 
     alert_useless_actived = models.BooleanField(default=False)
@@ -51,6 +57,18 @@ class Feedback(models.Model):
 
     alert_view_actived = models.BooleanField(default=False)
     min_view = models.IntegerField(null=True)
+
+
+class Feedback(models.Model):
+    class Meta:
+        verbose_name = 'Feedback'
+        verbose_name_plural = 'Feedbacks'
+        app_label = 'article'
+
+    author = models.ForeignKey(User, on_delete=models.CASCADE, default=DEFAULT_AUTHOR_ID)
+    rate = models.CharField(max_length=1, choices=RATE_CHOICES, default=RATE_CHOICES[2])
+    explanation = models.TextField(default='')
+    comments = models.ManyToManyField(Comment, help_text=tags_help, blank=True)
 
 
 class UserArticle (models.Model):
@@ -81,7 +99,7 @@ class Article(models.Model):
     modified = models.DateTimeField(editable=False)
 
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default=STATUS_CHOICES[0])
-    feedback = models.ForeignKey(Feedback, on_delete=models.CASCADE, default=DEFAULT_FEEDBACK_ID, editable=False)
+    feedback_manager = models.ForeignKey(FeedbackManager, on_delete=models.CASCADE, default=DEFAULT_FEEDBACK_ID, editable=False)
 
     useful_counter = models.IntegerField(default=0, editable=False)
     favorite_counter = models.IntegerField(default=0, editable=False)
@@ -95,7 +113,7 @@ class Article(models.Model):
     description = models.TextField(help_text=description_help, default='')
     content = models.TextField(default='')
     categories = models.ManyToManyField(Category, help_text=tags_help, blank=True)
-    tags = models.ManyToManyField(Tag, help_text=tags_help, blank=True)
+    feedback = models.ManyToManyField(Feedback, help_text=tags_help, blank=True)
 
     def active_article(self):
         if self.publish_date >= timezone.now() and timezone.now() < self.expiration_date:
@@ -127,7 +145,8 @@ class Article(models.Model):
         return self.title
 
 
-class Shortcut(models.Model):
+@python_2_unicode_compatible
+class Shortcut(MPTTModel):
     class Meta:
         verbose_name = 'Shortcut'
         verbose_name_plural = 'Shortcuts'
@@ -140,9 +159,13 @@ class Shortcut(models.Model):
     activated = models.BooleanField(default=True)
     static = models.BooleanField(default=False)
     click_counter = models.IntegerField(default=0)
+    parent = TreeForeignKey('self', null=True, blank=True, related_name='children')
+
+    def get_previous_parent(self):
+        return self.parent.parent
 
     def __str__(self):
-        return self.name
+        return self.name or ''
 
 
 def get_related_favorites(self):

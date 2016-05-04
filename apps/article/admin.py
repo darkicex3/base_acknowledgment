@@ -3,11 +3,20 @@ from django_mptt_admin.admin import DjangoMpttAdmin
 from django_summernote.admin import SummernoteModelAdmin
 from django.contrib import admin
 from attachments.admin import AttachmentInlines
-from apps.article.models import Category, Tag, Article, Feedback, Shortcut, UserArticle
+from apps.article.models import Category, Article, Feedback, Shortcut, UserArticle, FeedbackManager, Comment
 
 
 class CategoryAdmin(DjangoMpttAdmin):
     pass
+
+
+class ShortcutStructure(DjangoMpttAdmin):
+    pass
+
+
+class ShortcutTree(Shortcut):
+    class Meta:
+        proxy = True
 
 
 def make_published(modeladmin, request, queryset):
@@ -87,9 +96,11 @@ class ShortcutAdmin(admin.ModelAdmin):
 
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Article, ArticleAdmin)
-admin.site.register(Tag)
 admin.site.register(Feedback)
+admin.site.register(FeedbackManager)
+admin.site.register(Comment)
 admin.site.register(Shortcut, ShortcutAdmin)
+admin.site.register(ShortcutTree, ShortcutStructure)
 admin.site.register(UserArticle)
 
 

@@ -1,6 +1,6 @@
 import datetime
 from haystack import indexes
-from apps.article.models import Article, Tag, Category, UserArticle
+from apps.article.models import Article, Category, UserArticle
 
 
 class CategoryIndex(indexes.SearchIndex, indexes.Indexable):
@@ -32,18 +32,6 @@ class UserArticleIndex (indexes.SearchIndex, indexes.Indexable):
     def index_queryset(self, using=None):
         """Used when the entire index for model is updated."""
         return self.get_model().objects.order_by('user_id')
-
-
-class TagIndex(indexes.SearchIndex, indexes.Indexable):
-    text = indexes.CharField(document=True, use_template=True)
-    name = indexes.CharField(model_attr='name')
-
-    def get_model(self):
-        return Tag
-
-    def index_queryset(self, using=None):
-        """Used when the entire index for model is updated."""
-        return self.get_model().objects.order_by('name')
 
 
 class ArticleIndex(indexes.SearchIndex, indexes.Indexable):

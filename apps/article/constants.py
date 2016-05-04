@@ -21,3 +21,11 @@ STATUS_CHOICES = (
     ('p', 'Published'),
     ('w', 'Withdrawn'),
 )
+
+RATE_CHOICES = (
+    ('0', 'Very Dissatisfied'),
+    ('1', 'Dissatisfied'),
+    ('2', 'Neutral'),
+    ('3', 'Satisfied'),
+    ('4', 'Very Satisfied'),
+)

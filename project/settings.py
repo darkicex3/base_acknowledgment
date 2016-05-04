@@ -87,15 +87,6 @@ INSTALLED_APPS = [
 
 INSTALLED_APPS += ('django_summernote', )
 
-INSTALLED_APPS += (
-    'fluent_comments',
-    'crispy_forms',
-    'django_comments',
-    'django.contrib.sites',
-)
-
-COMMENTS_APP = 'fluent_comments'
-
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
 HAYSTACK_CONNECTIONS = {
