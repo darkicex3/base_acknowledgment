@@ -4,12 +4,14 @@
 
 /* Rules for sizing the icon. */
 .material-icons.md-18 { font-size: 18px; }
+.material-icons.md-20 { font-size: 20px; }
 .material-icons.md-24 { font-size: 23px; }
 .material-icons.md-36 { font-size: 30px; }
 .material-icons.md-48 { font-size: 48px; }
 
 
 .material-icons.md-18.width18 { width: 18px; }
+.material-icons.md-20.width20 { width: 20px; }
 .material-icons.md-24.width24 { width: 23px; }
 .material-icons.md-36.width36 { width: 30px; }
 .material-icons.md-48.width48 { width: 48px; }
@@ -21,9 +23,11 @@
 .material-icons.color_secure { color: #2ecc71; }
 .material-icons.color_unsecure { color: #f1c40f; }
 .material-icons.color_view { color: #bdc3c7; }
+.material-icons.color_white { color: #fff; }
+
 
 .material-icons.bold { font-weight: bold; }
-
+.first-item { margin: 0 !important; padding: 0 !important;}
 
 /* Rules for using icons as black on a light background. */
 .material-icons.md-dark { color: rgba(0, 0, 0, 0.54); }
@@ -36,7 +40,7 @@
 .material-icons{
     vertical-align: middle;
     position: relative;
-    top: -2px;
+    top: -3px;
     margin-right: 5px;
     color: #000;
 }
@@ -446,38 +450,7 @@ a#author {
 /* H E A D E R  S T Y L E                   */
 /* ---------------------------------------- */
 .app_content {
-    padding-top: 80px;
-}
-
-.loading-blur {
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 998;
-}
-
-.loading-img {
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 1000;
-    background: url('../img/loading.gif') center center no-repeat;
-}
-
-.loading-overlay {
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 999;
-    opacity: 0.5;
-    filter: alpha(opacity:50);
-    background: #ffffff;
+    padding-top: 45px;
 }
 
 #header {
@@ -486,7 +459,7 @@ a#author {
     left: 0;
     top: 0;
     width: 100%;
-    min-height: 80px;
+    height: 45px;
     background-color: #ffffff;
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
@@ -497,13 +470,15 @@ a#author {
 }
 
 .SearchGuidesBar {
+    padding-top: 45px;
+    position: fixed;
+    width: 100%;
     background-color: #222;
+    z-index: 998;
 }
 
 .SearchGuidesBar .guidesWrapper {
     background-color: #222;
-    -webkit-box-shadow: 0 1px #f4f4f4;
-    box-shadow: 0 1px #f4f4f4;
     height: 85px;
     overflow: hidden;
     position: relative;
@@ -659,7 +634,7 @@ a {
 
 #logo {
     padding-left: 20px;
-    line-height: 80px;
+    line-height: 45px;
 }
 
 #logo img {
@@ -835,9 +810,9 @@ a {
     color: #7f8c8d;
     padding: 10px !important;
     border: none;
-    margin-top: 18px;
+    margin-top: 7px;
     font-weight: bold;
-    height: 45px;
+    height: 32px;
 }
 
 .search_section button {
@@ -848,10 +823,21 @@ a {
     float: left;
     background: #f3f3f3;
     border-radius: 3px 0 0 3px;
+    padding: 4px 10px 4px 10px !important;
 }
 
 #search_bar {
     overflow: hidden;
+}
+
+.action-bar-header {
+    padding-top: 16px;
+}
+
+.action-bar-header i {
+    cursor: pointer;
+    float: right;
+    margin-right: 10px !important;
 }
 
 #search_bar input {
@@ -865,7 +851,9 @@ a {
     float: right;
     border-radius: 0 3px 3px 0;
     border-left: none !important;
-    background-color: #fbfcfc !important;
+    background-color: #fbfcfc;
+    padding: 4px 6px 5px 5px !important;
+    transition: all 500ms;
 }
 
 #header_search i {
@@ -945,7 +933,7 @@ ul.dropdown-profile li:hover a {
 .user_profile {
     padding: 10px;
     width: 100%;
-    height: 90px;
+    height: 77px;
 }
 
 .badge {
@@ -1039,6 +1027,11 @@ a.login-url:active, .login_button:active{
     border-radius: 3px;
     box-shadow: 0 1px 4px rgba(0,0,0,.04);
     border: 1px solid rgba(0,0,0,.09);
+    overflow: hidden;
+}
+
+.left-sidebar:hover {
+    overflow-y: scroll;
 }
 
 .left-sidebar ul.menu li:before {
@@ -1145,7 +1138,7 @@ a.login-url:active, .login_button:active{
     font-size: 12pt;
     width: 100%;
     text-decoration: none;
-    padding: 15px 15px 15px 15px;
+    padding: 10px 15px 10px 15px;
     display: block;
     color: #78829d;
     cursor: pointer;
@@ -1156,11 +1149,6 @@ a.login-url:active, .login_button:active{
     -o-transition: all 0.3s ease;
     -ms-transition: all 0.3s ease;
     transition: all 0.3s ease;
-}
-
-.widget-menus ul li a:hover,
-.widget-menus ul li.current-menu-item a {
-    border-left: #e74c3c 2px solid;
 }
 
 .widget-menus ul li a:hover {

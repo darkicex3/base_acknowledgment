@@ -133,7 +133,9 @@ class Shortcut(models.Model):
         verbose_name_plural = 'Shortcuts'
 
     name = models.CharField(max_length=300, unique=True)
-    icon = models.CharField(max_length=500, default="Your Icon", help_text="Add an icon to your shortcut !")
+    icon = models.CharField(max_length=500, default="Your Icon", help_text="Add an icon to your shortcut ! <a href=\"ht"
+                                                                           "tps://design.google.com/ico"
+                                                                           "ns/\">Click Here !</a>")
     articles = models.ManyToManyField(Article, help_text=tags_help, blank=True)
     activated = models.BooleanField(default=True)
     static = models.BooleanField(default=False)

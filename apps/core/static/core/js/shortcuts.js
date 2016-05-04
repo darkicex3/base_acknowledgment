@@ -9,7 +9,7 @@ function get_shortcuts() {
             for (var key in data) {
                 html += shortcut(key, data[key]['name'], data[key]['icon']);
             }
-            $('.base_menu').append(html);
+            $('.base_menu').empty().append(html);
         }
     );
 }

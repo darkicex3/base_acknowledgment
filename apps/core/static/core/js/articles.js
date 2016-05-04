@@ -36,6 +36,7 @@ function get_articles(category, element, tags) {
             }
 
             $('#feed').empty().append(html);
+            Pace.restart()
             resize_iframe();
             resize_img();
         }
@@ -79,6 +80,7 @@ function show_article(element) {
                                 data['attachements']);
 
             $('#feed').empty().append(html);
+            Pace.restart()
             resize_article('.article');
         }
     )

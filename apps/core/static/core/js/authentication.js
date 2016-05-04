@@ -41,6 +41,8 @@ jQuery(document).ready(function ($) {
                     $('#img_profile').css('background-image', 'url(' + url + ')');
                     $('.username').empty().append(data['username']);
                     $('.badge').empty().append(data['points'] + ' pts');
+                    get_shortcuts();
+                    get_articles('Home', $(this));
                 } else {
 
                 }

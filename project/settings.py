@@ -72,12 +72,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sessions',
 
+    'notifications',
     'django_mptt_admin',
     'elasticsearch',
     'urllib3',
     'haystack',
     'attachments',
-
 
     'apps.core.apps.CoreConfig',
     'apps.users.apps.UsersConfig',
@@ -86,6 +86,15 @@ INSTALLED_APPS = [
 ]
 
 INSTALLED_APPS += ('django_summernote', )
+
+INSTALLED_APPS += (
+    'fluent_comments',
+    'crispy_forms',
+    'django_comments',
+    'django.contrib.sites',
+)
+
+COMMENTS_APP = 'fluent_comments'
 
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 

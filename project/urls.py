@@ -15,8 +15,12 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+import notifications
+from notifications import urls
 
 urlpatterns = [
+    url(r'^blog/comments/', include('fluent_comments.urls')),
+    url('^inbox/notifications/', include(notifications.urls, namespace='notifications')),
     url(r'^attachments/', include('attachments.urls', namespace='attachments')),
     url(r'^summernote/', include('django_summernote.urls')),
     url(r'^content/', include('apps.content.urls', namespace='contents')),

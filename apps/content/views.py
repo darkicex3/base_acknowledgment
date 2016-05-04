@@ -1,7 +1,6 @@
 from django.http import JsonResponse
 from apps.article.models import Category, Article, Shortcut
 from django.views.generic import View
-from haystack.query import SearchQuerySet
 
 
 class ManageSidebarShortcutsShowingView(View):
@@ -44,6 +43,9 @@ class ManageSidebarShortcutsInsertingView(View):
             context.update({q.id: {'success': True}})
 
         return JsonResponse(context)
+
+
+
 
 
 
