@@ -933,7 +933,7 @@ ul.dropdown-profile li:hover a {
 .user_profile {
     padding: 10px;
     width: 100%;
-    height: 77px;
+    height: 90px;
 }
 
 .badge {
@@ -1027,11 +1027,6 @@ a.login-url:active, .login_button:active{
     border-radius: 3px;
     box-shadow: 0 1px 4px rgba(0,0,0,.04);
     border: 1px solid rgba(0,0,0,.09);
-    overflow: hidden;
-}
-
-.left-sidebar:hover {
-    overflow-y: scroll;
 }
 
 .left-sidebar ul.menu li:before {
@@ -1138,7 +1133,7 @@ a.login-url:active, .login_button:active{
     font-size: 12pt;
     width: 100%;
     text-decoration: none;
-    padding: 10px 15px 10px 15px;
+    padding: 8px 15px 15px 15px;
     display: block;
     color: #78829d;
     cursor: pointer;
@@ -1149,6 +1144,11 @@ a.login-url:active, .login_button:active{
     -o-transition: all 0.3s ease;
     -ms-transition: all 0.3s ease;
     transition: all 0.3s ease;
+}
+
+.widget-menus ul li a:hover,
+.widget-menus ul li.current-menu-item a {
+    border-left: #e74c3c 2px solid;
 }
 
 .widget-menus ul li a:hover {

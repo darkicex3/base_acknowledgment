@@ -62,15 +62,4 @@ jQuery(document).ready(function ($) {
 
     });
 
-    $('.left-sidebar').mouseover(function (e) {
-        $('body').css('overflow', 'hidden');
-        $('html').css('overflow', 'hidden');
-        $('left-sidebar').css('overflow-y', 'scroll !important');
-    });
-
-    $('.left-sidebar').mouseout(function (e) {
-        $('body').removeAttr('style');
-        $('html').removeAttr('style');
-    });
-
 });
