@@ -48,8 +48,8 @@ class Comment(MPTTModel):
 
 class FeedbackManager(models.Model):
     class Meta:
-        verbose_name = 'Feedback Manager'
-        verbose_name_plural = 'Feedback Manager'
+        verbose_name = 'FeedBack Manager'
+        verbose_name_plural = 'FeedBack Manager'
         app_label = 'article'
 
     alert_useless_actived = models.BooleanField(default=False)
@@ -61,8 +61,8 @@ class FeedbackManager(models.Model):
 
 class Feedback(models.Model):
     class Meta:
-        verbose_name = 'Feedback'
-        verbose_name_plural = 'Feedbacks'
+        verbose_name = 'FeedBack'
+        verbose_name_plural = 'FeedBacks'
         app_label = 'article'
 
     author = models.ForeignKey(User, on_delete=models.CASCADE, default=DEFAULT_AUTHOR_ID)
@@ -146,10 +146,10 @@ class Article(models.Model):
 
 
 @python_2_unicode_compatible
-class Shortcut(MPTTModel):
+class ShortcutManager(MPTTModel):
     class Meta:
-        verbose_name = 'Shortcut'
-        verbose_name_plural = 'Shortcuts'
+        verbose_name = 'Shortcut Manager'
+        verbose_name_plural = 'Shortcut Manager'
 
     name = models.CharField(max_length=300, unique=True)
     icon = models.CharField(max_length=500, default="Your Icon", help_text="Add an icon to your shortcut ! <a href=\"ht"

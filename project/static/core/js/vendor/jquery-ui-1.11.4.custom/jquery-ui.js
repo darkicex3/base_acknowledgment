@@ -972,7 +972,7 @@ var mouse = $.widget("ui.mouse", {
 	_mouseMove: function(event) {
 		// Only check for mouseups outside the document if you've moved inside the document
 		// at least once. This prevents the firing of mouseup in the case of IE<9, which will
-		// fire a mousemove event if content is placed under the cursor. See #7778
+		// fire a mousemove event if manager is placed under the cursor. See #7778
 		// Support: IE <9
 		if ( this._mouseMoved ) {
 			// IE mouseup check - mouseup happened when mouse was out of window
@@ -5887,10 +5887,10 @@ var accordion = $.widget( "ui.accordion", {
 
 		this._destroyIcons();
 
-		// clean up content panels
+		// clean up manager panels
 		contents = this.headers.next()
-			.removeClass( "ui-helper-reset ui-widget-content ui-corner-bottom " +
-				"ui-accordion-content ui-accordion-content-active ui-state-disabled" )
+			.removeClass( "ui-helper-reset ui-widget-manager ui-corner-bottom " +
+				"ui-accordion-manager ui-accordion-manager-active ui-state-disabled" )
 			.css( "display", "" )
 			.removeAttr( "role" )
 			.removeAttr( "aria-hidden" )
@@ -6026,7 +6026,7 @@ var accordion = $.widget( "ui.accordion", {
 			.addClass( "ui-accordion-header ui-state-default ui-corner-all" );
 
 		this.panels = this.headers.next()
-			.addClass( "ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" )
+			.addClass( "ui-accordion-manager ui-helper-reset ui-widget-manager ui-corner-bottom" )
 			.filter( ":not(.ui-accordion-content-active)" )
 			.hide();
 
@@ -6047,7 +6047,7 @@ var accordion = $.widget( "ui.accordion", {
 			.addClass( "ui-accordion-header-active ui-state-active ui-corner-top" )
 			.removeClass( "ui-corner-all" );
 		this.active.next()
-			.addClass( "ui-accordion-content-active" )
+			.addClass( "ui-accordion-manager-active" )
 			.show();
 
 		this.headers
@@ -6219,7 +6219,7 @@ var accordion = $.widget( "ui.accordion", {
 
 			clicked
 				.next()
-				.addClass( "ui-accordion-content-active" );
+				.addClass( "ui-accordion-manager-active" );
 		}
 	},
 
@@ -6319,7 +6319,7 @@ var accordion = $.widget( "ui.accordion", {
 				step: function( now, fx ) {
 					fx.now = Math.round( now );
 					if ( fx.prop !== "height" ) {
-						if ( boxSizing === "content-box" ) {
+						if ( boxSizing === "manager-box" ) {
 							adjust += fx.now;
 						}
 					} else if ( that.options.heightStyle !== "content" ) {
@@ -6334,7 +6334,7 @@ var accordion = $.widget( "ui.accordion", {
 		var toHide = data.oldPanel;
 
 		toHide
-			.removeClass( "ui-accordion-content-active" )
+			.removeClass( "ui-accordion-manager-active" )
 			.prev()
 				.removeClass( "ui-corner-top" )
 				.addClass( "ui-corner-all" );
@@ -6390,7 +6390,7 @@ var menu = $.widget( "ui.menu", {
 		this.mouseHandled = false;
 		this.element
 			.uniqueId()
-			.addClass( "ui-menu ui-widget ui-widget-content" )
+			.addClass( "ui-menu ui-widget ui-widget-manager" )
 			.toggleClass( "ui-menu-icons", !!this.element.find( ".ui-icon" ).length )
 			.attr({
 				role: this.options.role,
@@ -6489,7 +6489,7 @@ var menu = $.widget( "ui.menu", {
 		this.element
 			.removeAttr( "aria-activedescendant" )
 			.find( ".ui-menu" ).addBack()
-				.removeClass( "ui-menu ui-widget ui-widget-content ui-menu-icons ui-front" )
+				.removeClass( "ui-menu ui-widget ui-widget-manager ui-menu-icons ui-front" )
 				.removeAttr( "role" )
 				.removeAttr( "tabIndex" )
 				.removeAttr( "aria-labelledby" )
@@ -6517,7 +6517,7 @@ var menu = $.widget( "ui.menu", {
 			});
 
 		// Destroy menu dividers
-		this.element.find( ".ui-menu-divider" ).removeClass( "ui-menu-divider ui-widget-content" );
+		this.element.find( ".ui-menu-divider" ).removeClass( "ui-menu-divider ui-widget-manager" );
 	},
 
 	_keydown: function( event ) {
@@ -6620,7 +6620,7 @@ var menu = $.widget( "ui.menu", {
 
 		// Initialize nested menus
 		submenus.filter( ":not(.ui-menu)" )
-			.addClass( "ui-menu ui-widget ui-widget-content ui-front" )
+			.addClass( "ui-menu ui-widget ui-widget-manager ui-front" )
 			.hide()
 			.attr({
 				role: this.options.role,
@@ -6647,7 +6647,7 @@ var menu = $.widget( "ui.menu", {
 		items.not( ".ui-menu-item" ).each(function() {
 			var item = $( this );
 			if ( that._isDivider( item ) ) {
-				item.addClass( "ui-widget-content ui-menu-divider" );
+				item.addClass( "ui-widget-manager ui-menu-divider" );
 			}
 		});
 
@@ -6970,7 +6970,7 @@ var menu = $.widget( "ui.menu", {
 		return this.activeMenu
 			.find( this.options.items )
 
-			// Only match on items, not dividers or other content (#10571)
+			// Only match on items, not dividers or other manager (#10571)
 			.filter( ".ui-menu-item" )
 			.filter(function() {
 				return regex.test( $.trim( $( this ).text() ) );
@@ -8118,7 +8118,7 @@ function Datepicker() {
 	$.extend(this._defaults, this.regional[""]);
 	this.regional.en = $.extend( true, {}, this.regional[ "" ]);
 	this.regional[ "en-US" ] = $.extend( true, {}, this.regional.en );
-	this.dpDiv = datepicker_bindHover($("<div id='" + this._mainDivId + "' class='ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all'></div>"));
+	this.dpDiv = datepicker_bindHover($("<div id='" + this._mainDivId + "' class='ui-datepicker ui-widget ui-widget-manager ui-helper-clearfix ui-corner-all'></div>"));
 }
 
 $.extend(Datepicker.prototype, {
@@ -8171,7 +8171,7 @@ $.extend(Datepicker.prototype, {
 			drawMonth: 0, drawYear: 0, // month being drawn
 			inline: inline, // is datepicker inline or not
 			dpDiv: (!inline ? this.dpDiv : // presentation div
-			datepicker_bindHover($("<div class='" + this._inlineClass + " ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all'></div>")))};
+			datepicker_bindHover($("<div class='" + this._inlineClass + " ui-datepicker ui-widget ui-widget-manager ui-helper-clearfix ui-corner-all'></div>")))};
 	},
 
 	/* Attach the date picker to an input field. */
@@ -8774,7 +8774,7 @@ $.extend(Datepicker.prototype, {
 		}
 	},
 
-	/* Generate the date picker content. */
+	/* Generate the date picker manager. */
 	_updateDatepicker: function(inst) {
 		this.maxRows = 4; //Reset the max number of rows being displayed (see #7043)
 		datepicker_instActive = inst; // for delegate hover events
@@ -9670,7 +9670,7 @@ $.extend(Datepicker.prototype, {
 		controls = (!inst.inline ? "<button type='button' class='ui-datepicker-close ui-state-default ui-priority-primary ui-corner-all' data-handler='hide' data-event='click'>" +
 			this._get(inst, "closeText") + "</button>" : "");
 
-		buttonPanel = (showButtonPanel) ? "<div class='ui-datepicker-buttonpane ui-widget-content'>" + (isRTL ? controls : "") +
+		buttonPanel = (showButtonPanel) ? "<div class='ui-datepicker-buttonpane ui-widget-manager'>" + (isRTL ? controls : "") +
 			(this._isInRange(inst, gotoDate) ? "<button type='button' class='ui-datepicker-current ui-state-default ui-priority-secondary ui-corner-all' data-handler='today' data-event='click'" +
 			">" + currentText + "</button>" : "") + (isRTL ? "" : controls) + "</div>" : "";
 
@@ -10156,7 +10156,7 @@ var dialog = $.widget( "ui.dialog", {
 		this.element
 			.show()
 			.removeAttr( "title" )
-			.addClass( "ui-dialog-content ui-widget-content" )
+			.addClass( "ui-dialog-manager ui-widget-manager" )
 			.appendTo( this.uiDialog );
 
 		this._createTitlebar();
@@ -10197,7 +10197,7 @@ var dialog = $.widget( "ui.dialog", {
 
 		this.element
 			.removeUniqueId()
-			.removeClass( "ui-dialog-content ui-widget-content" )
+			.removeClass( "ui-dialog-manager ui-widget-manager" )
 			.css( this.originalCss )
 			// Without detaching first, the following becomes really slow
 			.detach();
@@ -10328,7 +10328,7 @@ var dialog = $.widget( "ui.dialog", {
 		// Set focus to the first match:
 		// 1. An element that was focused previously
 		// 2. First element inside the dialog matching [autofocus]
-		// 3. Tabbable element inside the content element
+		// 3. Tabbable element inside the manager element
 		// 4. Tabbable element inside the buttonpane
 		// 5. The close button
 		// 6. The dialog itself
@@ -10370,7 +10370,7 @@ var dialog = $.widget( "ui.dialog", {
 
 	_createWrapper: function() {
 		this.uiDialog = $("<div>")
-			.addClass( "ui-dialog ui-widget ui-widget-content ui-corner-all ui-front " +
+			.addClass( "ui-dialog ui-widget ui-widget-manager ui-corner-all ui-front " +
 				this.options.dialogClass )
 			.hide()
 			.attr({
@@ -10417,8 +10417,8 @@ var dialog = $.widget( "ui.dialog", {
 		});
 
 		// We assume that any existing aria-describedby attribute means
-		// that the dialog content is marked up properly
-		// otherwise we brute force the content as the description
+		// that the dialog manager is marked up properly
+		// otherwise we brute force the manager as the description
 		if ( !this.element.find( "[aria-describedby]" ).length ) {
 			this.uiDialog.attr({
 				"aria-describedby": this.element.uniqueId().attr( "id" )
@@ -10544,7 +10544,7 @@ var dialog = $.widget( "ui.dialog", {
 		}
 
 		this.uiDialog.draggable({
-			cancel: ".ui-dialog-content, .ui-dialog-titlebar-close",
+			cancel: ".ui-dialog-manager, .ui-dialog-titlebar-close",
 			handle: ".ui-dialog-titlebar",
 			containment: "document",
 			start: function( event, ui ) {
@@ -10593,7 +10593,7 @@ var dialog = $.widget( "ui.dialog", {
 		}
 
 		this.uiDialog.resizable({
-			cancel: ".ui-dialog-content",
+			cancel: ".ui-dialog-manager",
 			containment: "document",
 			alsoResize: this.element,
 			maxWidth: options.maxWidth,
@@ -10776,12 +10776,12 @@ var dialog = $.widget( "ui.dialog", {
 	},
 
 	_size: function() {
-		// If the user has resized the dialog, the .ui-dialog and .ui-dialog-content
+		// If the user has resized the dialog, the .ui-dialog and .ui-dialog-manager
 		// divs will both have width and height set, so we need to reset them
 		var nonContentHeight, minContentHeight, maxContentHeight,
 			options = this.options;
 
-		// Reset content sizing
+		// Reset manager sizing
 		this.element.show().css({
 			width: "auto",
 			minHeight: 0,
@@ -10794,7 +10794,7 @@ var dialog = $.widget( "ui.dialog", {
 		}
 
 		// reset wrapper sizing
-		// determine the height of all the non-content elements
+		// determine the height of all the non-manager elements
 		nonContentHeight = this.uiDialog.css({
 				height: "auto",
 				width: options.width
@@ -10945,7 +10945,7 @@ var progressbar = $.widget( "ui.progressbar", {
 		this.oldValue = this.options.value = this._constrainedValue();
 
 		this.element
-			.addClass( "ui-progressbar ui-widget ui-widget-content ui-corner-all" )
+			.addClass( "ui-progressbar ui-widget ui-widget-manager ui-corner-all" )
 			.attr({
 				// Only set static values, aria-valuenow and aria-valuemax are
 				// set inside _refreshValue()
@@ -10961,7 +10961,7 @@ var progressbar = $.widget( "ui.progressbar", {
 
 	_destroy: function() {
 		this.element
-			.removeClass( "ui-progressbar ui-widget ui-widget-content ui-corner-all" )
+			.removeClass( "ui-progressbar ui-widget ui-widget-manager ui-corner-all" )
 			.removeAttr( "role" )
 			.removeAttr( "aria-valuemin" )
 			.removeAttr( "aria-valuemax" )
@@ -11711,7 +11711,7 @@ var slider = $.widget( "ui.slider", $.ui.mouse, {
 			.addClass( "ui-slider" +
 				" ui-slider-" + this.orientation +
 				" ui-widget" +
-				" ui-widget-content" +
+				" ui-widget-manager" +
 				" ui-corner-all");
 
 		this._refresh();
@@ -11814,7 +11814,7 @@ var slider = $.widget( "ui.slider", $.ui.mouse, {
 				" ui-slider-horizontal" +
 				" ui-slider-vertical" +
 				" ui-widget" +
-				" ui-widget-content" +
+				" ui-widget-manager" +
 				" ui-corner-all" );
 
 		this._mouseDestroy();
@@ -12603,7 +12603,7 @@ var spinner = $.widget( "ui.spinner", {
 	},
 
 	_uiSpinnerHtml: function() {
-		return "<span class='ui-spinner ui-widget ui-widget-content ui-corner-all'></span>";
+		return "<span class='ui-spinner ui-widget ui-widget-manager ui-corner-all'></span>";
 	},
 
 	_buttonHtml: function() {
@@ -12923,7 +12923,7 @@ var tabs = $.widget( "ui.tabs", {
 		this.running = false;
 
 		this.element
-			.addClass( "ui-tabs ui-widget ui-widget-content ui-corner-all" )
+			.addClass( "ui-tabs ui-widget ui-widget-manager ui-corner-all" )
 			.toggleClass( "ui-tabs-collapsible", options.collapsible );
 
 		this._processTabs();
@@ -13307,7 +13307,7 @@ var tabs = $.widget( "ui.tabs", {
 		});
 
 		this.panels
-			.addClass( "ui-tabs-panel ui-widget-content ui-corner-bottom" )
+			.addClass( "ui-tabs-panel ui-widget-manager ui-corner-bottom" )
 			.attr( "role", "tabpanel" );
 
 		// Avoid memory leaks (#10056)
@@ -13561,7 +13561,7 @@ var tabs = $.widget( "ui.tabs", {
 			this.xhr.abort();
 		}
 
-		this.element.removeClass( "ui-tabs ui-widget ui-widget-content ui-corner-all ui-tabs-collapsible" );
+		this.element.removeClass( "ui-tabs ui-widget ui-widget-manager ui-corner-all ui-tabs-collapsible" );
 
 		this.tablist
 			.removeClass( "ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" )
@@ -13581,7 +13581,7 @@ var tabs = $.widget( "ui.tabs", {
 			} else {
 				$( this )
 					.removeClass( "ui-state-default ui-state-active ui-state-disabled " +
-						"ui-corner-top ui-corner-bottom ui-widget-content ui-tabs-active ui-tabs-panel" )
+						"ui-corner-top ui-corner-bottom ui-widget-manager ui-tabs-active ui-tabs-panel" )
 					.removeAttr( "tabIndex" )
 					.removeAttr( "aria-live" )
 					.removeAttr( "aria-busy" )
@@ -13964,10 +13964,10 @@ var tooltip = $.widget( "ui.tooltip", {
 		}
 
 		// Content can be updated multiple times. If the tooltip already
-		// exists, then just update the content and bail.
+		// exists, then just update the manager and bail.
 		tooltipData = this._find( target );
 		if ( tooltipData ) {
-			tooltipData.tooltip.find( ".ui-tooltip-content" ).html( content );
+			tooltipData.tooltip.find( ".ui-tooltip-manager" ).html( content );
 			return;
 		}
 
@@ -13989,7 +13989,7 @@ var tooltip = $.widget( "ui.tooltip", {
 		tooltipData = this._tooltip( target );
 		tooltip = tooltipData.tooltip;
 		this._addDescribedBy( target, tooltip.attr( "id" ) );
-		tooltip.find( ".ui-tooltip-content" ).html( content );
+		tooltip.find( ".ui-tooltip-manager" ).html( content );
 
 		// Support: Voiceover on OS X, JAWS on IE <= 9
 		// JAWS announces deletions even when aria-relevant="additions"
@@ -14078,7 +14078,7 @@ var tooltip = $.widget( "ui.tooltip", {
 		if ( !tooltipData ) {
 
 			// We set ui-tooltip-open immediately upon open (in open()), but only set the
-			// additional data once there's actually content to show (in _open()). So even if the
+			// additional data once there's actually manager to show (in _open()). So even if the
 			// tooltip doesn't have full data, we always remove ui-tooltip-open in case we're in
 			// the period between open() and _open().
 			target.removeData( "ui-tooltip-open" );
@@ -14136,12 +14136,12 @@ var tooltip = $.widget( "ui.tooltip", {
 	_tooltip: function( element ) {
 		var tooltip = $( "<div>" )
 				.attr( "role", "tooltip" )
-				.addClass( "ui-tooltip ui-widget ui-corner-all ui-widget-content " +
+				.addClass( "ui-tooltip ui-widget ui-corner-all ui-widget-manager " +
 					( this.options.tooltipClass || "" ) ),
 			id = tooltip.uniqueId().attr( "id" );
 
 		$( "<div>" )
-			.addClass( "ui-tooltip-content" )
+			.addClass( "ui-tooltip-manager" )
 			.appendTo( tooltip );
 
 		tooltip.appendTo( this.document[0].body );
@@ -15177,7 +15177,7 @@ $.extend( $.effects, {
 			active = document.activeElement;
 
 		// support: Firefox
-		// Firefox incorrectly exposes anonymous content
+		// Firefox incorrectly exposes anonymous manager
 		// https://bugzilla.mozilla.org/show_bug.cgi?id=561664
 		try {
 			active.id;
@@ -16126,7 +16126,7 @@ var effectSize = $.effects.effect.size = function( o, done ) {
 		}
 	}
 
-	// Scale the content
+	// Scale the manager
 	if ( scale === "content" || scale === "both" ) {
 
 		// Vertical props scaling

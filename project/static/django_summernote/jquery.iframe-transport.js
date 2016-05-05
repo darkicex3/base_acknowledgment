@@ -94,7 +94,7 @@
                                     response = undefined;
                                 }
                                 // The complete callback returns the
-                                // iframe content document as response object:
+                                // iframe manager document as response object:
                                 completeCallback(
                                     200,
                                     'success',
@@ -181,7 +181,7 @@
         }
     });
 
-    // The iframe transport returns the iframe content document as response.
+    // The iframe transport returns the iframe manager document as response.
     // The following adds converters from iframe to text, json, html, xml
     // and script.
     // Please note that the Content-Type for JSON responses has to be text/plain

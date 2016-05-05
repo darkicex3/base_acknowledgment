@@ -15,6 +15,6 @@ function get_shortcuts() {
 }
 
 function shortcut(key, name, icon, static_shortcut ) {
-    return '<span id="' + key + '" hidden="hidden">' + key + '</span>' + '<li id="' + name + '"class="static_category ui-widget-content">'+
+    return '<span id="' + key + '" hidden="hidden">' + key + '</span>' + '<li id="' + name + '"class="static_category ui-widget-manager">'+
         '<a class="shortcuts-link"><i class="material-icons md-18 width18 color_base">' + icon + '</i>' + name + '</a></li>'
 }

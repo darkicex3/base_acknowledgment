@@ -5,7 +5,8 @@ from apps.article import views
 
 urlpatterns = [
     url(r'^search/', include('haystack.urls')),
-    url(r'^search_titles/', views.search_titles, name='ajax_search_view'),
+    url(r'^searching/', views.articles_search, name='articles_search_view'),
+    url(r'^test_searching/', views.index_search, name='test_search_view'),
     url(r'^set_favorites/', views.SetLikedView.as_view(), name='set_liked_view'),
     url(r'^set_useful/', views.SetUsefulView.as_view(), name='set_useful_view'),
     url(r'^set_read/', views.SetReadView.as_view(), name='set_read_view'),

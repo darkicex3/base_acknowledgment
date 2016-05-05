@@ -44,7 +44,7 @@
             '<div class="webui-popover-inner">' +
             '<a href="#" class="close"></a>' +
             '<h3 class="webui-popover-title"></h3>' +
-            '<div class="webui-popover-content"><i class="icon-refresh"></i> <p>&nbsp;</p></div>' +
+            '<div class="webui-popover-manager"><i class="icon-refresh"></i> <p>&nbsp;</p></div>' +
             '</div>' +
             '</div>',
         backdrop: false,
@@ -295,7 +295,7 @@
                 elementPos = this.getElementPosition(),
                 //target postion
                 $target = this.getTarget().removeClass().addClass(pluginClass).addClass(this._customTargetClass),
-                //target content
+                //target manager
                 $targetContent = this.getContentElement(),
                 //target Width
                 targetWidth = $target[0].offsetWidth,
@@ -395,7 +395,7 @@
                 var $arrow = this.$target.find('.arrow');
                 $arrow.removeAttr('style');
 
-                //prevent arrow change by content size
+                //prevent arrow change by manager size
                 if (placement === 'left' || placement === 'right') {
                     $arrow.css({
                         top: this.$target.height() / 2
@@ -444,7 +444,7 @@
         },
         getContentElement: function() {
             if (!this.$contentElement) {
-                this.$contentElement = this.getTarget().find('.' + pluginClass + '-content');
+                this.$contentElement = this.getTarget().find('.' + pluginClass + '-manager');
             }
             return this.$contentElement;
         },
@@ -539,7 +539,7 @@
                                 this.content.show();
                             }
                         } catch (error) {
-                            throw new Error('Unable to get popover content. Invalid selector specified.');
+                            throw new Error('Unable to get popover manager. Invalid selector specified.');
                         }
                         break;
                 }
@@ -550,11 +550,11 @@
                 } else {
                     content = this.options.content;
                 }
-                this.content = this.$element.attr('data-content') || content;
+                this.content = this.$element.attr('data-manager') || content;
                 if (!this.content) {
                     var $next = this.$element.next();
 
-                    if ($next && $next.hasClass(pluginClass + '-content')) {
+                    if ($next && $next.hasClass(pluginClass + '-manager')) {
                         this.content = $next;
                     }
                 }
@@ -567,7 +567,7 @@
             if (typeof content === 'string') {
                 $ct.html(content);
             } else if (content instanceof jQuery) {
-                content.removeClass(pluginClass + '-content');
+                content.removeClass(pluginClass + '-manager');
                 $ct.html('');
                 content.appendTo($ct);
             }

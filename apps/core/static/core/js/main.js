@@ -1,12 +1,43 @@
 jQuery(document).ready(function ($) {
     
-    get_shortcuts();
+    get_shortcuts(undefined);
     get_articles('Home', $(this));
     action_acticle('#favorite', 'favorite', 'favorite_border', SET_FAVORITE, 'favorite');
     action_acticle('#note', 'useful', 'color_bigup', SET_USEFUL, '');
 
 
-    $('body').on('click', '.static_category', function (e) {
+
+
+
+
+    $('body').on({
+        mouseenter: function() {
+            console.log(getCookie('csrftoken'));
+            if ($('#search_bar input[name=\'csrfmiddlewaretoken\']').attr('value') != getCookie('csrftoken'))
+                alert('gffgdzgfxhg');
+
+            var width = ($(this).width() / 2) - 9;
+            $(this).find('.add-tags').css({'left': width}).show(100);
+        },
+        mouseleave: function() {
+            $(this).find('.add-tags').hide();
+        }
+    }, '.bookmarkBadge');
+
+    // $('body').on('mouseout', '.bookmarkBadge', function (e) {
+    //     $(this).children('.action-badge').stop().hide(100);
+    // });
+
+    $('body').on('click', '.shortcuts-link', function (e) {
+        var selector = $(this).parent().children('.children');
+
+        if (selector.text() != '')
+            $(this).parent().children('.children').slideUp(200, function () {
+                $(this).empty();
+            });
+        else {
+            get_shortcuts($(this));
+        }
         get_articles(undefined, $(this));
     });
 
@@ -24,14 +55,11 @@ jQuery(document).ready(function ($) {
 
     $(window).resize(function (e) {
         resize_article('.article');
-
         resize_article('.mini-article .list');
     });
 
     $('body').on('click', '.bookmarkLink', function (e) {
-        var text = $(this).text();
-        console.log(text);
-        $('#search_bar input').attr('placeholder','').empty().css('background', '#3498db').css('font-size','18pt').css('color', '#fff !important').val(text);
+        $('#search_bar input').attr('placeholder','').empty().css('background', '#3498db').css('font-size','18pt').css('color', '#fff !important').val('#'+$(this).text());
         $('#search_categories').empty().css('background', '#3498db');
         $('#search_sorting').css('background', '#3498db').find('.sorting').attr('class', 'sorting material-icons color_white md-36 first-item');
         get_articles(undefined, $(this), 'tags');
@@ -42,7 +70,6 @@ jQuery(document).ready(function ($) {
         $('#search_categories').removeAttr('style');
         $('#search_sorting').removeAttr('style').find('.sorting').attr('class', 'material-icons color_base md-36 first-item');
         $(this).attr('placeholder','What are you looking for ?');
-
     });
 
 

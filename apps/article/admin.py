@@ -3,7 +3,7 @@ from django_mptt_admin.admin import DjangoMpttAdmin
 from django_summernote.admin import SummernoteModelAdmin
 from django.contrib import admin
 from attachments.admin import AttachmentInlines
-from apps.article.models import Category, Article, Feedback, Shortcut, UserArticle, FeedbackManager, Comment
+from apps.article.models import Category, Article, Feedback, ShortcutManager, FeedbackManager, Comment
 
 
 class CategoryAdmin(DjangoMpttAdmin):
@@ -14,9 +14,11 @@ class ShortcutStructure(DjangoMpttAdmin):
     pass
 
 
-class ShortcutTree(Shortcut):
+class Shortcut(ShortcutManager):
     class Meta:
         proxy = True
+        # verbose_name = "Shortcut"
+        # verbose_name_plural = "Shorcuts"
 
 
 def make_published(modeladmin, request, queryset):
@@ -80,7 +82,7 @@ class ArticleAdmin(SummernoteModelAdmin, admin.ModelAdmin):
                     'status']
     list_editable = ['status']
     list_filter = ['modified', 'publish_date', 'status']
-    search_fields = ['title', 'content', 'description']
+    search_fields = ['title', 'manager', 'description']
     inlines = (AttachmentInlines,)
 
     ordering = ['title']
@@ -97,10 +99,9 @@ class ShortcutAdmin(admin.ModelAdmin):
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Article, ArticleAdmin)
 admin.site.register(Feedback)
-admin.site.register(FeedbackManager)
 admin.site.register(Comment)
-admin.site.register(Shortcut, ShortcutAdmin)
-admin.site.register(ShortcutTree, ShortcutStructure)
-admin.site.register(UserArticle)
+admin.site.register(Shortcut, ShortcutStructure)
+admin.site.register(ShortcutManager, ShortcutAdmin)
+admin.site.register(FeedbackManager)
 
 

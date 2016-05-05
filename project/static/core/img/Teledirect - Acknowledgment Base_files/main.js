@@ -49,14 +49,14 @@ jQuery(document).ready(function ($) {
 
     $('.article-view').click(function (e) {
         $('.mini-article').css('transition', 'all 500ms');
-        $('.mini-article .content').hide();
+        $('.mini-article .manager').hide();
         $('.mini-article #title').css({'font-size':'12pt'});
         resize_article('.mini-article');
     });
 
     $('.list-view').click(function (e) {
         $('.mini-article').css('transition', 'none');
-        $('.mini-article .content').show();
+        $('.mini-article .manager').show();
         $('.mini-article #title').css({'font-size':'20pt'});
         $('.mini-article').css('width','588px');
 

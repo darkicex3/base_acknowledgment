@@ -6034,7 +6034,7 @@ function cloneFixAttributes( src, dest ) {
 
 	// IE6-8 fail to clone children inside object elements that use
 	// the proprietary classid attribute value (rather than the type
-	// attribute) to identify the type of content to display
+	// attribute) to identify the type of manager to display
 	if ( nodeName === "object" ) {
 		dest.outerHTML = src.outerHTML;
 
@@ -7276,7 +7276,7 @@ jQuery.extend({
 					return match === undefined ? null : match;
 				},
 
-				// Overrides response content-type header
+				// Overrides response manager-type header
 				overrideMimeType: function( type ) {
 					if ( !state ) {
 						s.mimeType = type;
@@ -7467,7 +7467,7 @@ jQuery.extend({
 		// Uppercase the type
 		s.type = s.type.toUpperCase();
 
-		// Determine if request has content
+		// Determine if request has manager
 		s.hasContent = !rnoContent.test( s.type );
 
 		// Watch for a new set of requests
@@ -7475,7 +7475,7 @@ jQuery.extend({
 			jQuery.event.trigger( "ajaxStart" );
 		}
 
-		// More options handling for requests with no content
+		// More options handling for requests with no manager
 		if ( !s.hasContent ) {
 
 			// If data is available, append data to url
@@ -7660,7 +7660,7 @@ jQuery.extend({
 
 /* Handles responses to an ajax request:
  * - sets all responseXXX fields accordingly
- * - finds the right dataType (mediates between content-type and expected dataType)
+ * - finds the right dataType (mediates between manager-type and expected dataType)
  * - returns the corresponding response
  */
 function ajaxHandleResponses( s, jqXHR, responses ) {
@@ -7680,15 +7680,15 @@ function ajaxHandleResponses( s, jqXHR, responses ) {
 		}
 	}
 
-	// Remove auto dataType and get content-type in the process
+	// Remove auto dataType and get manager-type in the process
 	while( dataTypes[ 0 ] === "*" ) {
 		dataTypes.shift();
 		if ( ct === undefined ) {
-			ct = s.mimeType || jqXHR.getResponseHeader( "content-type" );
+			ct = s.mimeType || jqXHR.getResponseHeader( "manager-type" );
 		}
 	}
 
-	// Check if we're dealing with a known content-type
+	// Check if we're dealing with a known manager-type
 	if ( ct ) {
 		for ( type in contents ) {
 			if ( contents[ type ] && contents[ type ].test( ct ) ) {
@@ -8668,7 +8668,7 @@ jQuery.fx.prototype = {
 		this.options.show = true;
 
 		// Begin the animation
-		// Make sure that we start at a small width/height to avoid any flash of content
+		// Make sure that we start at a small width/height to avoid any flash of manager
 		if ( dataShow !== undefined ) {
 			// This show is picking up where a previous hide or show left off
 			this.custom( this.cur(), dataShow );

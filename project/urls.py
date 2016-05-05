@@ -22,7 +22,7 @@ urlpatterns = [
     url('^inbox/notifications/', include(notifications.urls, namespace='notifications')),
     url(r'^attachments/', include('attachments.urls', namespace='attachments')),
     url(r'^summernote/', include('django_summernote.urls')),
-    url(r'^content/', include('apps.content.urls', namespace='contents')),
+    url(r'^manager/', include('apps.manager.urls', namespace='contents')),
     url(r'^article/', include('apps.article.urls', namespace='articles')),
     url(r'^users/', include('apps.users.urls', namespace='users')),
     url(r'^', include('apps.core.urls', namespace='core')),

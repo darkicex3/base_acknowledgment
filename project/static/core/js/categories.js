@@ -42,8 +42,8 @@ jQuery(document).ready(function ($) {
         $('.Categories').slideDown(slideSpeed);
     });
 
-    //on .webui-popover-content li click event
-    $('body').on('click', '.webui-popover-content li', function (event) {
+    //on .webui-popover-manager li click event
+    $('body').on('click', '.webui-popover-manager li', function (event) {
         event.preventDefault();
 
         //show categories section
@@ -85,7 +85,7 @@ jQuery(document).ready(function ($) {
         );
     });
 
-    //render the content
+    //render the manager
     $('.right').click(function () {
         selector = $('.guidesContainer');
         var position = selector.position();
@@ -115,7 +115,7 @@ jQuery(document).ready(function ($) {
     $(document).mouseup(function (e) {
         var container = $('.Categories');
         var header = $('header');
-        var popover = $('.webui-popover-content');
+        var popover = $('.webui-popover-manager');
 
         if (!container.is(e.target) && container.has(e.target).length === 0 && !header.is(e.target) && header.has(e.target).length === 0 && !popover.is(e.target) && popover.has(e.target).length === 0)
             container.slideUp(slideSpeed);

@@ -1075,7 +1075,7 @@ a.login-url:active, .login_button:active{
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     border-radius: 3px; /* border radius */
-    background-color: #e73f2e; /* layer fill content */
+    background-color: #e73f2e; /* layer fill manager */
 }
 
 #run_pump_setup {
@@ -1332,7 +1332,7 @@ a.login-url:active, .login_button:active{
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
     border-radius: 10px; /* border radius */
-    background-color: #f3f5f9; /* layer fill content */
+    background-color: #f3f5f9; /* layer fill manager */
     text-decoration: none;
     color: #6f7d95;
     line-height: 20px;
@@ -1643,7 +1643,7 @@ ul.q-f-sort li a:hover {
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     border-radius: 3px; /* border radius */
-    background-color: #00adef; /* layer fill content */
+    background-color: #00adef; /* layer fill manager */
 
 }
 
@@ -1889,7 +1889,7 @@ ul.article-tags li {
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     border-radius: 3px; /* border radius */
-    background-color: #e73f2e; /* layer fill content */
+    background-color: #e73f2e; /* layer fill manager */
 }
 
 .article-main-content .vote-block span.btn-time-content,
@@ -1922,7 +1922,7 @@ ul.article-tags li {
     -moz-border-radius: 13px;
     -webkit-border-radius: 13px;
     border-radius: 13px; /* border radius */
-    background-color: #1abc9c; /* layer fill content */
+    background-color: #1abc9c; /* layer fill manager */
     margin-right: 20px;
 
 }
@@ -1931,7 +1931,7 @@ ul.article-tags li {
     -moz-border-radius: 13px;
     -webkit-border-radius: 13px;
     border-radius: 13px; /* border radius */
-    background-color: #f39b11; /* layer fill content */
+    background-color: #f39b11; /* layer fill manager */
 
 }
 
@@ -2071,7 +2071,7 @@ a.hide-comment {
 .paginations ul li a:hover,
 .paginations ul li span.current {
     color: #fff;
-    background-color: #e73f2e; /* layer fill content */
+    background-color: #e73f2e; /* layer fill manager */
 
 }
 
@@ -2104,7 +2104,7 @@ ul.answers-pagination {
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     border-radius: 3px; /* border radius */
-    background-color: #e73f2e; /* layer fill content */
+    background-color: #e73f2e; /* layer fill manager */
     font-size: 14px;
     font-weight: 700;
 

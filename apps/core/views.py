@@ -6,6 +6,7 @@ from django.views.generic import View
 from django.contrib.auth.models import User
 from haystack.query import SearchQuerySet
 
+
 def index(request):
     return render(request, 'core/home.html')
 

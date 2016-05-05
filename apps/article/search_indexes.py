@@ -51,10 +51,14 @@ class ArticleIndex(indexes.SearchIndex, indexes.Indexable):
     categories = indexes.MultiValueField()
 
     publish_date = indexes.DateTimeField(model_attr='publish_date')
+    modified = indexes.DateTimeField(model_attr='modified')
 
-    content_auto = indexes.EdgeNgramField(model_attr='title')
+    title_auto = indexes.EdgeNgramField(model_attr='title')
     # content_auto_content = indexes.EdgeNgramField(model_attr='content')
     # content_auto_description = indexes.EdgeNgramField(model_attr='description')
+
+    def prepare_title_auto(self, object):
+        return object.title.lower()
 
     def prepare_categories(self, obj):
         return [category.pk for category in obj.categories.all()]

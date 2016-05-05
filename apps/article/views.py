@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from apps.article.models import Category, Article, Shortcut, UserArticle
+from apps.article.models import Category, Article, ShortcutManager, UserArticle
 from django.shortcuts import render_to_response
 from django.views.generic import View
 import datetime, calendar
@@ -7,12 +7,34 @@ from django.contrib.auth.decorators import login_required
 from haystack.query import SearchQuerySet
 from django.core.exceptions import ObjectDoesNotExist
 from attachments.models import Attachment
+from elasticsearch import exceptions
+from django.shortcuts import render_to_response
+from .forms import ArticlesSearchForm
+from django.shortcuts import render
+import simplejson as json
+from django.http import HttpResponse
+from haystack.query import SearchQuerySet
+
+# def search_titles(request):
+#     print(request.POST.get('search_text'))
+#     articles = SearchQuerySet().autocomplete(content_auto=request.POST.get('q', 'q'))
+#
+#     return render_to_response('base.html', {'articles': articles})
 
 
-def search_titles(request):
-    articles = SearchQuerySet().autocomplete(content_auto=request.POST.get('search_text', ''))
+def index_search(request):
+    return render(request, 'article/base.html')
 
-    return render_to_response('base.html', {'articles': articles})
+
+def articles_search(request):
+    sqs = SearchQuerySet().autocomplete(title_auto__startswith=request.GET.get('q', ''))[:5]
+    suggestions = [result.title for result in sqs]
+    # Make sure you return a JSON object, not a bare list.
+    # Otherwise, you could be vulnerable to an XSS attack.
+    the_data = json.dumps({
+        'results': suggestions
+    })
+    return HttpResponse(the_data, content_type='application/json')
 
 
 class GetCategoriesView(View):
@@ -32,7 +54,8 @@ class GetCategoriesView(View):
             else:
                 categories = node_category.get_previous_parent().get_children()
 
-        for category in categories: context.update({category.id: str(category.name)})
+        for category in categories:
+            context.update({category.id: str(category.name)})
 
         return JsonResponse(context)
 
@@ -186,7 +209,7 @@ class CreateShortcutView(View):
 
         context = {}
         shortcut_name = self.request.GET.get('shortcut_name')
-        shortcut = Shortcut.objects.create(name=shortcut_name)
+        shortcut = ShortcutManager.objects.create(name=shortcut_name)
 
         if shortcut:
             context['success'] = True
@@ -203,7 +226,7 @@ class AddArticleToShortcutView(View):
         shortcut_id = self.request.GET.get('shortcut_id')
 
         article = Article.objects.get(pk=article_id)
-        shortcut = Shortcut.objects.get(pk=shortcut_id)
+        shortcut = ShortcutManager.objects.get(pk=shortcut_id)
 
         if shortcut.articles.add(article):
             context['success'] = True
@@ -217,9 +240,9 @@ class ShowArticleFromShortcutView(View):
 
         context = {}
         shortcut_id = self.request.GET.get('shortcut_id')
-        shortcut = Shortcut.objects.get(pk=shortcut_id)
+        shortcut = ShortcutManager.objects.get(pk=shortcut_id)
 
-        for article in shortcut.articles.exclude(status='w').exclude(status='d'):
+        for article in ShortcutManager.articles.exclude(status='w').exclude(status='d'):
             context.update({article.id: {
                 'title': article.title,
                 'author': article.author,
@@ -243,68 +266,79 @@ class GetArticlesByStaticShortcutsView(View):
         get_by_tag = self.request.GET.get('get_articles_by_tags')
         current_user = self.request.user
 
+        try:
+            p = SearchQuerySet().models(Article).exclude(status='d').exclude(status='w')
+            q = p[0]
+        except IndexError:
+            print("INDEX ERROR")
+            context.update({'msg': 'No articles :( You can add or publish new ones from the '
+                                   '<a href="http://127.0.0.1:8000/admin" style="text-decoratio">admin interface</a> !'})
+            return JsonResponse(context)
+
+        # GET HOME ARTICLES BY USEFUL COUNTER
         if get_by == 'Home':
-            try:
-                articles = SearchQuerySet().models(Article).order_by('-useful_counter').exclude(status='d').exclude(status='w')
-            except ObjectDoesNotExist:
-                context.update({'msg': 'You don\'t have any articles ;('})
-                return JsonResponse(context)
+            articles = p.order_by('-useful_counter')
+        # GET MOST USED ARTICLES
         elif get_by == 'Most Used':
-            try:
-                articles = SearchQuerySet().models(Article).order_by('-useful_counter').exclude(status='d').exclude(status='w')
-            except ObjectDoesNotExist:
-                context.update({'msg': 'You don\'t have any articles ;('})
-                return JsonResponse(context)
+            articles = p.order_by('-useful_counter')
+        # GET MOST VIEWED ARTICLES
         elif get_by == 'Most Viewed':
-            try:
-                articles = SearchQuerySet().models(Article).order_by('-view_counter').exclude(status='d').exclude(status='w')
-            except ObjectDoesNotExist:
-                context.update({'msg': 'You don\'t have any articles ;('})
-                return JsonResponse(context)
+            articles = p.order_by('-view_counter')
+        # GET MOST LOVED ARTICLES
         elif get_by == 'Most Loved':
-            try:
-                articles = SearchQuerySet().models(Article).order_by('-favorite_counter').exclude(status='d').exclude(status='w')
-            except ObjectDoesNotExist:
-                context.update({'msg': 'You don\'t have any articles ;('})
-                return JsonResponse(context)
+            articles = p.order_by('-favorite_counter')
+        # GET LAST UPDATES
+        elif get_by == 'Last Updates':
+            for i in p.order_by('-modified'):
+                x = Article.objects.get(pk=i.__getattribute__('pk'))
+                if x.modified != x.publish_date:
+                    x.publish_date = x.modified
+                    articles.append(x)
+        # GET RECENT ARICLES
+        elif get_by == 'Recent':
+            articles = p.order_by('publish_date')
+        # GET FAVORITES FOR CURRENT USER
         elif get_by == 'Favorites':
             try:
                 ids = current_user.get_related_favorites()
                 for i in ids:
                     articles.append(Article.objects.get(id=i, status='p'))
-                p = articles[0]
+                print(articles[0])
             except ObjectDoesNotExist:
-                context.update({'msg': 'You don\'t have favorites ;('})
+                context.update({'msg': 'You do not like any item :('})
                 return JsonResponse(context)
             except IndexError:
-                context.update({'msg': 'You don\'t have favorites ;('})
+                context.update({'msg': 'You do not like any item :('})
                 return JsonResponse(context)
+        # GET HISTORIC FOR CURRENT USER
         elif get_by == 'Historic':
             try:
-                articles = current_user.get_related_articles_viewed()
+                ids = current_user.get_related_articles_viewed()
+                for i in ids:
+                    articles.append(Article.objects.get(id=i, status='p'))
+                print(articles[0])
             except ObjectDoesNotExist:
-                context.update({'msg': 'You don\'t visit an article for the moment ;('})
+                context.update({'msg': 'Nothing for the moment :( Visit an article !'})
                 return JsonResponse(context)
-        elif get_by == 'Last Update':
-            try:
-                articles = SearchQuerySet().models(Article).order_by('updated_at').exclude(status='d').exclude(status='w')
-            except ObjectDoesNotExist:
-                context.update({'msg': 'There isn\'t updates for the moment ;('})
+            except IndexError:
+                context.update({'msg': 'Nothing for the moment :( Visit an article !'})
                 return JsonResponse(context)
-        elif get_by == 'Recent':
-            try:
-                articles = SearchQuerySet().all().order_by('publish_date')
-            except ObjectDoesNotExist:
-                context.update({'msg': 'There isn\'t recent update for the moment ;('})
-                return JsonResponse(context)
+        # GET ARTICLES BY SHORTCUTS OR TAGS
         else:
+            # BY SHORTCUTS
             if get_by is not None:
                 try:
-                    p = Shortcut.objects.get(name=get_by)
+                    p = ShortcutManager.objects.get(name=get_by)
                     articles = p.articles.all()
                 except ObjectDoesNotExist:
-                    context.update({'msg': 'There isn\'t articles for the moment ;('})
+                    context.update({'msg': 'No articles :( You can add new '
+                                           'ones in <srtong>' + get_by + '</srtong> from admin interface !'})
                     return JsonResponse(context)
+                except IndexError:
+                    context.update({'msg': 'No articles :( You can add new '
+                                           'ones in <srtong>' + get_by + '</srtong> from admin interface !'})
+                    return JsonResponse(context)
+            # BY TAGS
             else:
                 try:
                     category = Category.objects.get(name=get_by_tag)
@@ -316,7 +350,12 @@ class GetArticlesByStaticShortcutsView(View):
                     if articles is None:
                         raise ObjectDoesNotExist
                 except ObjectDoesNotExist:
-                    context.update({'msg': 'There isn\'t articles for the moment ;('})
+                    context.update({'msg': 'There isn\'t articles with the tag'
+                                           ' <srtong>' + get_by_tag + '</srtong> for the moment :('})
+                    return JsonResponse(context)
+                except IndexError:
+                    context.update({'msg': 'There isn\'t articles with the tag'
+                                           ' <srtong>' + get_by_tag + '</srtong> for the moment :('})
                     return JsonResponse(context)
 
         key = 0
@@ -345,7 +384,17 @@ class GetArticlesByStaticShortcutsView(View):
 
             art = Article.objects.get(id=article.pk)
             for a in art.categories.all()[:4]:
-                    tags += '<a class="badge bookmarkLink" href="#">#' + a.name + '</a>'
+                    tags += '<span class="badge bookmarkBadge">#<span class="add-tags" style="display:none">' \
+                            '<i class="material-icons">add_circle</i>' \
+                            '</span><a id="' + a.name + '" class="bookmarkLink" href="#">' + a.name + \
+                            '</a></span>'
+
+            if get_by == 'Last Updates':
+                time = article.publish_date.strftime("%d %B %Y %H:%M")
+                update = 'ok'
+            else:
+                time = article.publish_date.strftime("%d %b %Y")
+                update = 'ko'
 
             key += 1
             context.update({key: {
@@ -353,7 +402,7 @@ class GetArticlesByStaticShortcutsView(View):
                 'title':    article.title,
                 'author':   str(article.author),
                 'desc':     article.description,
-                'pub_date': article.publish_date.strftime("%d %B"),
+                'pub_date': time,
                 'useful':   article.useful_counter,
                 'viewed':   article.view_counter,
                 'loved':    article.favorite_counter,
@@ -362,6 +411,7 @@ class GetArticlesByStaticShortcutsView(View):
                 'favorites': favorites,
                 'bigup': bigup,
                 'read': readed,
+                'last_update': update,
             }})
 
         return JsonResponse(context)

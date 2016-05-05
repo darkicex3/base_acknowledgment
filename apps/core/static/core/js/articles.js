@@ -4,10 +4,13 @@
 
 function get_articles(category, element, tags) {
     if (typeof category == 'undefined')
-        category = element.attr('id');
+        category = element.parent().attr('id');
 
-    if (typeof tags != 'undefined'){
-        tags = element.text();
+    if (typeof tags != 'undefined') {
+        if (tags == '#')
+            tags = element.attr('id');
+        else
+            tags = element.text();
     }
 
     console.log(tags);
@@ -16,10 +19,11 @@ function get_articles(category, element, tags) {
         {'get_articles_by': category, 'get_articles_by_tags':tags},
 
         function (data) {
+            var html;
             if (typeof (data['msg']) != 'undefined') {
-                var html = '<div style="width: 588px;font-size:20pt;">' + data['msg'] + '</div>';
+                html = '<div style="width: 588px;font-size:20pt;">' + data['msg'] + '</div>';
             } else {
-                var html = '';
+                html = '';
                 for (var key in data) {
                     html += mini_article(data[key]['id'],
                         data[key]['title'],
@@ -30,13 +34,15 @@ function get_articles(category, element, tags) {
                         data[key]['favorites'],
                         data[key]['read'],
                         data[key]['useful'],
-                        data[key]['bigup']);
+                        data[key]['bigup'],
+                        data[key]['last_update']);
                 }
 
             }
 
             $('#feed').empty().append(html);
-            Pace.restart()
+            Pace.restart();
+            
             resize_iframe();
             resize_img();
         }
@@ -80,7 +86,7 @@ function show_article(element) {
                                 data['attachements']);
 
             $('#feed').empty().append(html);
-            Pace.restart()
+            Pace.restart();
             resize_article('.article');
         }
     )
@@ -141,12 +147,19 @@ function article(key, title, author, content, verified_article, date_publish, vi
 }
 
 function mini_article(key, title, description, date_publish, favorite_counter,
-                      tags, favorites, read_article, useful_counter, bigup_article) {
+                      tags, favorites, read_article, useful_counter, bigup_article, last_update) {
+
+    var style1 = "position: absolute;display: inline-block;width: 27px;background-color: #2ecc71;border-radius: " +
+        "60px;left: -20px;top: -4px;padding: 2px;font-size: 17pt;color: white;transition: all 1s;";
+    var style = "font-size: 9pt;color: white;position: relative;top: -1px;padding: 1px 13px 0px 13px;background-color: " +
+        "#2ecc71;border-radius: 3px;left: -8px;transition: all 1s;";
 
     var favorite_icon = (favorites == 'ok' ? 'favorite' : 'favorite_border');
     var color_read = (read_article == 'ok' ? 'color_bigup' : 'color_base');
     var color_big = (bigup_article == 'ok' ? 'color_bigup' : 'color_base');
-
+    var icon_time = (last_update == 'ok' ? 'update' : 'schedule');
+    var style_update = (last_update == 'ok' ? style : '');
+    var style_update1 = (last_update == 'ok' ? style1 : '');
 
     return  '<div class="mini-article">' +
             '<span class="key" id="' + key + '" hidden="hidden">' + key + '</span>' +
@@ -156,10 +169,19 @@ function mini_article(key, title, description, date_publish, favorite_counter,
             '</header>' +
             '<div class="content"><p>' + description + '</p></div>' +
             '<footer class="footer-mini-article">' +
-            '<p id="pub_date"><i class="material-icons md-18 width18 color_base">schedule</i>' + date_publish + '</p>' +
-            '<p id="note" style="color: #95a5a6"><i class="useful material-icons md-18 width18 ' + color_big + '">thumb_up</i><span class="useful_counter">' + useful_counter + '</span></p>' +
-            '<p id="favorite" style="color: #95a5a6;margin-left: 20px;"><i class="favorite material-icons md-18 width18 color_base_favorite">' + favorite_icon + '</i><span class="favorite_counter">' + favorite_counter + '</span></p>' +
-            '<p id="bookmark" style="color: #95a5a6; float: right;"><i class="material-icons md-18 width18 color_base"></i>' + tags + '</p>' +
+            '<p id="pub_date" style="' + style_update + '"><i style="' + style_update1 + '" class="material-icons ' +
+        'md-18 width18 color_base">' + icon_time + '</i>' + date_publish + '</p>' +
+
+            '<p id="note" style="color: #95a5a6"><i class="useful material-icons ' +
+        'md-18 width18 ' + color_big + '">thumb_up</i><span class="useful_counter">' + useful_counter + '</span></p>' +
+
+            '<p id="favorite" style="color: #95a5a6;margin-left: 20px;"><i class="favorite material-icons ' +
+        'md-18 width18 color_base_favorite">' + favorite_icon + '</i><span class="favorite_counter">' +
+        '' + favorite_counter + '</span></p>' +
+
+            '<p id="bookmark" style="color: #95a5a6; float: right;"><i class="material-icons ' +
+        'md-18 width18 color_base"></i>' + tags + '</p>' +
+
             '</footer>' +
             '</div>'
 }

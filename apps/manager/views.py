@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from apps.article.models import Category, Article, Shortcut
+from apps.article.models import Category, Article, ShortcutManager
 from django.views.generic import View
 
 
@@ -7,7 +7,17 @@ class ManageSidebarShortcutsShowingView(View):
     def get(self, *args, **kwargs):
 
         context = {}
-        shortcuts = Shortcut.objects.all()
+        node_id = self.request.GET.get('node_id')
+        previous = self.request.GET.get('previous')
+
+        if node_id is None:
+            shortcuts = ShortcutManager.objects.all().filter(level=0)
+        else:
+            node_shortcut = ShortcutManager.objects.all().get(pk=node_id)
+            if previous == 'false':
+                shortcuts = node_shortcut.get_children()
+            else:
+                shortcuts = node_shortcut.get_previous_parent().get_children()
 
         for shortcut in shortcuts:
             if shortcut.activated:
@@ -26,7 +36,7 @@ class ManageSidebarShortcutsEditingView(View):
         context = {'success': True}
 
         for key, value in self.request.POST.items():
-            shortcut = Shortcut.objects.get(key)
+            shortcut = ShortcutManager.objects.get(key)
             shortcut.activated = value
 
         return JsonResponse(context)
@@ -37,7 +47,7 @@ class ManageSidebarShortcutsInsertingView(View):
 
         context = {}
         shortcut_name = self.request.POST('shortcut_name')
-        q = Shortcut.objects.create(shortcut_name=shortcut_name)
+        q = ShortcutManager.objects.create(shortcut_name=shortcut_name)
 
         if q:
             context.update({q.id: {'success': True}})

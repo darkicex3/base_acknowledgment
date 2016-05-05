@@ -37,12 +37,24 @@
 .material-icons.md-light { color: rgba(255, 255, 255, 1); }
 .material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
 
+.category {
+    cursor: pointer;
+}
+
 .material-icons{
     vertical-align: middle;
     position: relative;
     top: -3px;
     margin-right: 5px;
     color: #000;
+}
+
+.add-tags {
+    display: inline-block;
+    position: absolute;
+    top: -22px;
+    overflow: hidden;
+    padding: 1px;
 }
 
 .action-bar {
@@ -60,6 +72,29 @@
     border-radius: 1px;
     border-top: 2px #00adef solid;
     padding-bottom: 10px;
+}
+
+.update_time {
+    display: inline-block;
+    width: 31px;
+    background-color: #2ecc71;
+    border-radius: 60px;
+    left: -21px;
+    top: -5px;
+    padding: 3px;
+    font-size: 18pt;
+    color: white;
+    transition: all 1s;
+}
+
+.update_logo {
+    color: white;
+    position: relative;
+    top: -3px;padding: 1px 13px 0px 13px;
+    background-color: #2ecc71;
+    border-radius: 3px;
+    left: -8px;
+    transition: all 1s;
 }
 
 .list-view {
@@ -131,7 +166,8 @@ ul li {
     float: right;
 }
 
-.bookmarkLink {
+.bookmarkLink, .bookmarkBadge {
+    position: relative;
     color: white !important;
     font-size: 9pt !important;
     font-weight: normal !important;
@@ -148,6 +184,10 @@ ul li {
     width: 100%;
     margin: auto;
     overflow: hidden;
+}
+
+.content {
+
 }
 
 .feedback {
@@ -379,7 +419,7 @@ ul {
     transition: all 1s;
 }
 
-.content p {
+.content span {
     font-family: 'EB Garamond' !important;
     font-size: 18px;
     transition: all 500ms;

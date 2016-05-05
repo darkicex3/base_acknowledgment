@@ -21,7 +21,7 @@ class UserProfileForm(forms.ModelForm):
                     u'Please use an image that is '
                     '%s x %s pixels or smaller.' % (max_width, max_height))
 
-            # validate content type
+            # validate manager type
             main, sub = avatar.content_type.split('/')
             if not (main == 'image' and sub in ['jpeg', 'pjpeg', 'gif', 'png']):
                 raise forms.ValidationError(u'Please use a JPEG, '

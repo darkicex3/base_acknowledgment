@@ -82,7 +82,7 @@ INSTALLED_APPS = [
     'apps.core.apps.CoreConfig',
     'apps.users.apps.UsersConfig',
     'apps.article.apps.ArticleConfig',
-    'apps.content.apps.ContentConfig',
+    'apps.manager.apps.ManagerConfig',
 ]
 
 INSTALLED_APPS += ('django_summernote', )

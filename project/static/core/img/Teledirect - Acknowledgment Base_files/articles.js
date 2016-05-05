@@ -48,15 +48,15 @@ function resize_article(element) {
     var window_width = $(window).width();
     var article_width = window_width - menu_width;
     $(element).css({'width': article_width});
-    $('.content-article p').css({'font-family': '\'EB Garamond\' !important'});
+    $('.manager-article p').css({'font-family': '\'EB Garamond\' !important'});
 }
 
 function resize_iframe() {
-    $('.mini-article .content').find('iframe').attr('width', '555px').attr('height', '300px');
+    $('.mini-article .manager').find('iframe').attr('width', '555px').attr('height', '300px');
 }
 
 function resize_img() {
-    $('.mini-article .content').find('img').css({'width': '555px'});
+    $('.mini-article .manager').find('img').css({'width': '555px'});
 }
 
 function show_article(element) {
@@ -126,7 +126,7 @@ function article(key, title, author, content, verified_article, date_publish, vi
             // '<i class="material-icons expand_more md-24 width24">expand_more</i>' +
         '</div>' +
 
-        '<div class="content-article">' +
+        '<div class="manager-article">' +
         content +
         '</div>' +
 
@@ -154,7 +154,7 @@ function mini_article(key, title, description, date_publish, favorite_counter,
             '<a id="title">' + title + '</a>' +
             '<a id="secure"><i class="material-icons md-18 width18 ' + color_read + '">done_all</i></a>' +
             '</header>' +
-            '<div class="content"><p>' + description + '</p></div>' +
+            '<div class="manager"><p>' + description + '</p></div>' +
             '<footer class="footer-mini-article">' +
             '<p id="pub_date"><i class="material-icons md-18 width18 color_base">schedule</i>' + date_publish + '</p>' +
             '<p id="note" style="color: #95a5a6"><i class="useful material-icons md-18 width18 ' + color_big + '">thumb_up</i><span class="useful_counter">' + useful_counter + '</span></p>' +

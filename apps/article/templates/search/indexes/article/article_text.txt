@@ -1,7 +1,5 @@
-{{ object.text }}
 {{ object.title }}
 {{ object.author }}
-{{ object.keywords }}
 {{ object.description }}
 {{ object.content }}
 {{ object.publish_date }}

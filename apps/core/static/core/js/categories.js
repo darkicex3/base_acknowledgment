@@ -15,7 +15,7 @@ jQuery(document).ready(function ($) {
         content: function (data) {
             var html = '<ul>';
             for (var key in data) {
-                html += '<li>' + '<span id="key" hidden="hidden">'
+                html += '<li class="category">' + '<span id="key" hidden="hidden">'
                     + key + '</span>' + data[key] + '</li>';
             }
             html += '</ul>';
@@ -43,7 +43,7 @@ jQuery(document).ready(function ($) {
     });
 
     //on .webui-popover-content li click event
-    $('body').on('click', '.webui-popover-content li', function (event) {
+    $('body').on('click', '.category', function (event) {
         event.preventDefault();
 
         //show categories section
