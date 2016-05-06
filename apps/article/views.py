@@ -27,8 +27,26 @@ def index_search(request):
 
 
 def articles_search(request):
-    sqs = SearchQuerySet().autocomplete(title_auto__startswith=request.GET.get('q', ''))[:5]
-    suggestions = [result.title for result in sqs]
+
+    tags = request.GET.get('in')
+    sort = request.GET.get('by')
+    suggestions = []
+
+    sqs = SearchQuerySet().autocomplete(title_auto__startswith=request.GET.get('q'))
+
+    if sort != '':
+        sqs.order_by(sort)
+
+    if tags != '':
+        category = Category.objects.get(name=tags)
+        for i in sqs:
+            for a in i.categories:
+                tmp = Category.objects.get(pk=a)
+                if tmp.name == category.name:
+                    suggestions.append(i.title)
+    else:
+        suggestions = [result.title for result in sqs]
+
     # Make sure you return a JSON object, not a bare list.
     # Otherwise, you could be vulnerable to an XSS attack.
     the_data = json.dumps({
@@ -490,12 +508,18 @@ class ShowArticleView(View):
         return JsonResponse(context)
 
 
+class GetSortingMethodsView(View):
+    def get(self, *args, **kwargs):
+        context = {}
+
+        return JsonResponse(context)
 
 
+class GetPollsView(View):
+    def get(self, *args, **kwargs):
+        context = {}
 
-
-
-
+        return JsonResponse(context)
 
 
 

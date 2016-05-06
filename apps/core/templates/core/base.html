@@ -35,26 +35,27 @@
         <a href="#">
             <img src="{% static 'core/img/logo_base.jpg' %}" style="width: 180px">
         </a>
-    </div><!-- logo -->
+    </div><!-- logo teledirect -->
 
     <div class="col-md-8 col-xs-8" id="colSearchBar">
         <button class="search_section" type="button" id="search_categories"><i class="material-icons color_base md-36 first-item">more_horiz</i></button>
         <button class="search_section" type="button" id="search_sorting"><i class="sorting material-icons color_base md-36 first-item">sort</i></button>
 
-        <form id="search_bar" method="POST" action="{% url 'articles:ajax_search_view' %}">
+        <form id="search_bar" method="post" action="{% url 'articles:articles_search_view' %}" class="autocomplete-me">
             {% csrf_token %}
-            <input class="search_section" id="search_field" type="text" name="q" value=""
-                   placeholder="What are you looking for ?">
+            <input class="search_section" id="search_field"
+                   placeholder="What are you looking for ?" type="text" id="id_q" name="q">
+            <input type="hidden" value="Search!">
         </form>
-    </div><!-- search -->
+    </div><!-- autocomplete search, by categories, by sorting -->
 
 
     <div class="col-md-2 col-xs-2 btn-group action-bar-header">
-        <i class="col-md-2 logout login-url material-icons md-20 first-item">power_settings_new</i>
-        <i class="col-md-2 material-icons md-20 first-item">help</i>
-        <i class="col-md-2 material-icons md-20 first-item">settings</i>
-        <i class="col-md-2 material-icons md-20 first-item">notifications</i>
-    </div><!-- avatar -->
+        <i class="col-md-2 logout login-url material-icons md-20 first-item color_bblack">power_settings_new</i>
+        <i class="col-md-2 material-icons md-20 first-item help-action color_bblack">help</i>
+        <i class="col-md-2 material-icons md-20 first-item settings-action color_bblack">settings</i>
+        <i class="col-md-2 material-icons md-20 first-item notifications-action color_bblack">notifications</i>
+    </div><!-- notifications, settings, help, logout -->
 </header>
 
 <div class="Categories Module SearchGuidesBar" data-component-type="47" style="display: none">
@@ -68,7 +69,7 @@
             <em></em>
         </a>
     </div>
-</div>
+</div><!-- categories -->
 
 <div class="app_content">
     <div class="col-md-12 col-xs-12" id="header_sidebar" style=""></div>
@@ -79,60 +80,64 @@
         {% endblock %}
     </div>
 
+    <div class="cover" style="display:none;"></div>
 
     <div class="col-md-12 main-content">
         {% for article in articles %}
-            <li><a>{{ article.object.title }}CACACACACACACCA</a></li>
+            <li><a>{{ article.object.title }}</a></li>
         {% endfor %}
 
         {% block content %}
-            <!-- CONTENT -->
+            <!-- content -->
         {% endblock %}
     </div>
 
     <div class="footer-container" style="display: none">
         <footer class="wrapper">
-            <!-- FOOTER -->
+            <!-- footer -->
         </footer>
     </div>
-</div>
+    {% include 'core/menu-right.html' %}
+</div><!-- app -->
 
 {% load staticfiles %}
 
 <script>
-    SET_USEFUL = "{% url 'articles:set_useful_view' %}";
-    SET_FAVORITE = "{% url 'articles:set_liked_view' %}";
-    SET_VISITED = "{% url 'articles:set_visited_view' %}";
-    SET_SEARCHED = "{% url 'articles:set_searched_view' %}";
-    SET_READ = "{% url 'articles:set_read_view' %}";
+    URL_AUTO_COMPLETE                   =   "{% url 'articles:articles_search_view'                     %}"; //TODO
+    SET_VISITED                         =   "{% url 'articles:set_visited_view'                         %}"; //TODO
+    GET_SORTING_METHODS                 =   "{% url 'articles:get_sorting_methods_view'                 %}"; //TODO
+    SET_SEARCHED                        =   "{% url 'articles:set_searched_view'                        %}"; //TODO
+    GET_POLLS                           =   "{% url 'articles:get_polls_view'                           %}"; //TODO                                                              //TODO
+    SORT_ARTICLES                       =   "{% url 'articles:sort_article_view'                        %}"; //TODO
+    CHANGE_AVATAR                       =   "{% url 'core:change_avatar_view'                           %}"; //TODO
 
-    AJAX_LOGIN = "{% url 'users:login_view' %}";
-    AJAX_REGISTER = "{% url 'users:register_view' %}";
-    AJAX_LOGOUT = "{% url 'users:logout_view' %}";
-    AJAX_ISCO = "{% url 'users:is_connected_view' %}";
-    GET_ARTICLES_BY_STATIC_SHORTCUTS = "{% url 'articles:get_article_by_static_shortcuts' %}";
-    GET_SORTING_METHODS = "";
-    GET_CATEGORIES = "{% url 'articles:get_categories_view' %}";
-    GET_ARTICLES_FROM_SHORTCUT = "{% url 'articles:show_article_from_shorcuts' %}";
-    SHOW_ARTICLE = "{% url 'articles:ShowArticle' %}";
-    GET_SHORTCUTS = "{% url 'contents:manage_sidebar_shortcuts_showing_view' %}";
-    GET_POLLS = "";
-    GET_TAGS = "";
-    SORT_ARTICLES = "{% url 'articles:sort_article_view' %}";
-    ADD_ARTICLE_TO_SHORTCUT = "{% url 'articles:add_article_to_shortcut' %}";
-    CREATE_SHORTCUT = "{% url 'articles:create_shortcut' %}";
-    EDIT_SHORTCUTS = "{% url 'contents:manage_sidebar_shortcuts_editing_view' %}";
-    INSERT_SHORTCUTS = "{% url 'contents:manage_sidebar_shortcuts_inserting_view' %}";
-    CHANGE_AVATAR = "{% url 'core:change_avatar_view' %}";
+    SET_USEFUL                          =   "{% url 'articles:set_useful_view'                          %}"; //OK
+    SET_FAVORITE                        =   "{% url 'articles:set_liked_view'                           %}"; //OK
+    SET_READ                            =   "{% url 'articles:set_read_view'                            %}"; //OK
+    AJAX_LOGIN                          =   "{% url 'users:login_view'                                  %}"; //OK
+    AJAX_REGISTER                       =   "{% url 'users:register_view'                               %}"; //OK
+    AJAX_LOGOUT                         =   "{% url 'users:logout_view'                                 %}"; //OK
+    AJAX_ISCO                           =   "{% url 'users:is_connected_view'                           %}"; //OK
+    GET_ARTICLES_BY_STATIC_SHORTCUTS    =   "{% url 'articles:get_article_by_static_shortcuts'          %}"; //OK
+    GET_CATEGORIES                      =   "{% url 'articles:get_categories_view'                      %}"; //OK
+    GET_ARTICLES_FROM_SHORTCUT          =   "{% url 'articles:show_article_from_shorcuts'               %}"; //OK
+    SHOW_ARTICLE                        =   "{% url 'articles:ShowArticle'                              %}"; //OK
+    GET_SHORTCUTS                       =   "{% url 'contents:manage_sidebar_shortcuts_showing_view'    %}"; //OK
+
+{#    ADD_ARTICLE_TO_SHORTCUT             =   "{% url 'articles:add_article_to_shortcut' %}";#}
+{#    CREATE_SHORTCUT                     =   "{% url 'articles:create_shortcut' %}";#}
+{#    EDIT_SHORTCUTS                      =   "{% url 'contents:manage_sidebar_shortcuts_editing_view' %}";#}
+{#    INSERT_SHORTCUTS                    =   "{% url 'contents:manage_sidebar_shortcuts_inserting_view' %}";#}
 </script>
 
-<script data-pace-options='{ "ajax": true }' src="{% static 'core/js/vendor/pace.min.js' %}"></script>
+<script src="{% static 'core/js/vendor/pace.min.js' %}"></script>
 <script src="{% static 'core/js/vendor/jquery-1.11.2.min.js' %}"></script>
 <script src="{% static 'core/js/vendor/jquery-ui-1.11.4.custom/jquery-ui.min.js' %}"></script>
 <script src="{% static 'core/js/vendor/webui-popover/src/jquery.webui-popover.js' %}"></script>
 <script src="{% static 'core/js/vendor/bootstrap.min.js' %}"></script>
 
 <script src="{% static 'core/js/main.js' %}"></script>
+<script src="{% static 'core/js/autocomplete.js' %}"></script>
 <script src="{% static 'core/js/articles.js' %}"></script>
 <script src="{% static 'core/js/get_cookies.js' %}"></script>
 <script src="{% static 'core/js/authentication.js' %}"></script>

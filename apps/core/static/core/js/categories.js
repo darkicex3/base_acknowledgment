@@ -38,10 +38,6 @@ jQuery(document).ready(function ($) {
         }, placement: 'bottom', animation: 'pop', trigger: 'hover'
     });
 
-    $('#search_field').focus(function () {
-        $('.Categories').slideDown(slideSpeed);
-    });
-
     //on .webui-popover-content li click event
     $('body').on('click', '.category', function (event) {
         event.preventDefault();
@@ -113,11 +109,22 @@ jQuery(document).ready(function ($) {
 
 
     $(document).mouseup(function (e) {
+
         var container = $('.Categories');
         var header = $('header');
         var popover = $('.webui-popover-content');
+        var search = $('#search_field');
+        var results = $('.ac-results');
+        var rightmenu = $('.menu-right');
 
+        if (!rightmenu.is(e.target) && rightmenu.has(e.target).length === 0)
+            rightmenu.css('right',rightmenu.width() * (-1));
+        if (!search.is(e.target) && search.has(e.target).length === 0)
+            $('.cover').hide();
+        if (!results.is(e.target) && results.has(e.target).length === 0)
+            $('.ac-results').hide();
         if (!container.is(e.target) && container.has(e.target).length === 0 && !header.is(e.target) && header.has(e.target).length === 0 && !popover.is(e.target) && popover.has(e.target).length === 0)
             container.slideUp(slideSpeed);
+
     });
 });
