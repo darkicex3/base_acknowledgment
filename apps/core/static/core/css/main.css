@@ -1,3 +1,30 @@
+#result_list {
+    background-color: #fff !important;
+    background-clip: inherit;
+    border-radius: 3px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .04);
+    border: 1px solid rgba(0, 0, 0, .09);
+    max-width: 100%;
+    width: 100%;
+    border-collapse: inherit;
+}
+
+.margin-right {
+    margin-right: 10px;
+}
+
+#result_list th {
+    padding: 5px;
+}
+
+#result_list td {
+    padding: 5px;
+}
+
+
+
+
+
 /* ---------------------------------------- */
 /* ANIMATIONS                               */
 /* ---------------------------------------- */
@@ -111,11 +138,10 @@
 }
 
 .menu-right {
-    position: absolute;
+    position: fixed;
     top: 45px;
     right: -250px;
     width: 250px;
-    height: 100%;
     background-color: #34495e;
     transition: all 0.25s;
 }
@@ -685,7 +711,10 @@ a#author {
 /* H E A D E R  S T Y L E                   */
 /* ---------------------------------------- */
 .app_content {
+    width: 100%;
+    position: absolute;
     padding-top: 45px;
+    overflow-x: hidden;
 }
 
 #header {
@@ -1255,18 +1284,12 @@ a.login-url:active, .login_button:active {
     background-color: #fff;
     background-clip: inherit;
     padding: 0;
-    margin: 20px;
+    margin: 10px;
     width: 288px;
-    height: 100%;
     position: fixed;
     border-radius: 3px;
     box-shadow: 0 1px 4px rgba(0, 0, 0, .04);
     border: 1px solid rgba(0, 0, 0, .09);
-    overflow: hidden;
-}
-
-.left-sidebar:hover {
-    overflow-y: scroll;
 }
 
 .left-sidebar ul.menu li:before {
@@ -1275,8 +1298,7 @@ a.login-url:active, .login_button:active {
 
 .left-sidebar li.widget, .right-sidebar li.widget {
     list-style: none;
-    padding-left: 20px;
-    padding: 15px;
+    padding: 15px 20px 15px 15px;
 }
 
 .left-sidebar li.widget h2 {
@@ -1343,7 +1365,7 @@ a.login-url:active, .login_button:active {
 .widget-menus ul {
     list-style: none;
     padding: 0;
-    margin: 0;
+    margin: 0px 0px 16px 0px;
 }
 
 .widget-links ul li,
@@ -1432,7 +1454,7 @@ a.login-url:active, .login_button:active {
 /* ======================================= */
 .main-content {
     padding: 0;
-    margin: 20px 20px 20px 329px;
+    margin: 10px 20px 20px 310px;
     width: 0;
 }
 

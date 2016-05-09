@@ -2,7 +2,154 @@
  * Created by maxbook on 27/04/16.
  */
 
-function get_articles(category, element, tags) {
+
+/********************************************************/
+/****************       DISPLAYING     ******************/
+/********************************************************/
+
+function display_article(key, title, author, content, verified_article, date_publish, view_counter, useful_counter,
+                 favorite_counter, tags, favorites, read_article, bigup_article, attachments) {
+
+
+    var favorite_icon = (favorites == 'ok' ? 'favorite' : 'favorite_border');
+    var color_read = (read_article == 'ok' ? 'color_bigup' : 'color_base');
+    var readed = (read_article == 'ok' ? 'readed' : 'unreaded');
+    var color_big = (bigup_article == 'ok' ? 'color_bigup' : 'color_base');
+
+    console.log(readed);
+
+
+    return      '<div class="article shadow_material">' +
+
+                '<header class="header-article">' +
+                    '<span class="key" id="' + key + '" hidden="hidden">' + key + '</span>' +
+                    '<a class="bookmark">' +
+                    '<span class="txt">' + tags + '</span>' +
+                    '<i class="material-icons color_view md-18 width18" style="margin-left: 20px;">schedule</i><span class="txt">' + date_publish + '</span>' +
+                    '<i class="material-icons color_view md-18 width18" style="margin-left: 20px;">face</i><span class="txt">' + author + '</span>' +
+                    '</a>' +
+
+                    '<a class="article-title">' + title +
+                    '<i class="material-icons ' + color_read + '">done_all</i></a>' +
+
+                    '<div class="stat-article">' +
+                    '<p id="note" style="display: inline"><i class="useful material-icons md-18 width18 ' + color_big + '">thumb_up</i><span class="useful_counter">' + useful_counter + '</span></p>' +
+                    '<p id="favorite" style="display: inline; margin-left: 30px"><i class="favorite material-icons md-18 width18 color_base_favorite">' + favorite_icon + '</i><span class="favorite_counter">' + favorite_counter + '</span></p>' +
+                    '<i class="material-icons remove_red_eye color_base md-18 width18">remove_red_eye</i>' + view_counter +
+                    '</div>' +
+                '</header>' +
+
+                '<div class="attachment-article">' + attachments + '</div>' +
+                '<div class="content-article">' + content + '</div>' +
+                '<aside class="glossary-article">' + '</aside>' +
+
+                '<footer class="footer-article">' +
+                '<div class="feedback ' + readed + '">I have read this article !</div>' +
+                '</footer>' +
+                '</div>';
+}
+
+var display_function = {
+
+    module: function module_display(key, title, description, date_publish, favorite_counter, tags, favorites, read_article,
+                                useful_counter, bigup_article, last_update, view_counter) {
+
+        var style1 = "position: absolute;display: inline-block;width: 27px;background-color: #2ecc71;border-radius: " +
+            "60px;left: -20px;top: -4px;padding: 2px;font-size: 17pt;color: white;transition: all 1s;";
+        var style = "font-size: 9pt;color: white;position: relative;top: -1px;padding: 1px 13px 0px 13px;background-color: " +
+            "#2ecc71;border-radius: 3px;left: -8px;transition: all 1s;";
+
+        var favorite_icon = (favorites == 'ok' ? 'favorite' : 'favorite_border');
+        var color_read = (read_article == 'ok' ? 'color_bigup' : 'color_base');
+        var color_big = (bigup_article == 'ok' ? 'color_bigup' : 'color_base');
+        var icon_time = (last_update == 'ok' ? 'update' : 'schedule');
+        var style_update = (last_update == 'ok' ? style : '');
+        var style_update1 = (last_update == 'ok' ? style1 : '');
+
+        return '<div class="mini-article">' +
+            '<span class="key" id="' + key + '" hidden="hidden">' + key + '</span>' +
+            '<header>' +
+            '<a id="title">' + title + '</a>' +
+            '<a id="secure"><i class="material-icons md-18 width18 ' + color_read + '">done_all</i></a>' +
+            '</header>' +
+            '<div class="content"><p>' + description + '</p></div>' +
+            '<footer class="footer-mini-article">' +
+            '<p id="pub_date" style="' + style_update + '"><i style="' + style_update1 + '" class="material-icons ' +
+            'md-18 width18 color_base">' + icon_time + '</i>' + date_publish + '</p>' +
+
+            '<p id="note" style="color: #95a5a6"><i class="useful material-icons ' +
+            'md-18 width18 ' + color_big + '">thumb_up</i><span class="useful_counter">' + useful_counter + '</span></p>' +
+
+            '<p id="favorite" style="color: #95a5a6;margin-left: 20px;"><i class="favorite material-icons ' +
+            'md-18 width18 color_base_favorite">' + favorite_icon + '</i><span class="favorite_counter">' +
+            '' + favorite_counter + '</span></p>' +
+
+            '<p id="bookmark" style="color: #95a5a6; float: right;"><i class="material-icons ' +
+            'md-18 width18 color_base"></i>' + tags + '</p>' +
+
+            '</footer>' +
+            '</div>'
+    },
+
+    list: function list_display(key, title, description, date_publish, favorite_counter, tags, favorites, read_article,
+                                useful_counter, bigup_article, last_update, view_counter) {
+
+        return '<tr class="row' + key + '">' +
+            '<th class="field-title"><a href="#">' + title + '</a></th>' +
+            '<td class="field-publish_date nowrap">' + date_publish + '</td>' +
+            '<td class="field-modified nowrap">' + last_update + '</td>' +
+            '<td class="field-useful_counter">' + useful_counter + '</td>' +
+            '<td class="field-favorite_counter">' + favorite_counter + '</td>' +
+            '<td class="field-view_counter">' + view_counter + '</td>' +
+            '</tr>'
+    }
+};
+
+function list_display_options(sortpriority) {
+
+    return '<div class="sortoptions">' +
+                '<a class="sortremove" href="#" title="Remove from sorting"></a>' +
+                '<span class="sortpriority" title="Sorting priority: 2">' + sortpriority + '</span>' +
+                '<a href="#" class="toggle ascending" title="Toggle sorting"></a>' +
+            '</div>'
+}
+
+/********************************************************/
+/****************        GETTERS       ******************/
+/********************************************************/
+
+function get_article(element) {
+    var id = element.parent().find('.key').attr('id');
+
+    console.log(id);
+    $.get(SHOW_ARTICLE, {'article_id': id},
+        function (data) {
+            var html = display_article( data['id'],
+                                        data['title'],
+                                        data['author'],
+                                        data['desc'],
+                                        data['ok'],
+                                        data['pub_date'],
+                                        data['views'],
+                                        data['useful'],
+                                        data['loved'],
+                                        data['tags'],
+                                        data['favorites'],
+                                        data['read'],
+                                        data['bigup'],
+                                        data['attachements']);
+
+            $('#feed').empty().append(html);
+            Pace.restart();
+            resize_content('.article');
+        }
+    )
+}
+
+function get_list_articles(category, element, tags, display) {
+    var feed = $('#feed');
+    var table = $('.table-article tbody');
+
     if (typeof category == 'undefined')
         category = element.parent().attr('id');
 
@@ -25,36 +172,57 @@ function get_articles(category, element, tags) {
             } else {
                 html = '';
                 for (var key in data) {
-                    html += mini_article(data[key]['id'],
-                        data[key]['title'],
-                        data[key]['desc'],
-                        data[key]['pub_date'],
-                        data[key]['loved'],
-                        data[key]['tags'],
-                        data[key]['favorites'],
-                        data[key]['read'],
-                        data[key]['useful'],
-                        data[key]['bigup'],
-                        data[key]['last_update']);
+                    html += display_function[display](  data[key]['id'],
+                                                        data[key]['title'],
+                                                        data[key]['desc'],
+                                                        data[key]['pub_date'],
+                                                        data[key]['loved'],
+                                                        data[key]['tags'],
+                                                        data[key]['favorites'],
+                                                        data[key]['read'],
+                                                        data[key]['useful'],
+                                                        data[key]['bigup'],
+                                                        data[key]['last_update'],
+                                                        data[key]['view_counter']);
                 }
 
             }
 
-            $('#feed').empty().append(html);
+            if(display == 'module') {
+                table.empty();
+                feed.empty().append(html);
+            }
+            else {
+                feed.empty();
+                table.empty().append(html).parent().parent().parent().show();
+            }
+
+
             Pace.restart();
-            
+
             resize_iframe();
             resize_img();
         }
     );
 }
 
-function resize_article(element) {
-    var menu_width = $('.left-sidebar').width() + 60;
+/********************************************************/
+/****************      MISCANELLOUS    ******************/
+/********************************************************/
+
+function resize_content(element) {
+    var menu_width = $('.left-sidebar').width() + 50;
     var window_width = $(window).width();
     var article_width = window_width - menu_width;
     $(element).css({'width': article_width});
     $('.content-article p').css({'font-family': '\'EB Garamond\' !important'});
+}
+
+function resize_vertical(element) {
+    var header_height = $('header').height();
+    var window_height = $(window).height();
+    var element_height = window_height - header_height;
+    $(element).css({'height': element_height});
 }
 
 function resize_iframe() {
@@ -65,126 +233,11 @@ function resize_img() {
     $('.mini-article .content').find('img').css({'width': '555px'});
 }
 
-function show_article(element) {
-    var id = element.parent().find('.key').attr('id');
-    console.log(id);
-    $.get(SHOW_ARTICLE, {'article_id': id},
-        function (data) {
-            var html = article( data['id'],
-                                data['title'],
-                                data['author'],
-                                data['desc'],
-                                data['ok'],
-                                data['pub_date'],
-                                data['views'],
-                                data['useful'],
-                                data['loved'],
-                                data['tags'],
-                                data['favorites'],
-                                data['read'],
-                                data['bigup'],
-                                data['attachements']);
 
-            $('#feed').empty().append(html);
-            Pace.restart();
-            resize_article('.article');
-        }
-    )
-}
+/********************************************************/
+/****************         ACTIONS      ******************/
+/********************************************************/
 
-function article(key, title, author, content, verified_article, date_publish, view_counter, useful_counter,
-                 favorite_counter, tags, favorites, read_article, bigup_article, attachments) {
-
-
-    var favorite_icon = (favorites == 'ok' ? 'favorite' : 'favorite_border');
-    var color_read = (read_article == 'ok' ? 'color_bigup' : 'color_base');
-    var readed = (read_article == 'ok' ? 'readed' : 'unreaded');
-    var color_big = (bigup_article == 'ok' ? 'color_bigup' : 'color_base');
-
-    console.log(readed);
-
-
-    return '<div class="article shadow_material">' +
-        '<header class="header-article">' +
-        '<span class="key" id="' + key + '" hidden="hidden">' + key + '</span>' +
-        '<a class="bookmark">' +
-        '<span class="txt">' + tags + '</span>' +
-        '<i class="material-icons color_view md-18 width18" style="margin-left: 20px;">schedule</i><span class="txt">' + date_publish + '</span>' +
-        '<i class="material-icons color_view md-18 width18" style="margin-left: 20px;">face</i><span class="txt">' + author + '</span>' +
-        '</a>' +
-
-        '<a class="article-title">' + title +
-        '<i class="material-icons ' + color_read + '">done_all</i></a>' +
-
-        '<div class="stat-article">' +
-        '<p id="note" style="display: inline"><i class="useful material-icons md-18 width18 ' + color_big + '">thumb_up</i><span class="useful_counter">' + useful_counter + '</span></p>' +
-        '<p id="favorite" style="display: inline; margin-left: 30px"><i class="favorite material-icons md-18 width18 color_base_favorite">' + favorite_icon + '</i><span class="favorite_counter">' + favorite_counter + '</span></p>' +
-        '<i class="material-icons remove_red_eye color_base md-18 width18">remove_red_eye</i>' + view_counter +
-        '</div>' +
-
-        '</header>' +
-
-        '<div class="attachment-article">' +
-            attachments +
-            // '<i class="material-icons .close md-24 width24">close</i>' +
-            // '<i class="material-icons refresh md-24 width24">refresh</i>' +
-            // '<i class="material-icons more_horiz md-24 width24">more_vert</i>' +
-            // '<i class="material-icons expand_more md-24 width24">expand_more</i>' +
-        '</div>' +
-
-        '<div class="content-article">' +
-        content +
-        '</div>' +
-
-        '<aside class="glossary-article">' +
-
-        '</aside>' +
-
-        '<footer class="footer-article">' +
-        '<div class="feedback ' + readed + '">I have read this article !</div>' +
-        '</footer>' +
-        '</div>';
-}
-
-function mini_article(key, title, description, date_publish, favorite_counter,
-                      tags, favorites, read_article, useful_counter, bigup_article, last_update) {
-
-    var style1 = "position: absolute;display: inline-block;width: 27px;background-color: #2ecc71;border-radius: " +
-        "60px;left: -20px;top: -4px;padding: 2px;font-size: 17pt;color: white;transition: all 1s;";
-    var style = "font-size: 9pt;color: white;position: relative;top: -1px;padding: 1px 13px 0px 13px;background-color: " +
-        "#2ecc71;border-radius: 3px;left: -8px;transition: all 1s;";
-
-    var favorite_icon = (favorites == 'ok' ? 'favorite' : 'favorite_border');
-    var color_read = (read_article == 'ok' ? 'color_bigup' : 'color_base');
-    var color_big = (bigup_article == 'ok' ? 'color_bigup' : 'color_base');
-    var icon_time = (last_update == 'ok' ? 'update' : 'schedule');
-    var style_update = (last_update == 'ok' ? style : '');
-    var style_update1 = (last_update == 'ok' ? style1 : '');
-
-    return  '<div class="mini-article">' +
-            '<span class="key" id="' + key + '" hidden="hidden">' + key + '</span>' +
-            '<header>' +
-            '<a id="title">' + title + '</a>' +
-            '<a id="secure"><i class="material-icons md-18 width18 ' + color_read + '">done_all</i></a>' +
-            '</header>' +
-            '<div class="content"><p>' + description + '</p></div>' +
-            '<footer class="footer-mini-article">' +
-            '<p id="pub_date" style="' + style_update + '"><i style="' + style_update1 + '" class="material-icons ' +
-        'md-18 width18 color_base">' + icon_time + '</i>' + date_publish + '</p>' +
-
-            '<p id="note" style="color: #95a5a6"><i class="useful material-icons ' +
-        'md-18 width18 ' + color_big + '">thumb_up</i><span class="useful_counter">' + useful_counter + '</span></p>' +
-
-            '<p id="favorite" style="color: #95a5a6;margin-left: 20px;"><i class="favorite material-icons ' +
-        'md-18 width18 color_base_favorite">' + favorite_icon + '</i><span class="favorite_counter">' +
-        '' + favorite_counter + '</span></p>' +
-
-            '<p id="bookmark" style="color: #95a5a6; float: right;"><i class="material-icons ' +
-        'md-18 width18 color_base"></i>' + tags + '</p>' +
-
-            '</footer>' +
-            '</div>'
-}
 
 function action_acticle(element, class_name, form_change, url, form_base) {
     $('body').on('click', element, function (event) {
@@ -221,7 +274,8 @@ function action_acticle(element, class_name, form_change, url, form_base) {
         }
 
     });
-}
+} //A REFAIRE FONCTION TROP SALE
+
 
 function read(element, url) {
     var style = element.attr('class');
