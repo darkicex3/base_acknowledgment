@@ -282,6 +282,7 @@ class GetArticlesByStaticShortcutsView(View):
         articles = []
         get_by = self.request.GET.get('get_articles_by')
         get_by_tag = self.request.GET.get('get_articles_by_tags')
+        display = self.request.GET.get('display')
         current_user = self.request.user
 
         try:
@@ -290,7 +291,7 @@ class GetArticlesByStaticShortcutsView(View):
         except IndexError:
             print("INDEX ERROR")
             context.update({'msg': 'No articles :( You can add or publish new ones from the '
-                                   '<a href="http://127.0.0.1:8000/admin" style="text-decoratio">admin interface</a> !'})
+                                   '<a href="http://127.0.0.1:8000/admin">admin interface</a> !'})
             return JsonResponse(context)
 
         # GET HOME ARTICLES BY USEFUL COUNTER
@@ -350,11 +351,11 @@ class GetArticlesByStaticShortcutsView(View):
                     articles = p.articles.all()
                 except ObjectDoesNotExist:
                     context.update({'msg': 'No articles :( You can add new '
-                                           'ones in <srtong>' + get_by + '</srtong> from admin interface !'})
+                                           'ones in <strong>' + get_by + '</strong> from admin interface !'})
                     return JsonResponse(context)
                 except IndexError:
                     context.update({'msg': 'No articles :( You can add new '
-                                           'ones in <srtong>' + get_by + '</srtong> from admin interface !'})
+                                           'ones in <strong>' + get_by + '</strong> from admin interface !'})
                     return JsonResponse(context)
             # BY TAGS
             else:
@@ -369,11 +370,11 @@ class GetArticlesByStaticShortcutsView(View):
                         raise ObjectDoesNotExist
                 except ObjectDoesNotExist:
                     context.update({'msg': 'There isn\'t articles with the tag'
-                                           ' <srtong>' + get_by_tag + '</srtong> for the moment :('})
+                                           ' <strong>' + get_by_tag + '</strong> for the moment :('})
                     return JsonResponse(context)
                 except IndexError:
                     context.update({'msg': 'There isn\'t articles with the tag'
-                                           ' <srtong>' + get_by_tag + '</srtong> for the moment :('})
+                                           ' <strong>' + get_by_tag + '</strong> for the moment :('})
                     return JsonResponse(context)
 
         key = 0
@@ -400,15 +401,17 @@ class GetArticlesByStaticShortcutsView(View):
 
             tags = ''
 
+            bookmarkclass = 'bookmarkLink'
+
             art = Article.objects.get(id=article.pk)
             for a in art.categories.all()[:4]:
-                    tags += '<span class="badge bookmarkBadge">#<span class="add-tags" style="display:none">' \
+                    tags += '<span class="badge bookmarkBadge"><span class="add-tags" style="display:none">' \
                             '<i class="material-icons">add_circle</i>' \
-                            '</span><a id="' + a.name + '" class="bookmarkLink" href="#">' + a.name + \
+                            '</span><a id="' + a.name + '" class="' + bookmarkclass + '" href="#">' + a.name + \
                             '</a></span>'
 
-            if get_by == 'Last Updates':
-                time = article.publish_date.strftime("%d %B %Y %H:%M")
+            if get_by == 'Last Updates' and display != 'list':
+                time = article.modified.strftime("%d %B %Y %H:%M")
                 update = 'ok'
             else:
                 time = article.publish_date.strftime("%d %b %Y")
@@ -422,7 +425,7 @@ class GetArticlesByStaticShortcutsView(View):
                 'desc':     article.description,
                 'pub_date': time,
                 'useful':   article.useful_counter,
-                'viewed':   article.view_counter,
+                'views':   article.view_counter,
                 'loved':    article.favorite_counter,
                 'ok': 'ok',
                 'tags': tags,
@@ -430,6 +433,7 @@ class GetArticlesByStaticShortcutsView(View):
                 'bigup': bigup,
                 'read': readed,
                 'last_update': update,
+                'modified': article.modified.strftime("%d %B %Y %H:%M"),
             }})
 
         return JsonResponse(context)

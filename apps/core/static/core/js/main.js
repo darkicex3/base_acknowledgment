@@ -1,10 +1,16 @@
 jQuery(document).ready(function ($) {
 
-    window.display_mode = 'module';
+    window.display_mode = 'list';
+    $("table").tablesorter(); 
 
     resize_vertical('.left-sidebar');
+    resize_vertical('.right-sidebar');
     resize_vertical('.menu-right');
     resize_content('.results');
+
+    $('column-useful_counter').click(get_list_articles('Most Used', undefined, undefined, window.display_mode));
+    $('column-favorite_counter').click(get_list_articles('Most Loved', undefined, undefined, window.display_mode));
+    $('column-view_counter').click(get_list_articles('Most Used', undefined, undefined, window.display_mode));
 
     var body = $('body');
     var left_sidebar = $('.left-sidebar');

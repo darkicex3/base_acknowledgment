@@ -95,12 +95,12 @@ var display_function = {
                                 useful_counter, bigup_article, last_update, view_counter) {
 
         return '<tr class="row' + key + '">' +
-            '<th class="field-title"><a href="#">' + title + '</a></th>' +
-            '<td class="field-publish_date nowrap">' + date_publish + '</td>' +
-            '<td class="field-modified nowrap">' + last_update + '</td>' +
-            '<td class="field-useful_counter">' + useful_counter + '</td>' +
-            '<td class="field-favorite_counter">' + favorite_counter + '</td>' +
-            '<td class="field-view_counter">' + view_counter + '</td>' +
+            '<th class="field-title font-list padding-list"><a class="padding-bottom-list" href="#">' + title + '</a><br>' + tags + '</th>' +
+            '<td class="field-publish_date padding-top-list nowrap">' + date_publish + '</td>' +
+            '<td class="field-modified padding-top-list nowrap">' + last_update + '</td>' +
+            '<td class="center field-useful_counter padding-top-list">' + useful_counter + '</td>' +
+            '<td class="center field-favorite_counter padding-top-list">' + favorite_counter + '</td>' +
+            '<td class="center field-view_counter padding-top-list">' + view_counter + '</td>' +
             '</tr>'
     }
 };
@@ -146,7 +146,7 @@ function get_article(element) {
     )
 }
 
-function get_list_articles(category, element, tags, display) {
+function get_list_articles(category, element = undefined, tags = undefined, where = undefined, display = 'list') {
     var feed = $('#feed');
     var table = $('.table-article tbody');
 
@@ -163,7 +163,7 @@ function get_list_articles(category, element, tags, display) {
     console.log(tags);
 
     $.get(GET_ARTICLES_BY_STATIC_SHORTCUTS,
-        {'get_articles_by': category, 'get_articles_by_tags':tags},
+        {'get_articles_by': category, 'get_articles_by_tags':tags, 'display': display, 'in': where},
 
         function (data) {
             var html;
@@ -172,6 +172,7 @@ function get_list_articles(category, element, tags, display) {
             } else {
                 html = '';
                 for (var key in data) {
+                    console.log(data[key]['last_update'],data[key]['views']);
                     html += display_function[display](  data[key]['id'],
                                                         data[key]['title'],
                                                         data[key]['desc'],
@@ -182,8 +183,8 @@ function get_list_articles(category, element, tags, display) {
                                                         data[key]['read'],
                                                         data[key]['useful'],
                                                         data[key]['bigup'],
-                                                        data[key]['last_update'],
-                                                        data[key]['view_counter']);
+                                                        data[key]['modified'],
+                                                        data[key]['views']);
                 }
 
             }
@@ -200,6 +201,10 @@ function get_list_articles(category, element, tags, display) {
 
             Pace.restart();
 
+            $("#grid-data").bootgrid();
+
+            $("table").trigger("update");
+
             resize_iframe();
             resize_img();
         }
@@ -211,7 +216,7 @@ function get_list_articles(category, element, tags, display) {
 /********************************************************/
 
 function resize_content(element) {
-    var menu_width = $('.left-sidebar').width() + 50;
+    var menu_width = $('.left-sidebar').width() + 248;
     var window_width = $(window).width();
     var article_width = window_width - menu_width;
     $(element).css({'width': article_width});

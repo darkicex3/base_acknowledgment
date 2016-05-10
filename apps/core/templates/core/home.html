@@ -3,7 +3,7 @@
 {% block title %}Knowledge Base{% endblock %}
 
 {% block menu_sidebar %}
-{#    A RECUPERER DYNAMIQUEMENT#}
+    {#    A RECUPERER DYNAMIQUEMENT#}
 
     <div class="widget widget-menus">
         <div class="menu-left-menu-container">
@@ -33,6 +33,33 @@
     <div id="feed"></div>
     {% include 'core/list_display.html' %}
 {% endblock %}
+
+{% block menu_right_sidebar %}
+
+    <div class="widget widget-menus">
+        <div class="menu-left-menu-container">
+            <div class="user_profile">
+                <div id="img_profile" data-toggle="modal" data-target="#modal_change_img"></div>
+                <div id="detail_profile">
+                    <p class="username"></p>
+                    <hr>
+                    <p class="badge"></p>
+                </div>
+            </div>
+            <ul id="menu-left-menu-1" class="menu base_menu static"></ul>
+            <ul class="mega-shorcuts variable"></ul>
+            <ul class="shorcuts variable"></ul>
+            <ul class="pastilles variable"></ul>
+        </div>
+    </div>
+
+    <div class="copyright static">
+        ©2016 Teledirect Pte Ltd <br>
+        <a href="#">Terms & Privacy</a>
+    </div>
+
+{% endblock %}
+
 
 
 
