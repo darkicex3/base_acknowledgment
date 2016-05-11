@@ -7,8 +7,6 @@ function get_shortcuts(element) {
     if (element != undefined)
         var node_id = element.parent().children('span').attr('id');
 
-    console.log(node_id);
-
     $.get(GET_SHORTCUTS,
         {'node_id': node_id, 'previous': 'false'},
         function (data) {

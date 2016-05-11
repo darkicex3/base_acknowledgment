@@ -13,7 +13,6 @@ function OnClickShortcutsSetSelected() {
 function OnMouseEnterMouseLeaveTags() {
     $('body').on({
         mouseenter: function () {
-            console.log(getCookie('csrftoken'));
             if ($('#search_bar input[name=\'csrfmiddlewaretoken\']').attr('value') != getCookie('csrftoken')) {
                 var width = ($(this).width() / 2) - 9;
                 $(this).find('.add-tags').css({'left': width}).show(100);

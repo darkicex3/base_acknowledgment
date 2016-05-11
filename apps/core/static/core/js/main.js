@@ -3,8 +3,9 @@ jQuery(document).ready(function ($) {
     window.display_mode = 'list';
     $("table").tablesorter(); 
 
+    resize_content('.article');
+    resize_content('.mini-article .list');
     resize_vertical('.left-sidebar');
-    resize_vertical('.right-sidebar');
     resize_vertical('.menu-right');
     resize_content('.results');
 

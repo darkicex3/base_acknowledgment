@@ -203,8 +203,8 @@ th {
 .menu-right {
     position: fixed;
     top: 45px;
-    right: -250px;
-    width: 250px;
+    right: -243px;
+    width: 243px;
     background-color: #34495e;
     transition: all 0.25s;
 }

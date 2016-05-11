@@ -16,8 +16,6 @@ function display_article(key, title, author, content, verified_article, date_pub
     var readed = (read_article == 'ok' ? 'readed' : 'unreaded');
     var color_big = (bigup_article == 'ok' ? 'color_bigup' : 'color_base');
 
-    console.log(readed);
-
 
     return      '<div class="article shadow_material">' +
 
@@ -121,7 +119,6 @@ function list_display_options(sortpriority) {
 function get_article(element) {
     var id = element.parent().find('.key').attr('id');
 
-    console.log(id);
     $.get(SHOW_ARTICLE, {'article_id': id},
         function (data) {
             var html = display_article( data['id'],
@@ -160,7 +157,6 @@ function get_list_articles(category, element = undefined, tags = undefined, wher
             tags = element.text();
     }
 
-    console.log(tags);
 
     $.get(GET_ARTICLES_BY_STATIC_SHORTCUTS,
         {'get_articles_by': category, 'get_articles_by_tags':tags, 'display': display, 'in': where},
@@ -172,7 +168,6 @@ function get_list_articles(category, element = undefined, tags = undefined, wher
             } else {
                 html = '';
                 for (var key in data) {
-                    console.log(data[key]['last_update'],data[key]['views']);
                     html += display_function[display](  data[key]['id'],
                                                         data[key]['title'],
                                                         data[key]['desc'],
@@ -274,7 +269,7 @@ function action_acticle(element, class_name, form_change, url, form_base) {
 
             var article_id = $(this).parent().parent().find('.key').attr("id");
             $.get(url, {'action': action, 'article_id': article_id}, function (data) {
-                console.log(selector.parent().find('.' + class_name + '_counter').empty().append(data[class_name + '_counter']));
+                selector.parent().find('.' + class_name + '_counter').empty().append(data[class_name + '_counter']);
             });
         }
 
@@ -287,7 +282,6 @@ function read(element, url) {
     var action = 'false';
     var article_id = element.parent().parent().find('.key').text();
 
-    console.log(style, action, article_id);
     if (style == 'feedback unreaded') {
         element.attr('class', 'feedback readed');
         action = 'true';
@@ -295,7 +289,6 @@ function read(element, url) {
     else
         element.attr('class', 'feedback unreaded');
 
-    console.log(style, action, article_id);
 
     $.get(url, {'action': action, 'article_id': article_id}, function (data) {});
 
