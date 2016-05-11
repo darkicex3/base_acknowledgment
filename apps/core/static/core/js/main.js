@@ -3,11 +3,11 @@ jQuery(document).ready(function ($) {
     window.display_mode = 'list';
     $("table").tablesorter(); 
 
-    resize_content('.article');
     resize_content('.mini-article .list');
     resize_vertical('.left-sidebar');
     resize_vertical('.menu-right');
     resize_content('.results');
+    // resize_modal('.modal-dialog');
 
     $('column-useful_counter').click(get_list_articles('Most Used', undefined, undefined, window.display_mode));
     $('column-favorite_counter').click(get_list_articles('Most Loved', undefined, undefined, window.display_mode));
@@ -36,10 +36,10 @@ jQuery(document).ready(function ($) {
 
     body.on('click', '.guideText', function (e)             { get_list_articles(undefined, $(this), 'tags', window.display_mode);});
     body.on('click', '.feedback', function (e)              { read($(this), SET_READ); });
-    body.on('click', '.mini-article header', function (e)   { get_article($(this)); });
+    body.on('click', '.link-title-article', function (e)   { get_article($(this)); });
 
     $(window).resize(function (e) {
-        resize_content('.article');
+        //resize_content('.article', '.modal-content-article');
         resize_content('.mini-article .list');
         resize_vertical('.left-sidebar');
         resize_vertical('.menu-right');

@@ -109,6 +109,10 @@ th {
     font-size: 30px;
 }
 
+.material-icons.md-34 {
+    font-size: 34px;
+}
+
 .material-icons.md-48 {
     font-size: 48px;
 }
@@ -123,6 +127,10 @@ th {
 
 .material-icons.md-24.width24 {
     width: 23px;
+}
+
+.material-icons.md-34.width34 {
+    width: 34px;
 }
 
 .material-icons.md-36.width36 {
@@ -233,7 +241,84 @@ th {
     width: 588px;
 }
 
-/********************/
+/*********MODAL***********/
+
+.modal-dialog-article {
+    width: 740px;
+}
+
+.modal-dialog {
+    padding: 30px 0 0 30px;
+}
+
+.float-menu-left {
+    float: left;
+    width: 80px;
+    position: absolute;
+    left: -80px;
+}
+
+.useful-in-article {
+    padding: 23px 0 0 24px;
+}
+
+.favorite-in-article {
+    margin: 24px 0 0 -7px;
+}
+
+.stat-container {
+    width: 100%;
+    height: 78px;
+    margin-bottom: 27px;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 60px;
+    outline: 0;
+    box-shadow: 0 3px 9px rgba(0,0,0,0.5);
+    background-clip: padding-box;
+}
+
+.modal.fade:not(.in).bottom .modal-dialog {
+	-webkit-transform: translate3d(0, 25%, 0);
+	transform: translate3d(0, 25%, 0);
+}
+
+.modal-body {
+    padding: 0;
+}
+
+.counter {
+    display: block;
+    background: antiquewhite;
+    width: 40px;
+    height: 40px;
+    position: relative;
+    padding-top: 11px;
+    border-radius: 20px;
+    text-align: center;
+}
+
+.placement1 {
+    top: 0px;
+    right: 6px;
+}
+
+.placement2 {
+    top: 0px;
+    right: 6px;
+}
+
+.placement3 {
+    top: 0px;
+    right: 6px;
+}
+
+
+
+
+/*********MODAL***********/
+
+
 .typeaheadOverlay {
     background-color: rgba(0, 0, 0, 0.4);
     bottom: 0;
@@ -435,7 +520,6 @@ ul li {
     padding: 15px;
     box-shadow: 0 1px 4px rgba(0, 0, 0, .04);
     border: 1px solid rgba(0, 0, 0, .09);
-    margin-bottom: 20px;
     z-index: 998;
     transition: -webkit-filter 0.1s ease-out, filter 0.1s ease-out;
     transition: box-shadow 0.1s ease-out;
@@ -576,6 +660,7 @@ ul li {
 * {
     font-family: medium-content-sans-serif-font,"Lucida Grande","Lucida Sans Unicode","Lucida Sans",Geneva,Arial,sans-serif;;
     outline: none;
+    word-wrap: break-word;
 }
 
 body, html {

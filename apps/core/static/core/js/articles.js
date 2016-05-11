@@ -6,16 +6,30 @@
 /********************************************************/
 /****************       DISPLAYING     ******************/
 /********************************************************/
+function display_feedbacks(comments) {
+    return 'FEEDBACKS'
+}
 
-function display_article(key, title, author, content, verified_article, date_publish, view_counter, useful_counter,
-                 favorite_counter, tags, favorites, read_article, bigup_article, attachments) {
+function display_attachments(attachments) {
+    return '<div class="attachment-article">' + attachments + '</div>';
+}
 
-
+function display_actions(key, view_counter, useful_counter, favorite_counter, bigup_article, favorites) {
+    // data['views'], data['useful'], data['loved'], data['bigup'], data['favorites']
+    var color_big = (bigup_article == 'ok' ? 'color_bigup' : 'color_base');
     var favorite_icon = (favorites == 'ok' ? 'favorite' : 'favorite_border');
+
+    return  '<div class="">' +
+                '<span class="key" id="' + key + '" hidden="hidden">' + key + '</span>' +
+                '<div class="stat-container"><p id="note" style="display: inline"><i class="useful useful-in-article material-icons md-34 width34 ' + color_big + '">thumb_up</i><span class="counter placement1 useful_counter">' + useful_counter + '</span></p></div>' +
+                '<div class="stat-container"><p id="favorite" style="display: inline; margin-left: 30px"><i class="favorite favorite-in-article material-icons md-18 width18 color_base_favorite">' + favorite_icon + '</i><span class="counter placement2 favorite_counter">' + favorite_counter + '</span></p></div>' +
+                '<div class="stat-container"><i class="material-icons remove_red_eye color_base md-18 width18">remove_red_eye</i><span class="counter placement3">' + view_counter + '</span></div>' +
+            '</div>';
+}
+
+function display_article(key, title, author, content, verified_article, date_publish, tags, read_article) {
     var color_read = (read_article == 'ok' ? 'color_bigup' : 'color_base');
     var readed = (read_article == 'ok' ? 'readed' : 'unreaded');
-    var color_big = (bigup_article == 'ok' ? 'color_bigup' : 'color_base');
-
 
     return      '<div class="article shadow_material">' +
 
@@ -30,14 +44,8 @@ function display_article(key, title, author, content, verified_article, date_pub
                     '<a class="article-title">' + title +
                     '<i class="material-icons ' + color_read + '">done_all</i></a>' +
 
-                    '<div class="stat-article">' +
-                    '<p id="note" style="display: inline"><i class="useful material-icons md-18 width18 ' + color_big + '">thumb_up</i><span class="useful_counter">' + useful_counter + '</span></p>' +
-                    '<p id="favorite" style="display: inline; margin-left: 30px"><i class="favorite material-icons md-18 width18 color_base_favorite">' + favorite_icon + '</i><span class="favorite_counter">' + favorite_counter + '</span></p>' +
-                    '<i class="material-icons remove_red_eye color_base md-18 width18">remove_red_eye</i>' + view_counter +
-                    '</div>' +
                 '</header>' +
 
-                '<div class="attachment-article">' + attachments + '</div>' +
                 '<div class="content-article">' + content + '</div>' +
                 '<aside class="glossary-article">' + '</aside>' +
 
@@ -92,8 +100,8 @@ var display_function = {
     list: function list_display(key, title, description, date_publish, favorite_counter, tags, favorites, read_article,
                                 useful_counter, bigup_article, last_update, view_counter) {
 
-        return '<tr class="row' + key + '">' +
-            '<th class="field-title font-list padding-list"><a class="padding-bottom-list" href="#">' + title + '</a><br>' + tags + '</th>' +
+        return '<tr class="row' + key + '" id="' + key + '">' +
+            '<th class="field-title font-list padding-list"><a data-toggle="modal" href="http://fiddle.jshell.net/bHmRB/51/show/" data-target="#display-article" class="padding-bottom-list link-title-article" href="#">' + title + '</a><br>' + tags + '</th>' +
             '<td class="field-publish_date padding-top-list nowrap">' + date_publish + '</td>' +
             '<td class="field-modified padding-top-list nowrap">' + last_update + '</td>' +
             '<td class="center field-useful_counter padding-top-list">' + useful_counter + '</td>' +
@@ -117,30 +125,31 @@ function list_display_options(sortpriority) {
 /********************************************************/
 
 function get_article(element) {
-    var id = element.parent().find('.key').attr('id');
+    var id = element.parent().parent().attr('id');
 
     $.get(SHOW_ARTICLE, {'article_id': id},
         function (data) {
-            var html = display_article( data['id'],
-                                        data['title'],
-                                        data['author'],
-                                        data['desc'],
-                                        data['ok'],
-                                        data['pub_date'],
-                                        data['views'],
-                                        data['useful'],
-                                        data['loved'],
-                                        data['tags'],
-                                        data['favorites'],
-                                        data['read'],
-                                        data['bigup'],
-                                        data['attachements']);
 
-            $('#feed').empty().append(html);
+            // GET HTML
+            var article     =   display_article(data['id'], data['title'], data['author'], data['desc'], data['ok'], data['pub_date'], data['tags'], data['read'] );
+            var stats       =   display_actions(data['id'], data['views'], data['useful'], data['loved'], data['bigup'], data['favorites']);
+            var comments    =   display_feedbacks ();
+            var attachments =   display_attachments( data['attachements'] );
+
+            // APPEND HTML
+            $('.modal-body-article').empty().append(article);
+            $('.modal-stats-article').empty().append(stats);
+            $('.modal-comments-article').empty().append(comments);
+            $('.modal-attachments-article').empty().append(attachments);
+
+
+            // RENDER HTML
+            render_article();
+
+            // LOADING BAR
             Pace.restart();
-            resize_content('.article');
         }
-    )
+    );
 }
 
 function get_list_articles(category, element = undefined, tags = undefined, where = undefined, display = 'list') {
@@ -201,7 +210,6 @@ function get_list_articles(category, element = undefined, tags = undefined, wher
             $("table").trigger("update");
 
             resize_iframe();
-            resize_img();
         }
     );
 }
@@ -210,12 +218,47 @@ function get_list_articles(category, element = undefined, tags = undefined, wher
 /****************      MISCANELLOUS    ******************/
 /********************************************************/
 
-function resize_content(element) {
-    var menu_width = $('.left-sidebar').width() + 248;
+function resize_content(element, relative = undefined) {
+    var relative_width;
+    var article_width;
     var window_width = $(window).width();
-    var article_width = window_width - menu_width;
+    var menu_width = $('.left-sidebar').width() + 248;
+
+    if (relative != undefined) {
+        relative_width = $(relative).width();
+        console.log(relative_width);
+        article_width = relative_width;
+        $(element).css({'width': article_width});
+    }
+    else {
+        article_width = window_width - menu_width;
+        $(element).css({'width': article_width});
+        $('.content-article p').css({'font-family': '\'EB Garamond\' !important'});
+    }
+}
+
+function render_article() {
+    var article_content = $('.modal-content-article');
+    var article = $('.article');
+
+    article_content.find('*').each(function () {
+        var element = $(this);
+        if(element.width() > element.parent().width()){
+            element.css('width', '100%').css('height', 'auto');
+        }
+    });
+
+    var min_height = $(window).height() - 30;
+    article_content.css('min-height', min_height);
+    // console.log(article_content.height());
+    // article.css('height', article_content.height());
+
+}
+
+function resize_modal(element) {
+    var window_width = $(window).width();
+    var article_width = window_width - (45 / 100 * window_width);
     $(element).css({'width': article_width});
-    $('.content-article p').css({'font-family': '\'EB Garamond\' !important'});
 }
 
 function resize_vertical(element) {
@@ -227,10 +270,6 @@ function resize_vertical(element) {
 
 function resize_iframe() {
     $('.mini-article .content').find('iframe').attr('width', '555px').attr('height', '300px');
-}
-
-function resize_img() {
-    $('.mini-article .content').find('img').css({'width': '555px'});
 }
 
 
@@ -253,7 +292,6 @@ function action_acticle(element, class_name, form_change, url, form_base) {
                 $(selector).text(form_change);
 
             var article_id = $(this).parent().parent().find('.key').attr("id");
-
             $.get(url, {'action': action, 'article_id': article_id}, function (data) {
                 selector.parent().find('.' + class_name + '_counter').empty().append(data[class_name + '_counter']);
             });

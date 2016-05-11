@@ -286,7 +286,7 @@ class GetArticlesByStaticShortcutsView(View):
         current_user = self.request.user
 
         try:
-            p = SearchQuerySet().models(Article).exclude(status='d').exclude(status='w')
+            p = SearchQuerySet().models(Article).exclude(status='d').exclude(status='w').order_by('-publish_date')
             q = p[0]
         except IndexError:
             print("INDEX ERROR")
@@ -296,7 +296,7 @@ class GetArticlesByStaticShortcutsView(View):
 
         # GET HOME ARTICLES BY USEFUL COUNTER
         if get_by == 'Home':
-            articles = p.order_by('-useful_counter')
+            articles = p.order_by('-publish_date')
         # GET MOST USED ARTICLES
         elif get_by == 'Most Used':
             articles = p.order_by('-useful_counter')
