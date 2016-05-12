@@ -1,5 +1,6 @@
 jQuery(document).ready(function ($) {
 
+    $('.username').bigtext();
     window.display_mode = 'list';
     $("table").tablesorter(); 
 
@@ -9,9 +10,6 @@ jQuery(document).ready(function ($) {
     resize_content('.results');
     // resize_modal('.modal-dialog');
 
-    $('column-useful_counter').click(get_list_articles('Most Used', undefined, undefined, window.display_mode));
-    $('column-favorite_counter').click(get_list_articles('Most Loved', undefined, undefined, window.display_mode));
-    $('column-view_counter').click(get_list_articles('Most Used', undefined, undefined, window.display_mode));
 
     var body = $('body');
     var left_sidebar = $('.left-sidebar');

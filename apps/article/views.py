@@ -1,25 +1,13 @@
 from django.http import JsonResponse
-from apps.article.models import Category, Article, ShortcutManager, UserArticle
-from django.shortcuts import render_to_response
+from apps.article.models import Category, Article, Shortcut, UserArticle
 from django.views.generic import View
 import datetime, calendar
-from django.contrib.auth.decorators import login_required
-from haystack.query import SearchQuerySet
 from django.core.exceptions import ObjectDoesNotExist
 from attachments.models import Attachment
-from elasticsearch import exceptions
-from django.shortcuts import render_to_response
-from .forms import ArticlesSearchForm
 from django.shortcuts import render
 import simplejson as json
 from django.http import HttpResponse
 from haystack.query import SearchQuerySet
-
-# def search_titles(request):
-#     print(request.POST.get('search_text'))
-#     articles = SearchQuerySet().autocomplete(content_auto=request.POST.get('q', 'q'))
-#
-#     return render_to_response('base.html', {'articles': articles})
 
 
 def index_search(request):
@@ -227,7 +215,7 @@ class CreateShortcutView(View):
 
         context = {}
         shortcut_name = self.request.GET.get('shortcut_name')
-        shortcut = ShortcutManager.objects.create(name=shortcut_name)
+        shortcut = Shortcut.objects.create(name=shortcut_name)
 
         if shortcut:
             context['success'] = True
@@ -244,7 +232,7 @@ class AddArticleToShortcutView(View):
         shortcut_id = self.request.GET.get('shortcut_id')
 
         article = Article.objects.get(pk=article_id)
-        shortcut = ShortcutManager.objects.get(pk=shortcut_id)
+        shortcut = Shortcut.objects.get(pk=shortcut_id)
 
         if shortcut.articles.add(article):
             context['success'] = True
@@ -258,9 +246,9 @@ class ShowArticleFromShortcutView(View):
 
         context = {}
         shortcut_id = self.request.GET.get('shortcut_id')
-        shortcut = ShortcutManager.objects.get(pk=shortcut_id)
+        shortcut = Shortcut.objects.get(pk=shortcut_id)
 
-        for article in ShortcutManager.articles.exclude(status='w').exclude(status='d'):
+        for article in Shortcut.articles.exclude(status='w').exclude(status='d'):
             context.update({article.id: {
                 'title': article.title,
                 'author': article.author,
@@ -286,7 +274,7 @@ class GetArticlesByStaticShortcutsView(View):
         current_user = self.request.user
 
         try:
-            p = SearchQuerySet().models(Article).exclude(status='d').exclude(status='w').order_by('-publish_date')
+            p = SearchQuerySet().models(Article).exclude(status='d').exclude(status='w')
             q = p[0]
         except IndexError:
             print("INDEX ERROR")
@@ -296,7 +284,8 @@ class GetArticlesByStaticShortcutsView(View):
 
         # GET HOME ARTICLES BY USEFUL COUNTER
         if get_by == 'Home':
-            articles = p.order_by('-publish_date')
+            print('GRSOS JEQBFRBFJKHRBVKHREVCLJERWHVCLJRWEHVCLJWRHVBJL<ERWHVLIEHL<JVHEJW<HV<JEVWR')
+            articles = p.order_by('-modified')
         # GET MOST USED ARTICLES
         elif get_by == 'Most Used':
             articles = p.order_by('-useful_counter')
@@ -321,7 +310,7 @@ class GetArticlesByStaticShortcutsView(View):
             try:
                 ids = current_user.get_related_favorites()
                 for i in ids:
-                    articles.append(Article.objects.get(id=i, status='p'))
+                    articles.append(Article.objects.get(id=i))
                 print(articles[0])
             except ObjectDoesNotExist:
                 context.update({'msg': 'You do not like any item :('})
@@ -347,7 +336,7 @@ class GetArticlesByStaticShortcutsView(View):
             # BY SHORTCUTS
             if get_by is not None:
                 try:
-                    p = ShortcutManager.objects.get(name=get_by)
+                    p = Shortcut.objects.get(name=get_by)
                     articles = p.articles.all()
                 except ObjectDoesNotExist:
                     context.update({'msg': 'No articles :( You can add new '
@@ -480,9 +469,14 @@ class ShowArticleView(View):
 
         tags = ''
 
+        bookmarkclass = 'bookmarkLink'
+
         art = Article.objects.get(id=article.pk)
         for a in art.categories.all()[:7]:
-            tags += '<a class="badge bookmarkLink" href="/filter?tags=' + a.name.lower() + '">#' + a.name + ' </a>'
+            tags += '<span class="badge bookmarkBadge"><span class="add-tags" style="display:none">' \
+                    '<i class="material-icons">add_circle</i>' \
+                    '</span><a id="' + a.name + '" class="' + bookmarkclass + '" href="#">' + a.name + \
+                    '</a></span>'
 
         attachments = ''
         for a in Attachment.objects.attachments_for_object(art):

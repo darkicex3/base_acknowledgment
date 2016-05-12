@@ -5,7 +5,7 @@ from haystack.query import SearchQuerySet
 from mptt.models import TreeForeignKey, MPTTModel
 from django.db import models
 from .constants import *
-import datetime, calendar
+import datetime
 from django.utils import timezone
 
 
@@ -16,6 +16,7 @@ def get_upload_filename(instance, filename):
 @python_2_unicode_compatible
 class Category(MPTTModel):
     class Meta:
+        verbose_name = 'Category'
         verbose_name_plural = 'Categories'
         app_label = 'article'
 
@@ -32,6 +33,7 @@ class Category(MPTTModel):
 @python_2_unicode_compatible
 class Comment(MPTTModel):
     class Meta:
+        verbose_name = 'Comment'
         verbose_name_plural = 'Comments'
         app_label = 'article'
 
@@ -65,29 +67,11 @@ class Feedback(models.Model):
         verbose_name_plural = 'FeedBacks'
         app_label = 'article'
 
+    date = models.DateTimeField()
     author = models.ForeignKey(User, on_delete=models.CASCADE, default=DEFAULT_AUTHOR_ID)
     rate = models.CharField(max_length=1, choices=RATE_CHOICES, default=RATE_CHOICES[2])
     explanation = models.TextField(default='')
     comments = models.ManyToManyField(Comment, help_text=tags_help, blank=True)
-
-
-class UserArticle (models.Model):
-    class Meta:
-        verbose_name = 'User Article'
-        verbose_name_plural = 'User\'s Articles'
-        app_label = 'article'
-
-    user_id = models.IntegerField(default=0)
-    article_id = models.IntegerField(default=0)
-    favorites = models.BooleanField(default=False)
-    visited = models.BooleanField(default=False)
-    searched = models.BooleanField(default=False)
-    readed = models.BooleanField(default=False)
-    useful = models.BooleanField(default=False)
-
-    date_visited = models.DateTimeField(default=datetime.datetime.now)
-    date_searched = models.DateTimeField(default=datetime.datetime.now)
-    date_added = models.DateTimeField(default=datetime.datetime.now)
 
 
 class Article(models.Model):
@@ -95,11 +79,11 @@ class Article(models.Model):
         verbose_name_plural = 'Articles'
         app_label = 'article'
 
-    created = models.DateTimeField(editable=False)
     modified = models.DateTimeField(editable=False)
 
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default=STATUS_CHOICES[0])
-    feedback_manager = models.ForeignKey(FeedbackManager, on_delete=models.CASCADE, default=DEFAULT_FEEDBACK_ID, editable=False)
+    feedback_manager = models.ForeignKey(FeedbackManager, on_delete=models.CASCADE, default=DEFAULT_FEEDBACK_ID,
+                                         editable=False)
 
     useful_counter = models.IntegerField(default=0, editable=False)
     favorite_counter = models.IntegerField(default=0, editable=False)
@@ -118,6 +102,13 @@ class Article(models.Model):
     def active_article(self):
         if self.publish_date >= timezone.now() and timezone.now() < self.expiration_date:
             self.IS_ACTIVE = True
+
+    # def delete(self, *args, **kwargs):
+    #     userarticles = UserArticle.objects.all().filter(article_id=self.id)
+    #     for userarticle in userarticles:
+    #         userarticle.delete()
+    #
+    #     return super(Article, self).delete(*args, **kwargs)
 
     def save(self, *args, **kwargs):
         if not self.id:
@@ -146,10 +137,10 @@ class Article(models.Model):
 
 
 @python_2_unicode_compatible
-class ShortcutManager(MPTTModel):
+class Shortcut(MPTTModel):
     class Meta:
-        verbose_name = 'Shortcut Manager'
-        verbose_name_plural = 'Shortcut Manager'
+        verbose_name = 'Shortcut'
+        verbose_name_plural = 'Shortcuts'
 
     name = models.CharField(max_length=300, unique=True)
     icon = models.CharField(max_length=500, default="Your Icon", help_text="Add an icon to your shortcut ! <a href=\"ht"
@@ -157,7 +148,6 @@ class ShortcutManager(MPTTModel):
                                                                            "ns/\">Click Here !</a>")
     articles = models.ManyToManyField(Article, help_text=tags_help, blank=True)
     activated = models.BooleanField(default=True)
-    static = models.BooleanField(default=False)
     click_counter = models.IntegerField(default=0)
     parent = TreeForeignKey('self', null=True, blank=True, related_name='children')
 
@@ -200,4 +190,23 @@ def get_related_articles_visited(self):
 auth.models.User.add_to_class('get_related_favorites', get_related_favorites)
 auth.models.User.add_to_class('get_related_articles_viewed', get_related_favorites)
 auth.models.User.add_to_class('get_related_articles_visited', get_related_favorites)
+
+
+class UserArticle (models.Model):
+    class Meta:
+        verbose_name = 'User Article'
+        verbose_name_plural = 'User\'s Articles'
+        app_label = 'article'
+
+    user_id = models.IntegerField(default=0)
+    article_id = models.IntegerField(default=0)
+    favorites = models.BooleanField(default=False)
+    visited = models.BooleanField(default=False)
+    searched = models.BooleanField(default=False)
+    readed = models.BooleanField(default=False)
+    useful = models.BooleanField(default=False)
+
+    date_visited = models.DateTimeField(default=datetime.datetime.now)
+    date_searched = models.DateTimeField(default=datetime.datetime.now)
+    date_added = models.DateTimeField(default=datetime.datetime.now)
 

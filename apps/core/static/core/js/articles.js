@@ -35,11 +35,9 @@ function display_article(key, title, author, content, verified_article, date_pub
 
                 '<header class="header-article">' +
                     '<span class="key" id="' + key + '" hidden="hidden">' + key + '</span>' +
-                    '<a class="bookmark">' +
                     '<span class="txt">' + tags + '</span>' +
                     '<i class="material-icons color_view md-18 width18" style="margin-left: 20px;">schedule</i><span class="txt">' + date_publish + '</span>' +
                     '<i class="material-icons color_view md-18 width18" style="margin-left: 20px;">face</i><span class="txt">' + author + '</span>' +
-                    '</a>' +
 
                     '<a class="article-title">' + title +
                     '<i class="material-icons ' + color_read + '">done_all</i></a>' +
@@ -152,7 +150,7 @@ function get_article(element) {
     );
 }
 
-function get_list_articles(category, element = undefined, tags = undefined, where = undefined, display = 'list') {
+function get_list_articles(category, element = undefined, tags = undefined, display) {
     var feed = $('#feed');
     var table = $('.table-article tbody');
 
@@ -168,7 +166,7 @@ function get_list_articles(category, element = undefined, tags = undefined, wher
 
 
     $.get(GET_ARTICLES_BY_STATIC_SHORTCUTS,
-        {'get_articles_by': category, 'get_articles_by_tags':tags, 'display': display, 'in': where},
+        {'get_articles_by': category, 'get_articles_by_tags':tags, 'display': display},
 
         function (data) {
             var html;
@@ -200,15 +198,12 @@ function get_list_articles(category, element = undefined, tags = undefined, wher
             else {
                 feed.empty();
                 table.empty().append(html).parent().parent().parent().show();
+                $("#grid-data").bootgrid();
+                $("table").trigger("update");
             }
 
 
             Pace.restart();
-
-            $("#grid-data").bootgrid();
-
-            $("table").trigger("update");
-
             resize_iframe();
         }
     );
@@ -270,6 +265,7 @@ function resize_vertical(element) {
 
 function resize_iframe() {
     $('.mini-article .content').find('iframe').attr('width', '555px').attr('height', '300px');
+    $('.mini-article .content').find('img').css('width', '555px');
 }
 
 

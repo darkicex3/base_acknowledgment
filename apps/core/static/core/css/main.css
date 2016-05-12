@@ -241,6 +241,10 @@ th {
     width: 588px;
 }
 
+#feed {
+    margin-left: 15px;
+}
+
 /*********MODAL***********/
 
 .modal-dialog-article {
@@ -1389,7 +1393,9 @@ hr {
 }
 
 .username {
-    font-size: 15pt;
+    display: inline-block;
+    height: 30px;
+    width: 125px;
 }
 
 #img_profile {
