@@ -1,64 +1,110 @@
 {% extends "core/base.html" %}
 
-{% block title %}Knowledge Base{% endblock %}
+{% if user.is_authenticated %}
 
-{% block menu_sidebar %}
-    {#    A RECUPERER DYNAMIQUEMENT#}
+    {% block title %}Knowledge Base{% endblock %}
 
-    <div class="widget widget-menus">
-        <div class="menu-left-menu-container">
-            <div class="user_profile">
-                <div id="img_profile" data-toggle="modal" data-target="#modal_change_img"></div>
-                <div id="detail_profile">
-                    <p class="username"></p>
-                    <hr>
-                    <p class="badge"></p>
+    {% block menu_sidebar %}
+        <div class="widget widget-menus">
+            <div class="menu-left-menu-container">
+                <div class="user_profile">
+                    <form method="post">{% csrf_token %}
+                        {% if request.user.is_superuser %}
+                            <a class="user-profile-link" href="{% url 'admin:auth_user_change' request.user.id %}"><div id="img_profile"></div></a>
+                        {% elif request.user.is_staff %}
+                            <a class="user-profile-link" href="{% url 'admin:auth_user_change' request.user.id %}"><div id="img_profile"></div></a>
+                        {% else %}
+                            <div id="img_profile"></div>
+                        {% endif %}
+                    </form>
+                    <div id="detail_profile">
+                        <p class="username">
+                            {% if request.user.get_full_name %}
+                                {{ request.user.get_full_name.title }}
+                            {% else %}
+                                {{ request.user.username.title }}
+                            {% endif %}</p>
+                        <form method="post">{% csrf_token %}
+                            {% if request.user.is_superuser %}
+                                <a class="admin-link" href="{% url 'admin:index' %}"><p class="user-type administrator">Administrator</p></a>
+                            {% elif request.user.is_staff %}
+                                <p class="user-type staff">Staff User</p>
+                            {% else %}
+                                <p class="user-type normal">Basic User</p>
+                            {% endif %}
+                        </form>
+                        <hr>
+                        <p class="badge">{{ request.user.points }}</p>
+                    </div>
+                </div>
+                <ul id="menu-left-menu-1" class="menu base_menu static"></ul>
+                <ul class="mega-shorcuts variable"></ul>
+                <ul class="shorcuts variable"></ul>
+                <ul class="pastilles variable"></ul>
+            </div>
+        </div>
+
+        <div class="copyright static">
+            <form method="post">{% csrf_token %}
+                {% if request.user.is_staff %}
+                    <a href="{% url 'admin:article_shortcut_add' %}" class="add-button">Add Shortcut<i
+                            class="add-logo material-icons md-18 width18 color_base">add</i></a>
+                    <a href="{% url 'admin:article_shortcut_changelist' %}" class="add-button">Manage Shortcuts</a>
+                {% endif %}
+            </form>
+            ©2016 Teledirect Pte Ltd <br>
+            <a href="#">Terms & Privacy</a>
+        </div>
+
+    {% endblock %}
+
+    {% block content %}
+        <div class="search-section">
+            <div class=" col-md-12">
+                <div id="search-section-inner-content">
+                    <button class="search_section" type="button" id="search_categories"><i class="material-icons color_base md-36 first-item">more_horiz</i></button>
+                    <button class="search_section" type="button" id="search_sorting"><i class="sorting material-icons color_base md-36 first-item">sort</i></button>
+                    <form id="search_bar" method="post" action="{% url 'articles:articles_search_view' %}"
+                      class="autocomplete-me">
+                        {% csrf_token %}
+                        <input class="search_section" id="search_field"
+                            placeholder="What are you looking for ?" type="text" id="id_q" name="q">
+                        <input type="hidden" value="Search!">
+                    </form>
                 </div>
             </div>
-            <ul id="menu-left-menu-1" class="menu base_menu static"></ul>
-            <ul class="mega-shorcuts variable"></ul>
-            <ul class="shorcuts variable"></ul>
-            <ul class="pastilles variable"></ul>
         </div>
-    </div>
-
-    <div class="copyright static">
-        ©2016 Teledirect Pte Ltd <br>
-        <a href="#">Terms & Privacy</a>
-    </div>
-
-{% endblock %}
-
-{% block content %}
-    <div id="feed"></div>
-    {% include 'core/list_display.html' %}
-{% endblock %}
-
-{% block menu_right_sidebar %}
-
-    <div class="widget widget-menus">
-        <div class="menu-right-menu-container">
-            <div class="user_profile">
-                <div id="img_profile" data-toggle="modal" data-target="#modal_change_img"></div>
-                <div id="detail_profile">
-                    <p class="username"></p>
-                    <hr>
-                    <p class="badge"></p>
-                </div>
+        <div id="feed"></div>
+        {% include 'core/list_display.html' %}
+        <div class="search-section">
+            <div class=" col-md-12">
+                <form method="post">{% csrf_token %}
+                    {% if request.user.is_staff %}
+                        {% load admin_urls %}
+                        <a href="{% url 'admin:article_article_add' %}" class="add-button">Add New Articles<i class="material-icons md-18 width18 color_base" style="float: right;top: 1px;">add</i></a>
+                        <a href="{% url 'admin:article_article_changelist' %}" class="add-button">Manage Articles</a>
+                    {% endif %}
+                </form>
             </div>
-            <ul id="menu-left-menu-1" class="menu base_menu static"></ul>
-            <ul class="mega-shorcuts variable"></ul>
-            <ul class="shorcuts variable"></ul>
-            <ul class="pastilles variable"></ul>
         </div>
-    </div>
+    {% endblock %}
 
-    <div class="copyright static">
-        ©2016 Teledirect Pte Ltd <br>
-        <a href="#">Terms & Privacy</a>
-    </div>
+    {% block menu_right_sidebar %}
 
-{% endblock %}
+        <div class="widget widget-menus">
+            <div class="menu-right-menu-container">
+
+            </div>
+        </div>
+
+        <div class="copyright static">
+            ©2016 Teledirect Pte Ltd <br>
+            <a href="#">Terms & Privacy</a>
+        </div>
+
+    {% endblock %}
+
+{% endif %}
 
 
 

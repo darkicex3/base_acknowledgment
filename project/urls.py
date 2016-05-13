@@ -24,7 +24,7 @@ urlpatterns = [
     url(r'^summernote/', include('django_summernote.urls')),
     url(r'^manager/', include('apps.manager.urls', namespace='contents')),
     url(r'^article/', include('apps.article.urls', namespace='articles')),
-    url(r'^users/', include('apps.users.urls', namespace='users')),
+    url(r'^registration/', include('apps.registration.urls', namespace='registration')),
     url(r'^', include('apps.core.urls', namespace='core')),
     url(r'^admin/', admin.site.urls),
 ]

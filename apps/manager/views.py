@@ -11,7 +11,15 @@ class ManageSidebarShortcutsShowingView(View):
         previous = self.request.GET.get('previous')
 
         if node_id is None:
-            shortcuts = Shortcut.objects.all().filter(level=0)
+            try:
+                shortcuts = Shortcut.objects.all().filter(level=0)
+                q = shortcuts[0]
+            except IndexError:
+                print("INDEX ERROR S")
+                context.update({'msg': '<a class="button-add-shortcut" href="http://127.0.0.1:8000/admin/ar'
+                                       'ticle/shortcut/add/">Add Shortcut<i style="font-size: 25px; color: '
+                                       '#34495e;" class="material-icons float-left">add</i></a>'})
+                return JsonResponse(context)
         else:
             node_shortcut = Shortcut.objects.all().get(pk=node_id)
             if previous == 'false':

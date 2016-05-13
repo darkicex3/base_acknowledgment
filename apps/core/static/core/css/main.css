@@ -9,6 +9,24 @@
     border-collapse: inherit;
 }
 
+#search-section-inner-content {
+    width: 100%;
+    margin-bottom: 10px;
+    background-color: white;
+    border-radius: 3px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .04);
+    border: 1px solid rgba(0, 0, 0, .09);
+    border-collapse: separate;
+}
+
+.admin-link {
+    width: 100%;
+}
+
+.user-profile-link {
+    display: inline !important;
+}
+
 .margin-right {
     margin-right: 10px;
 }
@@ -23,25 +41,25 @@
 
 .field-modified, .field-publish_date, .field-useful_counter, .field-favorite_counter, .field-view_counter {
     font-size: 10pt !important;
-    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Open Sans","Helvetica Neue",sans-serif !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif !important;
     font-weight: 400 !important;
-    color: rgba(0,0,0,.44) !important;
+    color: rgba(0, 0, 0, .44) !important;
 }
 
 .font-list {
-        font-size: 11pt !important;
+    font-size: 11pt !important;
 }
 
 .padding-list {
-        padding: 15px !important;
+    padding: 15px !important;
 }
 
 .padding-bottom-list {
-        padding-bottom: 5px !important;
+    padding-bottom: 5px !important;
 }
 
 .padding-top-list {
-        padding-top: 15px !important;
+    padding-top: 15px !important;
 }
 
 .padding-left-list {
@@ -50,7 +68,7 @@
 
 .table {
     width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     background-color: white;
     border-radius: 3px;
     box-shadow: 0 1px 4px rgba(0, 0, 0, .04);
@@ -84,9 +102,6 @@ th {
     background-color: #f5f5f5;
     cursor: pointer;
 }
-
-
-
 
 /* ---------------------------------------- */
 /* ANIMATIONS                               */
@@ -256,7 +271,7 @@ th {
 }
 
 .float-menu-left {
-float: left;
+    float: left;
     width: 50px;
     position: absolute;
     left: -30px;
@@ -279,16 +294,16 @@ float: left;
     height: 50px;
     margin-bottom: 10px;
     background-color: #fff;
-    border: 1px solid rgba(0,0,0,0.2);
+    border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 60px;
     outline: 0;
-    box-shadow: 0 3px 9px rgba(0,0,0,0.5);
+    box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
     background-clip: padding-box;
 }
 
 .modal.fade:not(.in).bottom .modal-dialog {
-	-webkit-transform: translate3d(0, 25%, 0);
-	transform: translate3d(0, 25%, 0);
+    -webkit-transform: translate3d(0, 25%, 0);
+    transform: translate3d(0, 25%, 0);
 }
 
 .modal-body {
@@ -321,11 +336,7 @@ float: left;
     right: 6px;
 }
 
-
-
-
 /*********MODAL***********/
-
 
 .typeaheadOverlay {
     background-color: rgba(0, 0, 0, 0.4);
@@ -546,7 +557,7 @@ ul li {
     position: relative;
     font-size: 9pt !important;
     font-weight: normal !important;
-    color: rgba(0,0,0,.6) !important;
+    color: rgba(0, 0, 0, .6) !important;
 }
 
 #bookmark {
@@ -666,7 +677,7 @@ ul li {
 /* ---------------------------------------- */
 
 * {
-    font-family: medium-content-sans-serif-font,"Lucida Grande","Lucida Sans Unicode","Lucida Sans",Geneva,Arial,sans-serif;;
+    font-family: medium-content-sans-serif-font, "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Arial, sans-serif;;
     outline: none;
     word-wrap: break-word;
 }
@@ -1229,9 +1240,8 @@ a {
     color: #7f8c8d;
     padding: 10px !important;
     border: none;
-    margin-top: 7px;
     font-weight: bold;
-    height: 32px;
+    height: 43px;
 }
 
 .search_section button {
@@ -1242,7 +1252,7 @@ a {
     float: left;
     background: #fbfcfc;
     border-radius: 3px 0 0 3px;
-    padding: 4px 10px 4px 10px !important;
+    padding: 10px 10px 4px 10px !important;
 }
 
 #search_bar {
@@ -1271,14 +1281,13 @@ a {
     border-radius: 0 3px 3px 0;
     border-left: none !important;
     background-color: #fbfcfc;
-    padding: 4px 6px 5px 5px !important;
+    padding: 10px 6px 5px 5px !important;
     transition: all 500ms;
 }
 
 #search_bar input:focus {
     background-color: #f3f3f3;
 }
-
 
 #header_search i {
     display: inline-block;
@@ -1361,10 +1370,10 @@ ul.dropdown-profile li:hover a {
 }
 
 .badge {
-    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Open Sans","Helvetica Neue",sans-serif !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif !important;
     font-weight: 400 !important;
     font-style: normal;
-    color: rgba(0,0,0,.44) !important;
+    color: rgba(0, 0, 0, .44) !important;
     font-size: 13px !important;
     margin-right: 5px;
     letter-spacing: 0;
@@ -1372,18 +1381,19 @@ ul.dropdown-profile li:hover a {
     border-radius: 3px;
     padding: 5px 10px;
     border: none;
-    background: rgba(0,0,0,.05);
+    background: rgba(0, 0, 0, .05);
 }
 
 .badge:hover {
-    background: rgba(0,0,0,.1);
-    color: rgba(0,0,0,.6);
+    background: rgba(0, 0, 0, .1);
+    color: rgba(0, 0, 0, .6);
 }
 
 #detail_profile {
     height: 100%;
-    margin-left: 30px;
+    margin-left: 12px;
     float: left;
+    width: 140px;
 }
 
 hr {
@@ -1392,15 +1402,84 @@ hr {
     margin-bottom: -6px;
 }
 
+.button-add-article {
+    display: inline-block;
+    width: 100%;
+    margin: 24px;
+    padding: 20px;
+    background-color: #ecf0f1;
+    color: #34495e !important;
+}
+
+.button-add-shortcut {
+    display: inline-block;
+    width: 181px;
+    margin: 24px;
+    padding: 20px;
+    background-color: #ecf0f1;
+    color: #34495e !important;
+}
+
+.add-button {
+    background: rgba(0, 0, 0, .05);
+    padding: 20px;
+    width: 100%;
+    margin-bottom: 10px;
+    font-size: 11pt;
+    border-radius: 3px;
+}
+
+.add-logo {
+    font-size: 20px;
+    position: relative;
+    left: 39px;
+    top: -1px;
+}
+
 .username {
     display: inline-block;
+    height: 21px;
+    width: 100%;
+    color: #333;
+    overflow: hidden;
+}
+
+.user-type {
+    padding: 5px;
     height: 30px;
-    width: 125px;
+    position: relative;
+    top: -8px;
+    text-align: center;
+    width: 100%;
+    border-radius: 3px;
+}
+
+.staff {
+    border: #9b59b6 1px solid;
+    color: #9b59b6;
+}
+
+.normal {
+    border: #3498db 1px solid;
+    color: #3498db;
+}
+
+.visitor {
+    border: #9b59b6 1px solid;
+    color: #9b59b6;
+}
+
+.administrator {
+    border: #2ecc71 1px solid;
+    color: #2ecc71;
+    font-size: 9.7pt;
+    font-weight: normal !important;
+    width: 100%;
 }
 
 #img_profile {
     float: left;
-    border-radius: 50px;
+    border-radius: 3px;
     height: 57px;
     width: 57px;
     background-image: url('https://cdn-images-1.medium.com/fit/c/200/200/1*bJ68_kBzvNrJjipJs1GLuA.jpeg') !important;
@@ -1579,9 +1658,9 @@ a.login-url:active, .login_button:active {
 
 .widget-menus ul li a {
     font-size: 10pt !important;
-    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Open Sans","Helvetica Neue",sans-serif !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif !important;
     font-weight: 400 !important;
-    color: rgba(0,0,0,.44) !important;
+    color: rgba(0, 0, 0, .44) !important;
     width: 100%;
     padding: 10px 15px 10px 15px;
     display: block;
@@ -1640,7 +1719,6 @@ a.login-url:active, .login_button:active {
 .main-content {
     padding: 0;
     margin: 10px 20px 20px 240px;
-    width: 0;
 }
 
 .main-content > .row {

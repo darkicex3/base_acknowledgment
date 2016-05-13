@@ -8,12 +8,15 @@ from django.shortcuts import render
 import simplejson as json
 from django.http import HttpResponse
 from haystack.query import SearchQuerySet
+from django.contrib.auth.decorators import login_required
 
 
+@login_required
 def index_search(request):
     return render(request, 'article/base.html')
 
 
+@login_required
 def articles_search(request):
 
     tags = request.GET.get('in')
@@ -44,7 +47,7 @@ def articles_search(request):
 
 
 class GetCategoriesView(View):
-    # @login_required
+    @login_required
     def get(self, *args, **kwargs):
 
         context = {}
@@ -67,17 +70,16 @@ class GetCategoriesView(View):
 
 
 class SetLikedView(View):
-    # @login_required
     def get(self, *args, **kwargs):
         context = {}
 
         article_id = self.request.GET.get('article_id')
         action = self.request.GET.get('action')
-        current_user = self.request.user
         q = Article.objects.get(id=article_id)
+        user = self.request.user
 
         try:
-            p = UserArticle.objects.get(user_id=current_user.id, article_id=article_id)
+            p = UserArticle.objects.get(user_id=user.id, article_id=article_id)
 
             if action == 'true':
                 print(q.favorite_counter)
@@ -92,7 +94,7 @@ class SetLikedView(View):
 
         except ObjectDoesNotExist:
             if action == 'true':
-                UserArticle.objects.create(user_id=current_user.id, article_id=article_id, favorites=True)
+                UserArticle.objects.create(user_id=user.id, article_id=article_id, favorites=True)
                 q.favorite_counter += 1
 
         context.update({'favorite_counter': q.favorite_counter})
@@ -102,17 +104,16 @@ class SetLikedView(View):
 
 
 class SetUsefulView(View):
-    # @login_required
     def get(self, *args, **kwargs):
         context = {}
 
         article_id = self.request.GET.get('article_id')
         action = self.request.GET.get('action')
-        current_user = self.request.user
         q = Article.objects.get(id=article_id)
+        user = self.request.user
 
         try:
-            p = UserArticle.objects.all().get(user_id=current_user.id, article_id=article_id)
+            p = UserArticle.objects.all().get(user_id=user.id, article_id=article_id)
 
             if action == 'true':
                 p.useful = True
@@ -125,7 +126,7 @@ class SetUsefulView(View):
 
         except ObjectDoesNotExist:
             if action == 'true':
-                UserArticle.objects.create(user_id=current_user.id, article_id=article_id, useful=True)
+                UserArticle.objects.create(user_id=user.id, article_id=article_id, useful=True)
                 q.useful_counter += 1
 
         context.update({'useful_counter': q.useful_counter})
@@ -135,17 +136,16 @@ class SetUsefulView(View):
 
 
 class SetReadView(View):
-    # @login_required
     def get(self, *args, **kwargs):
         context = {}
 
         article_id = self.request.GET.get('article_id')
         action = self.request.GET.get('action')
-        current_user = self.request.user
         q = Article.objects.get(id=article_id)
+        user = self.request.user
 
         try:
-            p = UserArticle.objects.all().get(user_id=current_user.id, article_id=article_id)
+            p = UserArticle.objects.all().get(user_id=user.id, article_id=article_id)
 
             if action == 'true':
                 p.readed = True
@@ -158,7 +158,7 @@ class SetReadView(View):
 
         except ObjectDoesNotExist:
             if action == 'true':
-                UserArticle.objects.create(user_id=current_user.id, article_id=article_id, readed=True)
+                UserArticle.objects.create(user_id=user.id, article_id=article_id, readed=True)
                 q.view_counter += 1
 
         context.update({'readed_counter': q.view_counter})
@@ -168,49 +168,47 @@ class SetReadView(View):
 
 
 class SetVisitedView(View):
-    # @login_required
     def get(self, *args, **kwargs):
         context = {}
 
         article_id = self.request.GET.get('article_id')
-        current_user = self.request.user
+        user = self.request.user
 
         try:
-            p = UserArticle.objects.all().get(user_id=current_user.id, article_id=article_id)
+            p = UserArticle.objects.all().get(user_id=user.id, article_id=article_id)
             p.visited = True
             p.date_visited = datetime.datetime.now()
             p.save()
 
         except ObjectDoesNotExist:
-            UserArticle.objects.create(user_id=current_user.id, article_id=article_id, visited=True,
+            UserArticle.objects.create(user_id=user.id, article_id=article_id, visited=True,
                                        date_visited=datetime.datetime.now())
 
         return JsonResponse(context)
 
 
 class SetSearchedView(View):
-    # @login_required
     def get(self, *args, **kwargs):
         context = {}
 
         article_id = self.request.GET.get('article_id')
-        current_user = self.request.user
+        user = self.request.user
 
         try:
-            p = UserArticle.objects.all().get(user_id=current_user.id, article_id=article_id)
+            p = UserArticle.objects.all().get(user_id=user.id, article_id=article_id)
             p.searched = True
             p.date_searched = datetime.datetime.now()
             p.save()
 
         except ObjectDoesNotExist:
-            UserArticle.objects.create(user_id=current_user.id, article_id=article_id, searched=True,
+            UserArticle.objects.create(user_id=user.id, article_id=article_id, searched=True,
                                        date_searched=datetime.datetime.now())
 
         return JsonResponse(context)
 
 
 class CreateShortcutView(View):
-    # @login_required
+    @login_required
     def get(self, *args, **kwargs):
 
         context = {}
@@ -224,7 +222,7 @@ class CreateShortcutView(View):
 
 
 class AddArticleToShortcutView(View):
-    # @login_required
+    @login_required
     def get(self, *args, **kwargs):
 
         context = {}
@@ -241,7 +239,7 @@ class AddArticleToShortcutView(View):
 
 
 class ShowArticleFromShortcutView(View):
-    # @login_required
+    @login_required
     def get(self, *args, **kwargs):
 
         context = {}
@@ -263,23 +261,23 @@ class ShowArticleFromShortcutView(View):
 
 
 class GetArticlesByStaticShortcutsView(View):
-    # @login_required
-    def get(self, *args, **kwargs):
+    def get(self, user, **kwargs):
 
         context = {}
         articles = []
         get_by = self.request.GET.get('get_articles_by')
         get_by_tag = self.request.GET.get('get_articles_by_tags')
         display = self.request.GET.get('display')
-        current_user = self.request.user
+        user = self.request.user
 
         try:
             p = SearchQuerySet().models(Article).exclude(status='d').exclude(status='w')
             q = p[0]
         except IndexError:
             print("INDEX ERROR")
-            context.update({'msg': 'No articles :( You can add or publish new ones from the '
-                                   '<a href="http://127.0.0.1:8000/admin">admin interface</a> !'})
+            context.update({'msg': '<a class="button-add-article" href="http://127.0.0.1:8000/admin/article/art'
+                                   'icle/add/">Add Article<i style="font-size: 44px; color: #34495e;" '
+                                   'class="material-icons float-left">add</i></a>'})
             return JsonResponse(context)
 
         # GET HOME ARTICLES BY USEFUL COUNTER
@@ -308,7 +306,7 @@ class GetArticlesByStaticShortcutsView(View):
         # GET FAVORITES FOR CURRENT USER
         elif get_by == 'Favorites':
             try:
-                ids = current_user.get_related_favorites()
+                ids = user.get_related_favorites()
                 for i in ids:
                     articles.append(Article.objects.get(id=i))
                 print(articles[0])
@@ -321,7 +319,7 @@ class GetArticlesByStaticShortcutsView(View):
         # GET HISTORIC FOR CURRENT USER
         elif get_by == 'Historic':
             try:
-                ids = current_user.get_related_articles_viewed()
+                ids = user.get_related_articles_viewed()
                 for i in ids:
                     articles.append(Article.objects.get(id=i, status='p'))
                 print(articles[0])
@@ -371,19 +369,19 @@ class GetArticlesByStaticShortcutsView(View):
         for article in articles:
 
             try:
-                UserArticle.objects.get(user_id=current_user.id, article_id=article.pk, favorites=True)
+                UserArticle.objects.get(user_id=user.id, article_id=article.pk, favorites=True)
                 favorites = "ok"
             except ObjectDoesNotExist:
                 favorites = "ko"
 
             try:
-                UserArticle.objects.get(user_id=current_user.id, article_id=article.pk, readed=True)
+                UserArticle.objects.get(user_id=user.id, article_id=article.pk, readed=True)
                 readed = "ok"
             except ObjectDoesNotExist:
                 readed = "ko"
 
             try:
-                UserArticle.objects.get(user_id=current_user.id, article_id=article.pk, useful=True)
+                UserArticle.objects.get(user_id=user.id, article_id=article.pk, useful=True)
                 bigup = "ok"
             except ObjectDoesNotExist:
                 bigup = "ko"
@@ -429,7 +427,7 @@ class GetArticlesByStaticShortcutsView(View):
 
 
 class SortArticlesView(View):
-    # @login_required
+    @login_required
     def get(self, *args, **kwargs):
 
         context = {}
@@ -440,29 +438,27 @@ class SortArticlesView(View):
 
 
 class ShowArticleView(View):
-    # @login_required
     def get(self, *args, **kwargs):
         context = {}
         article_id = self.request.GET.get('article_id')
-        current_user = self.request.user
-
+        user = self.request.user
         article = Article.objects.get(id=article_id)
 
         try:
-            UserArticle.objects.get(user_id=current_user.id, article_id=article.pk, favorites=True)
+            UserArticle.objects.get(user_id=user.id, article_id=article.pk, favorites=True)
             favorites = "ok"
         except ObjectDoesNotExist:
             favorites = "ko"
 
         try:
-            UserArticle.objects.get(user_id=current_user.id, article_id=article.pk, readed=True)
+            UserArticle.objects.get(user_id=user.id, article_id=article.pk, readed=True)
             readed = "ok"
         except ObjectDoesNotExist:
             readed = "ko"
 
         try:
 
-            UserArticle.objects.get(user_id=current_user.id, article_id=article.pk, useful=True)
+            UserArticle.objects.get(user_id=user.id, article_id=article.pk, useful=True)
             bigup = "ok"
         except ObjectDoesNotExist:
             bigup = "ko"

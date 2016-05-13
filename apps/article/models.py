@@ -7,6 +7,8 @@ from django.db import models
 from .constants import *
 import datetime
 from django.utils import timezone
+from django.db import models
+from colorfield.fields import ColorField
 
 
 def get_upload_filename(instance, filename):
@@ -21,6 +23,8 @@ class Category(MPTTModel):
         app_label = 'article'
 
     name = models.CharField(max_length=50, blank=True, null=True)
+    color = ColorField(default='#FF0000', help_text='Please choose a color from <a href="https://flat'
+                                                    'uicolors.com/" target="_blank">FLAT UI Color</a>')
     parent = TreeForeignKey('self', null=True, blank=True, related_name='children')
 
     def get_previous_parent(self):

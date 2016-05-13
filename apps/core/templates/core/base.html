@@ -39,21 +39,8 @@
         </a>
     </div><!-- logo teledirect -->
 
-    <div class="col-md-8 col-xs-8" id="colSearchBar">
-        <button class="search_section" type="button" id="search_categories"><i class="material-icons color_base md-36 first-item">more_horiz</i></button>
-        <button class="search_section" type="button" id="search_sorting"><i class="sorting material-icons color_base md-36 first-item">sort</i></button>
-
-        <form id="search_bar" method="post" action="{% url 'articles:articles_search_view' %}" class="autocomplete-me">
-            {% csrf_token %}
-            <input class="search_section" id="search_field"
-                   placeholder="What are you looking for ?" type="text" id="id_q" name="q">
-            <input type="hidden" value="Search!">
-        </form>
-    </div><!-- autocomplete search, by categories, by sorting -->
-
-
     <div class="col-md-2 col-xs-2 btn-group action-bar-header">
-        <i class="col-md-2 logout login-url material-icons md-20 first-item color_bblack">power_settings_new</i>
+        <a href="{% url 'registration:logout' %}"><i class="col-md-2 logout login-url material-icons md-20 first-item color_bblack">power_settings_new</i></a>
         <i class="col-md-2 material-icons md-20 first-item help-action color_bblack">help</i>
         <i class="col-md-2 material-icons md-20 first-item settings-action color_bblack">settings</i>
         <i class="col-md-2 material-icons md-20 first-item notifications-action color_bblack">notifications</i>
@@ -117,15 +104,10 @@
     SET_SEARCHED                        =   "{% url 'articles:set_searched_view'                        %}"; //TODO
     GET_POLLS                           =   "{% url 'articles:get_polls_view'                           %}"; //TODO                                                              //TODO
     SORT_ARTICLES                       =   "{% url 'articles:sort_article_view'                        %}"; //TODO
-    CHANGE_AVATAR                       =   "{% url 'core:change_avatar_view'                           %}"; //TODO
 
     SET_USEFUL                          =   "{% url 'articles:set_useful_view'                          %}"; //OK
     SET_FAVORITE                        =   "{% url 'articles:set_liked_view'                           %}"; //OK
     SET_READ                            =   "{% url 'articles:set_read_view'                            %}"; //OK
-    AJAX_LOGIN                          =   "{% url 'users:login_view'                                  %}"; //OK
-    AJAX_REGISTER                       =   "{% url 'users:register_view'                               %}"; //OK
-    AJAX_LOGOUT                         =   "{% url 'users:logout_view'                                 %}"; //OK
-    AJAX_ISCO                           =   "{% url 'users:is_connected_view'                           %}"; //OK
     GET_ARTICLES_BY_STATIC_SHORTCUTS    =   "{% url 'articles:get_article_by_static_shortcuts'          %}"; //OK
     GET_CATEGORIES                      =   "{% url 'articles:get_categories_view'                      %}"; //OK
     GET_ARTICLES_FROM_SHORTCUT          =   "{% url 'articles:show_article_from_shorcuts'               %}"; //OK
@@ -152,7 +134,6 @@
 <script src="{% static 'core/js/autocomplete.js' %}"></script>
 <script src="{% static 'core/js/articles.js' %}"></script>
 <script src="{% static 'core/js/get_cookies.js' %}"></script>
-<script src="{% static 'core/js/authentication.js' %}"></script>
 <script src="{% static 'core/js/avatar.js' %}"></script>
 <script src="{% static 'core/js/shortcuts.js' %}"></script>
 <script src="{% static 'core/js/categories.js' %}"></script>

@@ -16,6 +16,7 @@ import sys
 import logging
 import copy
 from django.utils.log import DEFAULT_LOGGING
+from apps import registration
 
 
 LOGGING = copy.deepcopy(DEFAULT_LOGGING)
@@ -78,9 +79,10 @@ INSTALLED_APPS = [
     'urllib3',
     'haystack',
     'attachments',
+    'colorfield',
 
     'apps.core.apps.CoreConfig',
-    'apps.users.apps.UsersConfig',
+    'apps.registration.apps.RegistrationConfig',
     'apps.article.apps.ArticleConfig',
     'apps.manager.apps.ManagerConfig',
 ]
@@ -96,6 +98,9 @@ HAYSTACK_CONNECTIONS = {
         'INDEX_NAME': 'haystack',
     },
 }
+
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/registration/login/' \
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',

@@ -14,15 +14,20 @@ function get_shortcuts(element) {
             for (var key in data) {
                 html += shortcut(key, data[key]['name'], data[key]['icon']);
             }
-            if (element != undefined)
+            if (data['msg'] != undefined){
+                $('.base_menu').empty().append(data['msg']);
+            }
+            else if (element != undefined) {
                 element.parent().children('.children')   .empty()
                                             .append(html)
                                             .css('position','relative')
                                             .css('left', '20px')
                                             .slideDown(200);
-
-            else
+            }
+            else {
                 $('.base_menu').empty().append(html);
+                $('#Home .shortcuts-link').css('background-color', '#eee');
+            }
         }
     );
 }

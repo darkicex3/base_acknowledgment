@@ -200,6 +200,8 @@ function get_list_articles(category, element = undefined, tags = undefined, disp
                 table.empty().append(html).parent().parent().parent().show();
                 $("#grid-data").bootgrid();
                 $("table").trigger("update");
+                resize_content('.results');
+                resize_content('.search-section');
             }
 
 
