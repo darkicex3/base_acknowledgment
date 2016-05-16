@@ -200,11 +200,9 @@ function get_list_articles(category, element = undefined, tags = undefined, disp
                 table.empty().append(html).parent().parent().parent().show();
                 $("#grid-data").bootgrid();
                 $("table").trigger("update");
-                resize_content('.results');
-                resize_content('.search-section');
             }
 
-
+            resize_masterfeed();
             Pace.restart();
             resize_iframe();
         }
@@ -232,6 +230,25 @@ function resize_content(element, relative = undefined) {
         $(element).css({'width': article_width});
         $('.content-article p').css({'font-family': '\'EB Garamond\' !important'});
     }
+}
+
+function resize_masterfeed() {
+    var margin = 11;
+    var leftbarwidth = $('.left-sidebar').width() + margin * 2;
+    var rightbarwidth = $('.right-sidebar').width() + margin * 2;
+    var windowwidth = $(window).width();
+
+    $('.master-feed').css('width', windowwidth - (leftbarwidth + rightbarwidth));
+}
+
+function resize_module() {
+    var headerheight = $('header').height();
+    var windowheight = $(window).height();
+    var rightbarheight = (windowheight - headerheight) - 10;
+    var moduleheight = ( rightbarheight / 3 ) - 10;
+
+    $('.right-sidebar').css('height', rightbarheight);
+    $('.module').css('height', moduleheight);
 }
 
 function render_article() {

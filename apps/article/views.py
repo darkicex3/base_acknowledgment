@@ -274,15 +274,12 @@ class GetArticlesByStaticShortcutsView(View):
             p = SearchQuerySet().models(Article).exclude(status='d').exclude(status='w')
             q = p[0]
         except IndexError:
-            print("INDEX ERROR")
-            context.update({'msg': '<a class="button-add-article" href="http://127.0.0.1:8000/admin/article/art'
-                                   'icle/add/">Add Article<i style="font-size: 44px; color: #34495e;" '
-                                   'class="material-icons float-left">add</i></a>'})
+            context.update({'msg': '<p style="padding: 16px;">No articles available, please add new ones '
+                                   'or contact an administrator.</p>'})
             return JsonResponse(context)
 
         # GET HOME ARTICLES BY USEFUL COUNTER
         if get_by == 'Home':
-            print('GRSOS JEQBFRBFJKHRBVKHREVCLJERWHVCLJRWEHVCLJWRHVBJL<ERWHVLIEHL<JVHEJW<HV<JEVWR')
             articles = p.order_by('-modified')
         # GET MOST USED ARTICLES
         elif get_by == 'Most Used':

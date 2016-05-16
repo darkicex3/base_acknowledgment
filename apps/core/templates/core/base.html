@@ -13,7 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="{% static 'core/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'core/js/vendor/webui-popover/src/jquery.webui-popover.css' %}">
+    <link rel="stylesheet" href="{% static 'core/js/vendor/webui-popover/dist/jquery.webui-popover.min.css' %}">
     <link rel="stylesheet" href="{% static 'core/css/main.css' %}">
     <link rel="stylesheet" href="{% static 'core/css/vendor/perfect-scrollbar/perfect-scrollbar.min.css' %}">
     <link rel="stylesheet" href="{% static 'core/css/vendor/jquery.bootgrid.min.css' %}">
@@ -33,17 +33,13 @@
 {% include "core/modal.html" %}
 
 <header class="shadow_material" id="header">
-    <div class="col-md-2 col-xs-2" id="logo">
-        <a href="#">
-            <img src="{% static 'core/img/logo_base.jpg' %}" style="width: 180px">
-        </a>
-    </div><!-- logo teledirect -->
+    <a href="#" class="logo"><img src="{% static 'core/img/logo_base.jpg' %}" style="width: 180px"></a>
 
     <div class="col-md-2 col-xs-2 btn-group action-bar-header">
-        <a href="{% url 'registration:logout' %}"><i class="col-md-2 logout login-url material-icons md-20 first-item color_bblack">power_settings_new</i></a>
-        <i class="col-md-2 material-icons md-20 first-item help-action color_bblack">help</i>
-        <i class="col-md-2 material-icons md-20 first-item settings-action color_bblack">settings</i>
-        <i class="col-md-2 material-icons md-20 first-item notifications-action color_bblack">notifications</i>
+{#        <a href="{% url 'registration:logout' %}"><i class="col-md-2 logout login-url material-icons md-20 first-item color_bblack">power_settings_new</i></a>#}
+{#        <i class="col-md-2 material-icons md-20 first-item help-action color_bblack">help</i>#}
+{#        <i class="col-md-2 material-icons md-20 first-item settings-action color_bblack">settings</i>#}
+{#        <i class="col-md-2 material-icons md-20 first-item notifications-action color_bblack">notifications</i>#}
     </div><!-- notifications, settings, help, logout -->
 </header>
 
@@ -61,7 +57,6 @@
 </div><!-- categories -->
 
 <div class="app_content">
-    <div class="col-md-12 col-xs-12" id="header_sidebar" style=""></div>
 
     <div class="col-md-2 disable-mobile left-sidebar shadow_material" style="">
         {% block menu_sidebar %}
@@ -71,21 +66,9 @@
 
     <div class="cover" style="display:none;"></div>
 
-    <div class="col-md-12 main-content">
-        {% for article in articles %}
-            <li><a>{{ article.object.title }}</a></li>
-        {% endfor %}
-
-        {% block content %}
-            <!-- content -->
-        {% endblock %}
-    </div>
-
-    <div class="col-md-2 disable-mobile right-sidebar shadow_material" style="">
-        {% block menu_right_sidebar %}
-
-        {% endblock %}
-    </div>
+    {% block content %}
+        <!-- content -->
+    {% endblock %}
 
     <div class="footer-container" style="display: none">
         <footer class="wrapper">
@@ -123,13 +106,13 @@
 <script src="{% static 'core/js/vendor/pace.min.js' %}"></script>
 <script src="{% static 'core/js/vendor/jquery-1.11.2.min.js' %}"></script>
 <script src="{% static 'core/js/vendor/jquery-ui-1.11.4.custom/jquery-ui.min.js' %}"></script>
-<script src="{% static 'core/js/vendor/webui-popover/src/jquery.webui-popover.js' %}"></script>
+<script src="{% static 'core/js/vendor/webui-popover/dist/jquery.webui-popover.min.js' %}"></script>
 <script src="{% static 'core/js/vendor/bootstrap.min.js' %}"></script>
 <script src="{% static 'core/js/vendor/perfect-scrollbar/perfect-scrollbar.jquery.min.js' %}"></script>
 <script src="{% static 'core/js/vendor/jquery.bootgrid.min.js' %}"></script>
 <script src="{% static 'core/js/vendor/jquery.tablesorter.min.js' %}"></script>
 <script src="{% static 'core/js/vendor/jquery.tablesorter.widgets.min.js' %}"></script>
-<script src="{% static 'core/js/vendor/bigtext.js' %}"></script>
+<script src="{% static 'core/js/vendor/jquery.flip.min.js' %}"></script>
 
 <script src="{% static 'core/js/autocomplete.js' %}"></script>
 <script src="{% static 'core/js/articles.js' %}"></script>

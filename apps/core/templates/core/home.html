@@ -10,9 +10,13 @@
                 <div class="user_profile">
                     <form method="post">{% csrf_token %}
                         {% if request.user.is_superuser %}
-                            <a class="user-profile-link" href="{% url 'admin:auth_user_change' request.user.id %}"><div id="img_profile"></div></a>
+                            <a class="user-profile-link" href="{% url 'admin:auth_user_change' request.user.id %}">
+                                <div id="img_profile"></div>
+                            </a>
                         {% elif request.user.is_staff %}
-                            <a class="user-profile-link" href="{% url 'admin:auth_user_change' request.user.id %}"><div id="img_profile"></div></a>
+                            <a class="user-profile-link" href="{% url 'admin:auth_user_change' request.user.id %}">
+                                <div id="img_profile"></div>
+                            </a>
                         {% else %}
                             <div id="img_profile"></div>
                         {% endif %}
@@ -26,7 +30,8 @@
                             {% endif %}</p>
                         <form method="post">{% csrf_token %}
                             {% if request.user.is_superuser %}
-                                <a class="admin-link" href="{% url 'admin:index' %}"><p class="user-type administrator">Administrator</p></a>
+                                <a class="admin-link" href="{% url 'admin:index' %}"><p class="user-type administrator">
+                                    Administrator</p></a>
                             {% elif request.user.is_staff %}
                                 <p class="user-type staff">Staff User</p>
                             {% else %}
@@ -59,51 +64,102 @@
     {% endblock %}
 
     {% block content %}
-        <div class="search-section">
-            <div class=" col-md-12">
+        <div class="">
+        <div class="master-feed">
+
+            {#        Search Module        #}
+            <div class="search-section">
                 <div id="search-section-inner-content">
-                    <button class="search_section" type="button" id="search_categories"><i class="material-icons color_base md-36 first-item">more_horiz</i></button>
-                    <button class="search_section" type="button" id="search_sorting"><i class="sorting material-icons color_base md-36 first-item">sort</i></button>
+                    <button class="search_section" type="button" id="search_categories"><i
+                            class="material-icons color_base md-36 first-item">more_horiz</i></button>
+                    <button class="search_section" type="button" id="search_sorting"><i
+                            class="sorting material-icons color_base md-36 first-item">sort</i></button>
                     <form id="search_bar" method="post" action="{% url 'articles:articles_search_view' %}"
-                      class="autocomplete-me">
+                          class="autocomplete-me">
                         {% csrf_token %}
                         <input class="search_section" id="search_field"
-                            placeholder="What are you looking for ?" type="text" id="id_q" name="q">
+                               placeholder="What are you looking for ?" type="text" id="id_q" name="q">
                         <input type="hidden" value="Search!">
                     </form>
                 </div>
             </div>
-        </div>
-        <div id="feed"></div>
-        {% include 'core/list_display.html' %}
-        <div class="search-section">
-            <div class=" col-md-12">
+
+            {#        Results Module        #}
+            <div class="results">
+                <table class="table-article table table-condensed table-hover table-striped"
+                       id="result_list grid-data">
+                    <thead>
+                    <tr>
+                        <th id="title" data-column-id="title" scope="col"
+                            class="column padding-left-list column-title"
+                            style="padding: 12px 5px; border-radius: 2px 0 0 0;">TITLE
+                        </th>
+                        <th data-column-id="publish_date" class="column column-publish_date"
+                            style="padding: 12px 5px;">PUBLISHED
+                        </th>
+                        <th data-column-id="modified" class="column column-modified" style="padding: 12px 5px;">
+                            MODIFIED
+                        </th>
+                        <th data-column-id="big_up" data-type="numeric" scope="col"
+                            class="column column-useful_counter" style="padding: 10px 30px 8px 2px;"><i
+                                class="table-icon useful material-icons md-18 width18 color_bigup">thumb_up</i></th>
+                        <th data-column-id="favorites" data-type="numeric" scope="col"
+                            class="column column-favorite_counter" style="padding: 10px 30px 8px 2px;"><i
+                                class="table-icon favorite material-icons md-18 width18 color_base_favorite">favorite</i>
+                        </th>
+                        <th data-column-id="views" data-type="numeric" scope="col"
+                            class="column column-view_counter"
+                            style="padding: 10px 30px 8px 2px;border-radius: 0 2px 0 0;"><i
+                                class="table-icon material-icons remove_red_eye color_base md-18 width18">remove_red_eye</i>
+                        </th>
+                    </tr>
+                    </thead>
+
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            {#        Manager Module For Administrator Only        #}
+            <div class="manager-module">
                 <form method="post">{% csrf_token %}
                     {% if request.user.is_staff %}
                         {% load admin_urls %}
-                        <a href="{% url 'admin:article_article_add' %}" class="add-button">Add New Articles<i class="material-icons md-18 width18 color_base" style="float: right;top: 1px;">add</i></a>
-                        <a href="{% url 'admin:article_article_changelist' %}" class="add-button">Manage Articles</a>
+                        <a href="{% url 'admin:article_article_add' %}" class="add-button">Add New Articles<i
+                                class="material-icons md-18 width18 color_base"
+                                style="float: right;top: 1px;">add</i></a>
+                        <a href="{% url 'admin:article_article_changelist' %}" class="add-button">Manage
+                            Articles</a>
                     {% endif %}
                 </form>
             </div>
         </div>
-    {% endblock %}
 
-    {% block menu_right_sidebar %}
+        <div class="card right-sidebar">
+            <div class="front">
+                    <div class="module daily-recap">
+                        <p>Daily Recap</p>
 
-        <div class="widget widget-menus">
-            <div class="menu-right-menu-container">
 
+                    </div>
+                    <div class="module popular-article">
+                        <p>Popular Articles</p>
+                    </div>
+                    <div class="module popular-tags">
+                        <p>Popular Tags</p>
+
+                    </div>
+            </div>
+            <div class="back">
+                <div class="">
+                    <div class="">
+                        <p>Daily Recap</p>
+                        <p>Popular Articles</p>
+                        <p>Popular Tags</p>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <div class="copyright static">
-            ©2016 Teledirect Pte Ltd <br>
-            <a href="#">Terms & Privacy</a>
-        </div>
-
     {% endblock %}
-
 {% endif %}
 
 

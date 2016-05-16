@@ -66,6 +66,11 @@
     padding-left: 15px !important;
 }
 
+.master-feed {
+    margin: 11px auto;
+    width: 65%;
+}
+
 .table {
     width: 100%;
     margin-bottom: 10px;
@@ -882,6 +887,14 @@ a#author {
     overflow-x: hidden;
 }
 
+.logo {
+    display: block;
+    vertical-align: middle;
+    line-height: 45px;
+    margin: auto;
+    width: 180px;
+}
+
 #header {
     box-shadow: 0 0 1px rgba(0, 0, 0, .15);
     position: fixed;
@@ -889,7 +902,12 @@ a#author {
     top: 0;
     width: 100%;
     height: 45px;
-    background-color: #ffffff;
+    /*!* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,ffffff+25,f2f6fa+31,dee8f3+38,c3d5e9+46,5a8bc2+72,326fb3+82,145aa8+92,034ea2+100 *!*/
+    background: #ffffff; /* Old browsers */
+    /*background: -moz-linear-gradient(left,  #ffffff 0%, #ffffff 25%, #f2f6fa 31%, #dee8f3 38%, #c3d5e9 46%, #5a8bc2 72%, #326fb3 82%, #145aa8 92%, #034ea2 100%); !* FF3.6-15 *!*/
+    /*background: -webkit-linear-gradient(left,  #ffffff 0%,#ffffff 25%,#f2f6fa 31%,#dee8f3 38%,#c3d5e9 46%,#5a8bc2 72%,#326fb3 82%,#145aa8 92%,#034ea2 100%); !* Chrome10-25,Safari5.1-6 *!*/
+    /*background: linear-gradient(to right,  #ffffff 0%,#ffffff 25%,#f2f6fa 31%,#dee8f3 38%,#c3d5e9 46%,#5a8bc2 72%,#326fb3 82%,#145aa8 92%,#034ea2 100%); !* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ *!*/
+    /*filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#034ea2',GradientType=1 ); !* IE6-9 *!*/
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
     -o-transition: all 0.3s ease;
@@ -1536,7 +1554,7 @@ a.login-url:active, .login_button:active {
     background-color: #fff;
     background-clip: inherit;
     padding: 0;
-    margin: 10px;
+    margin: 11px 10px;
     width: 234px;
     position: fixed;
     border-radius: 3px;
@@ -1545,17 +1563,23 @@ a.login-url:active, .login_button:active {
 }
 
 .right-sidebar {
-    background-color: #fff;
-    background-clip: inherit;
     padding: 0;
     right: 0;
     top: 46px;
     margin: 10px;
     width: 234px;
-    position: fixed;
+    height: 100%;
+    position: fixed !important;
+}
+
+.module {
+    padding: 15px;
     border-radius: 3px;
+    margin-bottom: 10px;
+    height: 30%;
     box-shadow: 0 1px 4px rgba(0, 0, 0, .04);
     border: 1px solid rgba(0, 0, 0, .09);
+    background-color: #fff;
 }
 
 .left-sidebar ul.menu li:before {
@@ -1718,7 +1742,7 @@ a.login-url:active, .login_button:active {
 /* ======================================= */
 .main-content {
     padding: 0;
-    margin: 10px 20px 20px 240px;
+    margin: 10px 20px 20px 254px;
 }
 
 .main-content > .row {

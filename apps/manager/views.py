@@ -16,9 +16,9 @@ class ManageSidebarShortcutsShowingView(View):
                 q = shortcuts[0]
             except IndexError:
                 print("INDEX ERROR S")
-                context.update({'msg': '<a class="button-add-shortcut" href="http://127.0.0.1:8000/admin/ar'
-                                       'ticle/shortcut/add/">Add Shortcut<i style="font-size: 25px; color: '
-                                       '#34495e;" class="material-icons float-left">add</i></a>'})
+                context.update({'msg': '<p style="padding: 16px;">No shortcuts available, please add new ones '
+                                       'or contact an administrator.</p>'})
+
                 return JsonResponse(context)
         else:
             node_shortcut = Shortcut.objects.all().get(pk=node_id)
