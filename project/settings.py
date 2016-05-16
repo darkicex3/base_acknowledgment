@@ -82,6 +82,7 @@ INSTALLED_APPS = [
     'colorfield',
 
     'apps.core.apps.CoreConfig',
+    'apps.poll.apps.PollConfig',
     'apps.registration.apps.RegistrationConfig',
     'apps.article.apps.ArticleConfig',
     'apps.manager.apps.ManagerConfig',

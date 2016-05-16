@@ -6,7 +6,7 @@ from attachments.admin import AttachmentInlines             # DJANGO ATTACHMENTS
 
 # -- ARTICLE APP MODELS --
 from apps.article.models import Category, Article, \
-    Feedback, Shortcut, FeedbackManager, Comment, UserArticle
+    Feedback, Shortcut, FeedbackManager, Comment, UserArticle, DailyRecap
 
 # -- DJANGO ADMIN MODEL --
 from django.contrib.admin.models import LogEntry            # LOG OF ALL ACTIONS PERFORM ON ADMIN INTERFACE
@@ -18,6 +18,16 @@ from .functions import *                                    # ADDITIONAL FUNCTIO
 
 class CategoryAdmin(DjangoMpttAdmin):
     pass
+
+
+class DailyRecapAdmin(SummernoteModelAdmin, admin.ModelAdmin):
+    list_display = ['title', 'id', 'publish_date', 'modified', 'view_counter', 'status']
+    list_editable = ['status']
+    list_filter = ['publish_date', 'status']
+    search_fields = ['title']
+    inlines = (AttachmentInlines,)
+    ordering = ['title']
+    actions = [make_published, make_draft, make_withdrawn, duplicate_event, deleteall]
 
 
 class ArticleAdmin(SummernoteModelAdmin, admin.ModelAdmin):
@@ -57,6 +67,7 @@ admin.site.register(Category, CategoryAdmin)
 admin.site.register(Article, ArticleAdmin)
 admin.site.register(Shortcut, ShortcutAdmin)
 admin.site.register(Feedback, FeedBackAdmin)
+admin.site.register(DailyRecap, DailyRecapAdmin)
 admin.site.register(FeedbackManager)
 admin.site.register(Comment)
 

@@ -3,7 +3,7 @@ from django.contrib import auth
 from six import python_2_unicode_compatible
 from haystack.query import SearchQuerySet
 from mptt.models import TreeForeignKey, MPTTModel
-from django.db import models
+from apps import poll
 from .constants import *
 import datetime
 from django.utils import timezone
@@ -78,30 +78,58 @@ class Feedback(models.Model):
     comments = models.ManyToManyField(Comment, help_text=tags_help, blank=True)
 
 
+class DailyRecap(models.Model):
+    class Meta:
+        verbose_name_plural = 'Daily Recaps'
+        verbose_name = 'Daily Recap'
+        app_label = 'article'
+
+    # REQUIRED
+    author = models.ForeignKey(User, on_delete=models.CASCADE, default=DEFAULT_AUTHOR_ID, editable=False)
+    title = models.CharField(max_length=255, default='')
+    content = models.TextField(default='')
+    modified = models.DateTimeField(editable=False)
+    publish_date = models.DateTimeField(help_text=publish_date_help)
+    view_counter = models.IntegerField(default=0, editable=False)
+    useful_counter = models.IntegerField(default=0, editable=False)
+    status = models.CharField(max_length=1, choices=STATUS_CHOICES, default=STATUS_CHOICES[0])
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.created = timezone.now()
+        self.modified = timezone.now()
+        return super(DailyRecap, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.title
+
+
 class Article(models.Model):
     class Meta:
         verbose_name_plural = 'Articles'
         app_label = 'article'
 
+    # REQUIRED
+    author = models.ForeignKey(User, on_delete=models.CASCADE, default=DEFAULT_AUTHOR_ID)
+    title = models.CharField(max_length=255, default='')
+    content = models.TextField(default='')
+    publish_date = models.DateTimeField(help_text=publish_date_help)
     modified = models.DateTimeField(editable=False)
-
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default=STATUS_CHOICES[0])
-    feedback_manager = models.ForeignKey(FeedbackManager, on_delete=models.CASCADE, default=DEFAULT_FEEDBACK_ID,
-                                         editable=False)
+    categories = models.ManyToManyField(Category, help_text=tags_help, blank=True)
 
+    # COUNTERS
     useful_counter = models.IntegerField(default=0, editable=False)
     favorite_counter = models.IntegerField(default=0, editable=False)
     view_counter = models.IntegerField(default=0, editable=False)
 
-    author = models.ForeignKey(User, on_delete=models.CASCADE, default=DEFAULT_AUTHOR_ID)
-    publish_date = models.DateTimeField(help_text=publish_date_help)
-    expiration_date = models.DateTimeField(blank=True, null=True, help_text=expiration_date)
-
-    title = models.CharField(max_length=255, default='')
+    # OPTIONNAL
     description = models.TextField(help_text=description_help, default='')
-    content = models.TextField(default='')
-    categories = models.ManyToManyField(Category, help_text=tags_help, blank=True)
+    feedback_manager = models.ForeignKey(FeedbackManager, on_delete=models.CASCADE, default=DEFAULT_FEEDBACK_ID,
+                                         editable=False)
+    expiration_date = models.DateTimeField(blank=True, null=True, help_text=expiration_date)
     feedback = models.ManyToManyField(Feedback, help_text=tags_help, blank=True)
+    polls = models.ManyToManyField('poll.Poll', help_text=tags_help, blank=True)
 
     def active_article(self):
         if self.publish_date >= timezone.now() and timezone.now() < self.expiration_date:

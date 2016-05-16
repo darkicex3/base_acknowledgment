@@ -29,3 +29,8 @@ RATE_CHOICES = (
     ('3', 'Satisfied'),
     ('4', 'Very Satisfied'),
 )
+
+TYPE_CHOICES = (
+    ('0', 'Right Answer'),
+    ('1', 'Wrong Answer'),
+)
