@@ -1266,11 +1266,24 @@ a {
     float: left;
     background: #fbfcfc;
     border-radius: 3px 0 0 3px;
-    padding: 10px 10px 4px 10px !important;
 }
 
 #search_bar {
+    position: relative;
     overflow: hidden;
+}
+
+.clear-search-bar {
+    cursor: pointer;
+    color: #fff;
+    text-align: center;
+    position:absolute;
+    height:100%;
+    right:0;
+    width: 0;
+    top:0;
+    display: none;
+    transition: all 500ms;
 }
 
 .action-bar-header {
@@ -1297,10 +1310,6 @@ a {
     background-color: #fbfcfc;
     padding: 10px 6px 5px 5px !important;
     transition: all 500ms;
-}
-
-#search_bar input:focus {
-    background-color: #f3f3f3;
 }
 
 #header_search i {

@@ -29,6 +29,7 @@ jQuery(document).ready(function ($) {
     OnClickShortcutsShowTrees();
     OnClickBookmarkGetArticlesByBookmark();
     OnClickSearchBarSetEditable();
+    OnSearchBar();
 
     body.on('click', '.guideText', function (e) {
         get_list_articles(undefined, $(this), 'tags', window.display_mode);

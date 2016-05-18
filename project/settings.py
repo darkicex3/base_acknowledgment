@@ -273,7 +273,7 @@ SUMMERNOTE_CONFIG = {
         static_url('django_summernote/django_summernote_inplace.css'),
     ),
     'js_for_inplace': (
-        '//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js',
+        static_url('core/js/vendor/bootstrap.min.js'),
         static_url('core/js/vendor/summernote-ext-print.js'),
         static_url('django_summernote/jquery.ui.widget.js'),
         static_url('django_summernote/jquery.iframe-transport.js'),

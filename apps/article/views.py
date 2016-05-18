@@ -278,8 +278,11 @@ class GetArticlesByStaticShortcutsView(View):
             [tab_model.append(str(i.id)) for i in Article.objects.all()]
 
             if not set(tab_index) == set(tab_model):
-                context.update({'msg': '<p style="padding: 16px;">Index error in the search engine. You have to run'
-                                       ' \'python3.5 manage.py rebuild_index\' command in the terminal.</p>'})
+                context.update({'msg': '<p style="padding: 16px;">Index error in the search engine.'
+                                       '<br><br>1. You have to run'
+                                       ' \'python3.5 manage.py rebuild_index\' command in the terminal.'
+                                       '<br><br>Or<br><br>2. Start'
+                                       ' elasticsearch if it is not.</p>'})
                 return JsonResponse(context)
 
             p = SearchQuerySet().models(Article).exclude(status='d').exclude(status='w')
