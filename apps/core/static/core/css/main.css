@@ -95,10 +95,6 @@ th {
     font-size: 9pt;
 }
 
-.column {
-
-}
-
 .table-icon {
     padding: 0 0 0 17px;
 }
@@ -1572,7 +1568,11 @@ a.login-url:active, .login_button:active {
     position: fixed !important;
 }
 
-.module {
+.big-module {
+
+}
+
+.module, .big-module {
     padding: 15px;
     border-radius: 3px;
     margin-bottom: 10px;

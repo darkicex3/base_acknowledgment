@@ -9,6 +9,7 @@ import simplejson as json
 from django.http import HttpResponse
 from haystack.query import SearchQuerySet
 from django.contrib.auth.decorators import login_required
+from haystack.management.commands import rebuild_index, update_index
 
 
 @login_required
@@ -82,11 +83,9 @@ class SetLikedView(View):
             p = UserArticle.objects.get(user_id=user.id, article_id=article_id)
 
             if action == 'true':
-                print(q.favorite_counter)
                 p.favorites = True
                 q.favorite_counter += 1
             else:
-                print(q.favorite_counter)
                 p.favorites = False
                 q.favorite_counter -= 1
 
@@ -271,9 +270,28 @@ class GetArticlesByStaticShortcutsView(View):
         user = self.request.user
 
         try:
+
+            tab_index = []
+            tab_model = []
+
+            [tab_index.append(i.pk) for i in SearchQuerySet().models(Article)]
+            [tab_model.append(str(i.id)) for i in Article.objects.all()]
+
+            if not set(tab_index) == set(tab_model):
+                context.update({'msg': '<p style="padding: 16px;">Index error in the search engine. You have to run'
+                                       ' \'python3.5 manage.py rebuild_index\' command in the terminal.</p>'})
+                return JsonResponse(context)
+
             p = SearchQuerySet().models(Article).exclude(status='d').exclude(status='w')
+
+            if not Article.objects.all().filter(status='p') or not p:
+                raise ObjectDoesNotExist
             q = p[0]
         except IndexError:
+            context.update({'msg': '<p style="padding: 16px;">No articles available, please add new ones '
+                                   'or contact an administrator.</p>'})
+            return JsonResponse(context)
+        except ObjectDoesNotExist:
             context.update({'msg': '<p style="padding: 16px;">No articles available, please add new ones '
                                    'or contact an administrator.</p>'})
             return JsonResponse(context)

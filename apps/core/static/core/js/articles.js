@@ -99,7 +99,7 @@ var display_function = {
                                 useful_counter, bigup_article, last_update, view_counter) {
 
         return '<tr class="row' + key + '" id="' + key + '">' +
-            '<th class="field-title font-list padding-list"><a data-toggle="modal" href="http://fiddle.jshell.net/bHmRB/51/show/" data-target="#display-article" class="padding-bottom-list link-title-article" href="#">' + title + '</a><br>' + tags + '</th>' +
+            '<th class="field-title font-list padding-list"><a data-toggle="modal" href="" data-target="#display-article" class="padding-bottom-list link-title-article" href="#">' + title + '</a><br>' + tags + '</th>' +
             '<td class="field-publish_date padding-top-list nowrap">' + date_publish + '</td>' +
             '<td class="field-modified padding-top-list nowrap">' + last_update + '</td>' +
             '<td class="center field-useful_counter padding-top-list">' + useful_counter + '</td>' +
@@ -172,6 +172,9 @@ function get_list_articles(category, element = undefined, tags = undefined, disp
             var html;
             if (typeof (data['msg']) != 'undefined') {
                 html = '<div style="width: 588px;font-size:20pt;">' + data['msg'] + '</div>';
+                $('.results').empty().append(html);
+                resize_masterfeed();
+                return
             } else {
                 html = '';
                 for (var key in data) {
@@ -202,8 +205,8 @@ function get_list_articles(category, element = undefined, tags = undefined, disp
                 $("table").trigger("update");
             }
 
-            resize_masterfeed();
             Pace.restart();
+            resize_masterfeed();
             resize_iframe();
         }
     );
@@ -239,6 +242,7 @@ function resize_masterfeed() {
     var windowwidth = $(window).width();
 
     $('.master-feed').css('width', windowwidth - (leftbarwidth + rightbarwidth));
+    $('table').css('width', windowwidth - (leftbarwidth + rightbarwidth)).css('resize', 'both').css('overflow', 'auto');
 }
 
 function resize_module() {
@@ -267,12 +271,6 @@ function render_article() {
     // console.log(article_content.height());
     // article.css('height', article_content.height());
 
-}
-
-function resize_modal(element) {
-    var window_width = $(window).width();
-    var article_width = window_width - (45 / 100 * window_width);
-    $(element).css({'width': article_width});
 }
 
 function resize_vertical(element) {

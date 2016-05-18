@@ -15,7 +15,6 @@ class ManageSidebarShortcutsShowingView(View):
                 shortcuts = Shortcut.objects.all().filter(level=0)
                 q = shortcuts[0]
             except IndexError:
-                print("INDEX ERROR S")
                 context.update({'msg': '<p style="padding: 16px;">No shortcuts available, please add new ones '
                                        'or contact an administrator.</p>'})
 

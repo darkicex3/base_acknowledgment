@@ -99,7 +99,7 @@ var display_function = {
                                 useful_counter, bigup_article, last_update, view_counter) {
 
         return '<tr class="row' + key + '" id="' + key + '">' +
-            '<th class="field-title font-list padding-list"><a data-toggle="modal" href="http://fiddle.jshell.net/bHmRB/51/show/" data-target="#display-article" class="padding-bottom-list link-title-article" href="#">' + title + '</a><br>' + tags + '</th>' +
+            '<th class="field-title font-list padding-list"><a data-toggle="modal" href="" data-target="#display-article" class="padding-bottom-list link-title-article" href="#">' + title + '</a><br>' + tags + '</th>' +
             '<td class="field-publish_date padding-top-list nowrap">' + date_publish + '</td>' +
             '<td class="field-modified padding-top-list nowrap">' + last_update + '</td>' +
             '<td class="center field-useful_counter padding-top-list">' + useful_counter + '</td>' +
@@ -172,6 +172,9 @@ function get_list_articles(category, element = undefined, tags = undefined, disp
             var html;
             if (typeof (data['msg']) != 'undefined') {
                 html = '<div style="width: 588px;font-size:20pt;">' + data['msg'] + '</div>';
+                $('.results').empty().append(html);
+                resize_masterfeed();
+                return
             } else {
                 html = '';
                 for (var key in data) {
@@ -202,8 +205,8 @@ function get_list_articles(category, element = undefined, tags = undefined, disp
                 $("table").trigger("update");
             }
 
-
             Pace.restart();
+            resize_masterfeed();
             resize_iframe();
         }
     );
@@ -232,6 +235,26 @@ function resize_content(element, relative = undefined) {
     }
 }
 
+function resize_masterfeed() {
+    var margin = 11;
+    var leftbarwidth = $('.left-sidebar').width() + margin * 2;
+    var rightbarwidth = $('.right-sidebar').width() + margin * 2;
+    var windowwidth = $(window).width();
+
+    $('.master-feed').css('width', windowwidth - (leftbarwidth + rightbarwidth));
+    $('table').css('width', windowwidth - (leftbarwidth + rightbarwidth)).css('resize', 'both').css('overflow', 'auto');
+}
+
+function resize_module() {
+    var headerheight = $('header').height();
+    var windowheight = $(window).height();
+    var rightbarheight = (windowheight - headerheight) - 10;
+    var moduleheight = ( rightbarheight / 3 ) - 10;
+
+    $('.right-sidebar').css('height', rightbarheight);
+    $('.module').css('height', moduleheight);
+}
+
 function render_article() {
     var article_content = $('.modal-content-article');
     var article = $('.article');
@@ -250,12 +273,6 @@ function render_article() {
 
 }
 
-function resize_modal(element) {
-    var window_width = $(window).width();
-    var article_width = window_width - (45 / 100 * window_width);
-    $(element).css({'width': article_width});
-}
-
 function resize_vertical(element) {
     var header_height = $('header').height();
     var window_height = $(window).height();
@@ -268,7 +285,7 @@ function resize_iframe() {
     $('.mini-article .content').find('img').css('width', '555px');
 }
 
-2
+
 /********************************************************/
 /****************         ACTIONS      ******************/
 /********************************************************/

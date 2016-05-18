@@ -25,19 +25,6 @@ jQuery(document).ready(function ($) {
         $('#webuiPopover0').css('width', window.sizeSearchBar);
     });
 
-    $('#search_sorting').webuiPopover({
-        type: 'async',
-        url: GET_SORTING_METHODS,
-        content: function (data) {
-            var html = '<ul>';
-            for (var key in data) {
-                html += '<li>' + data[key] + '</li>';
-            }
-            html += '</ul>';
-            return html;
-        }, placement: 'bottom', animation: 'pop', trigger: 'hover'
-    });
-
     //on .webui-popover-content li click event
     $('body').on('click', '.category', function (event) {
         event.preventDefault();

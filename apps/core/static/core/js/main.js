@@ -6,7 +6,6 @@ jQuery(document).ready(function ($) {
 
     $(".card").flip({ trigger: 'manual' });
     $('#search_sorting').click(function () {
-        console.log('caca');
         $(".card").flip('toggle');
     });
 

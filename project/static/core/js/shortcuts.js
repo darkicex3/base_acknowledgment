@@ -24,10 +24,10 @@ function get_shortcuts(element) {
                                             .css('left', '20px')
                                             .slideDown(200);
             }
-            else
+            else {
                 $('.base_menu').empty().append(html);
-
-        
+                $('#Home .shortcuts-link').css('background-color', '#eee');
+            }
         }
     );
 }
