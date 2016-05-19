@@ -5,3 +5,4 @@ urllib3
 haystack
 django_attachments
 django_colorfield
+guinicorn
