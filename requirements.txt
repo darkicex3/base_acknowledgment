@@ -3,5 +3,5 @@ django_mptt_admin
 elasticsearch
 urllib3
 haystack
-attachments
+django_attachments
 colorfield
