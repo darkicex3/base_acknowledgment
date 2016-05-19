@@ -125,7 +125,7 @@ function list_display_options(sortpriority) {
 function get_article(element) {
     var id = element.parent().parent().attr('id');
 
-    $.get(SHOW_ARTICLE, {'article_id': id},
+    $.get(GET_ARTICLE, {'article_id': id},
         function (data) {
 
             // GET HTML
@@ -165,7 +165,7 @@ function get_list_articles(category, element = undefined, tags = undefined, disp
     }
 
 
-    $.get(GET_ARTICLES_BY_STATIC_SHORTCUTS,
+    $.get(GET_LIST_ARTICLES,
         {'get_articles_by': category, 'get_articles_by_tags':tags, 'display': display},
 
         function (data) {
