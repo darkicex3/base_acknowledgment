@@ -1,8 +1,0 @@
-notifications
-django_mptt_admin
-elasticsearch
-urllib3
-haystack
-django_attachments
-django_colorfield
-gunicorn
