@@ -65,17 +65,30 @@ $(document).ready(function () {
     };
 
     Autocomplete.prototype.show_results = function (data) {
+        // Remove any existing results.
+        $('.ac-results').remove();
 
         var results = data.results || [];
+        var results_wrapper = $('<div class="ac-results"></div>');
+        var base_elem = $('<div class="result-wrapper"><a href="#" class="ac-result"></a></div>');
 
         if (results.length > 0) {
-            
-            console.log(results.length);
+            $('.cover').show();
+            for (var res_offset in results) {
+                var elem = base_elem.clone();
+                // Don't use .html(...) here, as you open yourself to XSS.
+                // Really, you should use some form of templating.
+                elem.find('.ac-result').text(results[res_offset]);
+                results_wrapper.append(elem)
+            }
         }
         else {
-            console.log('No results');
+            var elem = base_elem.clone();
+            elem.text("No results found.");
+            results_wrapper.append(elem)
         }
 
+        this.query_box.after(results_wrapper)
     };
 
 

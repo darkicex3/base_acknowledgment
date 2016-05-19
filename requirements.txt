@@ -1,0 +1,7 @@
+notifications
+django_mptt_admin
+elasticsearch
+urllib3
+haystack
+attachments
+colorfield
