@@ -1,3 +1,1 @@
-web:python manage.py runserver
-web:gunicorn project.wsgi --log-file -
-heroku ps:scale web=1
+web: python3 manage.py runserver 0.0.0.0:$PORT
