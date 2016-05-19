@@ -4,4 +4,4 @@ elasticsearch
 urllib3
 haystack
 django_attachments
-colorfield
+django_colorfield
