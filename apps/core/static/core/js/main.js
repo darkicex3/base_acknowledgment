@@ -1,10 +1,24 @@
 jQuery(document).ready(function ($) {
 
+    window.Manager = new ArticleManager();
+    window.Manager.initEvents();
+    window.Manager.getListArticle(); //category, tags, sorting, counter
+
+
+
+
+
+
+
+
     resize_module();
+
     window.display_mode = 'list';
+
     $("table").tablesorter();
 
     $(".card").flip({ trigger: 'manual' });
+
     $('#search_sorting').click(function () {
         $(".card").flip('toggle');
     });
@@ -15,10 +29,9 @@ jQuery(document).ready(function ($) {
     left_sidebar.perfectScrollbar();
 
     get_shortcuts(undefined);
-    get_list_articles('Home', $(this), undefined, window.display_mode);
 
-    action_acticle('#favorite', 'favorite', 'favorite_border', SET_FAVORITE, 'favorite');
-    action_acticle('#note', 'useful', 'color_bigup', SET_USEFUL, '');
+    action_acticle('#favorite', 'favorite', 'favorite_border', LIKE_MANAGER, 'favorite');
+    action_acticle('#note', 'useful', 'color_bigup', BIGUP_MANAGER, '');
 
     ActionRightBar('.help-action', $('.help'));
     ActionRightBar('.notifications-action', $('.notifications'));
@@ -32,13 +45,10 @@ jQuery(document).ready(function ($) {
     OnSearchBar();
 
     body.on('click', '.guideText', function (e) {
-        get_list_articles(undefined, $(this), 'tags', window.display_mode);
+       window.Manager.getListArticle($(this).attr('id'));
     });
     body.on('click', '.feedback', function (e) {
-        read($(this), SET_READ);
-    });
-    body.on('click', '.link-title-article', function (e) {
-        get_article($(this));
+        read($(this), READ_MANAGER);
     });
 
     $(window).resize(function (e) {

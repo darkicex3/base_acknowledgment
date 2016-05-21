@@ -2,236 +2,390 @@
  * Created by maxbook on 19/05/16.
  */
 
-jQuery(document).ready(function ($) {
+window.body = $('body');
 
-    var Article = function (element, id, options) {
-        this.element = element;
-        this.id = id;
-        this.like_selector = '.like-button' || options.like_selector;
-        this.read_selector = '.read-button' || options.read_selector;
-        this.bigup_selector = '.useful-button' || options.bigup_selector;
-        this.attachment_selector = '.attachment-button' || options.attachment_selector;
-        this.comment_selector = '.comment-button' || options.comment_selector;
+/****************      ARTICLE    ******************/
 
-        this.isLike = function () {
-            return query(urls.like_manager, {'action', 'r'});
-        };
+var Article = function (id, element) {
+    this.element = element;
+    this.id = id;
 
-        this.isRead = function () {
-            return query(urls.read_manager, actions.read);
-        };
-
-        this.isSearch = function () {
-            return query(urls.search_manager, actions.read);
-        };
-
-        this.isBigup = function () {
-            return query(urls.bigup_manager, actions.read);
-        };
-
-        this.setLike = function (active, inactive) {
-            query(urls.like_manager, actions.read);
-            design(this.like_selector, active, inactive);
-        };
-
-        this.setRead = function (active, inactive) {
-            query(urls.like_manager, actions.write);
-            design(this.read_selector, active, inactive);
-        };
-
-        this.setBigup = function (active, inactive) {
-            query(urls.like_manager, actions.write);
-            design(this.bigup_selector, active, inactive)
-        };
-
-        this.setSearch = function () {
-            query(urls.like_manager, actions.write);
-        };
-
-        this.show = function () {
-            query(urls.like_manager, actions.read, {'id': this.id});
-        };
+    this.isLike = function () {
+        return this.element.text() == 'favorite_border'
     };
 
-    Article.actions = {
-        'read': 'r',
-        'write': 'w'
+    this.setLike = function (active, inactive) {
+        query_like(this.id, mode.write, this.isLike());
+        design(selector.like_icon, this.isLike(), this.element, active, inactive);
     };
 
-    Article.selector = {
-        'like_selector': this.like_selector,
-        'read_selector': this.read_selector,
-        'bigup_selector': this.bigup_selector,
-        'comment_selector': this.comment_selector,
-        'attachment_selector': this.attachment_selector,
+    this.isRead = function () {
+        return query(urls.read_manager, mode.read);
     };
 
-    Article.attrclass = {
-        'base': {},
-        'liked': {},
-        'bigup': {},
+    this.setRead = function (active, inactive) {
+        query(urls.like_manager, mode.write);
+        design(this.read_selector, this.isRead(), active, inactive);
     };
 
-    Article.style = {
-        'read': {},
-        'unread': {}
+    this.isBigup = function () {
+        return query(urls.bigup_manager, mode.read);
     };
 
-    Article.urls = {
-        'like_manager': LIKE_MANAGER,
-        'read_manager': READ_MANAGER,
-        'bigup_manager': BIGUP_MANAGER,
-        'useful_manager': USEFUL_MANAGER,
-        'search_manager': SEARCH_MANAGER,
-        'get_article': GET_ARTICLE
+    this.setBigup = function (active, inactive) {
+        query(urls.like_manager, mode.write);
+        design(this.bigup_selector, this.isBigup(), this.element, active, inactive)
     };
 
-    Article.prototype.query = function (url, action, params = null) {
-        $.get(url, {'action': action, params}, function (data) {
-            var results = {};
-            for (var key in data)
-                for (var value in data[key])
-                    var tmp_key = data[key];
-            results.update({tmp_key: {value: data[key][value]}});
-
-            return results;
-        });
+    this.isSearch = function () {
+        return query(urls.search_manager, mode.read);
     };
 
-    Article.prototype.design = function (element, active, inactive) {
+    this.setSearch = function () {
+        Article.query(urls.like_manager, mode.write);
+    };
+
+    var query_like = function (id, mode, bool) {
+        $.get(urls.like_manager,
+            {'id': id, 'mode': mode, 'action': bool},
+            function (data) {
+            }
+        );
+    };
+
+    this.show = function () {
+        query(this.id);
+    }; // OK
+
+    var results = function (data, display) {
+        var result = '';
+
+        // GET HTML
+        var articleHTML = article(data['id'], data['title'], data['author'], data['desc'], data['ok'],
+            data['pub_date'], data['tags'], data['read']);
+        var statsHTML = stats(data['id'], data['views'], data['useful'], data['loved'], data['bigup'],
+            data['favorites']);
+        var attachmentsHTML = attachments(data['attachements']);
+
+        // APPEND HTML
+        $(selector.body_selector).empty().append(articleHTML);
+        $(selector.stats_selector).empty().append(statsHTML);
+        $(selector.attachment_selector).empty().append(attachmentsHTML);
+
+        // RENDER HTML
+        render_article();
+
+    }; // OK
+
+    var query = function (id) {
+        $.get(urls.get_article,
+            {'id': id},
+            function (data) {
+                results(data);
+                Pace.restart();
+            }
+        );
+    };
+
+    var design = function (element, state, object, active, inactive) {
         switch (element) {
-            case this.like_selector:
-                if (this.isLike())
-                    $(element).attr('class', active || attrclass.liked);
-                else $(element).attr('class', inactive || attrclass.base);
+            case selector.like_icon:
+                if (state)
+                    object.text(inactive || attrclass.unliked);
+                else object.text(active || attrclass.liked);
                 break;
-            case this.read_selector:
-                if (this.isRead())
-                    $(element).css(active || style.read);
-                else $(element).css(inactive || style.unread);
+            case selector.read_icon:
+                if (state)
+                    object.css(active || style.read);
+                else object.css(inactive || style.unread);
                 break;
-            case this.bigup_selector:
-                if (this.isBigup())
-                    $(element).attr('class', active || attrclass.bigup);
-                else $(element).attr('class', inactive || attrclass.base);
+            case selector.bigup_icon:
+                if (state)
+                    object.attr('class', active || attrclass.bigup);
+                else object.attr('class', inactive || attrclass.base);
                 break;
             default:
                 break;
         }
     };
 
-    var ArticleManager = function (options) {
-        this.results_selector = '.results' || options.results_selector;
+    var article = function (key, title, author, content, verified_article, date_publish, tags, read_article) {
+        var color_read = (read_article == 'ok' ? 'color_bigup' : 'color_base');
+        var readed = (read_article == 'ok' ? 'readed' : 'unreaded');
+
+        return '<div class="article shadow_material">' +
+            '<header class="header-article">' +
+            '<span class="key" id="' + key + '" hidden="hidden">' + key + '</span>' +
+            '<span class="txt">' + tags + '</span>' +
+            '<i class="material-icons color_view md-18 width18" style="margin-left: 20px;">schedule</i>' +
+            '<span class="txt">' + date_publish + '</span>' +
+            '<i class="material-icons color_view md-18 width18" style="margin-left: 20px;">face</i>' +
+            '<span class="txt">' + author + '</span>' +
+            '<a class="article-title">' + title +
+            '<i class="material-icons ' + color_read + '">done_all</i></a>' +
+            '</header>' +
+            '<div class="content-article">' + content + '</div>' +
+            '<aside class="glossary-article">' + '</aside>' +
+            '<footer class="footer-article">' +
+            '<div class="feedback ' + readed + '">I have read this article !</div>' +
+            '</footer>' +
+            '</div>';
     };
 
-    Article.urls = {
+    var stats = function (key, view_counter, useful_counter, favorite_counter, bigup_article, favorites) {
+        var color_big = (bigup_article == 'ok' ? 'color_bigup' : 'color_base');
+        var favorite_icon = (favorites == 'ok' ? 'favorite' : 'favorite_border');
+
+        return '<div class="">' +
+            '<span class="key" id="' + key + '" hidden="hidden">' + key + '</span>' +
+            '<div class="stat-container bigup-button">' +
+            '<i class="center-icon useful material-icons md-28 width28">thumb_up</i>' +
+            '</div>' +
+            '<div class="stat-container like-button">' +
+            '<i class="center-icon favorite material-icons md-28 width28">'
+            + favorite_icon +
+            '</i>' +
+            '</div>' +
+            '<div class="stat-container">' +
+            '<i class="center-icon material-icons remove_red_eye color_base md-28 width28">remove_red_eye</i>' +
+            '</div>' +
+            '</div>';
+    };
+
+    var attachments = function (attachments) {
+        return '<div class="attachment-article">' + attachments + '</div>';
+    };
+
+    var mode = {
+        'read': 'r',
+        'write': 'w'
+    };
+
+    var selector = {
+        'body_selector': '.modal-body-article',
+        'stats_selector': '.modal-stats-article',
+        'comment_selector': '.modal-comments-article',
+        'attachment_selector': '.modal-attachments-article',
+        'like_selector': '.like-button',
+        'like_icon': '.favorite',
+        'read_selector': '.read-button',
+        'bigup_selector': '.bigup-button'
+    };
+
+    var attrclass = {
+        'base': {},
+        'liked': 'favorite_border',
+        'unliked': 'favorite',
+        'bigup': {}
+    };
+
+    var style = {
+        'read': {},
+        'unread': {}
+    };
+
+    var urls = {
         'like_manager': LIKE_MANAGER,
         'read_manager': READ_MANAGER,
+        'bigup_manager': BIGUP_MANAGER,
+        'search_manager': SEARCH_MANAGER,
+        'get_article': GET_ARTICLE
+    };
+};
+
+
+/****************      ARTICLE MANAGER    ******************/
+
+var ArticleManager = function (options) {
+    var results_selector = '.table-article tbody';
+    var link_article_selector = '.link-title-article';
+    var attachment_selector = '';
+    this.display = 'list';
+    this.counter = 20;
+    this.category = 'Home';
+    this.sorting = 'publish_date';
+    var current_article = null;
+
+    this.getListArticle = function (category, tags, sorting, counter) {
+        var count = counter || this.counter;
+        var cat = category || this.category;
+        var sort = sorting || this.sorting;
+
+        query(cat, tags, count, sort);
+    }; // OK
+
+    var results = function (data, display) {
+        var result = '';
+
+        for (var key in data) if (data.hasOwnProperty(key))
+            result += list(data[key]['id'], data[key]['title'], data[key]['desc'], data[key]['pub_date'],
+                data[key]['loved'], data[key]['tags'], data[key]['favorites'], data[key]['read'],
+                data[key]['useful'], data[key]['bigup'], data[key]['modified'], data[key]['views']);
+
+        $(results_selector).empty().append(result).parent().parent().parent().show();
+        $("#grid-data").bootgrid();
+        $("table").trigger("update");
+        resize_masterfeed();
+        resize_iframe();
+    }; // OK
+
+    // QUERY --> GET ARTICLES FROM DB AND APPEND RESULTS TO DOM
+    var query = function (by, sorting, counter) {
+        $.get(urls.get_list_articles,
+            {'by': by, 'counter': counter, 'sorting': sorting},
+            function (data) {
+                results(data);
+                Pace.restart();
+            }
+        );
+    }; // OK
+
+    // KEY --> GET KEY OF ARTICLE CONCERN BY CURRENT ACTION
+    var key = function (self) {
+        return self.parent().parent().attr("id");
     };
 
-    ArticleManager.prototype.key = function (self) {
-        return self.parent().parent().find('.key').attr("id");
-    };
-
-    ArticleManager.prototype.element = function (self) {
+    // OBJ --> GET ARTICLE (DOM OBJ) CONCERN BY CURRENT ACTION
+    var obj = function (self) {
         return self.parent().parent();
     };
 
-    ArticleManager.prototype.event = function () {
-        $('body')
-            .on('click', Article.like_selector, function (event) {
-                var article = new Article(key($(this)), element($(this)));
-                article.setLike();
-                article.destroy();
-            })
-            .on('click', Article.read_selector, function (event) {
-                var article = new Article(key($(this)), element($(this)));
-                article.setRead();
-                article.destroy();
-            })
-            .on('click', Article.bigup_selector, function (event) {
-                var article = new Article(key($(this)), element($(this)));
-                article.setBigup();
-                article.destroy();
-            })
-            .on('click', Article.attachment_selector, function (event) {
-                var article = new Article(key($(this)), element($(this)));
-                // Do something
-                article.destroy();
-            })
-            .on('click', Article.comment_selector, function (event) {
-                var article = new Article(key($(this)), element($(this)));
-                // Do something
-                article.destroy();
-            });
+    // ARTICLE --> ACTION AFTER A CLICK ON TITLE ARTICLE IN LIST
+    var article = function (object) {
+        var article = new Article(key(object), obj(object));
+        current_article = article;
+        article.show();
     };
 
-    Article.prototype.setup = function () {
-        var self = this;
+    // READ --> ACTION AFTER A CLICK ON READ BUTTON
+    var read = function () {
+        var article = new Article(key($(this)), obj($(this)));
+        article.setRead();
+    };
 
-        this.form_elem = $(this.form_selector);
-        this.query_box = this.form_elem.find('input[name=q]');
-        // Watch the input box.
-        this.query_box.on('keyup', function () {
-            var query = self.query_box.val();
+    // LIKE --> ACTION AFTER A CLICK ON LIKE BUTTON
+    var like = function (object) {
+        current_article.element = object.children().first();
+        current_article.setLike();
+    };
 
-            if (query.length < self.minimum_length) {
-                return false
-            }
+    // BIGUP --> ACTION AFTER A CLICK ON BIGUP BUTTON
+    var bigup = function () {
+        var article = new Article(key($(this)), obj($(this)));
+        article.setBigup();
+    };
 
-            self.fetch(query)
+    // COMMENT --> ACTION AFTER A CLICK ON COMMENT BUTTON
+    var comment = function () {
+        var article = new Article(key($(this)), obj($(this)));
+        article.setBigup();
+    };
+
+    // ATTACHMENT --> ACTION AFTER A CLICK ON ATTACHMENT BUTTON
+    var attachment = function () {
+        var article = new Article(key($(this)), obj($(this)));
+    };
+
+    // EVENTS --> BIND (Attach a handler to an event for the elements.) EACH BUTTON OF AN ARTICLE TO AN EVENT
+    this.initEvents = function () {
+        window.body.on("click", link_article_selector, function () {
+            article($(this))
         });
-
-        // On selecting a result, populate the search field.
-        this.form_elem.on('click', '.ac-result', function (ev) {
-            self.query_box.val($(this).text());
-            $('.ac-results').remove();
-            $('.cover').hide(100);
-            return false
-        })
+        window.body.on("click", selector.like_selector, function () {
+            like($(this))
+        });
+        window.body.on("click", selector.read_selector, function () {
+            read($(this))
+        });
+        window.body.on("click", selector.bigup_selector, function () {
+            bigup($(this))
+        });
+        window.body.on("click", selector.comment_selector, function () {
+            comment($(this))
+        });
+        window.body.on("click", selector.attachment_selector, function () {
+            attachment($(this))
+        });
     };
 
-    ArticleManager.prototype.fetch = function (query) {
-        var self = this;
-        var tags = $('#search_categories').text();
-        var sort = $('#search_sorting').text();
+    // LIST --> GENERATE THE LIST OF ARTICLES (HTML)
+    var list = function (key, title, description, date_publish, favorite_counter, tags, favorites, read_article,
+                         useful_counter, bigup_article, last_update, view_counter) {
 
-        if (tags.indexOf('#') != -1)
-            tags = tags.slice(1);
-        else
-            tags = null;
-
-
-        $.ajax({
-            url: this.url
-            , data: {
-                'in': tags,
-                'q': query,
-                'by': sort,
-            }
-            , success: function (data) {
-                self.show_results(data)
-            }
-        })
+        return '<tr class="row' + key + '" id="' + key + '">' +
+            '<th class="field-title font-list padding-list">' +
+            '<a data-toggle="modal" href="" data-target="#display-article" class="padding-bottom-list link-title-article" href="#">' +
+            '' + title + '' +
+            '</a>' +
+            '<br>' + tags + '</th>' +
+            '<td class="field-publish_date padding-top-list nowrap">' + date_publish + '</td>' +
+            '<td class="field-modified padding-top-list nowrap">' + last_update + '</td>' +
+            '<td class="center field-useful_counter padding-top-list">' + useful_counter + '</td>' +
+            '<td class="center field-favorite_counter padding-top-list">' + favorite_counter + '</td>' +
+            '<td class="center field-view_counter padding-top-list">' + view_counter + '</td>' +
+            '</tr>'
     };
 
-    ArticleManager.prototype.show_results = function (data) {
+    // URLS --> URL TO MANAGE THE LIST OF ARTICLES SERVER SIDE IN "VIEW.PY"
+    var urls = {
+        'get_list_articles': GET_LIST_ARTICLES
+    };
 
-        var results = data.results || [];
+    var selector = {
+        'body_selector': '.modal-body-article',
+        'stats_selector': '.modal-stats-article',
+        'comment_selector': '.modal-comments-article',
+        'attachment_selector': '.modal-attachments-article',
+        'like_selector': '.like-button',
+        'like_icon': '.favorite',
+        'read_selector': '.read-button',
+        'bigup_selector': '.bigup-button'
+    };
+};
 
-        if (results.length > 0) {
 
-            console.log(results.length);
+/****************      MISCANELLOUS    ******************/
+
+
+function resize_masterfeed() {
+    var margin = 11;
+    var leftbarwidth = $('.left-sidebar').width() + margin * 2;
+    var rightbarwidth = $('.right-sidebar').width() + margin * 2;
+    var windowwidth = $(window).width();
+
+    $('.master-feed').css('width', windowwidth - (leftbarwidth + rightbarwidth));
+    $('table').css('width', windowwidth - (leftbarwidth + rightbarwidth)).css('resize', 'both').css('overflow', 'auto');
+}
+
+function resize_module() {
+    var headerheight = $('header').height();
+    var windowheight = $(window).height();
+    var rightbarheight = (windowheight - headerheight) - 10;
+    var moduleheight = ( rightbarheight / 3 ) - 10;
+
+    $('.right-sidebar').css('height', rightbarheight);
+    $('.module').css('height', moduleheight);
+}
+
+function render_article() {
+    var article_content = $('.modal-content-article');
+    var article = $('.article');
+
+    article_content.find('*').each(function () {
+        var element = $(this);
+        if (element.width() > element.parent().width()) {
+            element.css('width', '100%').css('height', 'auto');
         }
-        else {
-            console.log('No results');
-        }
-
-    };
-
-
-    window.autocomplete = new Autocomplete({
-        form_selector: '.autocomplete-me'
     });
-    window.autocomplete.setup();
-});
+
+    var min_height = $(window).height() - 30;
+    article_content.css('min-height', min_height);
+
+}
+
+function resize_iframe() {
+    $('.mini-article .content').find('iframe').attr('width', '555px').attr('height', '300px');
+    $('.mini-article .content').find('img').css('width', '555px');
+}
+
+

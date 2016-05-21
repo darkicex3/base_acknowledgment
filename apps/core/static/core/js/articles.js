@@ -150,7 +150,7 @@ function get_article(element) {
     );
 }
 
-function get_list_articles(category, element = undefined, tags = undefined, display) {
+function get_list_articles(category, element, tags, display) {
     var feed = $('#feed');
     var table = $('.table-article tbody');
 
@@ -177,7 +177,7 @@ function get_list_articles(category, element = undefined, tags = undefined, disp
                 return
             } else {
                 html = '';
-                for (var key in data) {
+                for (var key in data) if (data.hasOwnProperty(key)) {
                     html += display_function[display](  data[key]['id'],
                                                         data[key]['title'],
                                                         data[key]['desc'],
@@ -216,7 +216,7 @@ function get_list_articles(category, element = undefined, tags = undefined, disp
 /****************      MISCANELLOUS    ******************/
 /********************************************************/
 
-function resize_content(element, relative = undefined) {
+function resize_content(element, relative) {
     var relative_width;
     var article_width;
     var window_width = $(window).width();

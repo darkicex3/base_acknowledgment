@@ -3,6 +3,7 @@
  */
 
 
+
 function OnClickShortcutsSetSelected() {
     $('body').on('click', '.widget-menus ul li a', function (e) {
         $('.widget-menus ul li a').removeAttr('style');
@@ -36,7 +37,7 @@ function OnClickShortcutsShowTrees() {
         else {
             get_shortcuts($(this));
         }
-        get_list_articles(undefined, $(this), undefined, window.display_mode);
+        window.Manager.getListArticle($(this).attr('id'));
     });
 }
 
@@ -58,7 +59,8 @@ function OnClickBookmarkGetArticlesByBookmark() {
         $('#search_bar input').attr('placeholder', '').empty().css('background', '#3498db').css('font-size', '17pt').css('color', '#fff !important').val('#' + $(this).text());
         $('#search_categories').empty().css('background', '#3498db');
         $('#search_sorting').css('background', '#3498db').find('.sorting').attr('class', 'sorting material-icons color_white md-36 first-item');
-        get_list_articles(undefined, $(this), 'tags', window.display_mode);
+        console.log($(this).attr('id'));
+        window.Manager.getListArticle($(this).attr('id'));
     });
 }
 
@@ -109,7 +111,7 @@ function OnSearchBar() {
             $(this).hide();
         });
 
-        get_list_articles('Home', $(this), undefined, window.display_mode);
+        window.Manager.getListArticle();
     });
 }
 

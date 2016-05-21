@@ -175,9 +175,10 @@ class Shortcut(MPTTModel):
         verbose_name_plural = 'Shortcuts'
 
     name = models.CharField(max_length=300, unique=True)
-    icon = models.CharField(max_length=500, default="Your Icon", help_text="Add an icon to your shortcut ! <a href=\"ht"
+    icon = models.CharField(max_length=500, default="", help_text="Add an icon to your shortcut ! <a href=\"ht"
                                                                            "tps://design.google.com/ico"
-                                                                           "ns/\">Click Here !</a>")
+                                                                           "ns/\">Click Here !</a>", null=True,
+                            blank=True)
     articles = models.ManyToManyField(Article, help_text=tags_help, blank=True)
     activated = models.BooleanField(default=True)
     click_counter = models.IntegerField(default=0)

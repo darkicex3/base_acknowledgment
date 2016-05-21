@@ -6,6 +6,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from attachments.models import Attachment
 from django.shortcuts import render
 import simplejson as json
+import string
 from django.http import HttpResponse
 from haystack.query import SearchQuerySet
 from django.contrib.auth.decorators import login_required
@@ -74,8 +75,9 @@ class SetLikedView(View):
     def get(self, *args, **kwargs):
         context = {}
 
-        article_id = self.request.GET.get('article_id')
+        article_id = self.request.GET.get('id')
         action = self.request.GET.get('action')
+        print(article_id, action)
         q = Article.objects.get(id=article_id)
         user = self.request.user
 
@@ -264,123 +266,125 @@ class GetArticlesByStaticShortcutsView(View):
 
         context = {}
         articles = []
-        get_by = self.request.GET.get('get_articles_by')
-        get_by_tag = self.request.GET.get('get_articles_by_tags')
+        get_by = self.request.GET.get('by')
         display = self.request.GET.get('display')
         user = self.request.user
 
-        try:
+        if "#" not in get_by:
 
-            tab_index = []
-            tab_model = []
-
-            [tab_index.append(i.pk) for i in SearchQuerySet().models(Article)]
-            [tab_model.append(str(i.id)) for i in Article.objects.all()]
-
-            if not set(tab_index) == set(tab_model):
-                context.update({'msg': '<p style="padding: 16px;">Index error in the search engine.'
-                                       '<br><br>1. You have to run'
-                                       ' \'python3.5 manage.py rebuild_index\' command in the terminal.'
-                                       '<br><br>Or<br><br>2. Start'
-                                       ' elasticsearch if it is not.</p>'})
-                return JsonResponse(context)
-
-            p = SearchQuerySet().models(Article).exclude(status='d').exclude(status='w')
-
-            if not Article.objects.all().filter(status='p') or not p:
-                raise ObjectDoesNotExist
-            q = p[0]
-        except IndexError:
-            context.update({'msg': '<p style="padding: 16px;">No articles available, please add new ones '
-                                   'or contact an administrator.</p>'})
-            return JsonResponse(context)
-        except ObjectDoesNotExist:
-            context.update({'msg': '<p style="padding: 16px;">No articles available, please add new ones '
-                                   'or contact an administrator.</p>'})
-            return JsonResponse(context)
-
-        # GET HOME ARTICLES BY USEFUL COUNTER
-        if get_by == 'Home':
-            articles = p.order_by('-modified')
-        # GET MOST USED ARTICLES
-        elif get_by == 'Most Used':
-            articles = p.order_by('-useful_counter')
-        # GET MOST VIEWED ARTICLES
-        elif get_by == 'Most Viewed':
-            articles = p.order_by('-view_counter')
-        # GET MOST LOVED ARTICLES
-        elif get_by == 'Most Loved':
-            articles = p.order_by('-favorite_counter')
-        # GET LAST UPDATES
-        elif get_by == 'Last Updates':
-            for i in p.order_by('-modified'):
-                x = Article.objects.get(pk=i.__getattribute__('pk'))
-                if x.modified != x.publish_date:
-                    x.publish_date = x.modified
-                    articles.append(x)
-        # GET RECENT ARICLES
-        elif get_by == 'Recent':
-            articles = p.order_by('publish_date')
-        # GET FAVORITES FOR CURRENT USER
-        elif get_by == 'Favorites':
             try:
-                ids = user.get_related_favorites()
-                for i in ids:
-                    articles.append(Article.objects.get(id=i))
-                print(articles[0])
-            except ObjectDoesNotExist:
-                context.update({'msg': 'You do not like any item :('})
-                return JsonResponse(context)
+
+                tab_index = []
+                tab_model = []
+
+                [tab_index.append(i.pk) for i in SearchQuerySet().models(Article)]
+                [tab_model.append(str(i.id)) for i in Article.objects.all()]
+
+                if not set(tab_index) == set(tab_model):
+                    context.update({'msg': '<p style="padding: 16px;">Index error in the search engine.'
+                                           '<br><br>1. You have to run'
+                                           ' \'python3.5 manage.py rebuild_index\' command in the terminal.'
+                                           '<br><br>Or<br><br>2. Start'
+                                           ' elasticsearch if it is not.</p>'})
+                    return JsonResponse(context)
+
+                p = SearchQuerySet().models(Article).exclude(status='d').exclude(status='w')
+
+                if not Article.objects.all().filter(status='p') or not p:
+                    raise ObjectDoesNotExist
+                q = p[0]
             except IndexError:
-                context.update({'msg': 'You do not like any item :('})
+                context.update({'msg': '<p style="padding: 16px;">No articles available, please add new ones '
+                                       'or contact an administrator.</p>'})
                 return JsonResponse(context)
-        # GET HISTORIC FOR CURRENT USER
-        elif get_by == 'Historic':
-            try:
-                ids = user.get_related_articles_viewed()
-                for i in ids:
-                    articles.append(Article.objects.get(id=i, status='p'))
-                print(articles[0])
             except ObjectDoesNotExist:
-                context.update({'msg': 'Nothing for the moment :( Visit an article !'})
+                context.update({'msg': '<p style="padding: 16px;">No articles available, please add new ones '
+                                       'or contact an administrator.</p>'})
                 return JsonResponse(context)
-            except IndexError:
-                context.update({'msg': 'Nothing for the moment :( Visit an article !'})
-                return JsonResponse(context)
-        # GET ARTICLES BY SHORTCUTS OR TAGS
-        else:
-            # BY SHORTCUTS
-            if get_by is not None:
+
+            # GET HOME ARTICLES BY USEFUL COUNTER
+            if get_by == 'Home':
+                articles = p.order_by('-modified')
+            # GET MOST USED ARTICLES
+            elif get_by == 'Most Used':
+                articles = p.order_by('-useful_counter')
+            # GET MOST VIEWED ARTICLES
+            elif get_by == 'Most Viewed':
+                articles = p.order_by('-view_counter')
+            # GET MOST LOVED ARTICLES
+            elif get_by == 'Most Loved':
+                articles = p.order_by('-favorite_counter')
+            # GET LAST UPDATES
+            elif get_by == 'Last Updates':
+                for i in p.order_by('-modified'):
+                    x = Article.objects.get(pk=i.__getattribute__('pk'))
+                    if x.modified != x.publish_date:
+                        x.publish_date = x.modified
+                        articles.append(x)
+            # GET RECENT ARICLES
+            elif get_by == 'Recent':
+                articles = p.order_by('publish_date')
+            # GET FAVORITES FOR CURRENT USER
+            elif get_by == 'Favorites':
                 try:
-                    p = Shortcut.objects.get(name=get_by)
-                    articles = p.articles.all()
+                    ids = user.get_related_favorites()
+                    for i in ids:
+                        articles.append(Article.objects.get(id=i))
+                    print(articles[0])
                 except ObjectDoesNotExist:
-                    context.update({'msg': 'No articles :( You can add new '
-                                           'ones in <strong>' + get_by + '</strong> from admin interface !'})
+                    context.update({'msg': 'You do not like any item :('})
                     return JsonResponse(context)
                 except IndexError:
-                    context.update({'msg': 'No articles :( You can add new '
-                                           'ones in <strong>' + get_by + '</strong> from admin interface !'})
+                    context.update({'msg': 'You do not like any item :('})
                     return JsonResponse(context)
-            # BY TAGS
+            # GET HISTORIC FOR CURRENT USER
+            elif get_by == 'Historic':
+                try:
+                    ids = user.get_related_articles_viewed()
+                    for i in ids:
+                        articles.append(Article.objects.get(id=i, status='p'))
+                    print(articles[0])
+                except ObjectDoesNotExist:
+                    context.update({'msg': 'Nothing for the moment :( Visit an article !'})
+                    return JsonResponse(context)
+                except IndexError:
+                    context.update({'msg': 'Nothing for the moment :( Visit an article !'})
+                    return JsonResponse(context)
+            # GET ARTICLES BY SHORTCUTS OR TAGS
             else:
-                try:
-                    category = Category.objects.get(name=get_by_tag)
-                    p = Article.objects.all()
-                    for i in p:
-                        for a in i.categories.all():
-                            if a.name == category.name:
-                                articles.append(i)
-                    if articles is None:
-                        raise ObjectDoesNotExist
-                except ObjectDoesNotExist:
-                    context.update({'msg': 'There isn\'t articles with the tag'
-                                           ' <strong>' + get_by_tag + '</strong> for the moment :('})
-                    return JsonResponse(context)
-                except IndexError:
-                    context.update({'msg': 'There isn\'t articles with the tag'
-                                           ' <strong>' + get_by_tag + '</strong> for the moment :('})
-                    return JsonResponse(context)
+                # BY SHORTCUTS
+                if get_by is not None:
+                    try:
+                        p = Shortcut.objects.get(name=get_by)
+                        articles = p.articles.all()
+                    except ObjectDoesNotExist:
+                        context.update({'msg': 'No articles :( You can add new '
+                                               'ones in <strong>' + get_by + '</strong> from admin interface !'})
+                        return JsonResponse(context)
+                    except IndexError:
+                        context.update({'msg': 'No articles :( You can add new '
+                                               'ones in <strong>' + get_by + '</strong> from admin interface !'})
+                        return JsonResponse(context)
+        # BY TAGS
+        else:
+            try:
+                get_by = get_by.replace("#", "")
+                category = Category.objects.get(name=get_by)
+                p = Article.objects.all()
+                for i in p:
+                    for a in i.categories.all():
+                        if a.name == category.name:
+                            articles.append(i)
+                if articles is None:
+                    raise ObjectDoesNotExist
+            except ObjectDoesNotExist:
+                context.update({'msg': 'There isn\'t articles with the tag'
+                                       ' <strong>' + get_by + '</strong> for the moment :('})
+                return JsonResponse(context)
+            except IndexError:
+                context.update({'msg': 'There isn\'t articles with the tag'
+                                       ' <strong>' + get_by + '</strong> for the moment :('})
+                return JsonResponse(context)
 
         key = 0
 
@@ -412,7 +416,7 @@ class GetArticlesByStaticShortcutsView(View):
             for a in art.categories.all()[:4]:
                     tags += '<span class="badge bookmarkBadge"><span class="add-tags" style="display:none">' \
                             '<i class="material-icons">add_circle</i>' \
-                            '</span><a id="' + a.name + '" class="' + bookmarkclass + '" href="#">' + a.name + \
+                            '</span><a id="#' + a.name + '" class="' + bookmarkclass + '" href="#">' + a.name + \
                             '</a></span>'
 
             if get_by == 'Last Updates' and display != 'list':
@@ -458,7 +462,7 @@ class SortArticlesView(View):
 class ShowArticleView(View):
     def get(self, *args, **kwargs):
         context = {}
-        article_id = self.request.GET.get('article_id')
+        article_id = self.request.GET.get('id')
         user = self.request.user
         article = Article.objects.get(id=article_id)
 
@@ -488,9 +492,9 @@ class ShowArticleView(View):
         art = Article.objects.get(id=article.pk)
         for a in art.categories.all()[:7]:
             tags += '<span class="badge bookmarkBadge"><span class="add-tags" style="display:none">' \
-                    '<i class="material-icons">add_circle</i>' \
-                    '</span><a id="' + a.name + '" class="' + bookmarkclass + '" href="#">' + a.name + \
-                    '</a></span>'
+                            '<i class="material-icons">add_circle</i>' \
+                            '</span><a id="#' + a.name + '" class="' + bookmarkclass + '" href="#">' + a.name + \
+                            '</a></span>'
 
         attachments = ''
         for a in Attachment.objects.attachments_for_object(art):
