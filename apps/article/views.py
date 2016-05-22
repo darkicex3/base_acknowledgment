@@ -108,8 +108,9 @@ class SetUsefulView(View):
     def get(self, *args, **kwargs):
         context = {}
 
-        article_id = self.request.GET.get('article_id')
+        article_id = self.request.GET.get('id')
         action = self.request.GET.get('action')
+        print(article_id, action)
         q = Article.objects.get(id=article_id)
         user = self.request.user
 

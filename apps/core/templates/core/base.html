@@ -12,16 +12,16 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <link href='https://fonts.googleapis.com/css?family=PT+Sans+Caption:400,700' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=EB+Garamond' rel='stylesheet' type='text/css'>
+    <link href="{% static 'core/css/pace.css' %}" rel="stylesheet"/>
+
     <link rel="stylesheet" href="{% static 'core/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'core/js/vendor/webui-popover/dist/jquery.webui-popover.min.css' %}">
     <link rel="stylesheet" href="{% static 'core/css/main.css' %}">
     <link rel="stylesheet" href="{% static 'core/css/vendor/perfect-scrollbar/perfect-scrollbar.min.css' %}">
     <link rel="stylesheet" href="{% static 'core/css/vendor/jquery.bootgrid.min.css' %}">
-
-    <link href='https://fonts.googleapis.com/css?family=PT+Sans+Caption:400,700' rel='stylesheet' type='text/css'>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href='https://fonts.googleapis.com/css?family=EB+Garamond' rel='stylesheet' type='text/css'>
-    <link href="{% static 'core/css/pace.css' %}" rel="stylesheet"/>
 
     <title>Teledirect - {% block title %}{% endblock %}</title>
 </head>
@@ -36,10 +36,10 @@
     <a href="#" class="logo"><img src="{% static 'core/img/logo_base.jpg' %}" style="width: 180px"></a>
 
     <div class="col-md-2 col-xs-2 btn-group action-bar-header">
-{#        <a href="{% url 'registration:logout' %}"><i class="col-md-2 logout login-url material-icons md-20 first-item color_bblack">power_settings_new</i></a>#}
-{#        <i class="col-md-2 material-icons md-20 first-item help-action color_bblack">help</i>#}
-{#        <i class="col-md-2 material-icons md-20 first-item settings-action color_bblack">settings</i>#}
-{#        <i class="col-md-2 material-icons md-20 first-item notifications-action color_bblack">notifications</i>#}
+        {#        <a href="{% url 'registration:logout' %}"><i class="col-md-2 logout login-url material-icons md-20 first-item color_bblack">power_settings_new</i></a>#}
+        {#        <i class="col-md-2 material-icons md-20 first-item help-action color_bblack">help</i>#}
+        {#        <i class="col-md-2 material-icons md-20 first-item settings-action color_bblack">settings</i>#}
+        {#        <i class="col-md-2 material-icons md-20 first-item notifications-action color_bblack">notifications</i>#}
     </div><!-- notifications, settings, help, logout -->
 </header>
 
@@ -81,26 +81,26 @@
 {% load staticfiles %}
 
 <script>
-    URL_AUTO_COMPLETE                   =   "{% url 'articles:articles_search_view'                     %}"; //TODO
-    SET_VISITED                         =   "{% url 'articles:set_visited_view'                         %}"; //TODO
-    GET_SORTING_METHODS                 =   "{% url 'articles:get_sorting_methods_view'                 %}"; //TODO
-    SEARCH_MANAGER                        =   "{% url 'articles:set_searched_view'                        %}"; //TODO
-    GET_POLLS                           =   "{% url 'articles:get_polls_view'                           %}"; //TODO                                                              //TODO
-    SORT_ARTICLES                       =   "{% url 'articles:sort_article_view'                        %}"; //TODO
+    URL_AUTO_COMPLETE = "{% url 'articles:articles_search_view'                     %}"; //TODO
+    SET_VISITED = "{% url 'articles:set_visited_view'                         %}"; //TODO
+    GET_SORTING_METHODS = "{% url 'articles:get_sorting_methods_view'                 %}"; //TODO
+    SEARCH_MANAGER = "{% url 'articles:set_searched_view'                        %}"; //TODO
+    GET_POLLS = "{% url 'articles:get_polls_view'                           %}"; //TODO                                                              //TODO
+    SORT_ARTICLES = "{% url 'articles:sort_article_view'                        %}"; //TODO
 
-    BIGUP_MANAGER                          =   "{% url 'articles:set_useful_view'                          %}"; //OK
-    LIKE_MANAGER                        =   "{% url 'articles:set_liked_view'                           %}"; //OK
-    READ_MANAGER                            =   "{% url 'articles:set_read_view'                            %}"; //OK
-    GET_LIST_ARTICLES                   =   "{% url 'articles:get_article_by_static_shortcuts'          %}"; //OK
-    GET_CATEGORIES                      =   "{% url 'articles:get_categories_view'                      %}"; //OK
-    GET_ARTICLES_FROM_SHORTCUT          =   "{% url 'articles:show_article_from_shorcuts'               %}"; //OK
-    GET_ARTICLE                        =    "{% url 'articles:ShowArticle'                              %}"; //OK
-    GET_SHORTCUTS                       =   "{% url 'contents:manage_sidebar_shortcuts_showing_view'    %}"; //OK
+    BIGUP_MANAGER = "{% url 'articles:set_useful_view'                          %}"; //OK
+    LIKE_MANAGER = "{% url 'articles:set_liked_view'                           %}"; //OK
+    READ_MANAGER = "{% url 'articles:set_read_view'                            %}"; //OK
+    GET_LIST_ARTICLES = "{% url 'articles:get_article_by_static_shortcuts'          %}"; //OK
+    GET_CATEGORIES = "{% url 'articles:get_categories_view'                      %}"; //OK
+    GET_ARTICLES_FROM_SHORTCUT = "{% url 'articles:show_article_from_shorcuts'               %}"; //OK
+    GET_ARTICLE = "{% url 'articles:ShowArticle'                              %}"; //OK
+    GET_SHORTCUTS = "{% url 'contents:manage_sidebar_shortcuts_showing_view'    %}"; //OK
 
-{#    ADD_ARTICLE_TO_SHORTCUT             =   "{% url 'articles:add_article_to_shortcut' %}";#}
-{#    CREATE_SHORTCUT                     =   "{% url 'articles:create_shortcut' %}";#}
-{#    EDIT_SHORTCUTS                      =   "{% url 'contents:manage_sidebar_shortcuts_editing_view' %}";#}
-{#    INSERT_SHORTCUTS                    =   "{% url 'contents:manage_sidebar_shortcuts_inserting_view' %}";#}
+    {#    ADD_ARTICLE_TO_SHORTCUT             =   "{% url 'articles:add_article_to_shortcut' %}";#}
+    {#    CREATE_SHORTCUT                     =   "{% url 'articles:create_shortcut' %}";#}
+    {#    EDIT_SHORTCUTS                      =   "{% url 'contents:manage_sidebar_shortcuts_editing_view' %}";#}
+    {#    INSERT_SHORTCUTS                    =   "{% url 'contents:manage_sidebar_shortcuts_inserting_view' %}";#}
 </script>
 
 <script src="{% static 'core/js/vendor/pace.min.js' %}"></script>

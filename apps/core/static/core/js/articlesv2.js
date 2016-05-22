@@ -15,7 +15,7 @@ var Article = function (id, element) {
     };
 
     this.setLike = function (active, inactive) {
-        query_like(this.id, mode.write, this.isLike());
+        query_action(this.id, this.isLike(), urls.like_manager);
         design(selector.like_icon, this.isLike(), this.element, active, inactive);
     };
 
@@ -29,12 +29,13 @@ var Article = function (id, element) {
     };
 
     this.isBigup = function () {
-        return query(urls.bigup_manager, mode.read);
+        return this.element.css('color') != 'rgb(52, 152, 219)';
     };
 
     this.setBigup = function (active, inactive) {
-        query(urls.like_manager, mode.write);
-        design(this.bigup_selector, this.isBigup(), this.element, active, inactive)
+        console.log(this.isBigup());
+        query_action(this.id, this.isBigup(), urls.bigup_manager);
+        design(selector.bigup_icon, this.isBigup(), this.element, active, inactive)
     };
 
     this.isSearch = function () {
@@ -45,14 +46,13 @@ var Article = function (id, element) {
         Article.query(urls.like_manager, mode.write);
     };
 
-    var query_like = function (id, mode, bool) {
-        $.get(urls.like_manager,
-            {'id': id, 'mode': mode, 'action': bool},
+    var query_action = function (id, bool, url) {
+        $.get(url,
+            {'id': id, 'action': bool},
             function (data) {
             }
         );
     };
-
     this.show = function () {
         query(this.id);
     }; // OK
@@ -101,8 +101,9 @@ var Article = function (id, element) {
                 break;
             case selector.bigup_icon:
                 if (state)
-                    object.attr('class', active || attrclass.bigup);
-                else object.attr('class', inactive || attrclass.base);
+                    object.css('color', '#3498db');
+                else
+                    object.removeAttr('style');
                 break;
             default:
                 break;
@@ -133,13 +134,13 @@ var Article = function (id, element) {
     };
 
     var stats = function (key, view_counter, useful_counter, favorite_counter, bigup_article, favorites) {
-        var color_big = (bigup_article == 'ok' ? 'color_bigup' : 'color_base');
+        var color_big = (bigup_article == 'ok' ? 'rgb(52, 152, 219)' : '');
         var favorite_icon = (favorites == 'ok' ? 'favorite' : 'favorite_border');
 
         return '<div class="">' +
             '<span class="key" id="' + key + '" hidden="hidden">' + key + '</span>' +
             '<div class="stat-container bigup-button">' +
-            '<i class="center-icon useful material-icons md-28 width28">thumb_up</i>' +
+            '<i class="center-icon color_base useful material-icons md-28 width28" style="color:'+color_big+'">thumb_up</i>' +
             '</div>' +
             '<div class="stat-container like-button">' +
             '<i class="center-icon favorite material-icons md-28 width28">'
@@ -169,7 +170,8 @@ var Article = function (id, element) {
         'like_selector': '.like-button',
         'like_icon': '.favorite',
         'read_selector': '.read-button',
-        'bigup_selector': '.bigup-button'
+        'bigup_selector': '.bigup-button',
+        'bigup_icon': '.useful'
     };
 
     var attrclass = {
@@ -212,7 +214,36 @@ var ArticleManager = function (options) {
         var sort = sorting || this.sorting;
 
         query(cat, tags, count, sort);
-    }; // OK
+    };
+
+    this.initEvents = function () {
+        window.body.on("click", link_article_selector, function () { article($(this)) });
+
+        for (var element in selector_action) if (selector_action.hasOwnProperty(element))
+            window.body.on("click", selector_action[element], function () { action($(this)) });
+    };
+
+    var query = function (by, sorting, counter) {
+        $.get(urls.get_list_articles,
+            {'by': by, 'counter': counter, 'sorting': sorting},
+            function (data) { results(data); Pace.restart(); }
+        );
+    };
+
+    var article = function (object) {
+        var article = new Article(object.parent().parent().attr("id"), object.parent().parent());
+        current_article = article;
+        article.show();
+    };
+
+    var action = function (object) {
+        current_article.element = object.children().first();
+
+        if (object.attr('class').indexOf('like-button') >= 0)
+                current_article.setLike();
+        else if(object.attr('class').indexOf('bigup-button') >= 0)
+                current_article.setBigup();
+    };
 
     var results = function (data, display) {
         var result = '';
@@ -227,88 +258,8 @@ var ArticleManager = function (options) {
         $("table").trigger("update");
         resize_masterfeed();
         resize_iframe();
-    }; // OK
-
-    // QUERY --> GET ARTICLES FROM DB AND APPEND RESULTS TO DOM
-    var query = function (by, sorting, counter) {
-        $.get(urls.get_list_articles,
-            {'by': by, 'counter': counter, 'sorting': sorting},
-            function (data) {
-                results(data);
-                Pace.restart();
-            }
-        );
-    }; // OK
-
-    // KEY --> GET KEY OF ARTICLE CONCERN BY CURRENT ACTION
-    var key = function (self) {
-        return self.parent().parent().attr("id");
     };
 
-    // OBJ --> GET ARTICLE (DOM OBJ) CONCERN BY CURRENT ACTION
-    var obj = function (self) {
-        return self.parent().parent();
-    };
-
-    // ARTICLE --> ACTION AFTER A CLICK ON TITLE ARTICLE IN LIST
-    var article = function (object) {
-        var article = new Article(key(object), obj(object));
-        current_article = article;
-        article.show();
-    };
-
-    // READ --> ACTION AFTER A CLICK ON READ BUTTON
-    var read = function () {
-        var article = new Article(key($(this)), obj($(this)));
-        article.setRead();
-    };
-
-    // LIKE --> ACTION AFTER A CLICK ON LIKE BUTTON
-    var like = function (object) {
-        current_article.element = object.children().first();
-        current_article.setLike();
-    };
-
-    // BIGUP --> ACTION AFTER A CLICK ON BIGUP BUTTON
-    var bigup = function () {
-        var article = new Article(key($(this)), obj($(this)));
-        article.setBigup();
-    };
-
-    // COMMENT --> ACTION AFTER A CLICK ON COMMENT BUTTON
-    var comment = function () {
-        var article = new Article(key($(this)), obj($(this)));
-        article.setBigup();
-    };
-
-    // ATTACHMENT --> ACTION AFTER A CLICK ON ATTACHMENT BUTTON
-    var attachment = function () {
-        var article = new Article(key($(this)), obj($(this)));
-    };
-
-    // EVENTS --> BIND (Attach a handler to an event for the elements.) EACH BUTTON OF AN ARTICLE TO AN EVENT
-    this.initEvents = function () {
-        window.body.on("click", link_article_selector, function () {
-            article($(this))
-        });
-        window.body.on("click", selector.like_selector, function () {
-            like($(this))
-        });
-        window.body.on("click", selector.read_selector, function () {
-            read($(this))
-        });
-        window.body.on("click", selector.bigup_selector, function () {
-            bigup($(this))
-        });
-        window.body.on("click", selector.comment_selector, function () {
-            comment($(this))
-        });
-        window.body.on("click", selector.attachment_selector, function () {
-            attachment($(this))
-        });
-    };
-
-    // LIST --> GENERATE THE LIST OF ARTICLES (HTML)
     var list = function (key, title, description, date_publish, favorite_counter, tags, favorites, read_article,
                          useful_counter, bigup_article, last_update, view_counter) {
 
@@ -326,9 +277,14 @@ var ArticleManager = function (options) {
             '</tr>'
     };
 
-    // URLS --> URL TO MANAGE THE LIST OF ARTICLES SERVER SIDE IN "VIEW.PY"
     var urls = {
         'get_list_articles': GET_LIST_ARTICLES
+    };
+
+    var selector_action = {
+        'like_selector': '.like-button',
+        'read_selector': '.read-button',
+        'bigup_selector': '.bigup-button'
     };
 
     var selector = {
@@ -336,11 +292,8 @@ var ArticleManager = function (options) {
         'stats_selector': '.modal-stats-article',
         'comment_selector': '.modal-comments-article',
         'attachment_selector': '.modal-attachments-article',
-        'like_selector': '.like-button',
-        'like_icon': '.favorite',
-        'read_selector': '.read-button',
-        'bigup_selector': '.bigup-button'
-    };
+        'like_icon': '.favorite'
+    }
 };
 
 
