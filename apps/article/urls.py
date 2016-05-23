@@ -9,6 +9,8 @@ urlpatterns = [
     url(r'^test_searching/', views.index_search, name='test_search_view'),
     url(r'^set_favorites/', views.SetLikedView.as_view(), name='set_liked_view'),
     url(r'^set_useful/', views.SetUsefulView.as_view(), name='set_useful_view'),
+    url(r'^send_feedback/', views.GetFeedback.as_view(), name='send_feedback'),
+
     url(r'^get_sorting_methods/', views.GetSortingMethodsView.as_view(), name='get_sorting_methods_view'),
     url(r'^get_polls_view/', views.GetPollsView.as_view(), name='get_polls_view'),
     url(r'^set_read/', views.SetReadView.as_view(), name='set_read_view'),

@@ -11,12 +11,12 @@ var Article = function (id, element) {
     this.id = id;
 
     this.isLike = function () {
-        return this.element.text() == 'favorite_border'
+        return this.element.children().first().text() == 'favorite_border'
     };
 
     this.setLike = function (active, inactive) {
         query_action(this.id, this.isLike(), urls.like_manager);
-        design(selector.like_icon, this.isLike(), this.element, active, inactive);
+        design(selector.like_icon, this.isLike(), this.element.children().first(), active, inactive);
     };
 
     this.isRead = function () {
@@ -29,14 +29,50 @@ var Article = function (id, element) {
     };
 
     this.isBigup = function () {
-        return this.element.css('color') != 'rgb(52, 152, 219)';
+        return this.element.children().first().css('color') != 'rgb(52, 152, 219)';
     };
 
     this.setBigup = function (active, inactive) {
-        console.log(this.isBigup());
+        console.log(this.element.children().first());
         query_action(this.id, this.isBigup(), urls.bigup_manager);
-        design(selector.bigup_icon, this.isBigup(), this.element, active, inactive)
+        design(selector.bigup_icon, this.isBigup(), this.element.children().first(), active, inactive)
     };
+
+    this.nextStepFeedback = function () {
+        this.element.parent().hide();
+        this.element.parent().parent().find('.step2').show();
+    };
+
+    this.backStepFeedback = function () {
+        this.element.parent().hide();
+        this.element.parent().parent().find('.step1').show();
+    };
+
+    this.changeMarkFeedback = function () {
+        var state = this.element.attr('class');
+        var element = this.element;
+
+        if (!state.indexOf('selected') >= 0) {
+            element.parent().find('.mark').each(function () {
+                if ($(this).attr('class').indexOf('selected') >= 0)
+                    $(this).attr('class', element.attr('class'));
+            });
+            element.attr('class', element.attr('class') + ' selected');
+        }
+    };
+
+    this.sendFeedback = function (data) {
+        console.log(this.element);
+        var d = $(this).serializeArray();
+        d.push('id', this.id);
+        d.push('feedback_choice', feedback_choice);
+        d.push(getCookie('csrftoken'));
+
+        $.post(urls.send_feedback, d, function (data) {
+            console.log(data);
+        });
+    };
+
 
     this.isSearch = function () {
         return query(urls.search_manager, mode.read);
@@ -127,9 +163,6 @@ var Article = function (id, element) {
             '</header>' +
             '<div class="content-article">' + content + '</div>' +
             '<aside class="glossary-article">' + '</aside>' +
-            '<footer class="footer-article">' +
-            '<div class="feedback ' + readed + '">I have read this article !</div>' +
-            '</footer>' +
             '</div>';
     };
 
@@ -139,13 +172,16 @@ var Article = function (id, element) {
 
         return '<div class="">' +
             '<span class="key" id="' + key + '" hidden="hidden">' + key + '</span>' +
-            '<div class="stat-container bigup-button">' +
-            '<i class="center-icon color_base useful material-icons md-28 width28" style="color:'+color_big+'">thumb_up</i>' +
-            '</div>' +
             '<div class="stat-container like-button">' +
             '<i class="center-icon favorite material-icons md-28 width28">'
             + favorite_icon +
             '</i>' +
+            '</div>' +
+            '<div class="stat-container bigup-button">' +
+            '<i class="center-icon color_base useful material-icons md-28 width28" style="color:' + color_big + '">thumb_up</i>' +
+            '</div>' +
+            '<div class="stat-container comment-button">' +
+            '<i class="center-icon material-icons color_base md-28 width28">chat</i>' +
             '</div>' +
             '<div class="stat-container">' +
             '<i class="center-icon material-icons remove_red_eye color_base md-28 width28">remove_red_eye</i>' +
@@ -191,7 +227,8 @@ var Article = function (id, element) {
         'read_manager': READ_MANAGER,
         'bigup_manager': BIGUP_MANAGER,
         'search_manager': SEARCH_MANAGER,
-        'get_article': GET_ARTICLE
+        'get_article': GET_ARTICLE,
+        'send_feedback': SEND_FEEDBACK
     };
 };
 
@@ -217,16 +254,27 @@ var ArticleManager = function (options) {
     };
 
     this.initEvents = function () {
-        window.body.on("click", link_article_selector, function () { article($(this)) });
+        window.body.on("click", link_article_selector, function () {
+            article($(this))
+        });
+
+        $('form-feedback').submit(function () {
+            current_article.sendFeedback($(this))
+        });
 
         for (var element in selector_action) if (selector_action.hasOwnProperty(element))
-            window.body.on("click", selector_action[element], function () { action($(this)) });
+            window.body.on("click", selector_action[element], function () {
+                action($(this))
+            });
     };
 
     var query = function (by, sorting, counter) {
         $.get(urls.get_list_articles,
             {'by': by, 'counter': counter, 'sorting': sorting},
-            function (data) { results(data); Pace.restart(); }
+            function (data) {
+                results(data);
+                Pace.restart();
+            }
         );
     };
 
@@ -237,12 +285,18 @@ var ArticleManager = function (options) {
     };
 
     var action = function (object) {
-        current_article.element = object.children().first();
+        current_article.element = object;
 
         if (object.attr('class').indexOf('like-button') >= 0)
-                current_article.setLike();
-        else if(object.attr('class').indexOf('bigup-button') >= 0)
-                current_article.setBigup();
+            current_article.setLike();
+        else if (object.attr('class').indexOf('bigup-button') >= 0)
+            current_article.setBigup();
+        else if (object.attr('class').indexOf('button-next-step-feedback') >= 0)
+            current_article.nextStepFeedback();
+        else if (object.attr('class').indexOf('button-back-step-feedback') >= 0)
+            current_article.backStepFeedback();
+        else if (object.attr('class').indexOf('mark') >= 0)
+            current_article.changeMarkFeedback();
     };
 
     var results = function (data, display) {
@@ -265,7 +319,7 @@ var ArticleManager = function (options) {
 
         return '<tr class="row' + key + '" id="' + key + '">' +
             '<th class="field-title font-list padding-list">' +
-            '<a data-toggle="modal" href="" data-target="#display-article" class="padding-bottom-list link-title-article" href="#">' +
+            '<a data-toggle="modal" href="#display-article" class="padding-bottom-list link-title-article">' +
             '' + title + '' +
             '</a>' +
             '<br>' + tags + '</th>' +
@@ -284,7 +338,11 @@ var ArticleManager = function (options) {
     var selector_action = {
         'like_selector': '.like-button',
         'read_selector': '.read-button',
-        'bigup_selector': '.bigup-button'
+        'bigup_selector': '.bigup-button',
+        'comment-to-step-2': '.button-next-step-feedback',
+        'comment-to-step-1': '.button-back-step-feedback',
+        'send-feedback': 'form-feedback',
+        'icon-feedback': '.mark'
     };
 
     var selector = {

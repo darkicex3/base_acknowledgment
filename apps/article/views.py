@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from apps.article.models import Category, Article, Shortcut, UserArticle
+from apps.article.models import Category, Article, Shortcut, UserArticle, Feedback
 from django.views.generic import View
 import datetime, calendar
 from django.core.exceptions import ObjectDoesNotExist
@@ -11,6 +11,7 @@ from django.http import HttpResponse
 from haystack.query import SearchQuerySet
 from django.contrib.auth.decorators import login_required
 from haystack.management.commands import rebuild_index, update_index
+from datetime import timezone
 
 
 @login_required
@@ -539,8 +540,16 @@ class GetPollsView(View):
         return JsonResponse(context)
 
 
+class GetFeedback(View):
+    def post(self, *args, **kwargs):
+        context = {}
+        feedback_choice = self.request.POST.get('feedback_choice')
+        feedback_text = self.request.POST.get('explainus')
+        user = self.request.user
+        article_id = self.request.POST.get('id')
 
-
+        Feedback.objects.create(date=datetime.datetime.now(), author=user, rate=feedback_choice,
+                                explanation=feedback_text, article_id=article_id)
 
 
 
