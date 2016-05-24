@@ -11,12 +11,28 @@ var Article = function (id, element) {
     this.id = id;
 
     this.isLike = function () {
-        return this.element.children().first().text() == 'favorite_border'
+        console.log(this.element.parent().children().last().attr('class').indexOf('favorite-active'));
+        return !(this.element.parent().children().last().attr('class').indexOf('favorite-active') >= 0);
     };
 
     this.setLike = function (active, inactive) {
+        console.log(this.isLike());
+        var counter = this.element.parent().children('.counter');
+        console.log(counter);
         query_action(this.id, this.isLike(), urls.like_manager);
-        design(selector.like_icon, this.isLike(), this.element.children().first(), active, inactive);
+        design(selector.like_icon, this.isLike(), counter, active, inactive);
+    };
+
+    this.isBigup = function () {
+        return !(this.element.parent().children().last().attr('class').indexOf('bigup-active') >= 0);
+    };
+
+    this.setBigup = function (active, inactive) {
+        console.log(this.isBigup());
+        var counter = this.element.parent().children('.counter');
+        console.log(counter);
+        query_action(this.id, this.isBigup(), urls.bigup_manager);
+        design(selector.bigup_icon, this.isBigup(), counter, active, inactive)
     };
 
     this.isRead = function () {
@@ -28,14 +44,16 @@ var Article = function (id, element) {
         design(this.read_selector, this.isRead(), active, inactive);
     };
 
-    this.isBigup = function () {
-        return this.element.children().first().css('color') != 'rgb(52, 152, 219)';
+    this.isSearch = function () {
+        return query(urls.search_manager, mode.read);
     };
 
-    this.setBigup = function (active, inactive) {
-        console.log(this.element.children().first());
-        query_action(this.id, this.isBigup(), urls.bigup_manager);
-        design(selector.bigup_icon, this.isBigup(), this.element.children().first(), active, inactive)
+    this.setSearch = function () {
+        Article.query(urls.like_manager, mode.write);
+    };
+
+    this.setView = function () {
+        query_action(this.id, true, urls.read_manager);
     };
 
     this.nextStepFeedback = function () {
@@ -71,29 +89,19 @@ var Article = function (id, element) {
         var feedback_text = this.element.parent().find('#explainus').val();
 
         this.element.parent().hide();
-        console.log(this.element.parent().parent().find('.step3'));
         this.element.parent().parent().find('.step3').show();
         this.element.parent().parent().css('height', '100px');
 
         $.get(urls.send_feedback, {'id': this.id, 'feedback_choice': feedback_choice, 'feedback_text': feedback_text},
             function (data) {
-                console.log(data);
             });
-    };
-
-
-    this.isSearch = function () {
-        return query(urls.search_manager, mode.read);
-    };
-
-    this.setSearch = function () {
-        Article.query(urls.like_manager, mode.write);
     };
 
     var query_action = function (id, bool, url) {
         $.get(url,
             {'id': id, 'action': bool},
             function (data) {
+
             }
         );
     };
@@ -138,7 +146,6 @@ var Article = function (id, element) {
                 });
 
                 var txt = article.parent().find('.eta').text();
-                console.log(txt);
                 article.parent().find('.eta').empty().append(txt + ' read');
             }
         );
@@ -147,9 +154,14 @@ var Article = function (id, element) {
     var design = function (element, state, object, active, inactive) {
         switch (element) {
             case selector.like_icon:
-                if (state)
-                    object.text(inactive || attrclass.unliked);
-                else object.text(active || attrclass.liked);
+                if (state) {
+                    object.attr('class', active || attrclass.liked);
+                    object.text(parseInt(object.text()) + 1);
+                }
+                else {
+                    object.attr('class', inactive || attrclass.unliked);
+                    object.text(parseInt(object.text()) - 1);
+                }
                 break;
             case selector.read_icon:
                 if (state)
@@ -157,10 +169,14 @@ var Article = function (id, element) {
                 else object.css(inactive || style.unread);
                 break;
             case selector.bigup_icon:
-                if (state)
-                    object.css('color', '#3498db');
-                else
-                    object.removeAttr('style');
+                if (state) {
+                    object.attr('class', active || attrclass.bigup);
+                    object.text(parseInt(object.text()) + 1);
+                }
+                else {
+                    object.attr('class', inactive || attrclass.unbigup);
+                    object.text(parseInt(object.text()) - 1);
+                }
                 break;
             default:
                 break;
@@ -183,6 +199,7 @@ var Article = function (id, element) {
             '<span class="key" id="' + key + '" hidden="hidden">' + key + '</span>' +
             '<a class="article-title">' + title +
             '<i class="material-icons ' + color_read + '">done_all</i></a>' +
+            '<i class="attachment-button material-icons color_base md-24">attach_file</i>' +
             '</header>' +
             '<div class="content-article">' + content + '</div>' +
             '<aside class="glossary-article">' + '</aside>' +
@@ -190,24 +207,25 @@ var Article = function (id, element) {
     };
 
     var stats = function (key, view_counter, useful_counter, favorite_counter, bigup_article, favorites) {
-        var color_big = (bigup_article == 'ok' ? 'rgb(52, 152, 219)' : '');
-        var favorite_icon = (favorites == 'ok' ? 'favorite' : 'favorite_border');
+        var active_bigup = (bigup_article == 'ok' ? 'bigup-active' : '');
+        var active_favorite = (favorites == 'ok' ? 'favorite-active' : '');
 
         return '<div class="">' +
             '<span class="key" id="' + key + '" hidden="hidden">' + key + '</span>' +
+
             '<div class="stat-container like-button">' +
-            '<i class="center-icon favorite material-icons md-28 width28">'
-            + favorite_icon +
-            '</i>' +
+            '<i class="center-icon color_base_favorite favorite material-icons md-24 width24">favorite</i>' +
+            '<span class="counter counter-like ' + active_favorite + '">'+favorite_counter+'</span>' +
             '</div>' +
+
             '<div class="stat-container bigup-button">' +
-            '<i class="center-icon color_base useful material-icons md-28 width28" style="color:' + color_big + '">thumb_up</i>' +
+            '<i class="center-icon color_bigup useful material-icons md-24 width24">thumb_up</i>' +
+            '<span class="counter counter-bigup ' + active_bigup + '">'+useful_counter+'</span>' +
             '</div>' +
-            '<div class="stat-container comment-button">' +
-            '<i class="center-icon material-icons color_base md-28 width28">chat</i>' +
-            '</div>' +
-            '<div class="stat-container">' +
-            '<i class="center-icon material-icons remove_red_eye color_base md-28 width28">remove_red_eye</i>' +
+
+            '<div class="stat-container view-button">' +
+            '<i class="center-icon material-icons remove_red_eye color_base md-24 width24">remove_red_eye</i>' +
+            '<span class="counter counter-view">'+view_counter+'</span>' +
             '</div>' +
             '</div>';
     };
@@ -235,9 +253,10 @@ var Article = function (id, element) {
 
     var attrclass = {
         'base': {},
-        'liked': 'favorite_border',
-        'unliked': 'favorite',
-        'bigup': {}
+        'liked': 'counter counter-like favorite-active',
+        'unliked': 'counter counter-like',
+        'unbigup': 'counter counter-bigup',
+        'bigup': 'counter counter-bigup bigup-active'
     };
 
     var style = {
@@ -300,15 +319,16 @@ var ArticleManager = function (options) {
     var article = function (object) {
         var article = new Article(object.parent().parent().attr("id"), object.parent().parent());
         current_article = article;
+        article.setView();
         article.show();
     };
 
     var action = function (object) {
         current_article.element = object;
 
-        if (object.attr('class').indexOf('like-button') >= 0)
+        if (object.attr('class').indexOf('favorite') >= 0)
             current_article.setLike();
-        else if (object.attr('class').indexOf('bigup-button') >= 0)
+        else if (object.attr('class').indexOf('useful') >= 0)
             current_article.setBigup();
         else if (object.attr('class').indexOf('button-next-step-feedback') >= 0)
             current_article.nextStepFeedback();
@@ -359,9 +379,9 @@ var ArticleManager = function (options) {
     };
 
     var selector_action = {
-        'like_selector': '.like-button',
+        'like_selector': '.favorite',
         'read_selector': '.read-button',
-        'bigup_selector': '.bigup-button',
+        'bigup_selector': '.useful',
         'comment-to-step-2': '.button-next-step-feedback',
         'comment-to-step-1': '.button-back-step-feedback',
         'comment-step-3': '.button-step3-step-feedback',
@@ -409,7 +429,6 @@ function render_article() {
 
     article_content.find('*').each(function () {
         var element = $(this);
-        console.log(element.parent().html());
         if (element.width() > element.parent().width()) {
             element.css('width', '100%').css('height', 'auto');
         } else if (element.is('p') && element.html() == '<br>') {

@@ -141,29 +141,10 @@ class SetReadView(View):
     def get(self, *args, **kwargs):
         context = {}
 
-        article_id = self.request.GET.get('article_id')
-        action = self.request.GET.get('action')
+        article_id = self.request.GET.get('id')
         q = Article.objects.get(id=article_id)
         user = self.request.user
-
-        try:
-            p = UserArticle.objects.all().get(user_id=user.id, article_id=article_id)
-
-            if action == 'true':
-                p.readed = True
-                q.view_counter += 1
-            else:
-                p.readed = False
-                q.view_counter -= 1
-
-            p.save()
-
-        except ObjectDoesNotExist:
-            if action == 'true':
-                UserArticle.objects.create(user_id=user.id, article_id=article_id, readed=True)
-                q.view_counter += 1
-
-        context.update({'readed_counter': q.view_counter})
+        q.view_counter += 1
         q.save()
 
         return JsonResponse(context)
@@ -173,7 +154,7 @@ class SetVisitedView(View):
     def get(self, *args, **kwargs):
         context = {}
 
-        article_id = self.request.GET.get('article_id')
+        article_id = self.request.GET.get('id')
         user = self.request.user
 
         try:
@@ -498,10 +479,9 @@ class ShowArticleView(View):
             attachments += '<a href = "' + a.attachment_file.url + '" >' \
                                                                    '<img alt="' + a.filename + '" ' \
                                                                                                'src="http://pris' \
-                                                                                               'maginario.com/es/asset' \
+                                                                                               'maginario.com/es/asset'\
                                                                                                's/img/icon-pdf-flat.p' \
                                                                                                'ng"></a>'
-
         context.update({'id': article.pk,
                         'title': article.title,
                         'author': str(article.author),

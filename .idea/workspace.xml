@@ -5,32 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="18b606f7-4bb6-4847-a114-ede8e2ca5ad6" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/core/static/core/js/vendor/readingTime.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/static/core/js/articlesv2.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/static/core/js/vendor/readingTime.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.ids" afterPath="$PROJECT_DIR$/.idea/dataSources.ids" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.xml" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/core/static/core/css/vendor/materialize.min.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/core/static/core/js/vendor/materialize.min.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/article/admin.py" afterPath="$PROJECT_DIR$/apps/article/admin.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/article/constants.py" afterPath="$PROJECT_DIR$/apps/article/constants.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/article/models.py" afterPath="$PROJECT_DIR$/apps/article/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/article/search_indexes.py" afterPath="$PROJECT_DIR$/apps/article/search_indexes.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/article/views.py" afterPath="$PROJECT_DIR$/apps/article/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/core/static/core/css/main.css" afterPath="$PROJECT_DIR$/apps/core/static/core/css/main.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/core/static/core/js/articlesv2.js" afterPath="$PROJECT_DIR$/apps/core/static/core/js/articlesv2.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/core/static/core/js/main.js" afterPath="$PROJECT_DIR$/apps/core/static/core/js/main.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/core/templates/core/base.html" afterPath="$PROJECT_DIR$/apps/core/templates/core/base.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/core/templates/core/home.html" afterPath="$PROJECT_DIR$/apps/core/templates/core/home.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/core/templates/core/modal.html" afterPath="$PROJECT_DIR$/apps/core/templates/core/modal.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/manager/views.py" afterPath="$PROJECT_DIR$/apps/manager/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/project/settings.py" afterPath="$PROJECT_DIR$/project/settings.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/project/static/core/css/main.css" afterPath="$PROJECT_DIR$/project/static/core/css/main.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/project/static/core/js/animation.js" afterPath="$PROJECT_DIR$/project/static/core/js/animation.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/project/static/core/js/articles.js" afterPath="$PROJECT_DIR$/project/static/core/js/articles.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/project/static/core/js/main.js" afterPath="$PROJECT_DIR$/project/static/core/js/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/project/static/core/js/shortcuts.js" afterPath="$PROJECT_DIR$/project/static/core/js/shortcuts.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/project/static/templates/admin/base.html" afterPath="$PROJECT_DIR$/project/static/templates/admin/base.html" />
     </list>
     <list id="c2818188-c081-4fde-b41c-d5fb9174705a" name="New changelist" comment="" />
     <ignored path="base_acknowledgment.iws" />
@@ -49,7 +31,7 @@
     <SUITE FILE_PATH="coverage/base_acknowledgment$structure.coverage" NAME="structure Coverage Results" MODIFIED="1462240584625" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/apps/content" />
   </component>
   <component name="CreatePatchCommitExecutor">
-    <option name="PATCH_PATH" value="" />
+    <option name="PATCH_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
     <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
@@ -60,106 +42,83 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="base.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/project/static/templates/admin/base.html">
+      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/core/static/core/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
-              <caret line="30" column="29" selection-start-line="30" selection-start-column="29" selection-end-line="30" selection-end-column="29" />
+            <state relative-caret-position="405">
+              <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/project/settings.py">
+      <file leaf-file-name="articlesv2.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/apps/core/static/core/js/articlesv2.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-458">
-              <caret line="205" column="20" selection-start-line="205" selection-start-column="20" selection-end-line="205" selection-end-column="20" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="codemirror.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/project/static/core/js/vendor/codemirror-5.15.2/lib/codemirror.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-50926">
-              <caret line="127" column="49" selection-start-line="127" selection-start-column="45" selection-end-line="127" selection-end-column="49" />
+            <state relative-caret-position="390">
+              <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
               <folding>
-                <element signature="n#!!doc" expanded="true" />
+                <element signature="e#0#42#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="codemirror.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/project/static/core/js/vendor/codemirror-5.15.2/lib/codemirror.css">
+      <file leaf-file-name="main.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/core/static/core/css/main.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="306">
+              <caret line="1148" column="1" selection-start-line="1148" selection-start-column="1" selection-end-line="1148" selection-end-column="16" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="base.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/core/templates/core/base.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="270">
+              <caret line="92" column="52" selection-start-line="92" selection-start-column="52" selection-end-line="92" selection-end-column="52" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/article/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2370">
+              <caret line="174" column="20" selection-start-line="174" selection-start-column="20" selection-end-line="174" selection-end-column="20" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="articles.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/core/static/core/js/articles.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="comment_test.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/project/static/core/js/vendor/codemirror-5.15.2/test/comment_test.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-788">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/project/static/core/js/vendor/codemirror-5.15.2/test/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2790">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="test.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/project/static/core/js/vendor/codemirror-5.15.2/test/test.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="sql-hint-test.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/project/static/core/js/vendor/codemirror-5.15.2/test/sql-hint-test.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="345" selection-end-column="4" />
               <folding>
-                <element signature="n#!!doc" expanded="true" />
+                <marker date="1463926847000" expanded="true" signature="1006:1021" placeholder="..." />
+                <marker date="1463926847000" expanded="true" signature="1281:1315" placeholder="..." />
+                <marker date="1463926847000" expanded="true" signature="2385:2403" placeholder="..." />
+                <marker date="1463926847000" expanded="true" signature="2548:2566" placeholder="..." />
+                <marker date="1463926847000" expanded="true" signature="4376:5751" placeholder="..." />
+                <marker date="1463926847000" expanded="true" signature="4493:4683" placeholder="..." />
+                <marker date="1463926847000" expanded="true" signature="4812:5725" placeholder="..." />
+                <marker date="1463926847000" expanded="true" signature="4857:4877" placeholder="..." />
+                <marker date="1463926847000" expanded="true" signature="4878:5024" placeholder="..." />
+                <marker date="1463926847000" expanded="true" signature="4889:4910" placeholder="..." />
+                <marker date="1463926847000" expanded="true" signature="5068:5082" placeholder="..." />
+                <marker date="1463926847000" expanded="true" signature="5083:5242" placeholder="..." />
+                <marker date="1463926847000" expanded="true" signature="5290:5323" placeholder="..." />
+                <marker date="1463926847000" expanded="true" signature="5324:5524" placeholder="..." />
+                <marker date="1463926847000" expanded="true" signature="5469:5520" placeholder="..." />
+                <marker date="1463926847000" expanded="true" signature="5572:5601" placeholder="..." />
+                <marker date="1463926847000" expanded="true" signature="5602:5693" placeholder="..." />
+                <marker date="1463926847000" expanded="true" signature="9241:9269" placeholder="..." />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="search_test.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/project/static/core/js/vendor/codemirror-5.15.2/test/search_test.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/project/static/core/js/vendor/codemirror-5.15.2/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="81" column="0" selection-start-line="81" selection-start-column="0" selection-end-line="83" selection-end-column="25" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -225,14 +184,14 @@
         <option value="$PROJECT_DIR$/apps/core/templates/core/home.html" />
         <option value="$PROJECT_DIR$/apps/core/templates/core/modal.html" />
         <option value="$PROJECT_DIR$/apps/core/static/core/js/vendor/readingTime.js" />
-        <option value="$PROJECT_DIR$/apps/core/templates/core/base.html" />
-        <option value="$PROJECT_DIR$/apps/article/views.py" />
         <option value="$PROJECT_DIR$/apps/core/static/core/css/rgt34.css" />
-        <option value="$PROJECT_DIR$/apps/core/static/core/css/main.css" />
-        <option value="$PROJECT_DIR$/apps/core/static/core/js/main.js" />
-        <option value="$PROJECT_DIR$/apps/core/static/core/js/articlesv2.js" />
         <option value="$PROJECT_DIR$/project/settings.py" />
         <option value="$PROJECT_DIR$/project/static/templates/admin/base.html" />
+        <option value="$PROJECT_DIR$/apps/core/static/core/js/main.js" />
+        <option value="$PROJECT_DIR$/apps/core/static/core/css/main.css" />
+        <option value="$PROJECT_DIR$/apps/core/templates/core/base.html" />
+        <option value="$PROJECT_DIR$/apps/article/views.py" />
+        <option value="$PROJECT_DIR$/apps/core/static/core/js/articlesv2.js" />
       </list>
     </option>
   </component>
@@ -471,40 +430,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="vendor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="base_acknowledgment" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="base_acknowledgment" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="apps" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="core" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="core" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="css" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -544,11 +469,11 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/apps/core/static/core/js/vendor" />
+      <recent name="$PROJECT_DIR$/apps/core/static/core/css/vendor" />
       <recent name="$PROJECT_DIR$/project/static" />
       <recent name="$PROJECT_DIR$/project" />
-      <recent name="$PROJECT_DIR$/apps/core/static/core/js/vendor" />
       <recent name="$PROJECT_DIR$/apps/core/static/core/css" />
-      <recent name="$PROJECT_DIR$/project/static/admin/css" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/apps/poll" />
@@ -894,13 +819,6 @@
       <option name="presentableId" value="Default" />
       <updated>1460348435713</updated>
     </task>
-    <task id="LOCAL-00019" summary="init">
-      <created>1460680836955</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1460680836955</updated>
-    </task>
     <task id="LOCAL-00020" summary="init">
       <created>1460709719096</created>
       <option name="number" value="00020" />
@@ -1237,7 +1155,14 @@
       <option name="project" value="LOCAL" />
       <updated>1463987057077</updated>
     </task>
-    <option name="localTasksCounter" value="68" />
+    <task id="LOCAL-00068" summary="staticfiles">
+      <created>1464063856633</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1464063856633</updated>
+    </task>
+    <option name="localTasksCounter" value="69" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1256,9 +1181,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24391988" sideWeight="0.49518073" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24391988" sideWeight="0.49518073" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32765958" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35421687" sideWeight="0.3683834" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1397,34 +1322,6 @@
         <state relative-caret-position="1080">
           <caret line="72" column="39" selection-start-line="72" selection-start-column="39" selection-end-line="72" selection-end-column="39" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/core/static/core/js/articles.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="345" selection-end-column="4" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-            <marker date="1463926847000" expanded="true" signature="1006:1021" placeholder="..." />
-            <marker date="1463926847000" expanded="true" signature="1281:1315" placeholder="..." />
-            <marker date="1463926847000" expanded="true" signature="2385:2403" placeholder="..." />
-            <marker date="1463926847000" expanded="true" signature="2548:2566" placeholder="..." />
-            <marker date="1463926847000" expanded="true" signature="4376:5751" placeholder="..." />
-            <marker date="1463926847000" expanded="true" signature="4493:4683" placeholder="..." />
-            <marker date="1463926847000" expanded="true" signature="4812:5725" placeholder="..." />
-            <marker date="1463926847000" expanded="true" signature="4857:4877" placeholder="..." />
-            <marker date="1463926847000" expanded="true" signature="4878:5024" placeholder="..." />
-            <marker date="1463926847000" expanded="true" signature="4889:4910" placeholder="..." />
-            <marker date="1463926847000" expanded="true" signature="5068:5082" placeholder="..." />
-            <marker date="1463926847000" expanded="true" signature="5083:5242" placeholder="..." />
-            <marker date="1463926847000" expanded="true" signature="5290:5323" placeholder="..." />
-            <marker date="1463926847000" expanded="true" signature="5324:5524" placeholder="..." />
-            <marker date="1463926847000" expanded="true" signature="5469:5520" placeholder="..." />
-            <marker date="1463926847000" expanded="true" signature="5572:5601" placeholder="..." />
-            <marker date="1463926847000" expanded="true" signature="5602:5693" placeholder="..." />
-            <marker date="1463926847000" expanded="true" signature="9241:9269" placeholder="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1592,24 +1489,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/core/templates/core/base.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="115" column="33" selection-start-line="115" selection-start-column="33" selection-end-line="115" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/article/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="232">
-          <caret line="486" column="38" selection-start-line="486" selection-start-column="38" selection-end-line="486" selection-end-column="38" />
-          <folding>
-            <element signature="e#0#36#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/apps/core/static/core/css/rgt34.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
@@ -1618,39 +1497,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/core/static/core/css/main.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="394">
-          <caret line="905" column="24" selection-start-line="905" selection-start-column="24" selection-end-line="905" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/core/static/core/js/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="690">
-          <caret line="46" column="8" selection-start-line="46" selection-start-column="8" selection-end-line="46" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/core/static/core/js/articlesv2.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="355">
-          <caret line="387" column="19" selection-start-line="387" selection-start-column="19" selection-end-line="387" selection-end-column="19" />
-          <folding>
-            <element signature="e#0#42#0" expanded="false" />
-            <marker date="1464060516000" expanded="true" signature="7423:7429" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/project/static/admin/js/admin/DateTimeShortcuts.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!doc" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1660,17 +1512,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/project/static/core/js/vendor/codemirror-5.15.2/lib/codemirror.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-50926">
-          <caret line="127" column="49" selection-start-line="127" selection-start-column="45" selection-end-line="127" selection-end-column="49" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!doc" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1712,7 +1554,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!doc" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1733,6 +1575,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/project/static/core/js/vendor/codemirror-5.15.2/lib/codemirror.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-46">
+          <caret line="3519" column="48" selection-start-line="3519" selection-start-column="48" selection-end-line="3519" selection-end-column="48" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/project/settings.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-458">
@@ -1746,6 +1598,75 @@
         <state relative-caret-position="450">
           <caret line="30" column="29" selection-start-line="30" selection-start-column="29" selection-end-line="30" selection-end-column="29" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/core/static/core/js/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/core/static/core/css/main.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="1148" column="1" selection-start-line="1148" selection-start-column="1" selection-end-line="1148" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/core/templates/core/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="92" column="52" selection-start-line="92" selection-start-column="52" selection-end-line="92" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/article/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2370">
+          <caret line="174" column="20" selection-start-line="174" selection-start-column="20" selection-end-line="174" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/core/static/core/js/articles.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="345" selection-end-column="4" />
+          <folding>
+            <marker date="1463926847000" expanded="true" signature="1006:1021" placeholder="..." />
+            <marker date="1463926847000" expanded="true" signature="1281:1315" placeholder="..." />
+            <marker date="1463926847000" expanded="true" signature="2385:2403" placeholder="..." />
+            <marker date="1463926847000" expanded="true" signature="2548:2566" placeholder="..." />
+            <marker date="1463926847000" expanded="true" signature="4376:5751" placeholder="..." />
+            <marker date="1463926847000" expanded="true" signature="4493:4683" placeholder="..." />
+            <marker date="1463926847000" expanded="true" signature="4812:5725" placeholder="..." />
+            <marker date="1463926847000" expanded="true" signature="4857:4877" placeholder="..." />
+            <marker date="1463926847000" expanded="true" signature="4878:5024" placeholder="..." />
+            <marker date="1463926847000" expanded="true" signature="4889:4910" placeholder="..." />
+            <marker date="1463926847000" expanded="true" signature="5068:5082" placeholder="..." />
+            <marker date="1463926847000" expanded="true" signature="5083:5242" placeholder="..." />
+            <marker date="1463926847000" expanded="true" signature="5290:5323" placeholder="..." />
+            <marker date="1463926847000" expanded="true" signature="5324:5524" placeholder="..." />
+            <marker date="1463926847000" expanded="true" signature="5469:5520" placeholder="..." />
+            <marker date="1463926847000" expanded="true" signature="5572:5601" placeholder="..." />
+            <marker date="1463926847000" expanded="true" signature="5602:5693" placeholder="..." />
+            <marker date="1463926847000" expanded="true" signature="9241:9269" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/core/static/core/js/articlesv2.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#42#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

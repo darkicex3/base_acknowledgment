@@ -82,7 +82,6 @@
 
 <script>
     URL_AUTO_COMPLETE = "{% url 'articles:articles_search_view'                     %}"; //TODO
-    SET_VISITED = "{% url 'articles:set_visited_view'                         %}"; //TODO
     GET_SORTING_METHODS = "{% url 'articles:get_sorting_methods_view'                 %}"; //TODO
     SEARCH_MANAGER = "{% url 'articles:set_searched_view'                        %}"; //TODO
     GET_POLLS = "{% url 'articles:get_polls_view'                           %}"; //TODO                                                              //TODO
@@ -92,6 +91,7 @@
     BIGUP_MANAGER = "{% url 'articles:set_useful_view'                          %}"; //OK
     LIKE_MANAGER = "{% url 'articles:set_liked_view'                           %}"; //OK
     READ_MANAGER = "{% url 'articles:set_read_view'                            %}"; //OK
+    VIEW_MANAGER = "{% url 'articles:set_visited_view'                            %}"; //OK
     GET_LIST_ARTICLES = "{% url 'articles:get_article_by_static_shortcuts'          %}"; //OK
     GET_CATEGORIES = "{% url 'articles:get_categories_view'                      %}"; //OK
     GET_ARTICLES_FROM_SHORTCUT = "{% url 'articles:show_article_from_shorcuts'               %}"; //OK
