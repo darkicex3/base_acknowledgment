@@ -16,10 +16,10 @@ def get_upload_filename(instance, filename):
 
 
 @python_2_unicode_compatible
-class Category(MPTTModel):
+class Tag(MPTTModel):
     class Meta:
-        verbose_name = 'Category'
-        verbose_name_plural = 'Categories'
+        verbose_name = 'Tag'
+        verbose_name_plural = 'Tags'
         app_label = 'article'
 
     name = models.CharField(max_length=50, blank=True, null=True)
@@ -65,19 +65,6 @@ class FeedbackManager(models.Model):
     min_view = models.IntegerField(null=True)
 
 
-class Feedback(models.Model):
-    class Meta:
-        verbose_name = 'FeedBack'
-        verbose_name_plural = 'FeedBacks'
-        app_label = 'article'
-
-    date = models.DateTimeField()
-    author = models.ForeignKey(User, on_delete=models.CASCADE, default=DEFAULT_AUTHOR_ID)
-    rate = models.CharField(max_length=1, choices=RATE_CHOICES, default=RATE_CHOICES[2])
-    explanation = models.TextField(default='')
-    comments = models.ManyToManyField(Comment, help_text=tags_help, blank=True)
-
-
 class DailyRecap(models.Model):
     class Meta:
         verbose_name_plural = 'Daily Recaps'
@@ -116,7 +103,7 @@ class Article(models.Model):
     publish_date = models.DateTimeField(help_text=publish_date_help)
     modified = models.DateTimeField(editable=False)
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default=STATUS_CHOICES[0])
-    categories = models.ManyToManyField(Category, help_text=tags_help, blank=True)
+    tags = models.ManyToManyField(Tag, help_text=tags_help, blank=True)
 
     # COUNTERS
     useful_counter = models.IntegerField(default=0, editable=False)
@@ -128,7 +115,6 @@ class Article(models.Model):
     feedback_manager = models.ForeignKey(FeedbackManager, on_delete=models.CASCADE, default=DEFAULT_FEEDBACK_ID,
                                          editable=False)
     expiration_date = models.DateTimeField(blank=True, null=True, help_text=expiration_date)
-    feedback = models.ManyToManyField(Feedback, help_text=tags_help, blank=True)
     polls = models.ManyToManyField('poll.Poll', help_text=tags_help, blank=True)
 
     def active_article(self):
@@ -168,14 +154,30 @@ class Article(models.Model):
         return self.title
 
 
-@python_2_unicode_compatible
-class Shortcut(MPTTModel):
+class Feedback(models.Model):
     class Meta:
-        verbose_name = 'Shortcut'
-        verbose_name_plural = 'Shortcuts'
+        verbose_name = 'FeedBack'
+        verbose_name_plural = 'FeedBacks'
+        app_label = 'article'
 
-    name = models.CharField(max_length=300, unique=True)
-    icon = models.CharField(max_length=500, default="", help_text="Add an icon to your shortcut ! <a href=\"ht"
+    date = models.DateTimeField()
+    author = models.ForeignKey(User, null=True, related_name='author')
+    article = models.ForeignKey(Article, null=True, related_name='article')
+    rate = models.CharField(max_length=1, choices=RATE_CHOICES, default=RATE_CHOICES[2])
+    explanation = models.TextField(default='')
+
+    def __str__(self):
+        return self.rate
+
+
+@python_2_unicode_compatible
+class Category(MPTTModel):
+    class Meta:
+        verbose_name = 'Category'
+        verbose_name_plural = 'Categories'
+
+    name = models.CharField(max_length=300, unique=True, null=True)
+    icon = models.CharField(max_length=500, default="", help_text="Add an icon to your category ! <a href=\"ht"
                                                                            "tps://design.google.com/ico"
                                                                            "ns/\">Click Here !</a>", null=True,
                             blank=True)

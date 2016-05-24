@@ -35,7 +35,7 @@ function get_shortcuts(element) {
 function shortcut(key, name, icon) {
 
     return      '<li id="' + name + '"class="static_category ui-widget-content"><span id="' + key + '" hidden="hidden">' + key + '</span>' +
-                    '<a class="shortcuts-link"><i class="material-icons md-18 width18 color_base">' + icon + '</i>' + name + '</a>' +
+                    '<a id="'+ name +'" class="shortcuts-link"><i class="material-icons md-18 width18 color_base">' + icon + '</i>' + name + '</a>' +
                     '<div class="children" style="display: none"></div>' +
                 '</li>'
 }

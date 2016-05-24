@@ -198,7 +198,6 @@ SUMMERNOTE_CONFIG = {
     # Use native HTML tags (`<b>`, `<i>`, ...) instead of style attributes
     # (Firefox, Chrome only)
     'styleWithTags': True,
-
     # Set text direction : 'left to right' is default.
     'direction': 'ltr',
 
@@ -216,8 +215,6 @@ SUMMERNOTE_CONFIG = {
         ['style', ['style']],
         ['font', ['bold', 'italic', 'underline', 'superscript', 'subscript',
                   'strikethrough', 'clear']],
-        ['fontname', ['fontname']],
-        ['fontsize', ['fontsize']],
         ['color', ['color']],
         ['para', ['ul', 'ol', 'paragraph', 'height']],
         ['height', ['height']],

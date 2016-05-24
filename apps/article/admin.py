@@ -5,8 +5,8 @@ from django_summernote.admin import SummernoteModelAdmin    # DJANGO SUMMERNOTE 
 from attachments.admin import AttachmentInlines             # DJANGO ATTACHMENTS ALLOW ATTACHMENTS TO ARTICLES
 
 # -- ARTICLE APP MODELS --
-from apps.article.models import Category, Article, \
-    Feedback, Shortcut, FeedbackManager, Comment, UserArticle, DailyRecap
+from apps.article.models import Tag, Article, \
+    Feedback, Category, FeedbackManager, Comment, UserArticle, DailyRecap
 
 # -- DJANGO ADMIN MODEL --
 from django.contrib.admin.models import LogEntry            # LOG OF ALL ACTIONS PERFORM ON ADMIN INTERFACE
@@ -43,10 +43,18 @@ class ArticleAdmin(SummernoteModelAdmin, admin.ModelAdmin):
 
 
 class FeedBackAdmin(admin.ModelAdmin):
-    list_display = ['author', 'rate', 'date']
+    list_display = ['author', 'get_article_id', 'rate', 'date', 'explanation']
     ordering = ['date']
     list_filter = ['rate', 'date']
     search_fields = ['author']
+
+    def get_article_title(self, obj):
+        return '%s' % obj.article.title
+    get_article_title.short_description = 'Article Name'
+
+    def get_article_id(self, obj):
+        return '%s' % obj.article.id
+    get_article_id.short_description = 'Article ID'
 
 
 class LogEntryAdmin(admin.ModelAdmin):
@@ -63,9 +71,9 @@ class ShortcutAdmin(DjangoMpttAdmin, admin.ModelAdmin):
     actions = [make_desactivated, make_activated, duplicate_event]
 
 admin.site.register(LogEntry, LogEntryAdmin)
-admin.site.register(Category, CategoryAdmin)
+admin.site.register(Tag, CategoryAdmin)
 admin.site.register(Article, ArticleAdmin)
-admin.site.register(Shortcut, ShortcutAdmin)
+admin.site.register(Category, ShortcutAdmin)
 admin.site.register(Feedback, FeedBackAdmin)
 admin.site.register(DailyRecap, DailyRecapAdmin)
 admin.site.register(FeedbackManager)

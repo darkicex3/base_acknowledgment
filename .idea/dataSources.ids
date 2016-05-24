@@ -24,22 +24,6 @@
       <index name="article_article_093f1296" unique="true" columns="feedback_manager_id"/>
       <index name="article_article_4f331e2f" unique="true" columns="author_id"/>
     </table>
-    <table name="article_article_categories" schema="" catalog="" type="TABLE">
-      <column name="id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
-      <column name="article_id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
-      <column name="category_id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
-      <primary-key columns="id"/>
-      <foreign-key name="#FAKE_article_article_categories_1" columns="category_id" ref-table="article_category" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
-      <foreign-key name="#FAKE_article_article_categories_2" columns="article_id" ref-table="article_article" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
-    </table>
-    <table name="article_article_feedback" schema="" catalog="" type="TABLE">
-      <column name="id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
-      <column name="article_id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
-      <column name="feedback_id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
-      <primary-key columns="id"/>
-      <foreign-key name="#FAKE_article_article_feedback_1" columns="feedback_id" ref-table="article_feedback" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
-      <foreign-key name="#FAKE_article_article_feedback_2" columns="article_id" ref-table="article_article" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
-    </table>
     <table name="article_article_polls" schema="" catalog="" type="TABLE">
       <column name="id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
       <column name="article_id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
@@ -51,14 +35,27 @@
       <index name="article_article_polls_a00c1b00" unique="true" columns="article_id"/>
       <index name="article_article_polls_article_id_836f886b_uniq" unique="true" columns="article_id,poll_id"/>
     </table>
+    <table name="article_article_tags" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
+      <column name="article_id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
+      <column name="tag_id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
+      <primary-key columns="id"/>
+      <foreign-key name="#FAKE_article_article_tags_1" columns="tag_id" ref-table="article_tag" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
+      <foreign-key name="#FAKE_article_article_tags_2" columns="article_id" ref-table="article_article" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
+      <index name="article_article_tags_76f094bc" unique="true" columns="tag_id"/>
+      <index name="article_article_tags_a00c1b00" unique="true" columns="article_id"/>
+      <index name="article_article_tags_article_id_d45ad9d9_uniq" unique="true" columns="article_id,tag_id"/>
+    </table>
     <table name="article_category" schema="" catalog="" type="TABLE">
       <column name="id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
-      <column name="name" sqlType="VARCHAR(50)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
-      <column name="color" sqlType="VARCHAR(10)" precision="0" scale="-1" nullable="false" jdbcType="12"/>
       <column name="lft" sqlType="INTEGER UNSIGNED" precision="0" scale="-1" nullable="false" jdbcType="4"/>
       <column name="rght" sqlType="INTEGER UNSIGNED" precision="0" scale="-1" nullable="false" jdbcType="4"/>
       <column name="tree_id" sqlType="INTEGER UNSIGNED" precision="0" scale="-1" nullable="false" jdbcType="4"/>
       <column name="level" sqlType="INTEGER UNSIGNED" precision="0" scale="-1" nullable="false" jdbcType="4"/>
+      <column name="activated" sqlType="BOOL" precision="0" scale="-1" nullable="false" jdbcType="4"/>
+      <column name="click_counter" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
+      <column name="icon" sqlType="VARCHAR(500)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="name" sqlType="VARCHAR(300)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
       <column name="parent_id" sqlType="INTEGER" precision="0" scale="-1" nullable="true" jdbcType="4"/>
       <primary-key columns="id"/>
       <foreign-key name="#FAKE_article_category_1" columns="parent_id" ref-table="article_category" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
@@ -67,6 +64,14 @@
       <index name="article_category_656442a0" unique="true" columns="tree_id"/>
       <index name="article_category_3cfbd988" unique="true" columns="rght"/>
       <index name="article_category_caf7cc51" unique="true" columns="lft"/>
+    </table>
+    <table name="article_category_articles" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
+      <column name="category_id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
+      <column name="article_id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
+      <primary-key columns="id"/>
+      <foreign-key name="#FAKE_article_category_articles_1" columns="article_id" ref-table="article_article" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
+      <foreign-key name="#FAKE_article_category_articles_2" columns="category_id" ref-table="article_category" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
     </table>
     <table name="article_comment" schema="" catalog="" type="TABLE">
       <column name="id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
@@ -106,21 +111,13 @@
       <column name="date" sqlType="DATETIME" precision="0" scale="-1" nullable="false" jdbcType="12"/>
       <column name="rate" sqlType="VARCHAR(1)" precision="0" scale="-1" nullable="false" jdbcType="12"/>
       <column name="explanation" sqlType="TEXT" precision="0" scale="-1" nullable="false" jdbcType="12"/>
-      <column name="author_id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
+      <column name="article_id" sqlType="INTEGER" precision="0" scale="-1" nullable="true" jdbcType="4"/>
+      <column name="author_id" sqlType="INTEGER" precision="0" scale="-1" nullable="true" jdbcType="4"/>
       <primary-key columns="id"/>
       <foreign-key name="#FAKE_article_feedback_1" columns="author_id" ref-table="auth_user" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
+      <foreign-key name="#FAKE_article_feedback_2" columns="article_id" ref-table="article_article" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
       <index name="article_feedback_4f331e2f" unique="true" columns="author_id"/>
-    </table>
-    <table name="article_feedback_comments" schema="" catalog="" type="TABLE">
-      <column name="id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
-      <column name="feedback_id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
-      <column name="comment_id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
-      <primary-key columns="id"/>
-      <foreign-key name="#FAKE_article_feedback_comments_1" columns="comment_id" ref-table="article_comment" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
-      <foreign-key name="#FAKE_article_feedback_comments_2" columns="feedback_id" ref-table="article_feedback" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
-      <index name="article_feedback_comments_69b97d17" unique="true" columns="comment_id"/>
-      <index name="article_feedback_comments_0188a0c9" unique="true" columns="feedback_id"/>
-      <index name="article_feedback_comments_feedback_id_0b542d1f_uniq" unique="true" columns="feedback_id,comment_id"/>
+      <index name="article_feedback_a00c1b00" unique="true" columns="article_id"/>
     </table>
     <table name="article_feedbackmanager" schema="" catalog="" type="TABLE">
       <column name="id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
@@ -130,35 +127,22 @@
       <column name="min_view" sqlType="INTEGER" precision="0" scale="-1" nullable="true" jdbcType="4"/>
       <primary-key columns="id"/>
     </table>
-    <table name="article_shortcut" schema="" catalog="" type="TABLE">
+    <table name="article_tag" schema="" catalog="" type="TABLE">
       <column name="id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
-      <column name="name" sqlType="VARCHAR(300)" precision="0" scale="-1" nullable="false" jdbcType="12"/>
-      <column name="activated" sqlType="BOOL" precision="0" scale="-1" nullable="false" jdbcType="4"/>
-      <column name="click_counter" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
+      <column name="name" sqlType="VARCHAR(50)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
+      <column name="color" sqlType="VARCHAR(10)" precision="0" scale="-1" nullable="false" jdbcType="12"/>
       <column name="lft" sqlType="INTEGER UNSIGNED" precision="0" scale="-1" nullable="false" jdbcType="4"/>
       <column name="rght" sqlType="INTEGER UNSIGNED" precision="0" scale="-1" nullable="false" jdbcType="4"/>
       <column name="tree_id" sqlType="INTEGER UNSIGNED" precision="0" scale="-1" nullable="false" jdbcType="4"/>
       <column name="level" sqlType="INTEGER UNSIGNED" precision="0" scale="-1" nullable="false" jdbcType="4"/>
-      <column name="icon" sqlType="VARCHAR(500)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
       <column name="parent_id" sqlType="INTEGER" precision="0" scale="-1" nullable="true" jdbcType="4"/>
       <primary-key columns="id"/>
-      <foreign-key name="#FAKE_article_shortcut_1" columns="parent_id" ref-table="article_shortcut" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
-      <index name="article_shortcut_6be37982" unique="true" columns="parent_id"/>
-      <index name="article_shortcut_c9e9a848" unique="true" columns="level"/>
-      <index name="article_shortcut_656442a0" unique="true" columns="tree_id"/>
-      <index name="article_shortcut_3cfbd988" unique="true" columns="rght"/>
-      <index name="article_shortcut_caf7cc51" unique="true" columns="lft"/>
-    </table>
-    <table name="article_shortcut_articles" schema="" catalog="" type="TABLE">
-      <column name="id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
-      <column name="shortcut_id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
-      <column name="article_id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
-      <primary-key columns="id"/>
-      <foreign-key name="#FAKE_article_shortcut_articles_1" columns="article_id" ref-table="article_article" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
-      <foreign-key name="#FAKE_article_shortcut_articles_2" columns="shortcut_id" ref-table="article_shortcut" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
-      <index name="article_shortcut_articles_a00c1b00" unique="true" columns="article_id"/>
-      <index name="article_shortcut_articles_33d05395" unique="true" columns="shortcut_id"/>
-      <index name="article_shortcut_articles_shortcut_id_74be7f5e_uniq" unique="true" columns="shortcut_id,article_id"/>
+      <foreign-key name="#FAKE_article_tag_1" columns="parent_id" ref-table="article_tag" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
+      <index name="article_tag_6be37982" unique="true" columns="parent_id"/>
+      <index name="article_tag_c9e9a848" unique="true" columns="level"/>
+      <index name="article_tag_656442a0" unique="true" columns="tree_id"/>
+      <index name="article_tag_3cfbd988" unique="true" columns="rght"/>
+      <index name="article_tag_caf7cc51" unique="true" columns="lft"/>
     </table>
     <table name="article_userarticle" schema="" catalog="" type="TABLE">
       <column name="id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>

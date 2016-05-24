@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from apps.article.models import Category, Article, Shortcut
+from apps.article.models import Tag, Article, Category
 from django.views.generic import View
 
 
@@ -12,7 +12,7 @@ class ManageSidebarShortcutsShowingView(View):
 
         if node_id is None:
             try:
-                shortcuts = Shortcut.objects.all().filter(level=0)
+                shortcuts = Category.objects.all().filter(level=0)
                 q = shortcuts[0]
             except IndexError:
                 context.update({'msg': '<p style="padding: 16px;">No shortcuts available, please add new ones '
@@ -20,18 +20,18 @@ class ManageSidebarShortcutsShowingView(View):
 
                 return JsonResponse(context)
         else:
-            node_shortcut = Shortcut.objects.all().get(pk=node_id)
+            node_shortcut = Category.objects.all().get(pk=node_id)
             if previous == 'false':
                 shortcuts = node_shortcut.get_children()
             else:
                 shortcuts = node_shortcut.get_previous_parent().get_children()
 
-        for shortcut in shortcuts:
-            if shortcut.activated:
-                context.update({shortcut.id: {
-                    'name': shortcut.name,
-                    'state': shortcut.activated,
-                    'icon': shortcut.icon
+        for category in shortcuts:
+            if category.activated:
+                context.update({category.id: {
+                    'name': category.name,
+                    'state': category.activated,
+                    'icon': category.icon
                 }})
 
         return JsonResponse(context)
@@ -43,8 +43,8 @@ class ManageSidebarShortcutsEditingView(View):
         context = {'success': True}
 
         for key, value in self.request.POST.items():
-            shortcut = Shortcut.objects.get(key)
-            shortcut.activated = value
+            category = Category.objects.get(key)
+            category.activated = value
 
         return JsonResponse(context)
 
@@ -54,7 +54,7 @@ class ManageSidebarShortcutsInsertingView(View):
 
         context = {}
         shortcut_name = self.request.POST('shortcut_name')
-        q = Shortcut.objects.create(shortcut_name=shortcut_name)
+        q = Category.objects.create(shortcut_name=shortcut_name)
 
         if q:
             context.update({q.id: {'success': True}})

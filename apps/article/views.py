@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from apps.article.models import Category, Article, Shortcut, UserArticle, Feedback
+from apps.article.models import Tag, Article, Category, UserArticle, Feedback
 from django.views.generic import View
 import datetime, calendar
 from django.core.exceptions import ObjectDoesNotExist
@@ -21,7 +21,6 @@ def index_search(request):
 
 @login_required
 def articles_search(request):
-
     tags = request.GET.get('in')
     sort = request.GET.get('by')
     suggestions = []
@@ -32,11 +31,11 @@ def articles_search(request):
         sqs.order_by(sort)
 
     if tags != '':
-        category = Category.objects.get(name=tags)
+        tag = Tag.objects.get(name=tags)
         for i in sqs:
-            for a in i.categories:
-                tmp = Category.objects.get(pk=a)
-                if tmp.name == category.name:
+            for a in i.tags:
+                tmp = Tag.objects.get(pk=a)
+                if tmp.name == tag.name:
                     suggestions.append(i.title)
     else:
         suggestions = [result.title for result in sqs]
@@ -58,16 +57,16 @@ class GetCategoriesView(View):
         previous = self.request.GET.get('previous')
 
         if node_id is None:
-            categories = Category.objects.all().filter(level=0)
+            tags = Tag.objects.all().filter(level=0)
         else:
-            node_category = Category.objects.all().get(pk=node_id)
+            node_category = Tag.objects.all().get(pk=node_id)
             if previous == 'false':
-                categories = node_category.get_children()
+                tags = node_category.get_children()
             else:
-                categories = node_category.get_previous_parent().get_children()
+                tags = node_category.get_previous_parent().get_children()
 
-        for category in categories:
-            context.update({category.id: str(category.name)})
+        for tag in tags:
+            context.update({tag.id: str(tag.name)})
 
         return JsonResponse(context)
 
@@ -213,12 +212,11 @@ class SetSearchedView(View):
 class CreateShortcutView(View):
     @login_required
     def get(self, *args, **kwargs):
-
         context = {}
         shortcut_name = self.request.GET.get('shortcut_name')
-        shortcut = Shortcut.objects.create(name=shortcut_name)
+        category = Category.objects.create(name=shortcut_name)
 
-        if shortcut:
+        if category:
             context['success'] = True
 
         return JsonResponse(context)
@@ -227,15 +225,14 @@ class CreateShortcutView(View):
 class AddArticleToShortcutView(View):
     @login_required
     def get(self, *args, **kwargs):
-
         context = {}
         article_id = self.request.GET.get('article_id')
         shortcut_id = self.request.GET.get('shortcut_id')
 
         article = Article.objects.get(pk=article_id)
-        shortcut = Shortcut.objects.get(pk=shortcut_id)
+        category = Category.objects.get(pk=shortcut_id)
 
-        if shortcut.articles.add(article):
+        if category.articles.add(article):
             context['success'] = True
 
         return JsonResponse(context)
@@ -244,12 +241,11 @@ class AddArticleToShortcutView(View):
 class ShowArticleFromShortcutView(View):
     @login_required
     def get(self, *args, **kwargs):
-
         context = {}
         shortcut_id = self.request.GET.get('shortcut_id')
-        shortcut = Shortcut.objects.get(pk=shortcut_id)
+        category = Category.objects.get(pk=shortcut_id)
 
-        for article in Shortcut.articles.exclude(status='w').exclude(status='d'):
+        for article in Category.articles.exclude(status='w').exclude(status='d'):
             context.update({article.id: {
                 'title': article.title,
                 'author': article.author,
@@ -352,12 +348,12 @@ class GetArticlesByStaticShortcutsView(View):
                 except IndexError:
                     context.update({'msg': 'Nothing for the moment :( Visit an article !'})
                     return JsonResponse(context)
-            # GET ARTICLES BY SHORTCUTS OR TAGS
+            # GET ARTICLES BY Categories OR TAGS
             else:
-                # BY SHORTCUTS
+                # BY Categories
                 if get_by is not None:
                     try:
-                        p = Shortcut.objects.get(name=get_by)
+                        p = Category.objects.get(name=get_by)
                         articles = p.articles.all()
                     except ObjectDoesNotExist:
                         context.update({'msg': 'No articles :( You can add new '
@@ -371,11 +367,11 @@ class GetArticlesByStaticShortcutsView(View):
         else:
             try:
                 get_by = get_by.replace("#", "")
-                category = Category.objects.get(name=get_by)
+                tag = Tag.objects.get(name=get_by)
                 p = Article.objects.all()
                 for i in p:
-                    for a in i.categories.all():
-                        if a.name == category.name:
+                    for a in i.tags.all():
+                        if a.name == tag.name:
                             articles.append(i)
                 if articles is None:
                     raise ObjectDoesNotExist
@@ -415,11 +411,11 @@ class GetArticlesByStaticShortcutsView(View):
             bookmarkclass = 'bookmarkLink'
 
             art = Article.objects.get(id=article.pk)
-            for a in art.categories.all()[:4]:
-                    tags += '<span class="badge bookmarkBadge"><span class="add-tags" style="display:none">' \
-                            '<i class="material-icons">add_circle</i>' \
-                            '</span><a id="#' + a.name + '" class="' + bookmarkclass + '" href="#">' + a.name + \
-                            '</a></span>'
+            for a in art.tags.all()[:4]:
+                tags += '<span class="badge bookmarkBadge"><span class="add-tags" style="display:none">' \
+                        '<i class="material-icons">add_circle</i>' \
+                        '</span><a id="#' + a.name + '" class="' + bookmarkclass + '" href="#">' + a.name + \
+                        '</a></span>'
 
             if get_by == 'Last Updates' and display != 'list':
                 time = article.modified.strftime("%d %B %Y %H:%M")
@@ -430,14 +426,14 @@ class GetArticlesByStaticShortcutsView(View):
 
             key += 1
             context.update({key: {
-                'id':       article.pk,
-                'title':    article.title,
-                'author':   str(article.author),
-                'desc':     article.description,
+                'id': article.pk,
+                'title': article.title,
+                'author': str(article.author),
+                'desc': article.description,
                 'pub_date': time,
-                'useful':   article.useful_counter,
-                'views':   article.view_counter,
-                'loved':    article.favorite_counter,
+                'useful': article.useful_counter,
+                'views': article.view_counter,
+                'loved': article.favorite_counter,
                 'ok': 'ok',
                 'tags': tags,
                 'favorites': favorites,
@@ -453,7 +449,6 @@ class GetArticlesByStaticShortcutsView(View):
 class SortArticlesView(View):
     @login_required
     def get(self, *args, **kwargs):
-
         context = {}
 
         # LOGIC HERE
@@ -492,18 +487,18 @@ class ShowArticleView(View):
         bookmarkclass = 'bookmarkLink'
 
         art = Article.objects.get(id=article.pk)
-        for a in art.categories.all()[:7]:
+        for a in art.tags.all()[:7]:
             tags += '<span class="badge bookmarkBadge"><span class="add-tags" style="display:none">' \
-                            '<i class="material-icons">add_circle</i>' \
-                            '</span><a id="#' + a.name + '" class="' + bookmarkclass + '" href="#">' + a.name + \
-                            '</a></span>'
+                    '<i class="material-icons">add_circle</i>' \
+                    '</span><a id="#' + a.name + '" class="' + bookmarkclass + '" href="#">' + a.name + \
+                    '</a></span>'
 
         attachments = ''
         for a in Attachment.objects.attachments_for_object(art):
             attachments += '<a href = "' + a.attachment_file.url + '" >' \
                                                                    '<img alt="' + a.filename + '" ' \
                                                                                                'src="http://pris' \
-                                                                                               'maginario.com/es/asset'\
+                                                                                               'maginario.com/es/asset' \
                                                                                                's/img/icon-pdf-flat.p' \
                                                                                                'ng"></a>'
 
@@ -512,7 +507,7 @@ class ShowArticleView(View):
                         'author': str(article.author),
                         'desc': article.content,
                         'ok': 'ok',
-                        'pub_date': article.publish_date.strftime("%d %B %Y %H:%M"),
+                        'pub_date': article.publish_date.strftime("%d %B %Y"),
                         'views': article.view_counter,
                         'useful': article.useful_counter,
                         'loved': article.favorite_counter,
@@ -541,41 +536,20 @@ class GetPollsView(View):
 
 
 class GetFeedback(View):
-    def post(self, *args, **kwargs):
+    def get(self, *args, **kwargs):
         context = {}
-        feedback_choice = self.request.POST.get('feedback_choice')
-        feedback_text = self.request.POST.get('explainus')
+        feedback_choice = self.request.GET.get('feedback_choice')
+        feedback_text = self.request.GET.get('feedback_text')
+        article_id = self.request.GET.get('id')
         user = self.request.user
-        article_id = self.request.POST.get('id')
 
-        Feedback.objects.create(date=datetime.datetime.now(), author=user, rate=feedback_choice,
-                                explanation=feedback_text, article_id=article_id)
+        print(feedback_choice, feedback_text, user, article_id)
 
+        obj = Feedback.objects.create(date=datetime.datetime.now(), author=user, rate=feedback_choice,
+                                      explanation=feedback_text, article=Article.objects.get(id=article_id))
 
+        obj.save()
 
+        print(obj)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        return JsonResponse(context)

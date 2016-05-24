@@ -52,9 +52,9 @@
         <div class="copyright static">
             <form method="post">{% csrf_token %}
                 {% if request.user.is_staff %}
-                    <a href="{% url 'admin:article_shortcut_add' %}" class="add-button">Add Shortcut<i
+                    <a href="{% url 'admin:article_category_add' %}" class="add-button">Add Shortcut<i
                             class="add-logo material-icons md-18 width18 color_base">add</i></a>
-                    <a href="{% url 'admin:article_shortcut_changelist' %}" class="add-button">Manage Shortcuts</a>
+                    <a href="{% url 'admin:article_category_changelist' %}" class="add-button">Manage Shortcuts</a>
                 {% endif %}
             </form>
             ©2016 Teledirect Pte Ltd <br>

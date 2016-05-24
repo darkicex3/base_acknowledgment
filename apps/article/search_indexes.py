@@ -1,6 +1,6 @@
 import datetime
 from haystack import indexes
-from apps.article.models import Article, Category, UserArticle
+from apps.article.models import Article, Tag, UserArticle
 
 
 class CategoryIndex(indexes.SearchIndex, indexes.Indexable):
@@ -8,7 +8,7 @@ class CategoryIndex(indexes.SearchIndex, indexes.Indexable):
     name = indexes.CharField(model_attr='name')
 
     def get_model(self):
-        return Category
+        return Tag
 
     def index_queryset(self, using=None):
         """Used when the entire index for model is updated."""
@@ -48,7 +48,7 @@ class ArticleIndex(indexes.SearchIndex, indexes.Indexable):
 
     description = indexes.CharField(model_attr='description')
     content = indexes.CharField(model_attr='content')
-    categories = indexes.MultiValueField()
+    tags = indexes.MultiValueField()
 
     publish_date = indexes.DateTimeField(model_attr='publish_date')
     modified = indexes.DateTimeField(model_attr='modified')
@@ -61,7 +61,7 @@ class ArticleIndex(indexes.SearchIndex, indexes.Indexable):
         return object.title.lower()
 
     def prepare_categories(self, obj):
-        return [category.pk for category in obj.categories.all()]
+        return [tag.pk for tag in obj.tags.all()]
 
     def get_model(self):
         return Article

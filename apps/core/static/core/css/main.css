@@ -9,6 +9,8 @@
     border-collapse: inherit;
 }
 
+
+
 #search-section-inner-content {
     width: 100%;
     margin-bottom: 10px;
@@ -19,7 +21,7 @@
     border-collapse: separate;
 }
 
-.button-next-step-feedback, .button-back-step-feedback, .submit-feedback {
+.button-next-step-feedback, .button-back-step-feedback, .submit-feedback, .button-step3-step-feedback {
     display: block;
     width: 100%;
     position: absolute;
@@ -28,6 +30,37 @@
     background: #333;
     color: white;
     border: none;
+}
+
+.schedule-icon {
+    margin-top: 5px;
+    margin-left: 20px;
+    float: left;
+    top: 2px !important;
+}
+
+.secondHeader {
+    margin: auto;
+    width: 94% !important;
+    height: auto;
+}
+
+.schedule-txt {
+    margin-top: 7px;
+    float: left;
+    font-size: 13px !important;
+    font-weight: normal !important;
+    color: rgba(0,0,0,.44) !important;
+}
+
+.tags-section {
+    display: block;
+    float: left;
+    max-width: 410px !important;
+}
+
+.button-step3-step-feedback {
+    width: 100% !important;
 }
 
 .button-back-step-feedback {
@@ -47,7 +80,7 @@
     width: 100%;
 }
 
-.step2 form{
+.step2 form {
     height: 100%;
     width: 100%;
 }
@@ -61,7 +94,7 @@
     width: 100%;
     border: none;
     height: 213px;
-    padding: 10px;
+    padding-left: 25px;
     position: relative;
 }
 
@@ -795,8 +828,26 @@ ul li {
     top: -173px;
 }
 
+.eta {
+    margin-top: 7px;
+    float: left;
+    font-size: 13px !important;
+    font-weight: normal !important;
+    color: rgba(0,0,0,.44) !important;
+}
+
+.dotDivider {
+    float: left;
+    position: relative;
+    top: -1px;
+    font-size: 17px;
+    padding-right: .45em;
+    padding-left: .45em;
+}
+
 .article-title {
     margin-top: 15px;
+    margin-bottom: 15px;
     font-size: 31pt;
     color: #333333 !important;
     display: block;
@@ -825,6 +876,64 @@ ul li {
 .attachment-article img {
     width: 40px;
     margin-right: 20px;
+}
+
+.content-article * {
+    font-family: medium-content-serif-font,Georgia,Cambria,"Times New Roman",Times,serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 21px;
+    line-height: 1.58;
+    letter-spacing: -.003em;
+    text-align: justify;
+    color: rgba(0,0,0,.8);
+}
+
+.content-article h1 {
+    font-family: medium-content-sans-serif-font,"Lucida Grande","Lucida Sans Unicode","Lucida Sans",Geneva,Arial,sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    margin-left: -1.75px;
+    line-height: 1.22;
+    letter-spacing: -.022em;
+    color: rgba(0,0,0,.44);
+}
+
+.content-article blockquote {
+    border-left: 3px solid rgba(0, 0, 0, .8);
+    padding-left: 20px;
+    margin-left: -23px;
+    padding-bottom: 3px;
+}
+
+.content-article h1 {
+    font-size: 36px;
+}
+
+.content-article code, .content-article pre, .content-article pre span {
+    font-family: "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace;
+    color: #666;
+    font-size: 12px;
+}
+
+.content-article h2 {
+    font-size: 36px;
+}
+
+.content-article h3 {
+    font-size: 36px;
+}
+
+.content-article h4 {
+    font-size: 36px;
+}
+
+.content-article h5 {
+    font-size: 36px;
+}
+
+.content-article h6 {
+    font-size: 36px;
 }
 
 .content-article {
@@ -1567,6 +1676,7 @@ ul.dropdown-profile li:hover a {
     color: rgba(0, 0, 0, .44) !important;
     font-size: 13px !important;
     margin-right: 5px;
+    margin-top: 5px;
     letter-spacing: 0;
     text-decoration: none;
     border-radius: 3px;

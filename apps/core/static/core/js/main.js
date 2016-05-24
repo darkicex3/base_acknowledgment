@@ -24,8 +24,6 @@ jQuery(document).ready(function ($) {
 
     window.display_mode = 'list';
 
-    $("table").tablesorter();
-
     $(".card").flip({ trigger: 'manual' });
 
     $('#search_sorting').click(function () {
@@ -47,6 +45,6 @@ jQuery(document).ready(function ($) {
 
     $(window).resize(function (e) {
         resize_masterfeed();
-        resize_module();
+        //resize_module();
     });
 });
