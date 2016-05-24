@@ -476,12 +476,7 @@ class ShowArticleView(View):
 
         attachments = ''
         for a in Attachment.objects.attachments_for_object(art):
-            attachments += '<a href = "' + a.attachment_file.url + '" >' \
-                                                                   '<img alt="' + a.filename + '" ' \
-                                                                                               'src="http://pris' \
-                                                                                               'maginario.com/es/asset'\
-                                                                                               's/img/icon-pdf-flat.p' \
-                                                                                               'ng"></a>'
+            attachments += '<a class="attachment-file" href = "' + a.attachment_file.url + '" >PDF</a>'
         context.update({'id': article.pk,
                         'title': article.title,
                         'author': str(article.author),

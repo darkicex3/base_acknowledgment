@@ -34,6 +34,18 @@
     transition: all 300ms;
 }
 
+.attachment-file {
+    padding: 12px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    border-radius: 50px;
+    display: block;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .04);
+    border: 1px solid rgba(0, 0, 0, .09);
+    background-color: #fff;
+    transition: all 300ms;
+}
+
 .attachment-button:hover {
     -ms-transform: rotate(360deg); /* IE 9 */
     -webkit-transform: rotate(360deg); /* Chrome, Safari, Opera */
@@ -488,6 +500,20 @@ background-color: #9b59b6;
     width: 740px;
 }
 
+.modal-glossary-article {
+    float: right;
+    width: 200px;
+    height: 300px;
+    position: absolute;
+    right: -213px;
+    background-color: #fff;
+    background-clip: inherit;
+    border-radius: 2px;
+    box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+    padding: 15px;
+    border: 1px solid rgba(0, 0, 0, .09);
+}
+
 .modal-dialog {
     padding: 30px 0 0 30px;
 }
@@ -496,7 +522,7 @@ background-color: #9b59b6;
     float: left;
     width: 80px;
     position: absolute;
-    left: -63px;
+    left: -61px;
 }
 
 .useful-in-article {
@@ -882,8 +908,7 @@ ul li {
 }
 
 .attachment-article {
-    border-top: #f3f3f3 1px solid;
-    padding: 15px;
+    margin-top: 32px;
 }
 
 .attachment-article span {

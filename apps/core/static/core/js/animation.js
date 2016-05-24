@@ -25,6 +25,22 @@ function OnMouseEnterMouseLeaveTags() {
     }, '.bookmarkBadge');
 }
 
+function OnAttachment() {
+    $('body').on({
+        mouseenter: function () {
+            var elem = $('.attachment-article');
+            if (elem.html() != '')
+                elem.slideDown(300);
+        },
+        mouseleave: function () {
+            var elem = $('.attachment-article');
+            if (elem.html() != '')
+                $('.attachment-article').slideUp(300);
+        }
+    }, '.attachment-button');
+}
+
+
 function OnClickShortcutsShowTrees() {
     $('body').on('click', '.shortcuts-link', function (e) {
         var selector = $(this).parent().children('.children');

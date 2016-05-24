@@ -114,15 +114,13 @@ var Article = function (id, element) {
 
         // GET HTML
         var articleHTML = article(data['id'], data['title'], data['author'], data['desc'], data['ok'],
-            data['pub_date'], data['tags'], data['read']);
+            data['pub_date'], data['tags'], data['read'], data['attachements']);
         var statsHTML = stats(data['id'], data['views'], data['useful'], data['loved'], data['bigup'],
             data['favorites']);
-        var attachmentsHTML = attachments(data['attachements']);
 
         // APPEND HTML
         $(selector.body_selector).empty().append(articleHTML);
         $(selector.stats_selector).empty().append(statsHTML);
-        $(selector.attachment_selector).empty().append(attachmentsHTML);
 
         // RENDER HTML
         render_article();
@@ -183,7 +181,7 @@ var Article = function (id, element) {
         }
     };
 
-    var article = function (key, title, author, content, verified_article, date_publish, tags, read_article) {
+    var article = function (key, title, author, content, verified_article, date_publish, tags, read_article, attachments) {
         var color_read = (read_article == 'ok' ? 'color_bigup' : 'color_base');
         var readed = (read_article == 'ok' ? 'readed' : 'unreaded');
 
@@ -200,6 +198,7 @@ var Article = function (id, element) {
             '<a class="article-title">' + title +
             '<i class="material-icons ' + color_read + '">done_all</i></a>' +
             '<i class="attachment-button material-icons color_base md-24">attach_file</i>' +
+            '<div class="attachment-article" style="display: none">' + attachments + '</div>' +
             '</header>' +
             '<div class="content-article">' + content + '</div>' +
             '<aside class="glossary-article">' + '</aside>' +
@@ -228,10 +227,6 @@ var Article = function (id, element) {
             '<span class="counter counter-view">'+view_counter+'</span>' +
             '</div>' +
             '</div>';
-    };
-
-    var attachments = function (attachments) {
-        return '<div class="attachment-article">' + attachments + '</div>';
     };
 
     var mode = {

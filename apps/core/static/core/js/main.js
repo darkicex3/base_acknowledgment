@@ -19,6 +19,7 @@ jQuery(document).ready(function ($) {
     OnClickBookmarkGetArticlesByBookmark();
     OnClickSearchBarSetEditable();
     OnSearchBar();
+    OnAttachment();
 
 
 
@@ -29,6 +30,8 @@ jQuery(document).ready(function ($) {
     $('#search_sorting').click(function () {
         $(".card").flip('toggle');
     });
+    
+    
 
 
 
