@@ -4,7 +4,7 @@ gunicorn==19.4.5
 psycopg2==2.6.1
 whitenoise==2.0.6
 django-colorfield
-attachments
+django-attachments
 django_mptt_admin
 django_summernote
 elasticsearch
