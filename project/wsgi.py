@@ -11,7 +11,10 @@ sys.path.append('/var/www/base_acknowledgment/env/lib/python3.4/site-packages')
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "project.settings")
 
 from django.core.wsgi import get_wsgi_application
+from whitenoise.django import DjangoWhiteNoise
+
 application = get_wsgi_application()
+application = DjangoWhiteNoise(application)
 
 # wsgi.py file end
 # ===================
