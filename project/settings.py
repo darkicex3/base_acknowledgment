@@ -17,6 +17,7 @@ import logging
 import copy
 from django.utils.log import DEFAULT_LOGGING
 from apps import registration
+import dj_database_url
 
 
 LOGGING = copy.deepcopy(DEFAULT_LOGGING)
@@ -39,11 +40,12 @@ class SuppressDeprecated(logging.Filter):
 
 
 PROJECT_DIR = os.path.dirname(os.path.realpath(__file__))
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = os.path.dirname(PROJECT_DIR)
 APPS_DIR = os.path.realpath(os.path.join(ROOT_DIR, 'apps'))
 sys.path.append(APPS_DIR)
 
-STATIC_ROOT = '../base_acknowledgment/project/static'
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 
 STATICFILES_FINDERS = (
                        'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -178,11 +180,22 @@ USE_L10N = True
 
 USE_TZ = True
 
+# Update database configuration with $DATABASE_URL.
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
+
+# Honor the 'X-Forwarded-Proto' header for request.is_secure()
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Allow all host headers
+ALLOWED_HOSTS = ['*']
+
+# Simplified static file serving.
+# https://warehouse.python.org/project/whitenoise/
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
-
-STATIC_URL = '/static/'
 
 
 def static_url(url):
