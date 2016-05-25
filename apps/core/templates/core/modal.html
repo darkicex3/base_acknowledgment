@@ -25,55 +25,54 @@
 </div>
 
 <div class="modal fade bottom in modal-display-article" tabindex="-1" data-focus-on="input:first" id="display-article">
-    <div class="modal-dialog modal-dialog-article">
-        <div class="modal-stats-article float-menu-left action-bar-modal"></div>
-        <div class="modal-glossary-article"></div>
-        <div class="modal-content modal-content-article">
-            <div class="modal-body modal-body-article">
+    <div class="modal-stats-article float-menu-left action-bar-modal"></div>
+    <div class="modal-glossary-article"></div>
+    <div class="outside">
+        <div class="modal-dialog modal-dialog-article">
+            <div class="modal-content modal-content-article">
+                <div class="modal-body modal-body-article">
 
-            </div>
-        </div>
-
-
-        <div class="footer-article">
-            <div class="ruban">
-                <h2>We can’t wait to hear your feedback!</h2>
-            </div>
-            <div class="ruban_gauche"></div>
-            <div class="ruban_droit"></div>
-            <div class="comment-mark">
-                <div class="step1">
-                    <i id="0" class="mark material-icons md-60">sentiment_very_dissatisfied</i>
-                    <i id="1" class="mark material-icons md-60">sentiment_dissatisfied</i>
-                    <i id="2" class="mark material-icons md-60 selected">sentiment_neutral</i>
-                    <i id="3" class="mark material-icons md-60">sentiment_satisfied</i>
-                    <i id="4" class="mark material-icons md-60">sentiment_very_satisfied</i>
-                    <button class="button-next-step-feedback">Next <i class="nopos material-icons md-18 color_white">arrow_forward</i>
-                    </button>
                 </div>
-                <div class="step2" style="display: none;">
-                    {% if request.user.get_full_name %}
-                        {% with name=request.user.get_full_name.title %}
-                            <textarea name="explainus"
-                                      placeholder="What do you think about this article {{ name }} ?"
-                                      id="explainus"></textarea>
-                        {% endwith %}
-                    {% else %}
-                        {% with name=request.user.username.title %}
-                            <textarea name="explainus"
-                                      placeholder="What do you think about this article {{ name }} ?"
-                                      id="explainus"></textarea>
-                        {% endwith %}
-                    {% endif %}
-                    <button class="submit-feedback"><i class="nopos material-icons md-18 color_white">check</i>Send
-                    </button>
-                    <button class="button-back-step-feedback"><i class="nopos material-icons md-18 color_white">arrow_back</i>Back
-                    </button>
-                </div>
-                <div class="step3" style="display: none">
-                    <button class="button-step3-step-feedback">I still have something to say !<i
-                            class="nopos material-icons md-18 color_white"></i>
-                    </button>
+            </div>
+
+
+            <div class="footer-article">
+                <div class="comment-mark">
+                    <div class="step1">
+                        <i id="0" class="mark material-icons md-60">sentiment_very_dissatisfied</i>
+                        <i id="1" class="mark material-icons md-60">sentiment_dissatisfied</i>
+                        <i id="2" class="mark material-icons md-60 selected">sentiment_neutral</i>
+                        <i id="3" class="mark material-icons md-60">sentiment_satisfied</i>
+                        <i id="4" class="mark material-icons md-60">sentiment_very_satisfied</i>
+                        <button class="button-next-step-feedback">Next <i
+                                class="nopos material-icons md-18 color_white">arrow_forward</i>
+                        </button>
+                    </div>
+                    <div class="step2" style="display: none;">
+                        {% if request.user.get_full_name %}
+                            {% with name=request.user.get_full_name.title %}
+                                <textarea name="explainus"
+                                          placeholder="What do you think about this article {{ name }} ?"
+                                          id="explainus"></textarea>
+                            {% endwith %}
+                        {% else %}
+                            {% with name=request.user.username.title %}
+                                <textarea name="explainus"
+                                          placeholder="What do you think about this article {{ name }} ?"
+                                          id="explainus"></textarea>
+                            {% endwith %}
+                        {% endif %}
+                        <button class="submit-feedback"><i class="nopos material-icons md-18 color_white">check</i>Send
+                        </button>
+                        <button class="button-back-step-feedback"><i class="nopos material-icons md-18 color_white">arrow_back</i>Back
+                        </button>
+                    </div>
+                    <div class="step3" style="display: none">
+                        <i class="valid-icon material-icons">check_circle</i>
+                        <button class="button-back-step-feedback fullw">
+                            Give another feedback.
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

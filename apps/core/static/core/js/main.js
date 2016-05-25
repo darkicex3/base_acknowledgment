@@ -7,6 +7,7 @@ jQuery(document).ready(function ($) {
     window.Manager.initEvents();
     window.Manager.getListArticle(); //category, tags, sorting, counter
 
+    $("table").tablesorter();
     left_sidebar.perfectScrollbar();
 
     ActionRightBar('.help-action', $('.help'));

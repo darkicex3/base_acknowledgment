@@ -90,7 +90,6 @@ var Article = function (id, element) {
 
         this.element.parent().hide();
         this.element.parent().parent().find('.step3').show();
-        this.element.parent().parent().css('height', '100px');
 
         $.get(urls.send_feedback, {'id': this.id, 'feedback_choice': feedback_choice, 'feedback_text': feedback_text},
             function (data) {
@@ -214,17 +213,17 @@ var Article = function (id, element) {
 
             '<div class="stat-container like-button">' +
             '<i class="center-icon color_base_favorite favorite material-icons md-24 width24">favorite</i>' +
-            '<span class="counter counter-like ' + active_favorite + '">'+favorite_counter+'</span>' +
+            '<span class="counter counter-like ' + active_favorite + '">' + favorite_counter + '</span>' +
             '</div>' +
 
             '<div class="stat-container bigup-button">' +
             '<i class="center-icon color_bigup useful material-icons md-24 width24">thumb_up</i>' +
-            '<span class="counter counter-bigup ' + active_bigup + '">'+useful_counter+'</span>' +
+            '<span class="counter counter-bigup ' + active_bigup + '">' + useful_counter + '</span>' +
             '</div>' +
 
             '<div class="stat-container view-button">' +
             '<i class="center-icon material-icons remove_red_eye color_base md-24 width24">remove_red_eye</i>' +
-            '<span class="counter counter-view">'+view_counter+'</span>' +
+            '<span class="counter counter-view">' + view_counter + '</span>' +
             '</div>' +
             '</div>';
     };
@@ -421,15 +420,72 @@ function resize_module() {
 function render_article() {
     var article_content = $('.modal-content-article');
     var article = $('.article');
+    var counter = 0;
+    var glossary = '<div class="glossary-header">Glossary<i class="material-icons">library_books</i></div><a class="link-glossary top-article">Header</a>';
+    var current_title = '';
+
+    $('.content-article').find('*').each(function () {
+        $(this).removeAttr('style');
+    });
 
     article_content.find('*').each(function () {
         var element = $(this);
+
         if (element.width() > element.parent().width()) {
             element.css('width', '100%').css('height', 'auto');
-        } else if (element.is('p') && element.html() == '<br>') {
+        }
+
+        if (((element.prev().is('p') || element.prev().is('div')) && (element.prev().html() == '<br>' || element.html() == '<br />'))
+            && ((element.is('p') || element.is('div')) && (element.html() == '<br>' || element.html() == '<br />'))) {
             element.remove();
         }
+
+        if ((element.prev().is('h1') || element.prev().is('h2') || element.prev().is('h3') || element.prev().is('h4')
+            || element.prev().is('h5') || element.prev().is('h6')) && ((element.html() == '<br>') && (element.is('p') || element.is('div')))) {
+            element.remove();
+        }
+
+        if (element.is('h1') || element.is('h2') || element.is('h3') || element.is('h4')
+            || element.is('h5') || element.is('h6')) {
+
+            counter += 1;
+            element.attr('id', 'title' + counter);
+            glossary += '<a class="link-glossary" href="#' + 'title' + counter + '">' + element.text() + '</a>';
+        }
     });
+
+    glossary += '<a class="bottom-article">Something to say ?</a>';
+
+    var pos = $('.modal-dialog-article').width();
+    var bodyw = $(window).width();
+    var jbfk4w = ((bodyw - pos) / 2 ) - 210;
+    var refiienvi = ((bodyw - pos) / 2 ) - 90;
+
+
+    console.log(jbfk4w);
+    $('.modal-glossary-article').empty().append(glossary).css('right', jbfk4w);
+    $('.float-menu-left').css('left', refiienvi);
+
+    $('.link-glossary').click(function () {
+        var scroll_elem = $('.modal-dialog-article');
+        if ($(this).attr('class') == 'link-glossary top-article') {
+            scroll_elem.animate({
+                scrollTop: 0
+            }, 300);
+        } else {
+            scroll_elem.animate({
+                scrollTop: $($.attr(this, 'href')).offset().top + scroll_elem.scrollTop() - 20
+            }, 300);
+        }
+    });
+
+    $('.bottom-article').click(function () {
+        var scroll_elem = $('.modal-dialog-article');
+        scroll_elem.animate({
+            scrollTop: $('.modal-content-article').height() + scroll_elem.scrollTop()
+        }, 300);
+    });
+
 
     var min_height = $(window).height() - 30;
     article_content.css('min-height', min_height);
@@ -437,8 +493,9 @@ function render_article() {
 }
 
 function resize_iframe() {
-    $('.mini-article .content').find('iframe').attr('width', '555px').attr('height', '300px');
-    $('.mini-article .content').find('img').css('width', '555px');
+    var elem = $('.mini-article .content');
+    elem.find('iframe').attr('width', '555px').attr('height', '300px');
+    elem.find('img').css('width', '555px');
 }
 
 
