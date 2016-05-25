@@ -12,3 +12,4 @@ docutils
 django-haystack
 django-notifications-hq
 urllib3
+simplejson

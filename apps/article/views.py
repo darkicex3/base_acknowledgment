@@ -1,17 +1,14 @@
 from django.http import JsonResponse
 from apps.article.models import Tag, Article, Category, UserArticle, Feedback
 from django.views.generic import View
-import datetime, calendar
+import datetime
 from django.core.exceptions import ObjectDoesNotExist
 from attachments.models import Attachment
 from django.shortcuts import render
 import simplejson as json
-import string
 from django.http import HttpResponse
 from haystack.query import SearchQuerySet
 from django.contrib.auth.decorators import login_required
-from haystack.management.commands import rebuild_index, update_index
-from datetime import timezone
 
 
 @login_required

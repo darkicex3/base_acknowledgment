@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from apps.article.models import Tag, Article, Category
+from apps.article.models import Category
 from django.views.generic import View
 
 

@@ -1,4 +1,3 @@
-import datetime
 from haystack import indexes
 from apps.article.models import Article, Tag, UserArticle
 
