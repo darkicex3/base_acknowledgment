@@ -16,6 +16,7 @@ import sys
 import logging
 import copy
 from django.utils.log import DEFAULT_LOGGING
+from django.core.management import execute_from_command_line
 from apps import registration
 import dj_database_url
 

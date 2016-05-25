@@ -10,5 +10,5 @@ django_summernote
 elasticsearch
 docutils
 django-haystack
-django_notifications
+django-notifications-hq
 urllib3
