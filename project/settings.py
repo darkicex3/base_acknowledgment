@@ -19,6 +19,8 @@ from django.utils.log import DEFAULT_LOGGING
 from django.core.management import execute_from_command_line
 from apps import registration
 import dj_database_url
+import os
+import psycopg2
 
 
 LOGGING = copy.deepcopy(DEFAULT_LOGGING)
@@ -182,8 +184,7 @@ USE_L10N = True
 USE_TZ = True
 
 # Update database configuration with $DATABASE_URL.
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
+DATABASES['default'] = dj_database_url.config()
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
