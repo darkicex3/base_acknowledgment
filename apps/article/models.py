@@ -3,7 +3,6 @@ from django.contrib import auth
 from six import python_2_unicode_compatible
 from haystack.query import SearchQuerySet
 from mptt.models import TreeForeignKey, MPTTModel
-from apps import poll
 from .constants import *
 import datetime
 from django.utils import timezone
