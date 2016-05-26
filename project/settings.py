@@ -20,7 +20,7 @@ from django.core.management import execute_from_command_line
 from apps import registration
 import dj_database_url
 import os
-import psycopg2
+from urllib.parse import urlparse
 
 
 LOGGING = copy.deepcopy(DEFAULT_LOGGING)
@@ -95,15 +95,21 @@ INSTALLED_APPS = [
 
 INSTALLED_APPS += ('django_summernote', )
 
+es = urlparse(os.environ.get('SEARCHBOX_URL') or 'http://127.0.0.1:9200/')
+port = es.port or 80
+
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
 HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
-        'URL': 'http://127.0.0.1:9200/',
+        'URL': es.scheme + '://' + es.hostname + ':' + str(port),
         'INDEX_NAME': 'haystack',
     },
 }
+
+if es.username:
+    HAYSTACK_CONNECTIONS['default']['KWARGS'] = {"http_auth": es.username + ':' + es.password}
 
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/registration/login/' \
@@ -184,7 +190,7 @@ USE_L10N = True
 USE_TZ = True
 
 # Update database configuration with $DATABASE_URL.
-DATABASES['default'] = dj_database_url.config()
+# DATABASES['default'] = dj_database_url.config()
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
