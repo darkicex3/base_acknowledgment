@@ -29,7 +29,7 @@
 
 @font-face {
     font-family: mediumc;
-    src: url('CHARI.ttf');
+    src: url('../fonts/CHARI.ttf');
 }
 
 .daily-recap p {
@@ -415,8 +415,26 @@ th {
     padding: 0 0 0 17px;
 }
 
+.column a:active {
+    -webkit-transform: scale(0.95);
+    -moz-transform: scale(0.95);
+    -ms-transform: scale(0.95);
+    -o-transform: scale(0.95);
+    transform: scale(0.95);
+}
+
+.column a {
+    color: white !important;
+    font-size: 9pt !important;
+    font-style: normal;
+    font-weight: 400 !important;
+}
+
+.column a  {
+    color: white !important;
+}
+
 .column:hover {
-    background-color: #f5f5f5;
     cursor: pointer;
 }
 
