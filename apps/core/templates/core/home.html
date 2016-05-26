@@ -68,7 +68,7 @@
         <div class="master-feed">
 
             {#        Search Module        #}
-            <div class="search-section">
+            <div class="search-section" style="display: none;">
                 <div id="search-section-inner-content">
                     <button class="search_section" type="button" id="search_categories"><i
                             class="material-icons color_base md-36 first-item">more_horiz</i></button>
@@ -99,15 +99,18 @@
                         <th data-column-id="publish_date" class="column column-publish_date"
                             style="padding: 10px 5px;width: 115px;"><a>Published</a>
                         </th>
-                        <th data-column-id="modified" class="column column-modified" style="padding: 10px 5px;width: 115px;">
+                        <th data-column-id="modified" class="column column-modified"
+                            style="padding: 10px 5px;width: 115px;">
                             <a>Modified</a>
                         </th>
                         <th data-column-id="big_up" data-type="numeric" scope="col"
                             class="column column-useful_counter" style="padding: 10px 30px 6px 2px; width: 30px;"><a><i
-                                class="table-icon useful-active material-icons md-18 width18 color_bigup">thumb_up</i></a></th>
+                                class="table-icon useful-active material-icons md-18 width18 color_bigup">thumb_up</i></a>
+                        </th>
                         <th data-column-id="favorites" data-type="numeric" scope="col"
-                            class="column column-favorite_counter" style="padding: 10px 30px 6px 2px; width: 30px;"><a><i
-                                class="table-icon material-icons md-18 width18 color_base_favorite">favorite</i></a>
+                            class="column column-favorite_counter" style="padding: 10px 30px 6px 2px; width: 30px;">
+                            <a><i
+                                    class="table-icon material-icons md-18 width18 color_base_favorite">favorite</i></a>
                         </th>
                         <th data-column-id="views" data-type="numeric" scope="col"
                             class="column column-view_counter"
@@ -138,18 +141,49 @@
 
         <div class="card right-sidebar">
             <div class="front">
-                    <div class="module daily-recap">
+                <div class="module daily-recap">
+                    <div class="header">
                         <p>Daily Recap</p>
-
-
+                        <i class="material-icons read-daily-icon">more_vert</i>
                     </div>
-                    <div class="module popular-article">
-                        <p>Popular Articles</p>
-                    </div>
-                    <div class="module popular-tags">
-                        <p>Popular Tags</p>
 
+                    <div class="daily-recap-item">
+                        <a class="link-daily-recap">Update on DCP</a>
+                        <a class="date-daily-recap">New</a>
                     </div>
+                    <div class="daily-recap-item">
+                        <a class="link-daily-recap">Syrian Women: Efforts and ...</a>
+                        <a class="date-daily-recap new-daily">New</a>
+                    </div>
+                    <div class="daily-recap-item">
+                        <a class="link-daily-recap">CPF Medisave check</a>
+                        <a class="date-daily-recap unread-daily">Unread</a>
+                    </div>
+                    <div class="daily-recap-item">
+                        <a class="link-daily-recap">Why I won’t talk about ...</a>
+                        <a class="date-daily-recap read-daily">Read<i
+                                class="material-icons read-daily-icon">done_all</i></a>
+                    </div>
+                    <div class="daily-recap-item">
+                        <a class="link-daily-recap">Why I won’t talk about ...</a>
+                        <a class="date-daily-recap read-daily">Read<i
+                                class="material-icons read-daily-icon">done_all</i></a>
+                    </div>
+                    <div class="daily-recap-item">
+                        <a class="link-daily-recap">Why I won’t talk about ...</a>
+                        <a class="date-daily-recap read-daily">Read<i
+                                class="material-icons read-daily-icon">done_all</i></a>
+                    </div>
+                </div>
+                <div class="module popular-article">
+                    <p>Popular Articles</p>
+                </div>
+                <div class="module popular-tags">
+                    <p>Popular Tags</p>
+                    <div class="content-tags-module">
+                        <span class="badge bookmarkBadge hundred">1. <a id="" class="bookmarkLink" href="#">Philosophy</a></span>
+                    </div>
+                </div>
             </div>
             <div class="back">
                 <div class="">

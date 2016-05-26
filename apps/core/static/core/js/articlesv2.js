@@ -363,7 +363,7 @@ var ArticleManager = function (options) {
             '<td class="field-modified padding-top-list nowrap">' + last_update + '</td>' +
             '<td class="center field-useful_counter padding-top-list">' + useful_counter + '</td>' +
             '<td class="center field-favorite_counter padding-top-list">' + favorite_counter + '</td>' +
-            '<td class="center field-view_counter padding-top-list" style="position: relative">' + view_counter + '<span class="id-article" style="position: absolute; bottom: 0; right: 0;">#'+ key +'</span></td>' +
+            '<td class="center field-view_counter padding-top-list" style="position: relative">' + view_counter + '<span class="id-article" style="">#'+ key +'</span></td>' +
             '</tr>'
     };
 

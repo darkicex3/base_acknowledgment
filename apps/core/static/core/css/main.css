@@ -18,6 +18,64 @@
     opacity: 1;
 }
 
+.hundred {
+    width: 100%;
+}
+
+.content-tags-module {
+    padding: 0 15px;
+}
+
+.date-daily-recap {
+    float: right;
+    font-size: 10px;
+    font-weight: 100 !important;
+    color: white !important;
+    background: #3498DB;
+    padding: 2px 9px;
+    border-radius: 2px;
+}
+
+.new-daily {
+    background: #3498DB;
+}
+
+.unread-daily {
+    background: #5F5F5F;
+}
+
+.read-daily {
+    background: #27ae60;
+}
+.link-daily-recap {
+    font-family: mediumc !important;
+    font-size: 9pt !important;
+    line-height: 1.58 !important;
+    letter-spacing: -.003em !important;
+    text-align: justify !important;
+    color: rgba(0, 0, 0, .8) !important;
+    background-image: none !important;
+    font-weight: normal !important;
+    text-decoration: underline !important;
+}
+
+.link-daily-recap:hover {
+    cursor: pointer;
+}
+
+.daily-recap-item {
+    margin: 3px 10px;
+    padding: 5px;
+}
+
+.read-daily-icon {
+    color: white !important;
+    top: -2px !important;
+    font-size: 10pt;
+    margin-right: 0 !important;
+    margin-left: 5px;
+}
+
 ::-moz-placeholder { /* Mozilla Firefox 19+ */
     color: #5F5F5F;
     opacity: 1;
@@ -32,14 +90,35 @@
     src: url('../fonts/CHARI.ttf');
 }
 
-.daily-recap p {
+.daily-recap .header {
     width: 100%;
     padding: 10px;
     background: #5F5F5F;
     border-radius: 2px 2px 0 0;
     color: white;
     font-size: 9pt;
+    height: 37px;
 }
+
+.daily-recap .header p {
+    float: left;
+    display: block;
+}
+
+.daily-recap .header a {
+    float: right;
+    text-decoration: underline !important;
+    color: white !important;
+    font-weight: 100 !important;
+    font-size: 9pt;
+}
+
+.daily-recap .header i {
+    float: right;
+    top: 0px !important;
+    font-size: 13pt;
+}
+
 
 .popular-article p {
     width: 100%;
@@ -61,12 +140,12 @@
 
 .id-article {
     position: absolute;
-    bottom: 0;
-    right: 0;
+    bottom: 10px;
+    right: 11px;
     text-align: center;
     width: 50px;
     background: #5F5F5F;
-    border-radius: 2px 0 0 0;
+    border-radius: 2px;
     color: #fff;
     font-size: 7pt;
 }
@@ -413,6 +492,7 @@ th {
 
 .table-icon {
     padding: 0 0 0 17px;
+    color: #fff !important;
 }
 
 .column a:active {
@@ -1141,11 +1221,11 @@ ul li {
     font-family: medium-content-sans-serif-font, "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Arial, sans-serif !important;
     font-weight: 700 !important;
     font-style: normal !important;
-    font-size: 36px !important;
     margin-left: -2.25px !important;
     line-height: 1.15 !important;
     letter-spacing: -.02em !important;
     color: rgba(0, 0, 0, .8) !important;
+    text-align: left !important;
 }
 
 .content-article h4, .content-article h4 ol li, .content-article h4 ul li {
@@ -1155,6 +1235,7 @@ ul li {
     line-height: 1.58 !important;
     letter-spacing: -.02em !important;
     color: rgba(0, 0, 0, .44) !important;
+    text-align: left !important;
 }
 
 .content-article blockquote {
