@@ -2,6 +2,7 @@ jQuery(document).ready(function ($) {
 
     var body = $('body');
     var left_sidebar = $('.left-sidebar');
+    resize_sidebars();
 
     window.Manager = new ArticleManager();
     window.Manager.initEvents();
@@ -48,7 +49,7 @@ jQuery(document).ready(function ($) {
     });
 
     $(window).resize(function (e) {
-        resize_masterfeed();
+        resize_sidebars();
         //resize_module();
     });
 });

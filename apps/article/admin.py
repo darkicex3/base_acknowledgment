@@ -16,8 +16,10 @@ from django.contrib import admin
 from .functions import *                                    # ADDITIONAL FUNCTIONS FOR MODELS IN DJANGO ADMIN
 
 
-class CategoryAdmin(DjangoMpttAdmin):
-    pass
+class TagAdmin(DjangoMpttAdmin):
+    list_display = ['name', 'click_counter', 'color']
+    ordering = ['name']
+    actions = [make_desactivated, make_activated, duplicate_event]
 
 
 class DailyRecapAdmin(SummernoteModelAdmin, admin.ModelAdmin):
@@ -71,7 +73,7 @@ class ShortcutAdmin(DjangoMpttAdmin, admin.ModelAdmin):
     actions = [make_desactivated, make_activated, duplicate_event]
 
 admin.site.register(LogEntry, LogEntryAdmin)
-admin.site.register(Tag, CategoryAdmin)
+admin.site.register(Tag, TagAdmin)
 admin.site.register(Article, ArticleAdmin)
 admin.site.register(Category, ShortcutAdmin)
 admin.site.register(Feedback, FeedBackAdmin)

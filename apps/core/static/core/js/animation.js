@@ -78,6 +78,7 @@ function OnClickBookmarkGetArticlesByBookmark() {
         $('#search_categories').empty().css('background', '#3498db');
         $('#search_sorting').css('background', '#3498db').find('.sorting').attr('class', 'sorting material-icons color_white md-36 first-item');
         console.log($(this).attr('id'));
+        increment_tag_counter($(this).attr('id').slice(1));
         window.Manager.getListArticle($(this).attr('id'));
     });
 }
@@ -148,6 +149,12 @@ function OnClickSearchBarSetEditable() {
         } else {
             $(this).css('background', '#f3f3f3');
         }
+    });
+}
+
+function increment_tag_counter(tag_name) {
+    $.get(TAGS_COUNTER_INCREMENT, {'in':tag_name}, function (data) {
+        console.log(data)
     });
 }
 

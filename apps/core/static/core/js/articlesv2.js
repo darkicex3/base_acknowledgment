@@ -347,14 +347,13 @@ var ArticleManager = function (options) {
         $(results_selector).empty().append(result).parent().parent().parent().show();
         $("#grid-data").bootgrid();
         $("table").trigger("update");
-        resize_masterfeed();
         resize_iframe();
     };
 
     var list = function (key, title, description, date_publish, favorite_counter, tags, favorites, read_article,
                          useful_counter, bigup_article, last_update, view_counter) {
 
-        return '<tr class="row' + key + '" id="' + key + '">' +
+        return '<tr class="row' + key + '" id="' + key + '" style="position: relative">' +
             '<th class="field-title font-list padding-list">' +
             '<a data-toggle="modal" href="#display-article" class="padding-bottom-list link-title-article">' +
             '' + title + '' +
@@ -364,7 +363,7 @@ var ArticleManager = function (options) {
             '<td class="field-modified padding-top-list nowrap">' + last_update + '</td>' +
             '<td class="center field-useful_counter padding-top-list">' + useful_counter + '</td>' +
             '<td class="center field-favorite_counter padding-top-list">' + favorite_counter + '</td>' +
-            '<td class="center field-view_counter padding-top-list">' + view_counter + '</td>' +
+            '<td class="center field-view_counter padding-top-list" style="position: relative">' + view_counter + '<span class="id-article" style="position: absolute; bottom: 0; right: 0;">#'+ key +'</span></td>' +
             '</tr>'
     };
 
@@ -405,6 +404,22 @@ function resize_masterfeed() {
 
     $('.master-feed').css('width', windowwidth - (leftbarwidth + rightbarwidth));
     $('.table-article').css('width', windowwidth - (leftbarwidth + rightbarwidth)).css('resize', 'both').css('overflow', 'auto');
+}
+
+function resize_sidebars() {
+    var windowwidth = $(window).width();
+    var masterfeed = $('.master-feed');
+
+    if (windowwidth <= 1310) {
+        masterfeed.css('width', '700px');
+    } else {
+        masterfeed.css('width', '800px');
+    }
+
+    var size = ((windowwidth - masterfeed.width()) / 2) - 20;
+
+    $('.left-sidebar').css('width', size);
+    $('.right-sidebar').css('width', size);
 }
 
 function resize_module() {

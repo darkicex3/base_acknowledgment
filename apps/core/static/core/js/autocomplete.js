@@ -60,7 +60,8 @@ $(document).ready(function () {
                 'by': sort
             }
             , success: function (data) {
-                self.show_results(data)
+                self.show_results(data);
+                console.log(data);
             }
         })
     };

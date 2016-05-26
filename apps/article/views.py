@@ -37,7 +37,7 @@ def articles_search(request):
                 if tmp.name == tag.name:
                     suggestions.append(i.title)
     else:
-        suggestions = [result.title for result in sqs]
+        suggestions = [result.pk for result in sqs]
 
     # Make sure you return a JSON object, not a bare list.
     # Otherwise, you could be vulnerable to an XSS attack.
@@ -45,6 +45,17 @@ def articles_search(request):
         'results': suggestions
     })
     return HttpResponse(the_data, content_type='application/json')
+
+
+class IncrementCounterTags(View):
+    def get(self, *args, **kwargs):
+
+        context = {}
+        tag_name = self.request.GET.get('in')
+        tag = Tag.objects.get(name=tag_name)
+        tag.click_counter += 1
+        tag.save()
+        return JsonResponse(context)
 
 
 class GetCategoriesView(View):

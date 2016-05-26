@@ -25,6 +25,7 @@ class Tag(MPTTModel):
     color = ColorField(default='#FF0000', help_text='Please choose a color from <a href="https://flat'
                                                     'uicolors.com/" target="_blank">FLAT UI Color</a>')
     parent = TreeForeignKey('self', null=True, blank=True, related_name='children')
+    click_counter = models.IntegerField(default=0, editable=False)
 
     def get_previous_parent(self):
         return self.parent.parent
@@ -96,6 +97,7 @@ class Article(models.Model):
         app_label = 'article'
 
     # REQUIRED
+    daily_recap = models.BooleanField(default=False, help_text="This is a Daily Recap ?")
     author = models.ForeignKey(User, on_delete=models.CASCADE, default=DEFAULT_AUTHOR_ID)
     title = models.CharField(max_length=255, default='')
     content = models.TextField(default='')
