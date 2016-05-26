@@ -87,7 +87,7 @@
 
 @font-face {
     font-family: mediumc;
-    src: url('../fonts/CHARI.ttf');
+    src: url('fonts/CHARI.ttf');
 }
 
 .daily-recap .header {
