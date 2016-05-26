@@ -20,12 +20,14 @@ def index_search(request):
 def articles_search(request):
     tags = request.GET.get('in')
     sort = request.GET.get('by')
+
+    print(tags)
     suggestions = []
 
     sqs = SearchQuerySet().autocomplete(title_auto__startswith=request.GET.get('q'))
 
-    if sort != '':
-        sqs.order_by(sort)
+    # if sort != '':
+    #     sqs.order_by(sort)
 
     if tags != '':
         tag = Tag.objects.get(name=tags)

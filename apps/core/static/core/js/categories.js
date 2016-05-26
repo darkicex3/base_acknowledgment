@@ -108,7 +108,7 @@ jQuery(document).ready(function ($) {
 
         if (!cleaner.is(e.target) && cleaner.has(e.target).length === 0 && !search.is(e.target) && search.has(e.target).length === 0)
             if (sc.css('background-color') != 'rgb(52, 152, 219)') {
-                search.css('background', '#fbfcfc');
+                search.css('background', '#fff');
             }
         if (!rightmenu.is(e.target) && rightmenu.has(e.target).length === 0)
             rightmenu.css('right', rightmenu.width() * (-1));

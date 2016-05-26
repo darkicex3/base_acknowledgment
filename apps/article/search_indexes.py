@@ -59,7 +59,7 @@ class ArticleIndex(indexes.SearchIndex, indexes.Indexable):
     def prepare_title_auto(self, object):
         return object.title.lower()
 
-    def prepare_categories(self, obj):
+    def prepare_tags(self, obj):
         return [tag.pk for tag in obj.tags.all()]
 
     def get_model(self):

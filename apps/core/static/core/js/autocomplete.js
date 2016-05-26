@@ -50,13 +50,14 @@ $(document).ready(function () {
         else
             tags = null;
 
+        console.log(tags);
 
         $.ajax({
             url: this.url
             , data: {
                 'in': tags,
                 'q': query,
-                'by': sort,
+                'by': sort
             }
             , success: function (data) {
                 self.show_results(data)

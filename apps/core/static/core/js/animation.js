@@ -69,6 +69,8 @@ function ActionRightBar(element, section) {
 function OnClickBookmarkGetArticlesByBookmark() {
     $('body').on('click', '.bookmarkLink', function (e) {
         var cleaner = $('.clear-search-bar');
+        console.log(cleaner.children().first());
+        cleaner.children().first().css('color', 'white');
         if (!cleaner.is(":visible")) {
             cleaner.show().transition({width: '50px'});
         }
@@ -115,10 +117,11 @@ function OnSearchBar() {
         var cat_txt = 'more_horiz';
         var sort_button = $('#search_sorting');
 
+        $(this).children().first().css('color', '#5F5F5F');
         console.log(cat_button.text());
         if (cat_button.text() != cat_txt) {
-            cat_button.append(cat_content);
-            cat_button.css('background', '#fbfcfc');
+            cat_button.empty().append(cat_content);
+            cat_button.css('background', '#fff');
             sort_button.removeAttr('style').find('.sorting').attr('class', 'sorting material-icons color_base md-36 first-item');
         }
 
@@ -133,8 +136,9 @@ function OnSearchBar() {
 
 function OnClickSearchBarSetEditable() {
     $('body').on('click', '#search_bar input', function (e) {
+        var cleaner = $('.clear-search-bar');
         if ($(this).css('background-color') == 'rgb(52, 152, 219)') {
-
+            cleaner.children().first().css('color', '#5F5F5F');
             var value = $(this).val();
             $(this).val('').removeAttr('style');
             $('#search_bar input[name=\'csrfmiddlewaretoken\']').attr('value', getCookie('csrftoken'));
