@@ -26,7 +26,8 @@ function get_shortcuts(element) {
             }
             else {
                 $('.base_menu').empty().append(html);
-                $('#Home .shortcuts-link').css('background-color', '#eee');
+                $('#Home .shortcuts-link').css({'background-color': '#1C1C25', 'color': '#FFFFFF !important'}).children('i').css('color', '#ffffff !important');;
+
             }
         }
     );
@@ -35,7 +36,7 @@ function get_shortcuts(element) {
 function shortcut(key, name, icon) {
 
     return      '<li id="' + name + '"class="static_category ui-widget-content"><span id="' + key + '" hidden="hidden">' + key + '</span>' +
-                    '<a id="'+ name +'" class="shortcuts-link"><i class="material-icons md-18 width18 color_base">' + icon + '</i>' + name + '</a>' +
+                    '<a id="'+ name +'" class="shortcuts-link"><i class="material-icons md-18 width18 link_menu_color">' + icon + '</i>' + name + '</a>' +
                     '<div class="children" style="display: none"></div>' +
                 '</li>'
 }

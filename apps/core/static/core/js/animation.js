@@ -7,7 +7,9 @@
 function OnClickShortcutsSetSelected() {
     $('body').on('click', '.widget-menus ul li a', function (e) {
         $('.widget-menus ul li a').removeAttr('style');
-        $(this).css('background-color', '#eee');
+        $('.widget-menus ul li a i').removeAttr('style');
+        $(this).css({'background-color': '#1C1C25', 'border-left-color': '#A48CD2', 'color': '#FFFFFF !important'});
+        $(this).children('i').css('color', '#ffffff !important');
     });
 }
 
@@ -156,5 +158,12 @@ function increment_tag_counter(tag_name) {
     $.get(TAGS_COUNTER_INCREMENT, {'in':tag_name}, function (data) {
         console.log(data)
     });
+}
+
+function resize_left_menu() {
+    var hbar = $('.left-sidebar').height();
+    var hman = $('.copyright').height() + 100;
+    var hres = hbar - hman;
+    $('.menu-left-menu-container').css('height', hres);
 }
 

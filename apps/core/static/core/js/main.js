@@ -2,6 +2,7 @@ jQuery(document).ready(function ($) {
 
     var body = $('body');
     var left_sidebar = $('.left-sidebar');
+    resize_left_menu();
     resize_sidebars();
 
     window.Manager = new ArticleManager();
@@ -9,7 +10,7 @@ jQuery(document).ready(function ($) {
     window.Manager.getListArticle(); //category, tags, sorting, counter
 
     $("table").tablesorter();
-    left_sidebar.perfectScrollbar();
+    $('.menu-left-menu-container').perfectScrollbar();
 
     ActionRightBar('.help-action', $('.help'));
     ActionRightBar('.notifications-action', $('.notifications'));
@@ -49,7 +50,9 @@ jQuery(document).ready(function ($) {
     });
 
     $(window).resize(function (e) {
+        resize_left_menu();
         resize_sidebars();
+        // reposition_stat_glossary();
         //resize_module();
     });
 });

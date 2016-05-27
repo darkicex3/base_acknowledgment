@@ -347,7 +347,6 @@ var ArticleManager = function (options) {
         $(results_selector).empty().append(result).parent().parent().parent().show();
         $("#grid-data").bootgrid();
         $("table").trigger("update");
-        resize_iframe();
     };
 
     var list = function (key, title, description, date_publish, favorite_counter, tags, favorites, read_article,
@@ -360,10 +359,10 @@ var ArticleManager = function (options) {
             '</a>' +
             '<br>' + tags + '</th>' +
             '<td class="field-publish_date padding-top-list nowrap">' + date_publish + '</td>' +
-            '<td class="field-modified padding-top-list nowrap">' + last_update + '</td>' +
+            // '<td class="field-modified padding-top-list nowrap">' + last_update + '</td>' +
             '<td class="center field-useful_counter padding-top-list">' + useful_counter + '</td>' +
             '<td class="center field-favorite_counter padding-top-list">' + favorite_counter + '</td>' +
-            '<td class="center field-view_counter padding-top-list" style="position: relative">' + view_counter + '<span class="id-article" style="">#'+ key +'</span></td>' +
+            '<td class="center field-view_counter padding-top-list" style="position: relative">' + view_counter + '<span class="id-article" style="">New</span></td>' +
             '</tr>'
     };
 
@@ -408,17 +407,11 @@ function resize_masterfeed() {
 
 function resize_sidebars() {
     var windowwidth = $(window).width();
-    var masterfeed = $('.master-feed');
+    var masterfeed = $('.master-feed').width();
+    var sidebar = $('.left-sidebar').width();
 
-    if (windowwidth <= 1310) {
-        masterfeed.css('width', '700px');
-    } else {
-        masterfeed.css('width', '800px');
-    }
+    var size = ((windowwidth - (masterfeed + sidebar + 71)));
 
-    var size = ((windowwidth - masterfeed.width()) / 2) - 20;
-
-    $('.left-sidebar').css('width', size);
     $('.right-sidebar').css('width', size);
 }
 
@@ -472,14 +465,13 @@ function render_article() {
     glossary += '<a class="bottom-article">Something to say ?</a>';
 
     var pos = $('.modal-dialog-article').width();
-    var bodyw = $(window).width();
-    var jbfk4w = ((bodyw - pos) / 2 ) - 210;
-    var refiienvi = ((bodyw - pos) / 2 ) - 90;
+    var bodywidth = $(window).width();
+    var right = ((bodywidth - pos) / 2 ) - 210;
+    var left = ((bodywidth - pos) / 2 ) - 90;
 
 
-    console.log(jbfk4w);
-    $('.modal-glossary-article').empty().append(glossary).css('right', jbfk4w);
-    $('.float-menu-left').css('left', refiienvi);
+    $('.modal-glossary-article').empty().append(glossary).css('right', right);
+    $('.float-menu-left').css('left', left);
 
     $('.link-glossary').click(function () {
         var scroll_elem = $('.modal-dialog-article');
@@ -511,6 +503,16 @@ function resize_iframe() {
     var elem = $('.mini-article .content');
     elem.find('iframe').attr('width', '555px').attr('height', '300px');
     elem.find('img').css('width', '555px');
+}
+
+function reposition_stat_glossary() {
+    var pos = $('.modal-dialog-article').width();
+    var bodywidth = $(window).width();
+    var right = ((bodywidth - pos) / 2 ) - 210;
+    var left = ((bodywidth - pos) / 2 ) - 90;
+
+    $('.modal-glossary-article').css('right', right);
+    $('.float-menu-left').css('left', left);
 }
 
 

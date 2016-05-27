@@ -4,44 +4,49 @@
 
     {% block title %}Knowledge Base{% endblock %}
 
+    {% block profile %}
+        <div class="profile-auth-user">
+            <div class="user_profile">
+                <form method="post">{% csrf_token %}
+                    {% if request.user.is_superuser %}
+                        <a class="user-profile-link" href="{% url 'admin:auth_user_change' request.user.id %}">
+                            <div id="img_profile"></div>
+                        </a>
+                    {% elif request.user.is_staff %}
+                        <a class="user-profile-link" href="{% url 'admin:auth_user_change' request.user.id %}">
+                            <div id="img_profile"></div>
+                        </a>
+                    {% else %}
+                        <div id="img_profile"></div>
+                    {% endif %}
+                </form>
+                <div id="detail_profile">
+                    <form method="post">{% csrf_token %}
+                        {% if request.user.is_superuser %}
+                            <a class="admin-link" href="{% url 'admin:index' %}"><p class="user-type administrator">
+                                Administrator</p></a>
+                        {% elif request.user.is_staff %}
+                            <p class="user-type staff">Staff User</p>
+                        {% else %}
+                            <p class="user-type normal">Basic User</p>
+                        {% endif %}
+                    </form>
+                    <p class="username">
+                        {% if request.user.get_full_name %}
+                            {{ request.user.get_full_name.title }}
+                        {% else %}
+                            {{ request.user.username.title }}
+                        {% endif %}
+                    </p>
+{#                    <p class="badge">{{ request.user.points }}</p>#}
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+
     {% block menu_sidebar %}
         <div class="widget widget-menus">
             <div class="menu-left-menu-container">
-                <div class="user_profile">
-                    <form method="post">{% csrf_token %}
-                        {% if request.user.is_superuser %}
-                            <a class="user-profile-link" href="{% url 'admin:auth_user_change' request.user.id %}">
-                                <div id="img_profile"></div>
-                            </a>
-                        {% elif request.user.is_staff %}
-                            <a class="user-profile-link" href="{% url 'admin:auth_user_change' request.user.id %}">
-                                <div id="img_profile"></div>
-                            </a>
-                        {% else %}
-                            <div id="img_profile"></div>
-                        {% endif %}
-                    </form>
-                    <div id="detail_profile">
-                        <p class="username">
-                            {% if request.user.get_full_name %}
-                                {{ request.user.get_full_name.title }}
-                            {% else %}
-                                {{ request.user.username.title }}
-                            {% endif %}</p>
-                        <form method="post">{% csrf_token %}
-                            {% if request.user.is_superuser %}
-                                <a class="admin-link" href="{% url 'admin:index' %}"><p class="user-type administrator">
-                                    Administrator</p></a>
-                            {% elif request.user.is_staff %}
-                                <p class="user-type staff">Staff User</p>
-                            {% else %}
-                                <p class="user-type normal">Basic User</p>
-                            {% endif %}
-                        </form>
-                        <hr>
-                        <p class="badge">{{ request.user.points }}</p>
-                    </div>
-                </div>
                 <ul id="menu-left-menu-1" class="menu base_menu static"></ul>
                 <ul class="mega-shorcuts variable"></ul>
                 <ul class="shorcuts variable"></ul>
@@ -57,8 +62,8 @@
                     <a href="{% url 'admin:article_category_changelist' %}" class="add-button">Manage Shortcuts</a>
                 {% endif %}
             </form>
-            ©2016 Teledirect Pte Ltd <br>
-            <a href="#">Terms & Privacy</a>
+{#            ©2016 Teledirect Pte Ltd <br>#}
+{#            <a href="#">Terms & Privacy</a>#}
         </div>
 
     {% endblock %}
@@ -68,7 +73,7 @@
         <div class="master-feed">
 
             {#        Search Module        #}
-            <div class="search-section" style="display: none;">
+            <div class="search-section" style="">
                 <div id="search-section-inner-content">
                     <button class="search_section" type="button" id="search_categories"><i
                             class="material-icons color_base md-36 first-item">more_horiz</i></button>
@@ -90,7 +95,7 @@
             <div class="results">
                 <table class="table-article table table-condensed table-hover table-striped"
                        id="result_list grid-data">
-                    <thead>
+                    <thead style="display: none">
                     <tr>
                         <th id="title" data-column-id="title" scope="col"
                             class="column padding-left-list column-title"
@@ -99,10 +104,10 @@
                         <th data-column-id="publish_date" class="column column-publish_date"
                             style="padding: 10px 5px;width: 115px;"><a>Published</a>
                         </th>
-                        <th data-column-id="modified" class="column column-modified"
-                            style="padding: 10px 5px;width: 115px;">
-                            <a>Modified</a>
-                        </th>
+{#                        <th data-column-id="modified" class="column column-modified"#}
+{#                            style="padding: 10px 5px;width: 115px;">#}
+{#                            <a>Modified</a>#}
+{#                        </th>#}
                         <th data-column-id="big_up" data-type="numeric" scope="col"
                             class="column column-useful_counter" style="padding: 10px 30px 6px 2px; width: 30px;"><a><i
                                 class="table-icon useful-active material-icons md-18 width18 color_bigup">thumb_up</i></a>
@@ -181,7 +186,8 @@
                 <div class="module popular-tags">
                     <p>Popular Tags</p>
                     <div class="content-tags-module">
-                        <span class="badge bookmarkBadge hundred">1. <a id="" class="bookmarkLink" href="#">Philosophy</a></span>
+                        <span class="badge bookmarkBadge hundred">1. <a id="" class="bookmarkLink"
+                                                                        href="#">Philosophy</a></span>
                     </div>
                 </div>
             </div>
