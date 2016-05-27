@@ -82,6 +82,7 @@
 {% load staticfiles %}
 
 <script>
+    URL_PDF = "{% static 'core/js/[NGNSP] Training_Pre-Enlistee - Overview V1,1.pdf' %}";
     URL_AUTO_COMPLETE = "{% url 'articles:articles_search_view'                     %}"; //TODO
     GET_SORTING_METHODS = "{% url 'articles:get_sorting_methods_view'                 %}"; //TODO
     SEARCH_MANAGER = "{% url 'articles:set_searched_view'                        %}"; //TODO
@@ -117,6 +118,10 @@
 <script src="{% static 'core/js/vendor/jquery.tablesorter.widgets.min.js' %}"></script>
 <script src="{% static 'core/js/vendor/jquery.flip.min.js' %}"></script>
 <script src="{% static 'core/js/vendor/jquery.transit.min.js' %}"></script>
+<script src="{% static 'core/js/vendor/pdf.js' %}"></script>
+<script type="text/javascript">
+    PDFJS.workerSrc = "{% static 'core/js/vendor/pdf.worker.js' %}";
+</script>
 
 <script src="{% static 'core/js/autocomplete.js' %}"></script>
 <script src="{% static 'core/js/articlesv2.js' %}"></script>
