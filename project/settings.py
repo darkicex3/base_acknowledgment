@@ -132,7 +132,7 @@ STATIC_URL = '/static/'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(os.path.dirname(__file__), "static", "templates")],
+        'DIRS': [os.path.join(os.path.dirname(__file__), "staticfiles", "templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -290,8 +290,8 @@ SUMMERNOTE_CONFIG = {
         static_url('django_summernote/django_summernote_inplace.css'),
     ),
     'js_for_inplace': (
-        static_url('core/js/vendor/bootstrap.min.js'),
-        static_url('core/js/vendor/summernote-ext-print.js'),
+        static_url('core/js/vendor/bootstrap/bootstrap.min.js'),
+        static_url('core/js/vendor/summernote/summernote-ext-print.js'),
         static_url('django_summernote/jquery.ui.widget.js'),
         static_url('django_summernote/jquery.iframe-transport.js'),
         static_url('django_summernote/jquery.fileupload.js'),

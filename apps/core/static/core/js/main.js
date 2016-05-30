@@ -1,6 +1,6 @@
 jQuery(document).ready(function ($) {
+    window.body = $('body');
 
-    var body = $('body');
     var left_sidebar = $('.left-sidebar');
     resize_left_menu();
     resize_sidebars();
@@ -42,10 +42,10 @@ jQuery(document).ready(function ($) {
 
 
 
-    body.on('click', '.guideText', function (e) {
+    window.body.on('click', '.guideText', function (e) {
        window.Manager.getListArticle($(this).attr('id'));
     });
-    body.on('click', '.feedback', function (e) {
+    window.body.on('click', '.feedback', function (e) {
         read($(this), READ_MANAGER);
     });
 

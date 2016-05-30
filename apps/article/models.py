@@ -112,6 +112,7 @@ class Article(models.Model):
     view_counter = models.IntegerField(default=0, editable=False)
 
     # OPTIONNAL
+    related_questions = models.ManyToManyField('poll.Question', help_text=tags_help, blank=True)
     description = models.TextField(help_text=description_help, default='')
     feedback_manager = models.ForeignKey(FeedbackManager, on_delete=models.CASCADE, default=DEFAULT_FEEDBACK_ID,
                                          editable=False)

@@ -36,6 +36,17 @@
       <index name="article_article_polls_a00c1b00" unique="true" columns="article_id"/>
       <index name="article_article_polls_article_id_836f886b_uniq" unique="true" columns="article_id,poll_id"/>
     </table>
+    <table name="article_article_related_questions" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
+      <column name="article_id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
+      <column name="question_id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
+      <primary-key columns="id"/>
+      <foreign-key name="#FAKE_article_article_related_questions_1" columns="question_id" ref-table="poll_question" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
+      <foreign-key name="#FAKE_article_article_related_questions_2" columns="article_id" ref-table="article_article" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
+      <index name="article_article_related_questions_7aa0f6ee" unique="true" columns="question_id"/>
+      <index name="article_article_related_questions_a00c1b00" unique="true" columns="article_id"/>
+      <index name="article_article_related_questions_article_id_cb3ce8e7_uniq" unique="true" columns="article_id,question_id"/>
+    </table>
     <table name="article_article_tags" schema="" catalog="" type="TABLE">
       <column name="id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
       <column name="article_id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>

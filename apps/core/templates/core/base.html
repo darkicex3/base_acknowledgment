@@ -18,9 +18,11 @@
     <link href="{% static 'core/css/vendor/pace.css' %}" rel="stylesheet"/>
 
     <link rel="stylesheet" href="{% static 'core/css/vendor/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'core/css/vendor/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'core/css/vendor/jquery.webui-popover.css' %}">
     <link rel="stylesheet" href="{% static 'core/css/main.css' %}">
     <link rel="stylesheet" href="{% static 'core/css/vendor/perfect-scrollbar.min.css' %}">
+    <link rel="stylesheet" href="{% static 'core/css/vendor/text_layer_builder.css' %}">
 
     <title>Teledirect - {% block title %}{% endblock %}</title>
 </head>
@@ -82,7 +84,9 @@
 {% load staticfiles %}
 
 <script>
-    URL_PDF = "{% static 'core/js/[NGNSP] Training_Pre-Enlistee - Overview V1,1.pdf' %}";
+    URL_PDF = "{% static 'core/files/[NGNSP] Training_Pre-Enlistee - Overview V1,1.pdf' %}";
+    PDF_ROOT_DIR = "{% static 'core/js/vendor/pdf/pdfjs-dist' %}";
+
     URL_AUTO_COMPLETE = "{% url 'articles:articles_search_view'                     %}"; //TODO
     GET_SORTING_METHODS = "{% url 'articles:get_sorting_methods_view'                 %}"; //TODO
     SEARCH_MANAGER = "{% url 'articles:set_searched_view'                        %}"; //TODO
@@ -107,21 +111,17 @@
 </script>
 
 <script src="{% static 'core/js/vendor/jquery-1.12.3.min.js' %}"></script>
-<script src="{% static 'core/js/vendor/jquery-ui.min.js' %}"></script>
-<script src="{% static 'core/js/vendor/pace.min.js' %}"></script>
-<script src="{% static 'core/js/vendor/readingTime.js' %}"></script>
-<script src="{% static 'core/js/vendor/jquery.webui-popover.min.js' %}"></script>
-<script src="{% static 'core/js/vendor/bootstrap.min.js' %}"></script>
-<script src="{% static 'core/js/vendor/perfect-scrollbar.jquery.min.js' %}"></script>
-<script src="{% static 'core/js/vendor/jquery.bootgrid.min.js' %}"></script>
-<script src="{% static 'core/js/vendor/jquery.tablesorter.min.js' %}"></script>
-<script src="{% static 'core/js/vendor/jquery.tablesorter.widgets.min.js' %}"></script>
-<script src="{% static 'core/js/vendor/jquery.flip.min.js' %}"></script>
-<script src="{% static 'core/js/vendor/jquery.transit.min.js' %}"></script>
-<script src="{% static 'core/js/vendor/pdf.js' %}"></script>
-<script type="text/javascript">
-    PDFJS.workerSrc = "{% static 'core/js/vendor/pdf.worker.js' %}";
-</script>
+<script src="{% static 'core/js/vendor/bootstrap/jquery-ui.min.js' %}"></script>
+<script src="{% static 'core/js/vendor/loading/pace.min.js' %}"></script>
+<script src="{% static 'core/js/vendor/reading/readingTime.js' %}"></script>
+<script src="{% static 'core/js/vendor/popover/jquery.webui-popover.min.js' %}"></script>
+<script src="{% static 'core/js/vendor/bootstrap/bootstrap.min.js' %}"></script>
+<script src="{% static 'core/js/vendor/scrollbar/perfect-scrollbar.jquery.min.js' %}"></script>
+<script src="{% static 'core/js/vendor/table/jquery.bootgrid.min.js' %}"></script>
+<script src="{% static 'core/js/vendor/table/jquery.tablesorter.min.js' %}"></script>
+<script src="{% static 'core/js/vendor/table/jquery.tablesorter.widgets.min.js' %}"></script>
+<script src="{% static 'core/js/vendor/animation/jquery.flip.min.js' %}"></script>
+<script src="{% static 'core/js/vendor/animation/jquery.transit.min.js' %}"></script>
 
 <script src="{% static 'core/js/autocomplete.js' %}"></script>
 <script src="{% static 'core/js/articlesv2.js' %}"></script>

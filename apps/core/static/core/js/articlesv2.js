@@ -2,8 +2,6 @@
  * Created by maxbook on 19/05/16.
  */
 
-window.body = $('body');
-
 /****************      ARTICLE    ******************/
 
 var Article = function (id, element) {
@@ -122,56 +120,7 @@ var Article = function (id, element) {
         $(selector.stats_selector).empty().append(statsHTML);
 
         // RENDER PDF
-        var url = URL_PDF;
 
-        // Asynchronous download PDF
-        PDFJS.getDocument(url)
-            .then(function (pdf) {
-
-                // Get div#container and cache it for later use
-                var container = document.getElementById("container");
-
-                // Loop from 1 to total_number_of_pages in PDF document
-                for (var i = 1; i <= pdf.numPages; i++) {
-
-                    // Get desired page
-                    pdf.getPage(i).then(function (page) {
-
-                        var scale = 1.5;
-                        var viewport = page.getViewport(scale);
-                        var div = document.createElement("div");
-
-                        // Set id attribute with page-#{pdf_page_number} format
-                        div.setAttribute("id", "page-" + (page.pageIndex + 1));
-
-                        // This will keep positions of child elements as per our needs
-                        div.setAttribute("style", "position: relative");
-
-                        // Append div within div#container
-                        container.appendChild(div);
-
-                        // Create a new Canvas element
-                        var canvas = document.createElement("canvas");
-
-                        // Append Canvas within div#page-#{pdf_page_number}
-                        div.appendChild(canvas);
-
-                        var context = canvas.getContext('2d');
-                        canvas.height = viewport.height;
-                        canvas.width = viewport.width;
-
-                        $('canvas').css('width', '100%');
-
-                        var renderContext = {
-                            canvasContext: context,
-                            viewport: viewport
-                        };
-
-                        // Render PDF page
-                        page.render(renderContext);
-                    });
-                }
-            });
 
         // RENDER HTML
         render_article();
