@@ -5,21 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="18b606f7-4bb6-4847-a114-ede8e2ca5ad6" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/core/static/core/js/vendor/pdf/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/core/static/core/js/vendor/pdf/pdf.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/core/static/core/js/vendor/pdf/pdf.worker.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/article/migrations/0023_auto_20160530_0254.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/article/migrations/0024_auto_20160530_0259.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/article/migrations/0025_remove_article_author_a.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/article/migrations/0026_article_author_a.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/article/migrations/0027_auto_20160530_0304.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/article/migrations/0028_auto_20160530_0308.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/article/migrations/0029_article_file_content.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/article/migrations/0030_auto_20160530_2006.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/article/migrations/0031_auto_20160530_2012.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/article/migrations/0032_remove_article_file_content.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/article/migrations/0033_article_file_content.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/article/migrations/0034_auto_20160530_2044.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/article/migrations/0035_auto_20160530_2336.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/article/migrations/0036_auto_20160530_2342.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/article/migrations/0037_article_url_article.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/article/migrations/0038_auto_20160531_0007.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/article/admin.py" afterPath="$PROJECT_DIR$/apps/article/admin.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/article/constants.py" afterPath="$PROJECT_DIR$/apps/article/constants.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/article/models.py" afterPath="$PROJECT_DIR$/apps/article/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/article/views.py" afterPath="$PROJECT_DIR$/apps/article/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/core/static/core/css/main.css" afterPath="$PROJECT_DIR$/apps/core/static/core/css/main.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/core/static/core/js/admin/article.js" afterPath="$PROJECT_DIR$/apps/core/static/core/js/admin/article.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/core/static/core/js/animation.js" afterPath="$PROJECT_DIR$/apps/core/static/core/js/animation.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/core/static/core/js/articlesv2.js" afterPath="$PROJECT_DIR$/apps/core/static/core/js/articlesv2.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/core/static/core/js/main.js" afterPath="$PROJECT_DIR$/apps/core/static/core/js/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/core/templates/core/base.html" afterPath="$PROJECT_DIR$/apps/core/templates/core/base.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
     </list>
     <list id="c2818188-c081-4fde-b41c-d5fb9174705a" name="New changelist" comment="" />
     <ignored path="base_acknowledgment.iws" />
@@ -490,6 +492,28 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="base_acknowledgment" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="base_acknowledgment" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="apps" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="article" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="migrations" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
@@ -878,13 +902,6 @@
       <option name="presentableId" value="Default" />
       <updated>1460348435713</updated>
     </task>
-    <task id="LOCAL-00055" summary="staticfiles">
-      <created>1463627056076</created>
-      <option name="number" value="00055" />
-      <option name="presentableId" value="LOCAL-00055" />
-      <option name="project" value="LOCAL" />
-      <updated>1463627056076</updated>
-    </task>
     <task id="LOCAL-00056" summary="staticfiles">
       <created>1463627986526</created>
       <option name="number" value="00056" />
@@ -1221,7 +1238,14 @@
       <option name="project" value="LOCAL" />
       <updated>1464660708604</updated>
     </task>
-    <option name="localTasksCounter" value="104" />
+    <task id="LOCAL-00104" summary="attachments article">
+      <created>1464682344077</created>
+      <option name="number" value="00104" />
+      <option name="presentableId" value="LOCAL-00104" />
+      <option name="project" value="LOCAL" />
+      <updated>1464682344077</updated>
+    </task>
+    <option name="localTasksCounter" value="105" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1242,7 +1266,7 @@
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23032904" sideWeight="0.49518073" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23032904" sideWeight="0.49518073" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32650602" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35421687" sideWeight="0.3683834" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1250,7 +1274,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32650602" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6028369" sideWeight="0.6316166" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30120483" sideWeight="0.48855507" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.86024094" sideWeight="0.48855507" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22460657" sideWeight="0.5048193" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
