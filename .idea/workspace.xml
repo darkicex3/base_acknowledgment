@@ -5,23 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="18b606f7-4bb6-4847-a114-ede8e2ca5ad6" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/article/migrations/0023_auto_20160530_0254.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/article/migrations/0024_auto_20160530_0259.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/article/migrations/0025_remove_article_author_a.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/article/migrations/0026_article_author_a.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/article/migrations/0027_auto_20160530_0304.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/article/migrations/0028_auto_20160530_0308.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/article/migrations/0029_article_file_content.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/article/migrations/0030_auto_20160530_2006.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/article/migrations/0031_auto_20160530_2012.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/article/migrations/0032_remove_article_file_content.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/article/migrations/0033_article_file_content.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/article/migrations/0034_auto_20160530_2044.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/article/migrations/0035_auto_20160530_2336.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/article/migrations/0036_auto_20160530_2342.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/article/migrations/0037_article_url_article.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/article/migrations/0038_auto_20160531_0007.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.xml" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/project/settings.py" afterPath="$PROJECT_DIR$/project/settings.py" />
     </list>
     <list id="c2818188-c081-4fde-b41c-d5fb9174705a" name="New changelist" comment="" />
     <ignored path="base_acknowledgment.iws" />
@@ -51,7 +37,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="articlesv2.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="articlesv2.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/core/static/core/js/articlesv2.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="682">
@@ -122,6 +108,16 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="settings.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/project/settings.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="757">
+              <caret line="324" column="40" selection-start-line="324" selection-start-column="40" selection-end-line="324" selection-end-column="40" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/article/models.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -130,16 +126,6 @@
               <folding>
                 <element signature="e#0#50#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="apps.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apps/article/apps.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -219,7 +205,6 @@
         <option value="$PROJECT_DIR$/apps/core/static/core/js/article_admin.js" />
         <option value="$PROJECT_DIR$/apps/core/static/core/css/admin/article.css" />
         <option value="$PROJECT_DIR$/requirements.txt" />
-        <option value="$PROJECT_DIR$/project/settings.py" />
         <option value="$PROJECT_DIR$/project/urls.py" />
         <option value="$PROJECT_DIR$/apps/core/static/core/js/animation.js" />
         <option value="$PROJECT_DIR$/apps/core/static/core/js/main.js" />
@@ -233,6 +218,7 @@
         <option value="$PROJECT_DIR$/apps/core/templates/core/base.html" />
         <option value="$PROJECT_DIR$/apps/core/static/core/css/main.css" />
         <option value="$PROJECT_DIR$/apps/core/static/core/js/articlesv2.js" />
+        <option value="$PROJECT_DIR$/project/settings.py" />
       </list>
     </option>
   </component>
@@ -305,6 +291,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="base_acknowledgment" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="base_acknowledgment" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="base_acknowledgment" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="project" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -902,13 +902,6 @@
       <option name="presentableId" value="Default" />
       <updated>1460348435713</updated>
     </task>
-    <task id="LOCAL-00056" summary="staticfiles">
-      <created>1463627986526</created>
-      <option name="number" value="00056" />
-      <option name="presentableId" value="LOCAL-00056" />
-      <option name="project" value="LOCAL" />
-      <updated>1463627986527</updated>
-    </task>
     <task id="LOCAL-00057" summary="staticfiles">
       <created>1463628006334</created>
       <option name="number" value="00057" />
@@ -1245,7 +1238,14 @@
       <option name="project" value="LOCAL" />
       <updated>1464682344077</updated>
     </task>
-    <option name="localTasksCounter" value="105" />
+    <task id="LOCAL-00105" summary="attachments article">
+      <created>1464682842376</created>
+      <option name="number" value="00105" />
+      <option name="presentableId" value="LOCAL-00105" />
+      <option name="project" value="LOCAL" />
+      <updated>1464682842376</updated>
+    </task>
+    <option name="localTasksCounter" value="106" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1264,9 +1264,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23032904" sideWeight="0.49518073" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23032904" sideWeight="0.49518073" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32650602" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35421687" sideWeight="0.3683834" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1531,16 +1531,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/project/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="9" />
-          <folding>
-            <element signature="e#311#320#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/apps/core/templates/core/modal.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="446">
@@ -1665,6 +1655,14 @@
             <marker date="1464681806000" expanded="true" signature="13761:13779" ph="..." />
             <marker date="1464681806000" expanded="true" signature="14543:14561" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/project/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="757">
+          <caret line="324" column="40" selection-start-line="324" selection-start-column="40" selection-end-line="324" selection-end-column="40" />
+          <folding />
         </state>
       </provider>
     </entry>
