@@ -99,7 +99,7 @@ INSTALLED_APPS += ('django_summernote', )
 es = urlparse(os.environ.get('SEARCHBOX_URL') or 'http://127.0.0.1:9200/')
 port = es.port or 80
 
-HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+HAYSTACK_SIGNAL_PROCESSOR = 'project.signals.RelatedRealtimeSignalProcessor'
 
 HAYSTACK_CONNECTIONS = {
     'default': {
@@ -317,9 +317,9 @@ SUMMERNOTE_CONFIG = {
     ),
 
     # You can disable file upload feature.
-    'disable_upload': False,
+    'disable_upload': True,
 }
 
 # Update database configuration with $DATABASE_URL.
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
+# db_from_env = dj_database_url.config(conn_max_age=500)
+# DATABASES['default'].update(db_from_env)

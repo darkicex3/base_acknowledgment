@@ -128,6 +128,7 @@ var Article = function (id, element) {
 
         // RENDER HTML or PDF
         render_article();
+        resize_iframe();
 
     }; // OK
 
@@ -521,9 +522,8 @@ function position_module_article() {
 }
 
 function resize_iframe() {
-    var elem = $('.mini-article .content');
-    elem.find('iframe').attr('width', '555px').attr('height', '300px');
-    elem.find('img').css('width', '555px');
+    var elem = $('.content-article');
+    elem.find('iframe').attr('width', '100%').removeAttr('style').parent().removeAttr('style');
 }
 
 function reposition_stat_glossary() {

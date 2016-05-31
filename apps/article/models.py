@@ -9,6 +9,7 @@ import datetime
 from django.utils import timezone
 from django.db import models
 from colorfield.fields import ColorField
+from haystack.management.commands import update_index
 
 
 def get_upload_filename(instance, filename):

@@ -1103,7 +1103,6 @@ th {
 
 ul li {
     list-style-type: none;
-    position: relative;
     overflow: hidden;
 }
 
@@ -1272,7 +1271,7 @@ ul li {
 
 .content-article img {
     position: relative;
-    width: 708px !important;
+    width: 718px !important;
     height: auto !important;
     margin: auto !important;
     left: -30px;

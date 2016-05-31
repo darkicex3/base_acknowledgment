@@ -57,8 +57,8 @@ class ArticleIndex(indexes.SearchIndex, indexes.Indexable):
     # content_auto_content = indexes.EdgeNgramField(model_attr='content')
     # content_auto_description = indexes.EdgeNgramField(model_attr='description')
 
-    def prepare_title_auto(self, object):
-        return object.title.lower()
+    def prepare_title_auto(self, obj):
+        return obj.title.lower()
 
     def prepare_tags(self, obj):
         return [tag.pk for tag in obj.tags.all()]

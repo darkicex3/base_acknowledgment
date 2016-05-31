@@ -20,9 +20,7 @@ function get_shortcuts(element) {
             else if (element != undefined) {
                 element.parent().children('.children')   .empty()
                                             .append(html)
-                                            .css('position','relative')
-                                            .css('left', '20px')
-                                            .slideDown(200);
+                                            .show(200);
             }
             else {
                 $('.base_menu').empty().append(html);

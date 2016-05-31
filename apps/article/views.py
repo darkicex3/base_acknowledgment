@@ -9,6 +9,7 @@ import simplejson as json
 from django.http import HttpResponse
 from haystack.query import SearchQuerySet
 from django.contrib.auth.decorators import login_required
+from haystack.management.commands import update_index
 import os
 
 tf_ext = ["doc", "docx", "odt", "txt", "pages", "wps", "wpd", "msg", "log"]
@@ -262,6 +263,8 @@ class ShowArticleFromShortcutView(View):
 class GetArticlesByStaticShortcutsView(View):
     def get(self, user, **kwargs):
 
+        update_index.Command().handle()
+
         context = {}
         articles = []
         get_by = self.request.GET.get('by')
@@ -289,7 +292,7 @@ class GetArticlesByStaticShortcutsView(View):
                                            ' elasticsearch if it is not.</p>'})
                     return JsonResponse(context)
 
-                p = SearchQuerySet().models(Article).exclude(status='d').exclude(status='w') \
+                p = SearchQuerySet().models(Article).exclude(status='d').exclude(status='w')\
                     .filter(authorized_groups__in=groups)
 
                 print(p)
@@ -330,11 +333,13 @@ class GetArticlesByStaticShortcutsView(View):
                 articles = p.order_by('publish_date')
             # GET FAVORITES FOR CURRENT USER
             elif get_by == 'Favorites':
+                print('Favorites')
                 try:
                     ids = user.get_related_favorites()
+                    print(ids)
                     for i in ids:
                         articles.append(Article.objects.get(id=i))
-                    print(articles[0])
+                    print(articles)
                 except ObjectDoesNotExist:
                     context.update({'msg': 'You do not like any item :('})
                     return JsonResponse(context)
@@ -394,6 +399,9 @@ class GetArticlesByStaticShortcutsView(View):
 
         for article in articles:
 
+            print(article.authorized_groups)
+            print(article.authorized_users)
+
             try:
                 UserArticle.objects.get(user_id=user.id, article_id=article.pk, favorites=True)
                 favorites = "ok"
@@ -437,6 +445,7 @@ class GetArticlesByStaticShortcutsView(View):
             else:
                 time = article.publish_date.strftime("%d %b %Y")
                 update = 'ko'
+
 
             key += 1
             context.update({key: {
