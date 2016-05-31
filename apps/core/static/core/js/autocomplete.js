@@ -52,18 +52,19 @@ $(document).ready(function () {
 
         console.log(tags);
 
-        $.ajax({
-            url: this.url
-            , data: {
-                'in': tags,
-                'q': query,
-                'by': sort
-            }
-            , success: function (data) {
-                self.show_results(data);
-                console.log(data);
-            }
-        })
+        window.Manager.getListArticle(tags, null, sort, null, true, query);
+        // $.ajax({
+        //     url: this.url
+        //     , data: {
+        //         'in': tags,
+        //         'q': query,
+        //         'by': sort
+        //     }
+        //     , success: function (data) {
+        //         self.show_results(data);
+        //         console.log(data);
+        //     }
+        // })
     };
 
     Autocomplete.prototype.show_results = function (data) {

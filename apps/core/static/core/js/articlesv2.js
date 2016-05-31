@@ -290,15 +290,19 @@ var ArticleManager = function (options) {
     this.display = 'list';
     this.counter = 20;
     this.category = 'Home';
+    this.autoquery = null;
+    this.autocomplete = false;
     this.sorting = 'publish_date';
     var current_article = null;
 
-    this.getListArticle = function (category, tags, sorting, counter) {
+    this.getListArticle = function (category, tags, sorting, counter, autocomplete, autoquery) {
         var count = counter || this.counter;
         var cat = category || this.category;
         var sort = sorting || this.sorting;
+        var auto = autocomplete || this.autocomplete;
+        var autoq = autoquery || this.autoquery;
 
-        query(cat, tags, count, sort);
+        query(cat, tags, count, sort, auto, autoq);
     };
 
     this.initEvents = function () {
@@ -312,9 +316,9 @@ var ArticleManager = function (options) {
             });
     };
 
-    var query = function (by, sorting, counter) {
+    var query = function (category, tags, sorting, counter, autocomplete, autoquery) {
         $.get(urls.get_list_articles,
-            {'by': by, 'counter': counter, 'sorting': sorting},
+            {'by': category, 'counter': counter, 'sorting': sorting, 'autocomplete': autocomplete, 'autoquery': autoquery},
             function (data) {
                 results(data);
                 Pace.restart();
@@ -562,7 +566,7 @@ function renderPDFfromUrl(url) {
                             return svgGfx.getSVG(opList, viewport);
                         })
                         .then(function (svg) {
-                            console.log(svg.setAttribute('style', 'width:100%'));
+                            console.log(svg.setAttribute('style', 'width:718px;position:relative;left: -15px;'));
                             container.appendChild(svg);
                         });
                 });
