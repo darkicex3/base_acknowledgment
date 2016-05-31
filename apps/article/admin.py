@@ -41,7 +41,8 @@ class ArticleAdmin(SummernoteModelAdmin, admin.ModelAdmin):
 
     fieldsets = (
         (None, {
-            'fields': ('author', 'publish_date', 'title', 'content', 'file_content')
+            'fields': ('author', 'publish_date', 'title', 'file_content_option', 'file_content', 'url_content_option',
+                       'url_article', 'content')
         }),
         ('Advanced options', {
             'fields': ('authorized_groups', 'authorized_users',),
@@ -52,7 +53,8 @@ class ArticleAdmin(SummernoteModelAdmin, admin.ModelAdmin):
                     'useful_counter', 'favorite_counter', 'view_counter', 'status']
 
     list_editable = ['status']
-    list_filter = ['authorized_groups', 'status', 'modified', 'publish_date']
+    list_filter = ['authorized_groups', 'status', 'modified', 'publish_date', 'file_content_option',
+                   'url_content_option']
     search_fields = ['title', 'id']
     inlines = (AttachmentInlines,)
     ordering = ['title']

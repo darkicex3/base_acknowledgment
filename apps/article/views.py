@@ -9,6 +9,16 @@ import simplejson as json
 from django.http import HttpResponse
 from haystack.query import SearchQuerySet
 from django.contrib.auth.decorators import login_required
+import os
+
+tf_ext = ["doc", "docx", "odt", "txt", "pages", "wps", "wpd", "msg", "log"]
+df_ext = ["csv", "ppt", "pptx", "sdf", "tar", "xml", "vcf", "dat", "key"]
+af_ext = ["aif", "iff", "m3u", "m4a", "mid", "mp3", "mpa", "wav", "wma"]
+vf_ext = ["3g2", "3gp", "asf", "avi", "flv", "m4v", "mov", "mp4", "mpg", "rm", "srt", "swf", "vob", "wmv"]
+rif_ext = ["bmp", "gif", "jpg", "png", "psd", "pspimage", "tif", "tiff", "yuv", "thm"]
+plf_ext = ["indd", "pct", "pdf"]
+sf_ext = ["xlr", "xls", "xlsx"]
+cf_ext = ["zip", "rar", "pkg", "7z"]
 
 
 @login_required
@@ -49,7 +59,6 @@ def articles_search(request):
 
 class IncrementCounterTags(View):
     def get(self, *args, **kwargs):
-
         context = {}
         tag_name = self.request.GET.get('in')
         tag = Tag.objects.get(name=tag_name)
@@ -280,7 +289,7 @@ class GetArticlesByStaticShortcutsView(View):
                                            ' elasticsearch if it is not.</p>'})
                     return JsonResponse(context)
 
-                p = SearchQuerySet().models(Article).exclude(status='d').exclude(status='w')\
+                p = SearchQuerySet().models(Article).exclude(status='d').exclude(status='w') \
                     .filter(authorized_groups__in=groups)
 
                 print(p)
@@ -408,6 +417,14 @@ class GetArticlesByStaticShortcutsView(View):
             bookmarkclass = 'bookmarkLink'
 
             art = Article.objects.get(id=article.pk)
+
+            if art.url_content_option is True:
+                url_option = 'ok'
+                url = art.url_article
+            else:
+                url_option = 'ko'
+                url = ''
+
             for a in art.tags.all()[:4]:
                 tags += '<span class="badge bookmarkBadge"><span class="add-tags" style="display:none">' \
                         '<i class="material-icons">add_circle</i>' \
@@ -426,7 +443,6 @@ class GetArticlesByStaticShortcutsView(View):
                 'id': article.pk,
                 'title': article.title,
                 'author': str(article.author),
-                'desc': article.description,
                 'pub_date': time,
                 'useful': article.useful_counter,
                 'views': article.view_counter,
@@ -438,6 +454,8 @@ class GetArticlesByStaticShortcutsView(View):
                 'read': readed,
                 'last_update': update,
                 'modified': article.modified.strftime("%d %B %Y %H:%M"),
+                'url_option': url_option,
+                'url': url
             }})
 
         return JsonResponse(context)
@@ -484,6 +502,14 @@ class ShowArticleView(View):
         bookmarkclass = 'bookmarkLink'
 
         art = Article.objects.get(id=article.pk)
+
+        if art.file_content_option is True:
+            file_option = 'ok'
+            file_url = art.file_content.url
+        else:
+            file_option = 'ko'
+            file_url = ''
+
         for a in art.tags.all()[:7]:
             tags += '<span class="badge bookmarkBadge"><span class="add-tags" style="display:none">' \
                     '<i class="material-icons">add_circle</i>' \
@@ -492,11 +518,45 @@ class ShowArticleView(View):
 
         attachments = ''
         for a in Attachment.objects.attachments_for_object(art):
-            attachments += '<a class="attachment-file" href = "' + a.attachment_file.url + '" >PDF</a>'
+            path, extension = os.path.splitext(a.attachment_file.name)
+            extension = extension.replace(".", "")
+            if extension in tf_ext:
+                ext_class = 'tf'
+            elif extension in df_ext:
+                ext_class = 'df'
+            elif extension in af_ext:
+                ext_class = 'af'
+            elif extension in vf_ext:
+                ext_class = 'vf'
+            elif extension in rif_ext:
+                ext_class = 'rif'
+            elif extension in plf_ext:
+                ext_class = 'plf'
+            elif extension in sf_ext:
+                ext_class = 'sf'
+            elif extension in cf_ext:
+                ext_class = 'cf'
+            else:
+                ext_class = 'oth'
+            filename = path.split("/")
+            attachments += '<a class="attachment-file" href = "' + a.attachment_file.url + '" target="_blank">' \
+                           + str(filename[len(filename) - 1]) + '<span class="ext_img ' + ext_class + '">' \
+                           + extension.upper() + '</span></a>'
+
+        if article.file_content_option is True:
+                content = article.file_content.url
+        else:
+                content = article.content
+
+        if article.title == '':
+                title = article.file_content.name
+        else:
+                title = article.title
+
         context.update({'id': article.pk,
-                        'title': article.title,
+                        'title': title,
                         'author': str(article.author),
-                        'desc': article.content,
+                        'desc': content,
                         'ok': 'ok',
                         'pub_date': article.publish_date.strftime("%d %B %Y"),
                         'views': article.view_counter,
@@ -507,6 +567,8 @@ class ShowArticleView(View):
                         'read': readed,
                         'bigup': bigup,
                         'attachements': attachments,
+                        'file_option': file_option,
+                        'file_url': file_url
                         })
 
         return JsonResponse(context)

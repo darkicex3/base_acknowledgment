@@ -18,6 +18,54 @@
     opacity: 1;
 }
 
+.attachment-file {
+    color: #333 !important;
+    text-align: left !important;
+    position: relative;
+}
+
+.attachment-file:active {
+    transform: scale(0.9);
+}
+
+.attachment-file .ext_img {
+    position: absolute;
+    width: auto !important;
+    right:10px;
+}
+
+.plf {
+    color: #e74c3c;
+}
+
+.tf {
+    color: #3498db;
+}
+
+.df, .sf {
+    color: #27ae60;
+}
+
+.rif {
+    color: #e67e22;
+}
+
+.oth {
+    color: #95a5a6;
+}
+
+.af {
+    color: #16a085;
+}
+
+.cf {
+    color: #2c3e50;
+}
+
+.vf {
+    color: #8e44ad;
+}
+
 .hundred {
     width: 100%;
 }
@@ -164,6 +212,18 @@
     font-weight: normal !important;
 }
 
+.link-title-article-url {
+    font-family: mediumc !important;
+    font-size: 11pt !important;
+    line-height: 1.58 !important;
+    letter-spacing: -.003em !important;
+    text-align: justify !important;
+    color: rgba(0, 0, 0, .8) !important;
+    text-decoration: none !important;
+    background-image: none !important;
+    font-weight: normal !important;
+}
+
 .fullw {
     width: 100% !important;
 }
@@ -211,7 +271,6 @@
 
 .attachment-button {
     position: relative !important;
-    top: 25px !important;
     z-index: 999;
     width: 50px !important;
     padding: 12px;
@@ -238,10 +297,14 @@
 }
 
 .attachment-button:hover {
-    -ms-transform: rotate(360deg); /* IE 9 */
-    -webkit-transform: rotate(360deg); /* Chrome, Safari, Opera */
-    transform: rotate(360deg);
-    transition: all 300ms;
+
+}
+
+.attachment-section {
+    width: 70% !important;
+    margin: auto;
+    position: relative !important;
+    top: 25px !important;
 }
 
 #search-section-inner-content {
@@ -796,12 +859,12 @@ th {
     width: 750px;
     overflow-x: hidden;
     height: 100%;
-    padding-right: 15px;
+    padding-right: 20px;
     padding-bottom: 30px;
 }
 
 .outside {
-    width: 730px;
+    width: 740px;
     height: 100%;
     margin: auto;
     overflow: hidden;
@@ -828,7 +891,7 @@ th {
 .stat-container {
     width: 100%;
     height: 80px;
-    margin-bottom: 17px;
+    margin-bottom: 10px;
     background-color: #fff;
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 60px;
@@ -1194,7 +1257,7 @@ ul li {
 }
 
 .attachment-article {
-    margin-top: 32px;
+    margin-top: -14px;
 }
 
 .attachment-article span {
@@ -1213,6 +1276,10 @@ ul li {
     height: auto !important;
     margin: auto !important;
     left: -30px;
+}
+
+#svg-rendering * {
+    font-family: mediumc !important;
 }
 
 .content-article a {

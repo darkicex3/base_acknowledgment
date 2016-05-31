@@ -52,6 +52,7 @@ jQuery(document).ready(function ($) {
     $(window).resize(function (e) {
         resize_left_menu();
         resize_sidebars();
+        position_module_article()
         // reposition_stat_glossary();
         //resize_module();
     });

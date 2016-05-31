@@ -105,7 +105,10 @@ class Article(models.Model):
     authorized_groups = models.ManyToManyField(Group, help_text=group_help, blank=True)
     title = models.CharField(max_length=255, default='')
     content = models.TextField(default='')
-    file_content = models.FileField(upload_to='/static/core/files',
+    file_content_option = models.BooleanField(default=False, help_text=help_option_content)
+    url_content_option = models.BooleanField(default=False, help_text=help_option_url)
+    url_article = models.CharField(max_length=255, default='', blank=True)
+    file_content = models.FileField(upload_to='article_pdf/%Y/%m/%d',
                                     blank=True)
     publish_date = models.DateTimeField(help_text=publish_date_help)
     modified = models.DateTimeField(editable=False)

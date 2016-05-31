@@ -28,18 +28,28 @@ function OnMouseEnterMouseLeaveTags() {
 }
 
 function OnAttachment() {
+    function rotate(elem, degree) {
+
+        elem.css({ WebkitTransform: 'rotate(' + degree + 'deg)'});
+        elem.css({ '-moz-transform': 'rotate(' + degree + 'deg)'});
+        var timer = setTimeout(function() {
+            ++degree; rotate();
+        },5);
+    }
+
+    var button = $('.attachment-button');
     $('body').on({
         mouseenter: function () {
             var elem = $('.attachment-article');
             if (elem.html() != '')
-                elem.slideDown(300);
+                elem.stop().slideDown(300);
         },
         mouseleave: function () {
             var elem = $('.attachment-article');
             if (elem.html() != '')
-                $('.attachment-article').slideUp(300);
+                elem.stop().slideUp(300);
         }
-    }, '.attachment-button');
+    }, '.attachment-section');
 }
 
 

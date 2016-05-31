@@ -111,21 +111,26 @@ var Article = function (id, element) {
 
         // GET HTML
         var articleHTML = article(data['id'], data['title'], data['author'], data['desc'], data['ok'],
-            data['pub_date'], data['tags'], data['read'], data['attachements']);
+            data['pub_date'], data['tags'], data['read'], data['attachements'], data['file_option']);
         var statsHTML = stats(data['id'], data['views'], data['useful'], data['loved'], data['bigup'],
             data['favorites']);
 
-        // APPEND HTML
+        // RENDER PDF or HTML
         $(selector.body_selector).empty().append(articleHTML);
+
+        if (data['file_option'] == 'ok') {
+            var url = data['file_url'];
+            renderPDFfromUrl(url);
+        }
+
+        // APPEND HTML STAT
         $(selector.stats_selector).empty().append(statsHTML);
 
-        // RENDER PDF
-
-
-        // RENDER HTML
+        // RENDER HTML or PDF
         render_article();
 
     }; // OK
+
 
     var query = function (id) {
         $.get(urls.get_article,
@@ -181,9 +186,12 @@ var Article = function (id, element) {
         }
     };
 
-    var article = function (key, title, author, content, verified_article, date_publish, tags, read_article, attachments) {
+    var article = function (key, title, author, content, verified_article, date_publish, tags, read_article, attachments
+        , file_option) {
         var color_read = (read_article == 'ok' ? 'color_bigup' : 'color_base');
         var readed = (read_article == 'ok' ? 'readed' : 'unreaded');
+        var content_final = (file_option == 'ko' ? content : '<div id="svg-rendering"></div>');
+        var ext_svg = (file_option == 'ko' ? '' : '-svg');
 
         return '<div class="article shadow_material">' +
             '<div class="secondHeader">' +
@@ -197,10 +205,12 @@ var Article = function (id, element) {
             '<span class="key" id="' + key + '" hidden="hidden">' + key + '</span>' +
             '<a class="article-title">' + title +
             '<i class="material-icons ' + color_read + '">done_all</i></a>' +
+            '<div class="attachment-section">' +
             '<i class="attachment-button material-icons color_base md-24">attach_file</i>' +
             '<div class="attachment-article" style="display: none">' + attachments + '</div>' +
+            '</div>' +
             '</header>' +
-            '<div class="content-article">' + content + '</div>' +
+            '<div class="content-article' + ext_svg + '">' + content_final + '</div>' +
             '<aside class="glossary-article">' + '</aside>' +
             '</div>';
     };
@@ -343,7 +353,8 @@ var ArticleManager = function (options) {
         for (var key in data) if (data.hasOwnProperty(key))
             result += list(data[key]['id'], data[key]['title'], data[key]['desc'], data[key]['pub_date'],
                 data[key]['loved'], data[key]['tags'], data[key]['favorites'], data[key]['read'],
-                data[key]['useful'], data[key]['bigup'], data[key]['modified'], data[key]['views']);
+                data[key]['useful'], data[key]['bigup'], data[key]['modified'], data[key]['views'],
+                data[key]['url_option'], data[key]['url']);
 
         $(results_selector).empty().append(result).parent().parent().parent().show();
         $("#grid-data").bootgrid();
@@ -351,11 +362,15 @@ var ArticleManager = function (options) {
     };
 
     var list = function (key, title, description, date_publish, favorite_counter, tags, favorites, read_article,
-                         useful_counter, bigup_article, last_update, view_counter) {
+                         useful_counter, bigup_article, last_update, view_counter, url_option, url) {
+
+        var href = (url_option == 'ok' ? url : '#display-article');
+        var redirect = (url_option == 'ok' ? '_blank' : '');
+        var classattr = (url_option == 'ok' ? 'link-title-article-url' : 'link-title-article');
 
         return '<tr class="row' + key + '" id="' + key + '" style="position: relative">' +
             '<th class="field-title font-list padding-list">' +
-            '<a data-toggle="modal" href="#display-article" class="padding-bottom-list link-title-article">' +
+            '<a data-toggle="modal" href="' + href + '" target="' + redirect + '" class="padding-bottom-list ' + classattr + '">' +
             '' + title + '' +
             '</a>' +
             '<br>' + tags + '</th>' +
@@ -465,14 +480,8 @@ function render_article() {
 
     glossary += '<a class="bottom-article">Something to say ?</a>';
 
-    var pos = $('.modal-dialog-article').width();
-    var bodywidth = $(window).width();
-    var right = ((bodywidth - pos) / 2 ) - 210;
-    var left = ((bodywidth - pos) / 2 ) - 90;
-
-
-    $('.modal-glossary-article').empty().append(glossary).css('right', right);
-    $('.float-menu-left').css('left', left);
+    $('.modal-glossary-article').empty().append(glossary);
+    position_module_article();
 
     $('.link-glossary').click(function () {
         var scroll_elem = $('.modal-dialog-article');
@@ -500,6 +509,17 @@ function render_article() {
 
 }
 
+function position_module_article() {
+    var pos = $('.modal-dialog-article').width();
+    var bodywidth = $(window).width();
+    var right = ((bodywidth - pos) / 2 ) - 210;
+    var left = ((bodywidth - pos) / 2 ) - 90;
+
+
+    $('.modal-glossary-article').css('right', right);
+    $('.float-menu-left').css('left', left);
+}
+
 function resize_iframe() {
     var elem = $('.mini-article .content');
     elem.find('iframe').attr('width', '555px').attr('height', '300px');
@@ -514,6 +534,40 @@ function reposition_stat_glossary() {
 
     $('.modal-glossary-article').css('right', right);
     $('.float-menu-left').css('left', left);
+}
+
+function renderPDFfromUrl(url) {
+    PDFJS.getDocument(url)
+        .then(function (pdf) {
+
+            // Get div#the-svg
+            var container = document.getElementById('svg-rendering');
+
+            // Loop from 1 to total_number_of_pages in PDF document
+            for (var i = 1; i <= pdf.numPages; i++) {
+
+                // Get desired page
+                pdf.getPage(i).then(function (page) {
+
+                    // Set scale (zoom) level
+                    var scale = 1;
+
+                    // Get viewport (dimensions)
+                    var viewport = page.getViewport(scale);
+
+                    // SVG rendering by PDF.js
+                    page.getOperatorList()
+                        .then(function (opList) {
+                            var svgGfx = new PDFJS.SVGGraphics(page.commonObjs, page.objs);
+                            return svgGfx.getSVG(opList, viewport);
+                        })
+                        .then(function (svg) {
+                            console.log(svg.setAttribute('style', 'width:100%'));
+                            container.appendChild(svg);
+                        });
+                });
+            }
+        });
 }
 
 
