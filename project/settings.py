@@ -77,6 +77,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sessions',
+    'django.contrib.sites',
 
     'notifications',
     'django_mptt_admin',
@@ -117,6 +118,7 @@ LOGIN_URL = '/registration/login/' \
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'subdomains.middleware.SubdomainURLRoutingMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -126,6 +128,22 @@ MIDDLEWARE_CLASSES = [
 ]
 
 ROOT_URLCONF = 'project.urls'
+
+SITE_ID = 1
+
+# A dictionary of urlconf module paths, keyed by their subdomain.
+SUBDOMAIN_URLCONFS = {
+    None: 'project.urls',  # no subdomain, e.g. ``example.com``
+    'www': 'project.urls',
+    'api': 'project.urls',
+}
+
+MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'site_media', 'media')
+MEDIA_URL = '/site_media/media/'
+
+STATICFILES_DIRS = (
+    os.path.join(os.path.dirname(__file__), 'site_media/media'),  # or whatever you named it
+)
 
 STATIC_URL = '/static/'
 

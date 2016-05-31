@@ -33,12 +33,27 @@ class DailyRecapAdmin(SummernoteModelAdmin, admin.ModelAdmin):
 
 
 class ArticleAdmin(SummernoteModelAdmin, admin.ModelAdmin):
+    class Media:
+        css = {
+            'all': ('core/css/admin/article.css',)
+        }
+        js = ('core/js/admin/article.js',)
+
+    fieldsets = (
+        (None, {
+            'fields': ('author', 'publish_date', 'title', 'content', 'file_content')
+        }),
+        ('Advanced options', {
+            'fields': ('authorized_groups', 'authorized_users',),
+        }),
+    )
+
     list_display = ['title', 'id', 'publish_date', 'modified',
                     'useful_counter', 'favorite_counter', 'view_counter', 'status']
 
     list_editable = ['status']
-    list_filter = ['modified', 'publish_date', 'status']
-    search_fields = ['title', 'description', 'id']
+    list_filter = ['authorized_groups', 'status', 'modified', 'publish_date']
+    search_fields = ['title', 'id']
     inlines = (AttachmentInlines,)
     ordering = ['title']
     actions = [make_published, make_draft, make_withdrawn, duplicate_event, deleteall, reset_counter]

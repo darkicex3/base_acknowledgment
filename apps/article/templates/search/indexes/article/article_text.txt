@@ -1,6 +1,7 @@
 {{ object.title }}
 {{ object.author }}
-{{ object.description }}
 {{ object.content }}
 {{ object.publish_date }}
 {{ object.expiration_date }}
+{{ object.authorized_groups }}
+{{ object.authorized_users }}

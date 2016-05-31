@@ -9,6 +9,7 @@ auto_tag_help = "Check this if you want to automatically assign any existing tag
 followup_for_help = "Select any other articles that this article follows up on."
 publish_date_help = "The date and time this article shall appear online."
 expiration_date = "Leave blank if the article does not expire."
+group_help = "Choose one or several group you want to allow access to this specific article."
 
 
 INJURIES = ""

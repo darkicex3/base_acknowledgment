@@ -17,8 +17,11 @@ from django.conf.urls import include, url
 from django.contrib import admin
 import notifications
 from notifications import urls
+from . import settings
 
 urlpatterns = [
+    url(r'^site_media/media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT,
+                                                                          'show_indexes': True}),
     url('^inbox/notifications/', include(notifications.urls, namespace='notifications')),
     url(r'^attachments/', include('attachments.urls', namespace='attachments')),
     url(r'^summernote/', include('django_summernote.urls')),
@@ -28,3 +31,4 @@ urlpatterns = [
     url(r'^', include('apps.core.urls', namespace='core')),
     url(r'^admin/', admin.site.urls),
 ]
+

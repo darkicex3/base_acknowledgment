@@ -140,7 +140,7 @@ var Article = function (id, element) {
                     wordCountTarget: article.parent().find('.word-count'),
                     wordsPerMinute: 275,
                     round: true,
-                    lang: 'en',
+                    lang: 'en'
                 });
 
                 var txt = article.parent().find('.eta').text();

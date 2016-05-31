@@ -1,5 +1,6 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.contrib import auth
+from django.core.files.storage import FileSystemStorage
 from six import python_2_unicode_compatible
 from haystack.query import SearchQuerySet
 from mptt.models import TreeForeignKey, MPTTModel
@@ -98,9 +99,14 @@ class Article(models.Model):
 
     # REQUIRED
     daily_recap = models.BooleanField(default=False, help_text="This is a Daily Recap ?")
-    author = models.ForeignKey(User, on_delete=models.CASCADE, default=DEFAULT_AUTHOR_ID)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, default=DEFAULT_AUTHOR_ID, related_name='author_article')
+    authorized_users = models.ManyToManyField(User, help_text=group_help, blank=True, related_name='authorized_users')
+
+    authorized_groups = models.ManyToManyField(Group, help_text=group_help, blank=True)
     title = models.CharField(max_length=255, default='')
     content = models.TextField(default='')
+    file_content = models.FileField(upload_to='/static/core/files',
+                                    blank=True)
     publish_date = models.DateTimeField(help_text=publish_date_help)
     modified = models.DateTimeField(editable=False)
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default=STATUS_CHOICES[0])
@@ -113,11 +119,10 @@ class Article(models.Model):
 
     # OPTIONNAL
     related_questions = models.ManyToManyField('poll.Question', help_text=tags_help, blank=True)
-    description = models.TextField(help_text=description_help, default='')
     feedback_manager = models.ForeignKey(FeedbackManager, on_delete=models.CASCADE, default=DEFAULT_FEEDBACK_ID,
                                          editable=False)
-    expiration_date = models.DateTimeField(blank=True, null=True, help_text=expiration_date)
     polls = models.ManyToManyField('poll.Poll', help_text=tags_help, blank=True)
+    expiration_date = models.DateTimeField(blank=True, null=True, help_text=expiration_date)
 
     def active_article(self):
         if self.publish_date >= timezone.now() and timezone.now() < self.expiration_date:

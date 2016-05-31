@@ -1,4 +1,4 @@
-* {
+.submit-row a.deletelink, #header, #header * {
     -moz-box-sizing: initial !important;
     box-sizing: initial !important;
 }

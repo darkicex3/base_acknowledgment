@@ -1,5 +1,5 @@
 from haystack import indexes
-from apps.article.models import Article, Tag, UserArticle
+from apps.article.models import Article, Tag, UserArticle, User, Group
 
 
 class CategoryIndex(indexes.SearchIndex, indexes.Indexable):
@@ -45,9 +45,10 @@ class ArticleIndex(indexes.SearchIndex, indexes.Indexable):
     favorite_counter = indexes.IntegerField(model_attr='favorite_counter')
     view_counter = indexes.IntegerField(model_attr='view_counter')
 
-    description = indexes.CharField(model_attr='description')
     content = indexes.CharField(model_attr='content')
     tags = indexes.MultiValueField()
+    authorized_users = indexes.MultiValueField()
+    authorized_groups = indexes.MultiValueField()
 
     publish_date = indexes.DateTimeField(model_attr='publish_date')
     modified = indexes.DateTimeField(model_attr='modified')
@@ -61,6 +62,12 @@ class ArticleIndex(indexes.SearchIndex, indexes.Indexable):
 
     def prepare_tags(self, obj):
         return [tag.pk for tag in obj.tags.all()]
+
+    def prepare_authorized_users(self, obj):
+        return [authorized_user.username for authorized_user in obj.authorized_users.all()]
+
+    def prepare_authorized_groups(self, obj):
+        return [authorized_group.name for authorized_group in obj.authorized_groups.all()]
 
     def get_model(self):
         return Article

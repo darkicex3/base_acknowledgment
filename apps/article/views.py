@@ -258,6 +258,9 @@ class GetArticlesByStaticShortcutsView(View):
         get_by = self.request.GET.get('by')
         display = self.request.GET.get('display')
         user = self.request.user
+        groups = self.request.user.groups.values_list('name', flat=True)
+
+        print(groups)
 
         if "#" not in get_by:
 
@@ -277,7 +280,10 @@ class GetArticlesByStaticShortcutsView(View):
                                            ' elasticsearch if it is not.</p>'})
                     return JsonResponse(context)
 
-                p = SearchQuerySet().models(Article).exclude(status='d').exclude(status='w')
+                p = SearchQuerySet().models(Article).exclude(status='d').exclude(status='w')\
+                    .filter(authorized_groups__in=groups)
+
+                print(p)
 
                 if not Article.objects.all().filter(status='p') or not p:
                     raise ObjectDoesNotExist
