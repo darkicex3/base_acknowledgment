@@ -8,6 +8,7 @@ jQuery(document).ready(function ($) {
     window.Manager = new ArticleManager();
     window.Manager.initEvents();
     window.Manager.getListArticle(); //category, tags, sorting, counter
+    window.Manager.getListDailyRecap();
 
     $("table").tablesorter();
     $('.menu-left-menu-container').perfectScrollbar();

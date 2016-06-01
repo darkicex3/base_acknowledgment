@@ -84,6 +84,10 @@
 {% load staticfiles %}
 
 <script>
+    USEFUL_MANAGER_DR = "{% url 'articles:set_useful_daily_recap' %}";
+    READ_MANAGER_DR = "{% url 'articles:set_read_daily_recap' %}";
+    SHOW_DAILY_RECAP = "{% url 'articles:show_daily_recap' %}";
+    GET_DAILY_RECAP = "{% url 'articles:get_daily_recap' %}";
     URL_AUTO_COMPLETE = "{% url 'articles:articles_search_view'                     %}"; //TODO
     GET_SORTING_METHODS = "{% url 'articles:get_sorting_methods_view'                 %}"; //TODO
     SEARCH_MANAGER = "{% url 'articles:set_searched_view'                        %}"; //TODO

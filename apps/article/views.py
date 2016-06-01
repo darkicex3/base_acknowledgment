@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from apps.article.models import Tag, Article, Category, UserArticle, Feedback
+from apps.article.models import Tag, Article, Category, UserArticle, Feedback, DailyRecap, UserDailyRecap
 from django.views.generic import View
 import datetime
 from django.core.exceptions import ObjectDoesNotExist
@@ -260,22 +260,190 @@ class ShowArticleFromShortcutView(View):
         return JsonResponse(context)
 
 
+class SetUsefulDailyRecapView(View):
+    def get(self, *args, **kwargs):
+        context = {}
+
+        daily_recap_id = self.request.GET.get('id')
+        action = self.request.GET.get('action')
+        print(daily_recap_id, action)
+        q = DailyRecap.objects.get(id=daily_recap_id)
+        user = self.request.user
+
+        try:
+            p = UserDailyRecap.objects.all().get(user_id=user.id, daily_recap_id=daily_recap_id)
+
+            if action == 'true':
+                p.useful = True
+                q.useful_counter += 1
+            else:
+                p.useful = False
+                q.useful_counter -= 1
+
+            p.save()
+
+        except ObjectDoesNotExist:
+            if action == 'true':
+                UserDailyRecap.objects.create(user_id=user.id, daily_recap_id=daily_recap_id, useful=True)
+                q.useful_counter += 1
+
+        context.update({'useful_counter': q.useful_counter})
+        q.save()
+
+        return JsonResponse(context)
+
+
+class SetReadDailyRecapView(View):
+    def get(self, *args, **kwargs):
+        context = {}
+
+        daily_recap_id = self.request.GET.get('id')
+        q = DailyRecap.objects.get(id=daily_recap_id)
+        user = self.request.user
+        q.view_counter += 1
+        q.save()
+
+        return JsonResponse(context)
+
+
+class ShowDailyRecapView(View):
+    def get(self, *args, **kwargs):
+        context = {}
+        daily_recap_id = self.request.GET.get('id')
+        user = self.request.user
+        daily_recap = DailyRecap.objects.get(id=daily_recap_id)
+
+        print(id, daily_recap.title)
+
+        try:
+            UserDailyRecap.objects.get(user_id=user.id, daily_recap_id=daily_recap.pk, readed=True)
+            readed = "ok"
+        except ObjectDoesNotExist:
+            readed = "ko"
+
+        try:
+
+            UserDailyRecap.objects.get(user_id=user.id, daily_recap_id=daily_recap.pk, useful=True)
+            bigup = "ok"
+        except ObjectDoesNotExist:
+            bigup = "ko"
+
+        art = DailyRecap.objects.get(id=daily_recap.pk)
+
+        attachments = ''
+        for a in Attachment.objects.attachments_for_object(art):
+            path, extension = os.path.splitext(a.attachment_file.name)
+            extension = extension.replace(".", "")
+            if extension in tf_ext:
+                ext_class = 'tf'
+            elif extension in df_ext:
+                ext_class = 'df'
+            elif extension in af_ext:
+                ext_class = 'af'
+            elif extension in vf_ext:
+                ext_class = 'vf'
+            elif extension in rif_ext:
+                ext_class = 'rif'
+            elif extension in plf_ext:
+                ext_class = 'plf'
+            elif extension in sf_ext:
+                ext_class = 'sf'
+            elif extension in cf_ext:
+                ext_class = 'cf'
+            else:
+                ext_class = 'oth'
+            filename = path.split("/")
+            attachments += '<a class="attachment-file" href = "' + a.attachment_file.url + '" target="_blank">' \
+                           + str(filename[len(filename) - 1]) + '<span class="ext_img ' + ext_class + '">' \
+                           + extension.upper() + '</span></a>'
+
+        context.update({'id': daily_recap.pk,
+                        'title': daily_recap.title,
+                        'desc': daily_recap.content,
+                        'ok': 'ok',
+                        'pub_date': daily_recap.publish_date.strftime("%d %B %Y"),
+                        'views': daily_recap.view_counter,
+                        'useful': daily_recap.useful_counter,
+                        'read': readed,
+                        'bigup': bigup,
+                        'attachements': attachments,
+                        })
+
+        return JsonResponse(context)
+
+
+class GetDailyRecapView(View):
+    def get(self, user, **kwargs):
+
+        context = {}
+        from_date = self.request.GET.get('from_date')
+        sorting = self.request.GET.get('sorting')
+        user = self.request.user
+        groups = self.request.user.groups.values_list('name', flat=True)
+
+        daily_recaps = SearchQuerySet().models(DailyRecap).exclude(status='d').exclude(status='w')
+
+        key = 0
+
+        for daily_recap in daily_recaps:
+
+            art = DailyRecap.objects.get(id=daily_recap.pk)
+
+            # CHECK IF USER BELONG TO AUTHORIZED GROUP(S) OR AUTHORIZED USER(S)
+            if art.is_public is False:
+                print('PRIVATE')
+                if art.by_groups is True:
+                    if len([i for i in groups if i in art.authorized_groups.values_list('name', flat=True)]) == 0:
+                        continue
+                elif art.by_groups is False:
+                    if user.username not in art.authorized_users_dr.values_list('username', flat=True):
+                        continue
+
+            try:
+                UserArticle.objects.get(user_id=user.id, article_id=daily_recap.pk, readed=True)
+                readed = "ok"
+            except ObjectDoesNotExist:
+                readed = "ko"
+
+            try:
+                UserArticle.objects.get(user_id=user.id, article_id=daily_recap.pk, useful=True)
+                bigup = "ok"
+            except ObjectDoesNotExist:
+                bigup = "ko"
+
+            key += 1
+            context.update({key: {
+                'id': art.pk,
+                'title': art.title,
+                'pub_date': art.publish_date,
+                'useful': art.useful_counter,
+                'views': art.view_counter,
+                'ok': 'ok',
+                'bigup': bigup,
+                'read': readed,
+                'modified': art.modified.strftime("%d %B %Y %H:%M"),
+            }})
+
+        return JsonResponse(context)
+
+
 class GetArticlesByStaticShortcutsView(View):
     def get(self, user, **kwargs):
 
-        update_index.Command().handle()
+        # update_index.Command().handle()
 
         context = {}
         articles = []
         get_by = self.request.GET.get('by')
         display = self.request.GET.get('display')
-
+        daily_recap = self.request.GET.get('is_daily')
         autocomplete = self.request.GET.get('autocomplete')
         autoquery = self.request.GET.get('autoquery')
 
         user = self.request.user
         groups = self.request.user.groups.values_list('name', flat=True)
 
+        # AUTOCOMPLETE MODE
         if autocomplete == 'true':
             print('*************************** '+autoquery+' ***************************')
             sqs = SearchQuerySet().autocomplete(title_auto__startswith=autoquery)
@@ -293,31 +461,18 @@ class GetArticlesByStaticShortcutsView(View):
 
             print(articles)
 
+        # DAILY RECAP MODE
+        elif daily_recap == 'true':
+            print('J\'ai faim')
+            articles = SearchQuerySet().models(Article).exclude(status='d').exclude(status='w').filter(daily_recap=True)
+
+        # ARTICLE MODE
         else:
 
             if "#" not in get_by:
 
                 try:
-
-                    tab_index = []
-                    tab_model = []
-
-                    [tab_index.append(i.pk) for i in SearchQuerySet().models(Article)]
-                    [tab_model.append(str(i.id)) for i in Article.objects.all()]
-
-                    if not set(tab_index) == set(tab_model):
-                        context.update({'msg': '<p style="padding: 16px;">Index error in the search engine.'
-                                               '<br><br>1. You have to run'
-                                               ' \'python3.5 manage.py rebuild_index\' command in the terminal.'
-                                               '<br><br>Or<br><br>2. Start'
-                                               ' elasticsearch if it is not.</p>'})
-                        return JsonResponse(context)
-
-                    p = SearchQuerySet().models(Article).exclude(status='d').exclude(status='w')
-
-                    # .filter(authorized_groups__in=groups)
-
-                    print(p)
+                    p = SearchQuerySet().models(Article).exclude(status='d').exclude(status='w').exclude(daily_recap=True)
 
                     if not Article.objects.all().filter(status='p') or not p:
                         raise ObjectDoesNotExist
@@ -421,8 +576,17 @@ class GetArticlesByStaticShortcutsView(View):
 
         for article in articles:
 
-            print(article.authorized_groups)
-            print(article.authorized_users)
+            art = Article.objects.get(id=article.pk)
+
+            # CHECK IF USER BELONG TO AUTHORIZED GROUP(S) OR AUTHORIZED USER(S)
+            if art.is_public is False:
+                print('PRIVATE')
+                if art.by_groups is True:
+                    if len([i for i in groups if i in art.authorized_groups.values_list('name', flat=True)]) == 0:
+                        continue
+                elif art.by_groups is False:
+                    if user.username not in art.authorized_users.values_list('username', flat=True):
+                        continue
 
             try:
                 UserArticle.objects.get(user_id=user.id, article_id=article.pk, favorites=True)
@@ -445,8 +609,6 @@ class GetArticlesByStaticShortcutsView(View):
             tags = ''
 
             bookmarkclass = 'bookmarkLink'
-
-            art = Article.objects.get(id=article.pk)
 
             if art.url_content_option is True:
                 url_option = 'ok'
@@ -471,22 +633,22 @@ class GetArticlesByStaticShortcutsView(View):
 
             key += 1
             context.update({key: {
-                'id': article.pk,
-                'title': article.title,
-                'author': str(article.author),
+                'id': art.pk,
+                'title': art.title,
+                'author': str(art.author),
                 'pub_date': time,
-                'useful': article.useful_counter,
-                'views': article.view_counter,
-                'loved': article.favorite_counter,
+                'useful': art.useful_counter,
+                'views': art.view_counter,
+                'loved': art.favorite_counter,
                 'ok': 'ok',
                 'tags': tags,
                 'favorites': favorites,
                 'bigup': bigup,
                 'read': readed,
                 'last_update': update,
-                'modified': article.modified.strftime("%d %B %Y %H:%M"),
+                'modified': art.modified.strftime("%d %B %Y %H:%M"),
                 'url_option': url_option,
-                'url': url
+                'url': url,
             }})
 
         return JsonResponse(context)

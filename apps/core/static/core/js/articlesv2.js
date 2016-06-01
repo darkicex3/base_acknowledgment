@@ -2,7 +2,184 @@
  * Created by maxbook on 19/05/16.
  */
 
-/****************      ARTICLE    ******************/
+/****************   DAILY RECAP   ******************/
+
+var DailyRecap = function (id, element) {
+    this.element = element;
+    this.id = id;
+
+    this.isBigup = function () {
+        return !(this.element.parent().children().last().attr('class').indexOf('bigup-active') >= 0);
+    };
+
+    this.setBigup = function (active, inactive) {
+        console.log(this.isBigup());
+        var counter = this.element.parent().children('.counter');
+        console.log(counter);
+        query_action(this.id, this.isBigup(), urls.bigup_manager);
+        design(selector.bigup_icon, this.isBigup(), counter, active, inactive)
+    };
+
+    this.isRead = function () {
+        return query(urls.read_manager, mode.read);
+    };
+
+    this.setRead = function (active, inactive) {
+        query(urls.like_manager, mode.write);
+        design(this.read_selector, this.isRead(), active, inactive);
+    };
+
+    this.setView = function () {
+        query_action(this.id, true, urls.read_manager);
+    };
+
+    var query_action = function (id, bool, url) {
+        $.get(url,
+            {'id': id, 'action': bool},
+            function (data) {
+
+            }
+        );
+    };
+    this.show = function () {
+        query(this.id);
+    }; // OK
+
+    var results = function (data, display) {
+        var result = '';
+
+        // GET HTML
+        var articleHTML = daily_recap(data['id'], data['title'], data['author'], data['desc'], data['ok'],
+            data['pub_date'], data['tags'], data['read'], data['attachements'], data['file_option']);
+        var statsHTML = daily_recap_stats(data['id'], data['views'], data['useful'], data['loved'], data['bigup'],
+            data['favorites']);
+
+        // RENDER PDF or HTML
+        $(selector.body_selector).empty().append(articleHTML);
+
+        // APPEND HTML STAT
+        $(selector.stats_selector).empty().append(statsHTML);
+
+        // RENDER HTML or PDF
+        render_article();
+        resize_iframe();
+
+    }; // OK
+
+
+    var query = function (id) {
+        $.get(urls.show_daily_recap,
+            {'id': id},
+            function (data) {
+                results(data);
+                Pace.restart();
+                var dailyrecap = $('.content-daily-recap');
+
+                dailyrecap.readingTime({
+                    readingTimeTarget: dailyrecap.parent().find('.eta'),
+                    wordCountTarget: dailyrecap.parent().find('.word-count'),
+                    wordsPerMinute: 275,
+                    round: true,
+                    lang: 'en'
+                });
+
+                var txt = dailyrecap.parent().find('.eta').text();
+                dailyrecap.parent().find('.eta').empty().append(txt + ' read');
+            }
+        );
+    };
+
+    var design = function (element, state, object, active, inactive) {
+        switch (element) {
+            case selector.bigup_icon:
+                if (state) {
+                    object.attr('class', active || attrclass.bigup);
+                    object.text(parseInt(object.text()) + 1);
+                }
+                else {
+                    object.attr('class', inactive || attrclass.unbigup);
+                    object.text(parseInt(object.text()) - 1);
+                }
+                break;
+            default:
+                break;
+        }
+    };
+
+    var daily_recap = function (key, title, author, content, verified_article, date_publish, tags, read_article, attachments) {
+        var color_read = (read_article == 'ok' ? 'color_bigup' : 'color_base');
+        var readed = (read_article == 'ok' ? 'readed' : 'unreaded');
+
+        return '<div class="article shadow_material">' +
+            '<div class="secondHeader">' +
+            '<span class="tags-section txt">' + tags + '</span>' +
+            '<i class="schedule-icon material-icons color_view md-18 width18">schedule</i>' +
+            '<span class="schedule-txt txt">' + date_publish + '</span>' +
+            '<span class="dotDivider">.</span>' +
+            '<p><small><span class="eta"></span></small></p>' +
+            '</div>' +
+            '<header class="header-article">' +
+            '<span class="key" id="' + key + '" hidden="hidden">' + key + '</span>' +
+            '<a class="article-title">' + title +
+            '<i class="material-icons ' + color_read + '">done_all</i></a>' +
+            '<div class="attachment-section">' +
+            '<i class="attachment-button material-icons color_base md-24">attach_file</i>' +
+            '<div class="attachment-article" style="display: none">' + attachments + '</div>' +
+            '</div>' +
+            '</header>' +
+            '<div class="content-daily-recap">' + content + '</div>' +
+            '</div>';
+    };
+
+    var daily_recap_stats = function (key, view_counter, useful_counter, favorite_counter, bigup_article, favorites) {
+        var active_bigup = (bigup_article == 'ok' ? 'bigup-active' : '');
+
+        return '<div class="">' +
+            '<span class="key" id="' + key + '" hidden="hidden">' + key + '</span>' +
+
+            '<div class="stat-container bigup-button">' +
+            '<i class="center-icon color_bigup useful material-icons md-24 width24">thumb_up</i>' +
+            '<span class="counter counter-bigup ' + active_bigup + '">' + useful_counter + '</span>' +
+            '</div>' +
+
+            '<div class="stat-container view-button">' +
+            '<i class="center-icon material-icons remove_red_eye color_base md-24 width24">remove_red_eye</i>' +
+            '<span class="counter counter-view">' + view_counter + '</span>' +
+            '</div>' +
+            '</div>';
+    };
+
+    var mode = {
+        'read': 'r',
+        'write': 'w'
+    };
+
+    var selector = {
+        'body_selector': '.modal-body-daily-recap',
+        'stats_selector': '.modal-stats-daily-recap',
+        'attachment_selector': '.modal-attachments-daily-recap',
+        'bigup_selector': '.bigup-button',
+        'bigup_icon': '.useful'
+    };
+
+    var attrclass = {
+        'base': {},
+        'unbigup': 'counter counter-bigup',
+        'bigup': 'counter counter-bigup bigup-active'
+    };
+
+    var style = {
+        'read': {},
+        'unread': {}
+    };
+
+    var urls = {
+        'read_manager': READ_MANAGER_DR,
+        'bigup_manager': USEFUL_MANAGER_DR,
+        'show_daily_recap': SHOW_DAILY_RECAP
+    };
+};
+
 
 var Article = function (id, element) {
     this.element = element;
@@ -285,7 +462,9 @@ var Article = function (id, element) {
 
 var ArticleManager = function (options) {
     var results_selector = '.table-article tbody';
+    var results_daily_selector = '.content-list-daily-recap';
     var link_article_selector = '.link-title-article';
+    var daily_recap_selector = '.daily-recap-item';
     var attachment_selector = '';
     this.display = 'list';
     this.counter = 20;
@@ -294,6 +473,7 @@ var ArticleManager = function (options) {
     this.autocomplete = false;
     this.sorting = 'publish_date';
     var current_article = null;
+    var current_daily_recap = null;
 
     this.getListArticle = function (category, tags, sorting, counter, autocomplete, autoquery) {
         var count = counter || this.counter;
@@ -305,9 +485,20 @@ var ArticleManager = function (options) {
         query(cat, tags, count, sort, auto, autoq);
     };
 
+    this.getListDailyRecap = function (sorting, from_date) {
+        var sort = sorting || null;
+        var date_fr = from_date || null;
+
+        query_daily_recap(sort, date_fr);
+    };
+
     this.initEvents = function () {
         window.body.on("click", link_article_selector, function () {
             article($(this))
+        });
+
+        window.body.on("click", daily_recap_selector, function () {
+            daily_recap($(this))
         });
 
         for (var element in selector_action) if (selector_action.hasOwnProperty(element))
@@ -316,9 +507,30 @@ var ArticleManager = function (options) {
             });
     };
 
-    var query = function (category, tags, sorting, counter, autocomplete, autoquery) {
+
+    var query_daily_recap = function (sorting, from_date) {
+        $.get(urls.get_list_daily_recap,
+            {
+                'sorting': sorting,
+                'from': from_date
+            },
+            function (data) {
+                results_daily_recap(data);
+                Pace.restart();
+            }
+        );
+    };
+
+    var query = function (category, tags, sorting, counter, autocomplete, autoquery, daily) {
         $.get(urls.get_list_articles,
-            {'by': category, 'counter': counter, 'sorting': sorting, 'autocomplete': autocomplete, 'autoquery': autoquery},
+            {
+                'by': category,
+                'counter': counter,
+                'sorting': sorting,
+                'autocomplete': autocomplete,
+                'autoquery': autoquery,
+                'is_daily': daily
+            },
             function (data) {
                 results(data);
                 Pace.restart();
@@ -331,6 +543,13 @@ var ArticleManager = function (options) {
         current_article = article;
         article.setView();
         article.show();
+    };
+
+    var daily_recap = function (object) {
+        var daily_recap = new DailyRecap(object.attr("id"), object);
+        current_daily_recap = daily_recap;
+        daily_recap.setView();
+        daily_recap.show();
     };
 
     var action = function (object) {
@@ -366,6 +585,19 @@ var ArticleManager = function (options) {
         $("table").trigger("update");
     };
 
+    var results_daily_recap = function (data, display) {
+        var result = '';
+
+        for (var key in data) if (data.hasOwnProperty(key))
+            result += list_daily_recap(data[key]['id'], data[key]['title'], data[key]['desc'], data[key]['pub_date'],
+                data[key]['loved'], data[key]['tags'], data[key]['favorites'], data[key]['read'],
+                data[key]['useful'], data[key]['bigup'], data[key]['modified'], data[key]['views'],
+                data[key]['url_option'], data[key]['url']);
+
+        $(results_daily_selector).empty().append(result);
+    };
+
+
     var list = function (key, title, description, date_publish, favorite_counter, tags, favorites, read_article,
                          useful_counter, bigup_article, last_update, view_counter, url_option, url) {
 
@@ -387,8 +619,19 @@ var ArticleManager = function (options) {
             '</tr>'
     };
 
+    var list_daily_recap = function (key, title, description, date_publish, favorite_counter, tags, favorites, read_article,
+                                     useful_counter, bigup_article, last_update, view_counter, url_option, url) {
+
+        return '<div class="daily-recap-item ' + key + '" id="' + key + '">' +
+            '<a data-toggle="modal" class="link-daily-recap" href="#display-daily-recap">' + title + '</a>' +
+            '<a class="date-daily-recap"></a>' +
+            '</div>';
+
+    };
+
     var urls = {
-        'get_list_articles': GET_LIST_ARTICLES
+        'get_list_articles': GET_LIST_ARTICLES,
+        'get_list_daily_recap': GET_DAILY_RECAP
     };
 
     var selector_action = {

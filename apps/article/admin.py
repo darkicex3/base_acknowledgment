@@ -1,19 +1,18 @@
-
 # -- VENDORS MODELS --
-from django_mptt_admin.admin import DjangoMpttAdmin         # DJANGO MPTT ALLOW TREE VIEW
-from django_summernote.admin import SummernoteModelAdmin    # DJANGO SUMMERNOTE ALLOW TEXT EDITOR FOR ARTICLES CONTENT
-from attachments.admin import AttachmentInlines             # DJANGO ATTACHMENTS ALLOW ATTACHMENTS TO ARTICLES
+from django_mptt_admin.admin import DjangoMpttAdmin  # DJANGO MPTT ALLOW TREE VIEW
+from django_summernote.admin import SummernoteModelAdmin  # DJANGO SUMMERNOTE ALLOW TEXT EDITOR FOR ARTICLES CONTENT
+from attachments.admin import AttachmentInlines  # DJANGO ATTACHMENTS ALLOW ATTACHMENTS TO ARTICLES
 
 # -- ARTICLE APP MODELS --
 from apps.article.models import Tag, Article, \
     Feedback, Category, FeedbackManager, Comment, UserArticle, DailyRecap
 
 # -- DJANGO ADMIN MODEL --
-from django.contrib.admin.models import LogEntry            # LOG OF ALL ACTIONS PERFORM ON ADMIN INTERFACE
+from django.contrib.admin.models import LogEntry  # LOG OF ALL ACTIONS PERFORM ON ADMIN INTERFACE
 from django.contrib import admin
 
 # -- MODELS FUNCTIONS --
-from .functions import *                                    # ADDITIONAL FUNCTIONS FOR MODELS IN DJANGO ADMIN
+from .functions import *  # ADDITIONAL FUNCTIONS FOR MODELS IN DJANGO ADMIN
 
 
 class TagAdmin(DjangoMpttAdmin):
@@ -23,13 +22,30 @@ class TagAdmin(DjangoMpttAdmin):
 
 
 class DailyRecapAdmin(SummernoteModelAdmin, admin.ModelAdmin):
-    list_display = ['title', 'id', 'publish_date', 'modified', 'view_counter', 'status']
-    list_editable = ['status']
-    list_filter = ['publish_date', 'status']
-    search_fields = ['title']
+    class Media:
+        css = {
+            'all': ('core/css/admin/article.css',)
+        }
+        js = ('core/js/admin/article.js',)
+
+    fieldsets = (
+        (None, {
+            'fields': ('title', 'content')
+        }),
+        ('Advanced options', {
+            'fields': ('is_public', 'by_groups', 'authorized_groups', 'authorized_users_dr', 'publish_date'),
+        }),
+    )
+
+    list_display = ['title', 'id', 'publish_date', 'modified',
+                    'useful_counter', 'view_counter', 'status', 'is_public']
+
+    list_editable = ['status', 'is_public']
+    list_filter = ['authorized_groups', 'status', 'publish_date']
+    search_fields = ['title', 'id']
     inlines = (AttachmentInlines,)
     ordering = ['title']
-    actions = [make_published, make_draft, make_withdrawn, duplicate_event, deleteall]
+    actions = [make_published, make_draft, make_withdrawn, duplicate_event, deleteall, reset_counter]
 
 
 class ArticleAdmin(SummernoteModelAdmin, admin.ModelAdmin):
@@ -41,19 +57,20 @@ class ArticleAdmin(SummernoteModelAdmin, admin.ModelAdmin):
 
     fieldsets = (
         (None, {
-            'fields': ('author', 'publish_date', 'title', 'file_content_option', 'file_content', 'url_content_option',
-                       'url_article', 'content')
+            'fields': ('author', 'title', 'content', 'tags')
         }),
         ('Advanced options', {
-            'fields': ('authorized_groups', 'authorized_users',),
+            'fields': ('is_public', 'by_groups', 'authorized_groups', 'authorized_users',
+                       'file_content_option', 'file_content', 'url_content_option',
+                       'url_article', 'publish_date', 'related_questions', 'polls'),
         }),
     )
 
     list_display = ['title', 'id', 'publish_date', 'modified',
-                    'useful_counter', 'favorite_counter', 'view_counter', 'status']
+                    'useful_counter', 'favorite_counter', 'view_counter', 'status', 'is_public']
 
-    list_editable = ['status']
-    list_filter = ['authorized_groups', 'status', 'modified', 'publish_date', 'file_content_option',
+    list_editable = ['status', 'is_public']
+    list_filter = ['authorized_groups', 'status', 'publish_date', 'file_content_option',
                    'url_content_option']
     search_fields = ['title', 'id']
     inlines = (AttachmentInlines,)
@@ -69,10 +86,12 @@ class FeedBackAdmin(admin.ModelAdmin):
 
     def get_article_title(self, obj):
         return '%s' % obj.article.title
+
     get_article_title.short_description = 'Article Name'
 
     def get_article_id(self, obj):
         return '%s' % obj.article.id
+
     get_article_id.short_description = 'Article ID'
 
 
@@ -89,6 +108,7 @@ class ShortcutAdmin(DjangoMpttAdmin, admin.ModelAdmin):
     ordering = ['name']
     actions = [make_desactivated, make_activated, duplicate_event]
 
+
 admin.site.register(LogEntry, LogEntryAdmin)
 admin.site.register(Tag, TagAdmin)
 admin.site.register(Article, ArticleAdmin)
@@ -99,6 +119,3 @@ admin.site.register(FeedbackManager)
 admin.site.register(Comment)
 
 admin.site.register(UserArticle)
-
-
-

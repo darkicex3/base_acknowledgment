@@ -74,8 +74,13 @@ class DailyRecap(models.Model):
         app_label = 'article'
 
     # REQUIRED
-    author = models.ForeignKey(User, on_delete=models.CASCADE, default=DEFAULT_AUTHOR_ID, editable=False)
+    users = models.ForeignKey(User, on_delete=models.CASCADE, default=DEFAULT_AUTHOR_ID, editable=False)
     title = models.CharField(max_length=255, default='')
+    authorized_users_dr = models.ManyToManyField(User, help_text=group_help, blank=True,
+                                                 related_name='authorized_users_dr')
+    is_public = models.BooleanField(default=True, help_text=is_public_info)
+    by_groups = models.BooleanField(default=True, help_text=by_groups_info)
+    authorized_groups = models.ManyToManyField(Group, help_text=group_help, blank=True)
     content = models.TextField(default='')
     modified = models.DateTimeField(editable=False)
     publish_date = models.DateTimeField(help_text=publish_date_help)
@@ -99,22 +104,22 @@ class Article(models.Model):
         app_label = 'article'
 
     # REQUIRED
-    daily_recap = models.BooleanField(default=False, help_text="This is a Daily Recap ?")
     author = models.ForeignKey(User, on_delete=models.CASCADE, default=DEFAULT_AUTHOR_ID, related_name='author_article')
     authorized_users = models.ManyToManyField(User, help_text=group_help, blank=True, related_name='authorized_users')
-
+    is_public = models.BooleanField(default=True, help_text=is_public_info)
+    by_groups = models.BooleanField(default=True, help_text=by_groups_info)
     authorized_groups = models.ManyToManyField(Group, help_text=group_help, blank=True)
     title = models.CharField(max_length=255, default='')
-    content = models.TextField(default='')
+    content = models.TextField(default='', blank=True)
     file_content_option = models.BooleanField(default=False, help_text=help_option_content)
     url_content_option = models.BooleanField(default=False, help_text=help_option_url)
     url_article = models.CharField(max_length=255, default='', blank=True)
     file_content = models.FileField(upload_to='article_pdf/%Y/%m/%d',
                                     blank=True)
-    publish_date = models.DateTimeField(help_text=publish_date_help)
+    publish_date = models.DateTimeField(help_text=publish_date_help, default=timezone.now())
     modified = models.DateTimeField(editable=False)
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default=STATUS_CHOICES[0])
-    tags = models.ManyToManyField(Tag, help_text=tags_help, blank=True)
+    tags = models.ManyToManyField(Tag, help_text=tags_help)
 
     # COUNTERS
     useful_counter = models.IntegerField(default=0, editable=False)
@@ -255,4 +260,18 @@ class UserArticle (models.Model):
     date_visited = models.DateTimeField(default=datetime.datetime.now)
     date_searched = models.DateTimeField(default=datetime.datetime.now)
     date_added = models.DateTimeField(default=datetime.datetime.now)
+
+
+class UserDailyRecap (models.Model):
+    class Meta:
+        verbose_name = 'User Daily Recap'
+        verbose_name_plural = 'User\'s Daily Recaps'
+        app_label = 'article'
+
+    user_id = models.IntegerField(default=0)
+    daily_recap_id = models.IntegerField(default=0)
+    visited = models.BooleanField(default=False)
+    readed = models.BooleanField(default=False)
+    useful = models.BooleanField(default=False)
+    date_visited = models.DateTimeField(default=datetime.datetime.now)
 

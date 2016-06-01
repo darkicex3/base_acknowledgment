@@ -16,6 +16,12 @@ urlpatterns = [
     url(r'^set_visited/', views.SetVisitedView.as_view(), name='set_visited_view'),
     url(r'^set_searched/', views.SetSearchedView.as_view(), name='set_searched_view'),
     url(r'^get_categories/', views.GetCategoriesView.as_view(), name='get_categories_view'),
+
+    url(r'^get_daily_recap/', views.GetDailyRecapView.as_view(), name='get_daily_recap'),
+    url(r'^show_daily_recap/', views.ShowDailyRecapView.as_view(), name='show_daily_recap'),
+    url(r'^set_useful_daily_recap/', views.SetUsefulDailyRecapView.as_view(), name='set_useful_daily_recap'),
+    url(r'^set_read_daily_recap/', views.SetReadDailyRecapView.as_view(), name='set_read_daily_recap'),
+
     url(r'^get_articles/', views.GetArticlesByStaticShortcutsView.as_view(), name='get_article_by_static_shortcuts'),
     url(r'^sort_articles/', views.SortArticlesView.as_view(), name='sort_article_view'),
     url(r'^show_article_from_shorcuts/', views.ShowArticleFromShortcutView.as_view(), name='show_article_from_shorcuts'),

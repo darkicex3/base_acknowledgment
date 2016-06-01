@@ -38,7 +38,7 @@
                             {{ request.user.username.title }}
                         {% endif %}
                     </p>
-{#                    <p class="badge">{{ request.user.points }}</p>#}
+                    {#                    <p class="badge">{{ request.user.points }}</p>#}
                 </div>
             </div>
         </div>
@@ -62,8 +62,8 @@
                     <a href="{% url 'admin:article_category_changelist' %}" class="add-button">Manage Shortcuts</a>
                 {% endif %}
             </form>
-{#            ©2016 Teledirect Pte Ltd <br>#}
-{#            <a href="#">Terms & Privacy</a>#}
+            {#            ©2016 Teledirect Pte Ltd <br>#}
+            {#            <a href="#">Terms & Privacy</a>#}
         </div>
 
     {% endblock %}
@@ -104,10 +104,10 @@
                         <th data-column-id="publish_date" class="column column-publish_date"
                             style="padding: 10px 5px;width: 115px;"><a>Published</a>
                         </th>
-{#                        <th data-column-id="modified" class="column column-modified"#}
-{#                            style="padding: 10px 5px;width: 115px;">#}
-{#                            <a>Modified</a>#}
-{#                        </th>#}
+                        {#                        <th data-column-id="modified" class="column column-modified"#}
+                        {#                            style="padding: 10px 5px;width: 115px;">#}
+                        {#                            <a>Modified</a>#}
+                        {#                        </th>#}
                         <th data-column-id="big_up" data-type="numeric" scope="col"
                             class="column column-useful_counter" style="padding: 10px 30px 6px 2px; width: 30px;"><a><i
                                 class="table-icon useful-active material-icons md-18 width18 color_bigup">thumb_up</i></a>
@@ -152,39 +152,16 @@
                         <i class="material-icons read-daily-icon">more_vert</i>
                     </div>
 
-                    <div class="daily-recap-item">
-                        <a class="link-daily-recap">Update on DCP</a>
-                        <a class="date-daily-recap">New</a>
-                    </div>
-                    <div class="daily-recap-item">
-                        <a class="link-daily-recap">Syrian Women: Efforts and ...</a>
-                        <a class="date-daily-recap new-daily">New</a>
-                    </div>
-                    <div class="daily-recap-item">
-                        <a class="link-daily-recap">CPF Medisave check</a>
-                        <a class="date-daily-recap unread-daily">Unread</a>
-                    </div>
-                    <div class="daily-recap-item">
-                        <a class="link-daily-recap">Why I won’t talk about ...</a>
-                        <a class="date-daily-recap read-daily">Read<i
-                                class="material-icons read-daily-icon">done_all</i></a>
-                    </div>
-                    <div class="daily-recap-item">
-                        <a class="link-daily-recap">Why I won’t talk about ...</a>
-                        <a class="date-daily-recap read-daily">Read<i
-                                class="material-icons read-daily-icon">done_all</i></a>
-                    </div>
-                    <div class="daily-recap-item">
-                        <a class="link-daily-recap">Why I won’t talk about ...</a>
-                        <a class="date-daily-recap read-daily">Read<i
-                                class="material-icons read-daily-icon">done_all</i></a>
+                    <div class="content-list-daily-recap">
+
                     </div>
                 </div>
+
                 <div class="module popular-article">
                     <p>Popular Articles</p>
                 </div>
                 <div class="module popular-tags">
-                    <p>Popular Tags</p>
+                    <p>Most asked questions</p>
                     <div class="content-tags-module">
                         <span class="badge bookmarkBadge hundred">1. <a id="" class="bookmarkLink"
                                                                         href="#">Philosophy</a></span>
