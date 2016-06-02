@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^show_daily_recap/', views.ShowDailyRecapView.as_view(), name='show_daily_recap'),
     url(r'^set_useful_daily_recap/', views.SetUsefulDailyRecapView.as_view(), name='set_useful_daily_recap'),
     url(r'^set_read_daily_recap/', views.SetReadDailyRecapView.as_view(), name='set_read_daily_recap'),
+    url(r'^wrong_or_right/', views.WrongOrRightView.as_view(), name='wrong_or_right'),
 
     url(r'^get_articles/', views.GetArticlesByStaticShortcutsView.as_view(), name='get_article_by_static_shortcuts'),
     url(r'^sort_articles/', views.SortArticlesView.as_view(), name='sort_article_view'),

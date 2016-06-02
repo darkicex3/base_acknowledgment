@@ -5,7 +5,7 @@ from attachments.admin import AttachmentInlines  # DJANGO ATTACHMENTS ALLOW ATTA
 
 # -- ARTICLE APP MODELS --
 from apps.article.models import Tag, Article, \
-    Feedback, Category, FeedbackManager, Comment, UserArticle, DailyRecap
+    Feedback, Category, FeedbackManager, Comment, UserArticle, DailyRecap, UserDailyRecap
 
 # -- DJANGO ADMIN MODEL --
 from django.contrib.admin.models import LogEntry  # LOG OF ALL ACTIONS PERFORM ON ADMIN INTERFACE
@@ -119,3 +119,4 @@ admin.site.register(FeedbackManager)
 admin.site.register(Comment)
 
 admin.site.register(UserArticle)
+admin.site.register(UserDailyRecap)

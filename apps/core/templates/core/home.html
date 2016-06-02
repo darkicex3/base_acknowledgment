@@ -73,7 +73,7 @@
         <div class="master-feed">
 
             {#        Search Module        #}
-            <div class="search-section" style="">
+            <div class="search-section mdl-shadow--2dp" style="">
                 <div id="search-section-inner-content">
                     <button class="search_section" type="button" id="search_categories"><i
                             class="material-icons color_base md-36 first-item">more_horiz</i></button>
@@ -146,28 +146,120 @@
 
         <div class="card right-sidebar">
             <div class="front">
-                <div class="module daily-recap">
-                    <div class="header">
-                        <p>Daily Recap</p>
-                        <i class="material-icons read-daily-icon">more_vert</i>
-                    </div>
+                {################  MODULE DAILY RECAPS ################}
+                <div class="module daily-recap mdl-card mdl-shadow--2dp">
+                    <div class="header-modules mdl-card__actions mdl-card--border">
+                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                            DAILY RECAPS
+                        </a>
+                        <div class="wrapper">
+                            <form method="post" style="float: left">{% csrf_token %}
+                                {% if request.user.is_staff %}
+                                    {% load admin_urls %}
+                                    <a href="{% url 'admin:article_dailyrecap_add' %}" class=""><i
+                                            class="material-icons md-18 width18 color_base add_item_button">add</i></a>
+                                    <a href="{% url 'admin:article_dailyrecap_changelist' %}" class="">
+                                        <i class="material-icons md-18 width18 color_base edit_button">edit</i>
+                                    </a>
+                                {% endif %}
+                            </form>
+                            <button id="daily-recap-menu-lower-right"
+                                    class="mdl-button mdl-js-button mdl-button--icon" style="color: #C2C2CA;">
+                                <i class="material-icons">sort</i>
+                            </button>
 
-                    <div class="content-list-daily-recap">
+                            <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                                for="daily-recap-menu-lower-right">
+                                <li class="mdl-menu__item any_date">Any date</li>
+                                <li class="mdl-menu__item today">Today</li>
+                                <li class="mdl-menu__item past_7_days">Past 7 days</li>
+                                <li class="mdl-menu__item this_month">This month</li>
+                                <li class="mdl-menu__item this_year">This years</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="content-list content-list-daily-recap">
 
                     </div>
                 </div>
 
-                <div class="module popular-article">
-                    <p>Popular Articles</p>
+                {################  MODULE POLLS ################}
+                <div class="module poll mdl-card mdl-shadow--2dp">
+                    <div class="header-modules mdl-card__actions mdl-card--border">
+                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                            POLLS
+                        </a>
+                        <div class="wrapper">
+                            <form method="post" style="float: left">{% csrf_token %}
+                                {% if request.user.is_staff %}
+                                    {% load admin_urls %}
+                                    <a href="{% url 'admin:poll_poll_add' %}" class=""><i
+                                            class="material-icons md-18 width18 color_base add_item_button">add</i></a>
+                                    <a href="{% url 'admin:poll_poll_changelist' %}" class="">
+                                        <i class="material-icons md-18 width18 color_base edit_button">edit</i>
+                                    </a>
+                                {% endif %}
+                            </form>
+                            <button id="poll-menu-lower-right"
+                                    class="mdl-button mdl-js-button mdl-button--icon" style="color: #C2C2CA;">
+                                <i class="material-icons">sort</i>
+                            </button>
+
+                            <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                                for="poll-menu-lower-right">
+                                <li class="mdl-menu__item any_date_p">Any date</li>
+                                <li class="mdl-menu__item today_p">Today</li>
+                                <li class="mdl-menu__item past_7_days_p">Past 7 days</li>
+                                <li class="mdl-menu__item this_month_p">This month</li>
+                                <li class="mdl-menu__item this_year_p">This years</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="content-list content-list-poll">
+
+                    </div>
                 </div>
-                <div class="module popular-tags">
-                    <p>Most asked questions</p>
-                    <div class="content-tags-module">
-                        <span class="badge bookmarkBadge hundred">1. <a id="" class="bookmarkLink"
-                                                                        href="#">Philosophy</a></span>
+
+                {################  MODULE MOST ASKED QUESTIONS ################}
+                {################  MODULE POLLS ################}
+                <div class="module poll mdl-card mdl-shadow--2dp">
+                    <div class="header-modules mdl-card__actions mdl-card--border">
+                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                            MOST ASKED QUESTIONS
+                        </a>
+                        <div class="wrapper">
+                            <form method="post" style="float: left">{% csrf_token %}
+                                {% if request.user.is_staff %}
+                                    {% load admin_urls %}
+                                    <a href="{% url 'admin:poll_poll_add' %}" class=""><i
+                                            class="material-icons md-18 width18 color_base add_item_button">add</i></a>
+                                    <a href="{% url 'admin:poll_poll_changelist' %}" class="">
+                                        <i class="material-icons md-18 width18 color_base edit_button">edit</i>
+                                    </a>
+                                {% endif %}
+                            </form>
+                            <button id="poll-menu-lower-right"
+                                    class="mdl-button mdl-js-button mdl-button--icon" style="color: #C2C2CA;">
+                                <i class="material-icons">sort</i>
+                            </button>
+
+                            <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                                for="poll-menu-lower-right">
+                                <li class="mdl-menu__item any_date_p">Any date</li>
+                                <li class="mdl-menu__item today_p">Today</li>
+                                <li class="mdl-menu__item past_7_days_p">Past 7 days</li>
+                                <li class="mdl-menu__item this_month_p">This month</li>
+                                <li class="mdl-menu__item this_year_p">This years</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="content-list content-list-poll">
+
                     </div>
                 </div>
             </div>
+
+
             <div class="back">
                 <div class="">
                     <div class="big-module">

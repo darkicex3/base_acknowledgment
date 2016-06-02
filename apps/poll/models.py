@@ -20,6 +20,7 @@ class Question(models.Model):
     class Meta:
         app_label = 'poll'
 
+    illustration = models.FileField(upload_to='questions_img/%Y/%m/%d', blank=True)
     choices = models.ManyToManyField(Choice, blank=True)
     title = models.CharField(max_length=200)
 

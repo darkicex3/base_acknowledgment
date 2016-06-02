@@ -1,17 +1,19 @@
 jQuery(document).ready(function ($) {
-    window.body = $('body');
-
-    var left_sidebar = $('.left-sidebar');
-    resize_left_menu();
-    resize_sidebars();
 
     window.Manager = new ArticleManager();
+    window.body = $('body');
+    resize_left_menu();
+    resize_sidebars();
+    resize_module();
+
     window.Manager.initEvents();
     window.Manager.getListArticle(); //category, tags, sorting, counter
     window.Manager.getListDailyRecap();
+    window.Manager.getListPolls();
 
     $("table").tablesorter();
     $('.menu-left-menu-container').perfectScrollbar();
+    $('.content-list-daily-recap').perfectScrollbar();
 
     ActionRightBar('.help-action', $('.help'));
     ActionRightBar('.notifications-action', $('.notifications'));
@@ -25,8 +27,7 @@ jQuery(document).ready(function ($) {
     OnSearchBar();
     OnAttachment();
 
-
-
+    
     window.display_mode = 'list';
 
     $(".card").flip({ trigger: 'manual' });
@@ -53,7 +54,8 @@ jQuery(document).ready(function ($) {
     $(window).resize(function (e) {
         resize_left_menu();
         resize_sidebars();
-        position_module_article()
+        position_module_article();
+        resize_module();
         // reposition_stat_glossary();
         //resize_module();
     });

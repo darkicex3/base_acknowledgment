@@ -1,7 +1,8 @@
 from django.http import JsonResponse
 from apps.article.models import Tag, Article, Category, UserArticle, Feedback, DailyRecap, UserDailyRecap
+from apps.poll.models import Poll, Question, Choice
 from django.views.generic import View
-import datetime
+from datetime import datetime, timedelta
 from django.core.exceptions import ObjectDoesNotExist
 from attachments.models import Attachment
 from django.shortcuts import render
@@ -380,8 +381,24 @@ class GetDailyRecapView(View):
         sorting = self.request.GET.get('sorting')
         user = self.request.user
         groups = self.request.user.groups.values_list('name', flat=True)
+        today = datetime.now()
 
-        daily_recaps = SearchQuerySet().models(DailyRecap).exclude(status='d').exclude(status='w')
+        if sorting == 'today':
+            daily_recaps = SearchQuerySet().models(DailyRecap).exclude(status='d').exclude(status='w') \
+                .filter(publish_date__gte=datetime.now() - timedelta(days=1)).order_by('-publish_date')
+        elif sorting == 'past_7_days':
+            daily_recaps = SearchQuerySet().models(DailyRecap).exclude(status='d').exclude(status='w') \
+                .filter(publish_date__gte=datetime.now() - timedelta(days=7)).order_by('-publish_date')
+        elif sorting == 'this_month':
+            daily_recaps = DailyRecap.objects.all().exclude(status='d').exclude(status='w') \
+                .filter(publish_date__year=today.year, publish_date__month=today.month).order_by('-publish_date')
+        elif sorting == 'this_year':
+            daily_recaps = DailyRecap.objects.all().exclude(status='d').exclude(status='w') \
+                .filter(publish_date__year=today.year).order_by('-publish_date')
+            print('YEAR : ', today.year)
+        else:
+            daily_recaps = SearchQuerySet().models(DailyRecap).exclude(status='d').exclude(status='w') \
+                .order_by('-publish_date')
 
         key = 0
 
@@ -415,7 +432,7 @@ class GetDailyRecapView(View):
             context.update({key: {
                 'id': art.pk,
                 'title': art.title,
-                'pub_date': art.publish_date,
+                'pub_date': art.publish_date.strftime("%d %B %Y %H:%M"),
                 'useful': art.useful_counter,
                 'views': art.view_counter,
                 'ok': 'ok',
@@ -445,7 +462,7 @@ class GetArticlesByStaticShortcutsView(View):
 
         # AUTOCOMPLETE MODE
         if autocomplete == 'true':
-            print('*************************** '+autoquery+' ***************************')
+            print('*************************** ' + autoquery + ' ***************************')
             sqs = SearchQuerySet().autocomplete(title_auto__startswith=autoquery)
 
             if "#" in get_by:
@@ -472,7 +489,8 @@ class GetArticlesByStaticShortcutsView(View):
             if "#" not in get_by:
 
                 try:
-                    p = SearchQuerySet().models(Article).exclude(status='d').exclude(status='w').exclude(daily_recap=True)
+                    p = SearchQuerySet().models(Article).exclude(status='d').exclude(status='w').exclude(
+                        daily_recap=True)
 
                     if not Article.objects.all().filter(status='p') or not p:
                         raise ObjectDoesNotExist
@@ -630,7 +648,6 @@ class GetArticlesByStaticShortcutsView(View):
                 time = article.publish_date.strftime("%d %b %Y")
                 update = 'ko'
 
-
             key += 1
             context.update({key: {
                 'id': art.pk,
@@ -737,14 +754,14 @@ class ShowArticleView(View):
                            + extension.upper() + '</span></a>'
 
         if article.file_content_option is True:
-                content = article.file_content.url
+            content = article.file_content.url
         else:
-                content = article.content
+            content = article.content
 
         if article.title == '':
-                title = article.file_content.name
+            title = article.file_content.name
         else:
-                title = article.title
+            title = article.title
 
         context.update({'id': article.pk,
                         'title': title,
@@ -774,13 +791,6 @@ class GetSortingMethodsView(View):
         return JsonResponse(context)
 
 
-class GetPollsView(View):
-    def get(self, *args, **kwargs):
-        context = {}
-
-        return JsonResponse(context)
-
-
 class GetFeedback(View):
     def get(self, *args, **kwargs):
         context = {}
@@ -791,7 +801,7 @@ class GetFeedback(View):
 
         print(feedback_choice, feedback_text, user, article_id)
 
-        obj = Feedback.objects.create(date=datetime.datetime.now(), author=user, rate=feedback_choice,
+        obj = Feedback.objects.create(date=datetime.now(), author=user, rate=feedback_choice,
                                       explanation=feedback_text, article=Article.objects.get(id=article_id))
 
         obj.save()
@@ -799,3 +809,104 @@ class GetFeedback(View):
         print(obj)
 
         return JsonResponse(context)
+
+
+class GetPollsView(View):
+    def get(self, *args, **kwargs):
+        context = {}
+        polls = []
+        questions = {}
+        poll_id = self.request.GET.get('id')
+        sorting = self.request.GET.get('sorting')
+        user = self.request.user
+        groups = self.request.user.groups.values_list('name', flat=True)
+        today = datetime.now()
+        choices = {}
+
+        print('ARTICLE_ID :', poll_id)
+
+        if poll_id != '':
+            poll = Poll.objects.get(id=poll_id)
+
+            for question in poll.questions.all():
+                if question.illustration:
+                    file = question.illustration.url
+                else:
+                    file = ''
+                questions.update({question.title: {}})
+                for choice in question.choices.all():
+                    questions[question.title].update(
+                        {choice.id: {'choice_id': choice.id, 'choice_title': choice.title, 'type': choice.type,
+                                     'img_url': file}})
+
+            context.update({poll.id: {
+                'poll_title': poll.title,
+                'questions': questions,
+                'pub_date': poll.publish_date.strftime("%d %B %Y")
+            }})
+        elif sorting == 'today':
+            polls = Poll.objects.all().filter(publish_date__gte=datetime.now() - timedelta(days=1)) \
+                .order_by('-publish_date')
+        elif sorting == 'past_7_days':
+            polls = Poll.objects.all().filter(publish_date__gte=datetime.now() - timedelta(days=7)) \
+                .order_by('-publish_date')
+        elif sorting == 'this_month':
+            polls = Poll.objects.all().filter(publish_date__year=today.year, publish_date__month=today.month) \
+                .order_by('-publish_date')
+        elif sorting == 'this_year':
+            polls = Poll.objects.all().filter(publish_date__year=today.year).order_by('-publish_date')
+        else:
+            polls = Poll.objects.all().order_by('-publish_date')
+
+        for poll in polls:
+            for question in poll.questions.all():
+                questions.update({question.title: {}})
+                for choice in question.choices.all():
+                    questions[question.title].update({choice.id: {'choice_id': choice.id, 'choice_title': choice.title,
+                                                                  'type': choice.type}})
+
+            context.update({poll.id: {
+                'poll_title': poll.title,
+                'questions': questions,
+                'pub_date': poll.publish_date.strftime("%d %B %Y")
+            }})
+
+        return JsonResponse(context)
+
+
+class WrongOrRightView(View):
+    def get(self, *args, **kwargs):
+        context = {}
+        choice_id = self.request.GET.get('choice_id')
+
+        print(Choice.objects.get(id=choice_id).type)
+
+        if (Choice.objects.get(id=choice_id)).type == '0':
+            context.update({'ok': 'ok'})
+
+        print(context)
+        return JsonResponse(context)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -10,7 +10,7 @@ $(document).ready(function () {
         this.form_selector = options.form_selector;
         this.url = options.url || URL_AUTO_COMPLETE;
         this.delay = parseInt(options.delay || 300);
-        this.minimum_length = parseInt(options.minimum_length || 3);
+        this.minimum_length = parseInt(options.minimum_length || 1);
         this.form_elem = null;
         this.query_box = null;
     };

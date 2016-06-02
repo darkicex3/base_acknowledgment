@@ -3,19 +3,31 @@ from django.contrib import admin
 from apps.poll.models import Poll, Question, Choice
 
 
+class PollQuestionsInline(admin.TabularInline):
+    model = Poll.questions.through
+
+
+class QuestionChoicesInline(admin.TabularInline):
+    model = Question.choices.through
+
+
 class PollAdmin(admin.ModelAdmin):
+    inlines = (PollQuestionsInline,)
+    exclude = ('questions',)
     list_display = ['title', 'id', 'publish_date']
     list_filter = ['publish_date']
     ordering = ['id']
 
 
 class QuestionAdmin(admin.ModelAdmin):
-    list_display = ['title']
+    inlines = (QuestionChoicesInline,)
+    exclude = ('choices',)
+    list_display = ['title', 'id']
     ordering = ['title']
 
 
 class ChoiceAdmin(admin.ModelAdmin):
-    list_display = ['title', 'votes', 'type']
+    list_display = ['title', 'votes', 'type', 'id']
     list_editable = ['type']
 
 
