@@ -114,7 +114,7 @@ var DailyRecap = function (id, element) {
         return '<div class="article shadow_material">' +
             '<div class="second-header-daily-recap">' +
             '<span class="key" id="' + key + '" hidden="hidden">' + key + '</span>' +
-            '<a class="title-daily-recap">' + title + '<i class="material-icons color_base">done_all</i></a>' +
+            '<a class="title-daily-recap">' + title + '<i class="done_all_read material-icons color_base">done_all</i></a>' +
             '<span class="schedule-txt-dialy-recap txt">' + date_publish + '</span>' +
             '</div>' +
             '<div class="content-daily-recap content-article">' + content + '</div>' +

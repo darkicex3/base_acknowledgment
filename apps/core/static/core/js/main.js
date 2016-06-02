@@ -4,7 +4,6 @@ jQuery(document).ready(function ($) {
     window.body = $('body');
     resize_left_menu();
     resize_sidebars();
-    resize_module();
 
     window.Manager.initEvents();
     window.Manager.getListArticle(); //category, tags, sorting, counter
@@ -55,7 +54,7 @@ jQuery(document).ready(function ($) {
         resize_left_menu();
         resize_sidebars();
         position_module_article();
-        resize_module();
+        // resize_module();
         // reposition_stat_glossary();
         //resize_module();
     });

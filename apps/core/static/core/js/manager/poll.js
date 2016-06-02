@@ -35,7 +35,7 @@ var Poll = function (id, element) {
             var choices = questions[question];
             console.log('QUESTION_IMG_URL : ', question['url_img']);
             body += '<div class="question-poll" id="question'+ counter_question +'">' +
-                '<div class="img_poll"><img style="display: none;" src="' + null + '"></div>' +
+                '<div class="img_poll"><img style="display: none;" src="#"></div>' +
                 '<div class="title-question">' + question + '</div><div class="choices">';
             for (var choice in choices) if (choices.hasOwnProperty(choice)) {
                 counter++;

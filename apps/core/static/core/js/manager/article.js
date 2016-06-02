@@ -111,9 +111,9 @@ var Article = function (id, element) {
 
         // GET HTML
         var articleHTML = article(data['id'], data['title'], data['author'], data['desc'], data['ok'],
-            data['pub_date'], data['tags'], data['read'], data['attachements'], data['file_option']);
+            data['pub_date'], data['tags'], data['read'], null, data['file_option']);
         var statsHTML = stats(data['id'], data['views'], data['useful'], data['loved'], data['bigup'],
-            data['favorites']);
+            data['favorites'], data['attachements']);
 
         // RENDER PDF or HTML
         $(selector.body_selector).empty().append(articleHTML);
@@ -195,28 +195,22 @@ var Article = function (id, element) {
         var ext_svg = (file_option == 'ko' ? '' : '-svg');
 
         return '<div class="article shadow_material">' +
-            '<div class="secondHeader">' +
-            '<span class="tags-section txt">' + tags + '</span>' +
-            '<i class="schedule-icon material-icons color_view md-18 width18">schedule</i>' +
-            '<span class="schedule-txt txt">' + date_publish + '</span>' +
-            '<span class="dotDivider">.</span>' +
-            '<p><small><span class="eta"></span></small></p>' +
-            '</div>' +
+            // '<div class="secondHeader">' +
+            // '<span class="tags-section txt">' + tags + '</span>' +
+            // '</div>' +
             '<header class="header-article">' +
+            '<span class="schedule-txt txt">' + date_publish + '</span>' +
+            '<p><small><span class="eta"></span></small></p>' +
             '<span class="key" id="' + key + '" hidden="hidden">' + key + '</span>' +
             '<a class="article-title">' + title +
-            '<i class="material-icons ' + color_read + '">done_all</i></a>' +
-            '<div class="attachment-section">' +
-            '<i class="attachment-button material-icons color_base md-24">attach_file</i>' +
-            '<div class="attachment-article" style="display: none">' + attachments + '</div>' +
-            '</div>' +
+            '<i class="material-icons done_all_read ' + color_read + '">done_all</i></a>' +
             '</header>' +
             '<div class="content-article' + ext_svg + '">' + content_final + '</div>' +
             '<aside class="glossary-article">' + '</aside>' +
             '</div>';
     };
 
-    var stats = function (key, view_counter, useful_counter, favorite_counter, bigup_article, favorites) {
+    var stats = function (key, view_counter, useful_counter, favorite_counter, bigup_article, favorites, attachments) {
         var active_bigup = (bigup_article == 'ok' ? 'bigup-active' : '');
         var active_favorite = (favorites == 'ok' ? 'favorite-active' : '');
 
@@ -237,6 +231,13 @@ var Article = function (id, element) {
             '<i class="center-icon material-icons remove_red_eye color_base md-24 width24">remove_red_eye</i>' +
             '<span class="counter counter-view">' + view_counter + '</span>' +
             '</div>' +
+
+            '<div class="stat-container attached-button">' +
+            '<i class="center-icon attachment-button material-icons color_base md-24">attach_file</i>' +
+            '</div>' +
+
+            '<div class="attachment-article" style="display: none">' + attachments + '</div>' +
+
             '</div>';
     };
 
