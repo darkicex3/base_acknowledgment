@@ -384,10 +384,11 @@ class GetDailyRecapView(View):
         today = datetime.now()
 
         if sorting == 'today':
-            daily_recaps = SearchQuerySet().models(DailyRecap).exclude(status='d').exclude(status='w') \
-                .filter(publish_date__gte=datetime.now() - timedelta(days=1)).order_by('-publish_date')
+            daily_recaps = DailyRecap.objects.all().filter(publish_date__year=today.year,
+                                                           publish_date__month=today.month,
+                                                           publish_date__day=today.day).order_by('-publish_date')
         elif sorting == 'past_7_days':
-            daily_recaps = SearchQuerySet().models(DailyRecap).exclude(status='d').exclude(status='w') \
+            daily_recaps = DailyRecap.objects.all().exclude(status='d').exclude(status='w') \
                 .filter(publish_date__gte=datetime.now() - timedelta(days=7)).order_by('-publish_date')
         elif sorting == 'this_month':
             daily_recaps = DailyRecap.objects.all().exclude(status='d').exclude(status='w') \
@@ -397,7 +398,7 @@ class GetDailyRecapView(View):
                 .filter(publish_date__year=today.year).order_by('-publish_date')
             print('YEAR : ', today.year)
         else:
-            daily_recaps = SearchQuerySet().models(DailyRecap).exclude(status='d').exclude(status='w') \
+            daily_recaps = DailyRecap.objects.all().exclude(status='d').exclude(status='w') \
                 .order_by('-publish_date')
 
         key = 0
@@ -641,12 +642,25 @@ class GetArticlesByStaticShortcutsView(View):
                         '</span><a id="#' + a.name + '" class="' + bookmarkclass + '" href="#">' + a.name + \
                         '</a></span>'
 
+            attachments = ''
+            nb_attachment = 0
+            for a in Attachment.objects.attachments_for_object(art):
+                nb_attachment += 1
+                filename = a.attachment_file.name.split("/")
+                attachments += '<a class="attachment-file" href = "' + a.attachment_file.url + '" target="_blank">' \
+                               + str(filename[len(filename) - 1]) + '</a>'
+
             if get_by == 'Last Updates' and display != 'list':
                 time = article.modified.strftime("%d %B %Y %H:%M")
                 update = 'ok'
             else:
                 time = article.publish_date.strftime("%d %b %Y")
                 update = 'ko'
+
+            newart = ''
+            print(article.publish_date.day, datetime.today().day)
+            if article.publish_date.day == datetime.today().day + 1:
+                newart = 'new'
 
             key += 1
             context.update({key: {
@@ -666,6 +680,8 @@ class GetArticlesByStaticShortcutsView(View):
                 'modified': art.modified.strftime("%d %B %Y %H:%M"),
                 'url_option': url_option,
                 'url': url,
+                'attachments': attachments,
+                'newart': newart
             }})
 
         return JsonResponse(context)
@@ -727,31 +743,30 @@ class ShowArticleView(View):
                     '</a></span>'
 
         attachments = ''
+        nb_attachment = 0
         for a in Attachment.objects.attachments_for_object(art):
-            path, extension = os.path.splitext(a.attachment_file.name)
-            extension = extension.replace(".", "")
-            if extension in tf_ext:
-                ext_class = 'tf'
-            elif extension in df_ext:
-                ext_class = 'df'
-            elif extension in af_ext:
-                ext_class = 'af'
-            elif extension in vf_ext:
-                ext_class = 'vf'
-            elif extension in rif_ext:
-                ext_class = 'rif'
-            elif extension in plf_ext:
-                ext_class = 'plf'
-            elif extension in sf_ext:
-                ext_class = 'sf'
-            elif extension in cf_ext:
-                ext_class = 'cf'
-            else:
-                ext_class = 'oth'
-            filename = path.split("/")
+            # if extension in tf_ext:
+            #     ext_class = 'tf'
+            # elif extension in df_ext:
+            #     ext_class = 'df'
+            # elif extension in af_ext:
+            #     ext_class = 'af'
+            # elif extension in vf_ext:
+            #     ext_class = 'vf'
+            # elif extension in rif_ext:
+            #     ext_class = 'rif'
+            # elif extension in plf_ext:
+            #     ext_class = 'plf'
+            # elif extension in sf_ext:
+            #     ext_class = 'sf'
+            # elif extension in cf_ext:
+            #     ext_class = 'cf'
+            # else:
+            #     ext_class = 'oth'
+            nb_attachment += 1
+            filename = a.attachment_file.name.split("/")
             attachments += '<a class="attachment-file" href = "' + a.attachment_file.url + '" target="_blank">' \
-                           + str(filename[len(filename) - 1]) + '<span class="ext_img ' + ext_class + '">' \
-                           + extension.upper() + '</span></a>'
+                           + str(filename[len(filename) - 1]) + '</a>'
 
         if article.file_content_option is True:
             content = article.file_content.url
@@ -778,7 +793,8 @@ class ShowArticleView(View):
                         'bigup': bigup,
                         'attachements': attachments,
                         'file_option': file_option,
-                        'file_url': file_url
+                        'file_url': file_url,
+                        'nb_attachment': nb_attachment
                         })
 
         return JsonResponse(context)
@@ -823,7 +839,7 @@ class GetPollsView(View):
         today = datetime.now()
         choices = {}
 
-        print('ARTICLE_ID :', poll_id)
+        print('ARTICLE_ID :', today.day)
 
         if poll_id != '':
             poll = Poll.objects.get(id=poll_id)
@@ -845,8 +861,8 @@ class GetPollsView(View):
                 'pub_date': poll.publish_date.strftime("%d %B %Y")
             }})
         elif sorting == 'today':
-            polls = Poll.objects.all().filter(publish_date__gte=datetime.now() - timedelta(days=1)) \
-                .order_by('-publish_date')
+            polls = Poll.objects.all().filter(publish_date__year=today.year, publish_date__month=today.month,
+                                              publish_date__day=today.day).order_by('-publish_date')
         elif sorting == 'past_7_days':
             polls = Poll.objects.all().filter(publish_date__gte=datetime.now() - timedelta(days=7)) \
                 .order_by('-publish_date')

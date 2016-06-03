@@ -113,7 +113,7 @@ var Article = function (id, element) {
         var articleHTML = article(data['id'], data['title'], data['author'], data['desc'], data['ok'],
             data['pub_date'], data['tags'], data['read'], null, data['file_option']);
         var statsHTML = stats(data['id'], data['views'], data['useful'], data['loved'], data['bigup'],
-            data['favorites'], data['attachements']);
+            data['favorites']);
 
         // RENDER PDF or HTML
         $(selector.body_selector).empty().append(articleHTML);
@@ -127,6 +127,13 @@ var Article = function (id, element) {
         $(selector.stats_selector).empty().append(statsHTML);
 
         // RENDER HTML or PDF
+        if (data['attachements'] != '') {
+            $('#attachments-menu-lower-right').webuiPopover({content: data['attachements'], placement: 'bottom-right'});
+            $('.nb_attachments').append(data['nb_attachment']).show();
+        } else {
+            $('.nb_attachments').hide();
+        }
+
         render_article();
         resize_iframe();
 
@@ -233,10 +240,12 @@ var Article = function (id, element) {
             '</div>' +
 
             '<div class="stat-container attached-button">' +
-            '<i class="center-icon attachment-button material-icons color_base md-24">attach_file</i>' +
+            '<button id="attachments-menu-lower-right"' +
+            ' class="mdl-button mdl-js-button mdl-button--icon" style="color: #C2C2CA;">' +
+            '<i class="center-icon-attach attachment-button material-icons color_base md-24">attach_file</i>' +
+            '</button>' +
+            '<span class="nb_attachments"></span>' +
             '</div>' +
-
-            '<div class="attachment-article" style="display: none">' + attachments + '</div>' +
 
             '</div>';
     };

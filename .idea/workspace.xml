@@ -6,14 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="18b606f7-4bb6-4847-a114-ede8e2ca5ad6" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/article/views.py" afterPath="$PROJECT_DIR$/apps/article/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/core/static/core/css/main.css" afterPath="$PROJECT_DIR$/apps/core/static/core/css/main.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/core/static/core/js/main.js" afterPath="$PROJECT_DIR$/apps/core/static/core/js/main.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/core/static/core/js/manager/article.js" afterPath="$PROJECT_DIR$/apps/core/static/core/js/manager/article.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/core/static/core/js/manager/dailyrecap.js" afterPath="$PROJECT_DIR$/apps/core/static/core/js/manager/dailyrecap.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/core/static/core/js/manager/poll.js" afterPath="$PROJECT_DIR$/apps/core/static/core/js/manager/poll.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/core/static/core/js/manager/manager.js" afterPath="$PROJECT_DIR$/apps/core/static/core/js/manager/manager.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/core/static/core/js/manager/render.js" afterPath="$PROJECT_DIR$/apps/core/static/core/js/manager/render.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/core/templates/core/home.html" afterPath="$PROJECT_DIR$/apps/core/templates/core/home.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/core/templates/core/menu-right.html" afterPath="$PROJECT_DIR$/apps/core/templates/core/menu-right.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
     </list>
     <list id="c2818188-c081-4fde-b41c-d5fb9174705a" name="New changelist" comment="" />
@@ -54,74 +52,22 @@
       <file leaf-file-name="manager.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/core/static/core/js/manager/manager.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2843">
-              <caret line="140" column="33" selection-start-line="140" selection-start-column="33" selection-end-line="140" selection-end-column="33" />
+            <state relative-caret-position="337">
+              <caret line="317" column="154" selection-start-line="317" selection-start-column="154" selection-end-line="317" selection-end-column="154" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
-                <marker date="1464866098000" expanded="true" signature="12734:12752" ph="..." />
-                <marker date="1464866098000" expanded="true" signature="13516:13534" ph="..." />
+                <marker date="1464921825000" expanded="true" signature="13174:13192" ph="..." />
+                <marker date="1464921825000" expanded="true" signature="13994:14012" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="render.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apps/core/static/core/js/manager/render.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="258">
-              <caret line="108" column="44" selection-start-line="108" selection-start-column="44" selection-end-line="108" selection-end-column="44" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.css" pinned="false" current-in-tab="true">
+      <file leaf-file-name="main.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/core/static/core/css/main.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="400">
-              <caret line="355" column="1" selection-start-line="355" selection-start-column="1" selection-end-line="355" selection-end-column="1" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="article.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apps/core/static/core/js/manager/article.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="292">
-              <caret line="205" column="51" selection-start-line="205" selection-start-column="51" selection-end-line="205" selection-end-column="51" />
-              <folding>
-                <marker date="1464880398000" expanded="true" signature="8959:8972" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="dailyrecap.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apps/core/static/core/js/manager/dailyrecap.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="262">
-              <caret line="116" column="79" selection-start-line="116" selection-start-column="79" selection-end-line="116" selection-end-column="79" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apps/core/static/core/js/main.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" column="22" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="base.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apps/core/templates/core/base.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="358">
-              <caret line="99" column="9" selection-start-line="99" selection-start-column="9" selection-end-line="99" selection-end-column="9" />
+            <state relative-caret-position="250">
+              <caret line="286" column="17" selection-start-line="286" selection-start-column="17" selection-end-line="286" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -140,8 +86,18 @@
       <file leaf-file-name="home.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/core/templates/core/home.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="628">
-              <caret line="188" column="32" selection-start-line="188" selection-start-column="32" selection-end-line="188" selection-end-column="46" />
+            <state relative-caret-position="271">
+              <caret line="231" column="52" selection-start-line="231" selection-start-column="52" selection-end-line="231" selection-end-column="52" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="render.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/core/static/core/js/manager/render.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="622">
+              <caret line="157" column="55" selection-start-line="157" selection-start-column="55" selection-end-line="157" selection-end-column="55" />
               <folding />
             </state>
           </provider>
@@ -153,6 +109,53 @@
             <state relative-caret-position="0">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="modal.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/core/templates/core/modal.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="718">
+              <caret line="109" column="0" selection-start-line="109" selection-start-column="0" selection-end-line="109" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/apps/article/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="187">
+              <caret line="534" column="15" selection-start-line="534" selection-start-column="15" selection-end-line="534" selection-end-column="15" />
+              <folding>
+                <element signature="e#0#36#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="article.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/core/static/core/js/manager/article.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="337">
+              <caret line="131" column="70" selection-start-line="131" selection-start-column="70" selection-end-line="131" selection-end-column="70" />
+              <folding>
+                <marker date="1464920919000" expanded="true" signature="9188:9203" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="poll.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/core/static/core/js/manager/poll.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="330">
+              <caret line="37" column="49" selection-start-line="37" selection-start-column="49" selection-end-line="37" selection-end-column="49" />
+              <folding>
+                <marker date="1464873856000" expanded="true" signature="1258:1272" ph="..." />
+                <marker date="1464873856000" expanded="true" signature="1919:1932" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -216,16 +219,16 @@
         <option value="$PROJECT_DIR$/apps/core/templates/core/base.html" />
         <option value="$PROJECT_DIR$/apps/poll/admin.py" />
         <option value="$PROJECT_DIR$/apps/poll/models.py" />
-        <option value="$PROJECT_DIR$/apps/article/views.py" />
-        <option value="$PROJECT_DIR$/apps/core/static/core/js/manager/manager.js" />
         <option value="$PROJECT_DIR$/apps/core/static/core/js/manager/poll.js" />
         <option value="$PROJECT_DIR$/apps/core/templates/core/menu-right.html" />
-        <option value="$PROJECT_DIR$/apps/core/templates/core/home.html" />
         <option value="$PROJECT_DIR$/apps/core/static/core/js/main.js" />
+        <option value="$PROJECT_DIR$/apps/core/static/core/js/manager/dailyrecap.js" />
         <option value="$PROJECT_DIR$/apps/core/static/core/js/manager/render.js" />
         <option value="$PROJECT_DIR$/apps/core/static/core/js/manager/article.js" />
-        <option value="$PROJECT_DIR$/apps/core/static/core/js/manager/dailyrecap.js" />
+        <option value="$PROJECT_DIR$/apps/core/templates/core/home.html" />
+        <option value="$PROJECT_DIR$/apps/core/static/core/js/manager/manager.js" />
         <option value="$PROJECT_DIR$/apps/core/static/core/css/main.css" />
+        <option value="$PROJECT_DIR$/apps/article/views.py" />
       </list>
     </option>
   </component>
@@ -497,7 +500,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="files" />
+              <option name="myItemId" value="css" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -515,19 +518,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="core" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="core" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
+              <option name="myItemId" value="article" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -919,13 +910,6 @@
       <option name="presentableId" value="Default" />
       <updated>1460348435713</updated>
     </task>
-    <task id="LOCAL-00062" summary="staticfiles">
-      <created>1463635157221</created>
-      <option name="number" value="00062" />
-      <option name="presentableId" value="LOCAL-00062" />
-      <option name="project" value="LOCAL" />
-      <updated>1463635157221</updated>
-    </task>
     <task id="LOCAL-00063" summary="staticfiles">
       <created>1463655234241</created>
       <option name="number" value="00063" />
@@ -1262,7 +1246,14 @@
       <option name="project" value="LOCAL" />
       <updated>1464866201444</updated>
     </task>
-    <option name="localTasksCounter" value="111" />
+    <task id="LOCAL-00111" summary="Revision du design pour la millieme fois&#10;">
+      <created>1464880559324</created>
+      <option name="number" value="00111" />
+      <option name="presentableId" value="LOCAL-00111" />
+      <option name="project" value="LOCAL" />
+      <updated>1464880559324</updated>
+    </task>
+    <option name="localTasksCounter" value="112" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1328,7 +1319,8 @@
     <MESSAGE value="real time search engine&#10;" />
     <MESSAGE value="Daily Recap&#10;Permission Group Users On Article and Daily Recap&#10;" />
     <MESSAGE value="Polls + Design Moche a refaire&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Polls + Design Moche a refaire&#10;" />
+    <MESSAGE value="Revision du design pour la millieme fois&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Revision du design pour la millieme fois&#10;" />
     <option name="PRESELECT_EXISTING_CHANGELIST" value="false" />
   </component>
   <component name="XDebuggerManager">
@@ -1604,14 +1596,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/core/templates/core/modal.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="712">
-          <caret line="109" column="0" selection-start-line="109" selection-start-column="0" selection-end-line="109" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/apps/poll/constants.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
@@ -1666,13 +1650,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/article/views.py">
+    <entry file="file://$PROJECT_DIR$/apps/core/static/core/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="313">
-          <caret line="839" column="38" selection-start-line="839" selection-start-column="38" selection-end-line="839" selection-end-column="45" />
-          <folding>
-            <element signature="e#0#36#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="75">
+          <caret line="5" column="22" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/core/static/core/js/manager/dailyrecap.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="262">
+          <caret line="116" column="79" selection-start-line="116" selection-start-column="79" selection-end-line="116" selection-end-column="79" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/core/templates/core/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="358">
+          <caret line="99" column="9" selection-start-line="99" selection-start-column="9" selection-end-line="99" selection-end-column="9" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1687,19 +1685,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/core/templates/core/base.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="358">
-          <caret line="99" column="9" selection-start-line="99" selection-start-column="9" selection-end-line="99" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/apps/core/templates/core/data.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="375">
           <caret line="25" column="6" selection-start-line="25" selection-start-column="6" selection-end-line="25" selection-end-column="6" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/core/static/core/js/manager/render.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="622">
+          <caret line="157" column="55" selection-start-line="157" selection-start-column="55" selection-end-line="157" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/core/static/core/js/manager/article.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="337">
+          <caret line="131" column="70" selection-start-line="131" selection-start-column="70" selection-end-line="131" selection-end-column="70" />
+          <folding>
+            <marker date="1464920919000" expanded="true" signature="9188:9203" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1711,65 +1719,49 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/core/templates/core/home.html">
+    <entry file="file://$PROJECT_DIR$/apps/core/templates/core/modal.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="628">
-          <caret line="188" column="32" selection-start-line="188" selection-start-column="32" selection-end-line="188" selection-end-column="46" />
+        <state relative-caret-position="718">
+          <caret line="109" column="0" selection-start-line="109" selection-start-column="0" selection-end-line="109" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/core/static/core/js/main.js">
+    <entry file="file://$PROJECT_DIR$/apps/core/templates/core/home.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="22" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
+        <state relative-caret-position="271">
+          <caret line="231" column="52" selection-start-line="231" selection-start-column="52" selection-end-line="231" selection-end-column="52" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/core/static/core/js/manager/manager.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2843">
-          <caret line="140" column="33" selection-start-line="140" selection-start-column="33" selection-end-line="140" selection-end-column="33" />
+        <state relative-caret-position="337">
+          <caret line="317" column="154" selection-start-line="317" selection-start-column="154" selection-end-line="317" selection-end-column="154" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
-            <marker date="1464866098000" expanded="true" signature="12734:12752" ph="..." />
-            <marker date="1464866098000" expanded="true" signature="13516:13534" ph="..." />
+            <marker date="1464921825000" expanded="true" signature="13174:13192" ph="..." />
+            <marker date="1464921825000" expanded="true" signature="13994:14012" ph="..." />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/core/static/core/js/manager/render.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="258">
-          <caret line="108" column="44" selection-start-line="108" selection-start-column="44" selection-end-line="108" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/core/static/core/js/manager/article.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="292">
-          <caret line="205" column="51" selection-start-line="205" selection-start-column="51" selection-end-line="205" selection-end-column="51" />
-          <folding>
-            <marker date="1464880398000" expanded="true" signature="8959:8972" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/core/static/core/js/manager/dailyrecap.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="262">
-          <caret line="116" column="79" selection-start-line="116" selection-start-column="79" selection-end-line="116" selection-end-column="79" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/core/static/core/css/main.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="355" column="1" selection-start-line="355" selection-start-column="1" selection-end-line="355" selection-end-column="1" />
+        <state relative-caret-position="250">
+          <caret line="286" column="17" selection-start-line="286" selection-start-column="17" selection-end-line="286" selection-end-column="17" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/article/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="534" column="15" selection-start-line="534" selection-start-column="15" selection-end-line="534" selection-end-column="15" />
+          <folding>
+            <element signature="e#0#36#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

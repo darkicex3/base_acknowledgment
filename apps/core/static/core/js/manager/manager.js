@@ -186,9 +186,9 @@ var ArticleManager = function (options) {
                         ).insertBefore("#question1");
                     } else {
                         $('<div class="result-poll">' + parseInt(score) + '/20</div>' +
-                        '<div class="restart-poll mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent res">Restart</div>' +
-                        '<div class="show-results-poll mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect res">Show Results</div>'
-                    ).insertBefore("#question1");
+                            '<div class="restart-poll mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent res">Restart</div>' +
+                            '<div class="show-results-poll mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect res">Show Results</div>'
+                        ).insertBefore("#question1");
                     }
                 } else {
                     progress += progress_bar_speed;
@@ -264,9 +264,13 @@ var ArticleManager = function (options) {
             result += list(data[key]['id'], data[key]['title'], data[key]['desc'], data[key]['pub_date'],
                 data[key]['loved'], data[key]['tags'], data[key]['favorites'], data[key]['read'],
                 data[key]['useful'], data[key]['bigup'], data[key]['modified'], data[key]['views'],
-                data[key]['url_option'], data[key]['url']);
+                data[key]['url_option'], data[key]['url'], data[key]['attachments'], data[key]['newart']);
+
 
         $(results_selector).empty().append(result).parent().parent().parent().show();
+        $('.attr_att').append('<i class="center-icon-attach attachment-button-list ' +
+                'material-icons color_base md-24">attach_file</i>');
+
         $("#grid-data").bootgrid();
         $("table").trigger("update");
     };
@@ -310,7 +314,9 @@ var ArticleManager = function (options) {
     };
 
     var list = function (key, title, description, date_publish, favorite_counter, tags, favorites, read_article,
-                         useful_counter, bigup_article, last_update, view_counter, url_option, url) {
+                         useful_counter, bigup_article, last_update, view_counter, url_option, url, att, newart) {
+        var attr_new = (newart == 'new' ? '<span class="id-article" style="">New</span><span class="id-article-ess" style="">Essential</span></td>' : '');
+        var attr_att = (att != '' ? ' attr_att' : '');
 
         var href = (url_option == 'ok' ? url : '#display-article');
         var redirect = (url_option == 'ok' ? '_blank' : '');
@@ -318,15 +324,15 @@ var ArticleManager = function (options) {
 
         return '<tr class="row' + key + '" id="' + key + '" style="position: relative">' +
             '<th class="field-title font-list padding-list">' +
-            '<a data-toggle="modal" href="' + href + '" target="' + redirect + '" class="padding-bottom-list ' + classattr + '">' +
-            '' + title + '' +
+            '<span class="'+newart+'"></span><a data-toggle="modal" href="' + href + '" target="' + redirect + '" class="padding-bottom-list ' + classattr + attr_att + '">' +
+            '' + title +
             '</a>' +
             '<br>' + tags + '</th>' +
             '<td class="field-publish_date padding-top-list nowrap">' + date_publish + '</td>' +
             // '<td class="field-modified padding-top-list nowrap">' + last_update + '</td>' +
             '<td class="center field-useful_counter padding-top-list">' + useful_counter + '</td>' +
             '<td class="center field-favorite_counter padding-top-list">' + favorite_counter + '</td>' +
-            '<td class="center field-view_counter padding-top-list" style="position: relative">' + view_counter + '<span class="id-article" style="">New</span></td>' +
+            '<td class="center field-view_counter padding-top-list" style="position: relative">' + view_counter + attr_new +
             '</tr>'
     };
 
