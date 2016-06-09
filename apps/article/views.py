@@ -1,17 +1,18 @@
-from django.http import JsonResponse
-from apps.article.models import Tag, Article, Category, UserArticle, Feedback, DailyRecap, UserDailyRecap
-from apps.poll.models import Poll, Question, Choice
-from django.views.generic import View
-from datetime import datetime, timedelta
-from django.core.exceptions import ObjectDoesNotExist
-from attachments.models import Attachment
-from django.shortcuts import render
-import simplejson as json
-from django.http import HttpResponse
-from haystack.query import SearchQuerySet
-from django.contrib.auth.decorators import login_required
-from haystack.management.commands import update_index
 import os
+from datetime import datetime, timedelta
+
+import simplejson as json
+from attachments.models import Attachment
+from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist
+from django.http import HttpResponse
+from django.http import JsonResponse
+from django.shortcuts import render
+from django.views.generic import View
+from haystack.query import SearchQuerySet
+
+from apps.article.models import Tag, Article, Category, UserArticle, Feedback, DailyRecap, UserDailyRecap
+from apps.poll.models import Poll, Choice
 
 tf_ext = ["doc", "docx", "odt", "txt", "pages", "wps", "wpd", "msg", "log"]
 df_ext = ["csv", "ppt", "pptx", "sdf", "tar", "xml", "vcf", "dat", "key"]
@@ -429,17 +430,22 @@ class GetDailyRecapView(View):
             except ObjectDoesNotExist:
                 bigup = "ko"
 
+            if art.publish_date.day == datetime.today().day:
+                pub_date = 'Today'
+            else:
+                pub_date = art.publish_date.strftime("%d %B %Y")
+
             key += 1
             context.update({key: {
                 'id': art.pk,
                 'title': art.title,
-                'pub_date': art.publish_date.strftime("%d %B %Y %H:%M"),
+                'pub_date': pub_date,
                 'useful': art.useful_counter,
                 'views': art.view_counter,
                 'ok': 'ok',
                 'bigup': bigup,
                 'read': readed,
-                'modified': art.modified.strftime("%d %B %Y %H:%M"),
+                'modified': art.modified.strftime("%d %B %Y"),
             }})
 
         return JsonResponse(context)
@@ -512,6 +518,8 @@ class GetArticlesByStaticShortcutsView(View):
                 elif get_by == 'Most Used':
                     articles = p.order_by('-useful_counter')
                 # GET MOST VIEWED ARTICLES
+                elif get_by == 'Essential':
+                    articles = p.filter(essential=True)
                 elif get_by == 'Most Viewed':
                     articles = p.order_by('-view_counter')
                 # GET MOST LOVED ARTICLES
@@ -526,7 +534,7 @@ class GetArticlesByStaticShortcutsView(View):
                             articles.append(x)
                 # GET RECENT ARICLES
                 elif get_by == 'Recent':
-                    articles = p.order_by('publish_date')
+                    articles = p.order_by('-publish_date')
                 # GET FAVORITES FOR CURRENT USER
                 elif get_by == 'Favorites':
                     print('Favorites')
@@ -657,31 +665,33 @@ class GetArticlesByStaticShortcutsView(View):
                 time = article.publish_date.strftime("%d %b %Y")
                 update = 'ko'
 
-            newart = ''
             print(article.publish_date.day, datetime.today().day)
-            if article.publish_date.day == datetime.today().day + 1:
-                newart = 'new'
+            if article.publish_date.day == datetime.today().day:
+                newart = True
+            else:
+                newart = False
 
             key += 1
             context.update({key: {
                 'id': art.pk,
                 'title': art.title,
-                'author': str(art.author),
                 'pub_date': time,
                 'useful': art.useful_counter,
                 'views': art.view_counter,
                 'loved': art.favorite_counter,
-                'ok': 'ok',
-                'tags': tags,
                 'favorites': favorites,
-                'bigup': bigup,
                 'read': readed,
-                'last_update': update,
-                'modified': art.modified.strftime("%d %B %Y %H:%M"),
                 'url_option': url_option,
                 'url': url,
                 'attachments': attachments,
-                'newart': newart
+                'newart': newart,
+                'essential': art.essential,
+
+                'author': str(art.author),
+                'bigup': bigup,
+                'tags': tags,
+                'last_update': update,
+                'modified': art.modified.strftime("%d %B %Y %H:%M"),
             }})
 
         return JsonResponse(context)

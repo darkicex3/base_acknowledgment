@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    {% load staticfiles %}
+    <link href='https://fonts.googleapis.com/css?family=PT+Sans+Caption:400,700' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=EB+Garamond' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="{% static 'core/css/proper.css' %}">
+    <link rel="stylesheet" href="{% static 'core/css/proper-mobile.css' %}">
+</head>
+<body>
+
+<div class="wrapper">
+    <nav role="navigation">
+        <div class="nav-wrapper">
+            <div class="profile">
+
+            </div>
+            <div class="menu">
+                <ul>
+                    <li>Link 1</li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="app">
+        <div class="feed">
+            <div class="top-menu">
+                <button class="all-button top-button" id="home">
+                    <span class="title-button"><i class="color-base material-icons">language</i>
+                        <span class="txt">ALL</span></span>
+                    <i class="color-base material-icons">keyboard_arrow_right</i></button>
+                <button class="essentials-button top-button" id="essentials">
+                    <span class="title-button"><i class="color-base material-icons">explicit</i>
+                        <span class="txt">ESSENTIALS</span></span>
+                    <i class="color-base material-icons logo-button">keyboard_arrow_right</i></button>
+                <button class="most-popular-button top-button" id="most_popular">
+                    <span class="title-button"><i class="color-base material-icons">star_rate</i>
+                        <span class="txt">MOST POPULAR</span></span>
+                    <i class="color-base material-icons">keyboard_arrow_right</i></button>
+                <button class="new-release-button top-button" id="new">
+                    <span class="title-button"><i class="color-base material-icons">new_releases</i>
+                        <span class="txt">NEW RELEASE</span></span>
+                    <i class="color-base material-icons">keyboard_arrow_right</i></button>
+            </div>
+            <div class="articles">
+                <div class="card mini-article">
+                    <div class="card-illustration"></div>
+                    <div class="card-header padding">
+                        Facing Three Months in Riker’s for “Climbs On Statue” While Protesting Police Murder.
+                    </div>
+                    <div class="card-stat">
+                        <div class="like-wrapper stat-wrapper">
+                            <i id="like-icon" class="color-base material-icons icon-mini-article">favorites</i>
+                            <span id="like-counter" class="counter-wrapper">0</span>
+                        </div>
+                        <div class="bigup-wrapper stat-wrapper">
+                            <i id="bigup-icon" class="color-base material-icons icon-mini-article">thumb_up</i>
+                            <span id="bigup-counter" class="counter-wrapper">0</span>
+                        </div>
+                        <div class="view-wrapper stat-wrapper">
+                            <i id="view-icon" class="color-base material-icons icon-mini-article">visibility</i>
+                            <span id="view-counter" class="counter-wrapper">0</span>
+                        </div>
+                    </div>
+                    <div class="tags-mini-article">
+                        tags
+                    </div>
+                    <div class="card-action padding" style="display: none">ACTION</div>
+                    <div class="card-status">
+                        <i class="color-explicit material-icons">explicit</i>
+                        {#                        <i class="color-new material-icons">fiber_new</i>#}
+                    </div>
+                </div>
+                <div class="card mini-article">
+                    <div class="card-illustration"></div>
+                    <div class="card-header padding">
+                        Facing Three Months in Riker’s for “Climbs On Statue” While Protesting Police Murder.
+                    </div>
+                    <div class="illustration-wrapper">
+                        {#                        <img src="{% static 'core/css/img/Screen Shot 2016-06-03 at 13.47.35.png' %}" alt="">#}
+                    </div>
+                    <div class="card-stat">
+                        <div class="like-wrapper stat-wrapper">
+                            <i id="like-icon" class="color-base material-icons icon-mini-article">favorites</i>
+                            <span id="like-counter" class="counter-wrapper">0</span>
+                        </div>
+                        <div class="bigup-wrapper stat-wrapper">
+                            <i id="bigup-icon" class="color-base material-icons icon-mini-article">thumb_up</i>
+                            <span id="bigup-counter" class="counter-wrapper">0</span>
+                        </div>
+                        <div class="view-wrapper stat-wrapper">
+                            <i id="view-icon" class="color-base material-icons icon-mini-article">visibility</i>
+                            <span id="view-counter" class="counter-wrapper">0</span>
+                        </div>
+                    </div>
+                    <div class="tags-mini-article">
+                        tags
+                    </div>
+                    <div class="card-action padding" style="display: none">ACTION</div>
+                </div>
+                <div class="card mini-article">
+                    <div class="card-illustration"></div>
+                    <div class="card-header padding">
+                        Facing Three Months in Riker’s for “Climbs On Statue” While Protesting Police Murder.
+                    </div>
+                    <div class="card-stat">
+                        <div class="like-wrapper stat-wrapper">
+                            <i id="like-icon" class="color-base material-icons icon-mini-article">favorites</i>
+                            <span id="like-counter" class="counter-wrapper">0</span>
+                        </div>
+                        <div class="bigup-wrapper stat-wrapper">
+                            <i id="bigup-icon" class="color-base material-icons icon-mini-article">thumb_up</i>
+                            <span id="bigup-counter" class="counter-wrapper">0</span>
+                        </div>
+                        <div class="view-wrapper stat-wrapper">
+                            <i id="view-icon" class="color-base material-icons icon-mini-article">visibility</i>
+                            <span id="view-counter" class="counter-wrapper">0</span>
+                        </div>
+                    </div>
+                    <div class="tags-mini-article">
+                        tags
+                    </div>
+                    <div class="card-action padding" style="display: none">ACTION</div>
+                </div>
+                <div class="card mini-article">
+                    <div class="card-illustration"></div>
+                    <div class="card-header padding">
+                        Facing Three Months in Riker’s for “Climbs On Statue” While Protesting Police Murder.
+                    </div>
+                    <div class="card-stat">
+                        <div class="like-wrapper stat-wrapper">
+                            <i id="like-icon" class="color-base material-icons icon-mini-article">favorites</i>
+                            <span id="like-counter" class="counter-wrapper">0</span>
+                        </div>
+                        <div class="bigup-wrapper stat-wrapper">
+                            <i id="bigup-icon" class="color-base material-icons icon-mini-article">thumb_up</i>
+                            <span id="bigup-counter" class="counter-wrapper">0</span>
+                        </div>
+                        <div class="view-wrapper stat-wrapper">
+                            <i id="view-icon" class="color-base material-icons icon-mini-article">visibility</i>
+                            <span id="view-counter" class="counter-wrapper">0</span>
+                        </div>
+                    </div>
+                    <div class="tags-mini-article">
+                        tags
+                    </div>
+                    <div class="card-action padding" style="display: none">ACTION</div>
+                </div>
+                <div class="card mini-article">
+                    <div class="card-illustration"></div>
+                    <div class="card-header padding">
+                        Facing Three Months in Riker’s for “Climbs On Statue” While Protesting Police Murder.
+                    </div>
+                    <div class="card-stat">
+                        <div class="like-wrapper stat-wrapper">
+                            <i id="like-icon" class="color-base material-icons icon-mini-article">favorites</i>
+                            <span id="like-counter" class="counter-wrapper">0</span>
+                        </div>
+                        <div class="bigup-wrapper stat-wrapper">
+                            <i id="bigup-icon" class="color-base material-icons icon-mini-article">thumb_up</i>
+                            <span id="bigup-counter" class="counter-wrapper">0</span>
+                        </div>
+                        <div class="view-wrapper stat-wrapper">
+                            <i id="view-icon" class="color-base material-icons icon-mini-article">visibility</i>
+                            <span id="view-counter" class="counter-wrapper">0</span>
+                        </div>
+                    </div>
+                    <div class="tags-mini-article">
+                        tags
+                    </div>
+                    <div class="card-action padding" style="display: none">ACTION</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modules">
+            <div class="daily-recap-module module card">
+                <div class="module-header">
+                    <span class="title-module">DAILY RECAPS</span>
+                    <i class="color-base material-icons edit-icon margin-icon">edit</i>
+                    <i class="color-base material-icons margin-icon">add</i>
+                    <i class="color-base material-icons">sort</i>
+                </div>
+                <div class="content-module">
+                    <div class="mini-daily-recap">
+                        <div class="daily-recap-title">Daily recap lorem ipsum iplor at domi</div>
+                        <div class="daily-recap-pubdate">20 June 2016</div>
+                    </div>
+                </div>
+                <div class="footer-module">
+                    <a href="#">more daily recap ...</a>
+                </div>
+            </div>
+
+            <div class="survey-module module card">
+                <div class="module-header">
+                    <span class="title-module">SURVEY</span>
+                    <i class="color-base material-icons edit-icon margin-icon">edit</i>
+                    <i class="color-base material-icons margin-icon">add</i>
+                    <i class="color-base material-icons">sort</i>
+                </div>
+                <div class="content-module">
+
+                </div>
+                <div class="footer-module">
+                    <a href="#">more survey ...</a>
+                </div>
+            </div>
+
+            <div class="most-popular-articles module card">
+                <div class="module-header">
+                    <span class="title-module">MOST POPULAR ARTICLE</span>
+                    <i class="color-base material-icons">sort</i>
+                </div>
+                <div class="content-module">
+
+                </div>
+                <div class="footer-module">
+                    <a href="#">more most asked questions ...</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-box"><i class="color-base material-icons">comment</i></div>
+    </div>
+</div>
+
+</body>
+</html>

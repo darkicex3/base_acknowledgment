@@ -44,6 +44,7 @@ class ArticleIndex(indexes.SearchIndex, indexes.Indexable):
     useful_counter = indexes.IntegerField(model_attr='useful_counter')
     favorite_counter = indexes.IntegerField(model_attr='favorite_counter')
     view_counter = indexes.IntegerField(model_attr='view_counter')
+    essential = indexes.BooleanField(model_attr='essential')
 
     content = indexes.CharField(model_attr='content')
     tags = indexes.MultiValueField()

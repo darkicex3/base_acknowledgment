@@ -1,136 +1,95 @@
 {% extends "core/base.html" %}
+{% load mptt_tags %}
+
 
 {% if user.is_authenticated %}
 
     {% block title %}Knowledge Base{% endblock %}
 
-    {% block profile %}
-        <div class="profile-auth-user">
-            <div class="user_profile">
-                <form method="post">{% csrf_token %}
-                    {% if request.user.is_superuser %}
-                        <a class="user-profile-link" href="{% url 'admin:auth_user_change' request.user.id %}">
-                            <div id="img_profile"></div>
-                        </a>
-                    {% elif request.user.is_staff %}
-                        <a class="user-profile-link" href="{% url 'admin:auth_user_change' request.user.id %}">
-                            <div id="img_profile"></div>
-                        </a>
-                    {% else %}
-                        <div id="img_profile"></div>
+    {% block side_menu %}
+        <ul id="static-menu" class="menu-side-bar">
+            {% recursetree nodes_static %}
+                <li>
+                    <span id="{{ node.name }}">
+                        <i class="material-icons md-18.width18 link_menu_color">{{ node.icon }}</i>{{ node.name }}
+                    </span>
+                    {% if not nodes_static.is_leaf_node %}
+                        <ul class="children" style="display: none">
+                            {{ children }}
+                        </ul>
                     {% endif %}
+                    {% if not nodes_static.is_leaf_node %}
+                        <ul class="children">
+                            {{ children }}
+                        </ul>
+                    {% endif %}
+                </li>
+            {% endrecursetree %}
+        </ul>
+        <ul id="variable-menu" class="menu-side-bar">
+            {% recursetree nodes_variable %}
+                <li>
+                    <span id="{{ node.name }}">
+                        <i class="material-icons md-18.width18 link_menu_color">{{ node.icon }}</i>{{ node.name }}
+                    </span>
+                    {% if not nodes_static.is_leaf_node %}
+                        <ul class="children" style="display: none">
+                            {{ children }}
+                        </ul>
+                    {% endif %}
+                </li>
+            {% endrecursetree %}
+        </ul>
+    {% endblock %}
+
+    {% block top_menu %}
+        <div class="top-menu">
+            <div class="front">
+                <button class="all-button top-button first" id="home">
+                    <span class="title-button"><i class="material-icons">language</i>
+                        <span class="txt">ALL</span></span>
+                </button>
+                <button class="essentials-button top-button" id="essentials">
+                    <span class="title-button"><i class="material-icons">explicit</i>
+                        <span class="txt">ESSENTIALS</span></span>
+                </button>
+                <button class="most-popular-button top-button" id="most_popular">
+                    <span class="title-button"><i class="material-icons">star_rate</i>
+                        <span class="txt">MOST POPULAR</span></span>
+                </button>
+                <button class="new-release-button top-button" id="new">
+                    <span class="title-button"><i class="material-icons">new_releases</i>
+                        <span class="txt">NEW RELEASE</span></span>
+                </button>
+                <button class="new-release-button top-button last" id="search">
+                    <span class="title-button"><i class="material-icons">search</i>
+                        </span>
+                </button>
+            </div>
+            <div class="back">
+                <form id="search_bar" method="post" action="{% url 'articles:articles_search_view' %}"
+                      class="autocomplete-me">
+                    {% csrf_token %}
+                    <div class="new-release-button top-button last" id="back_search">
+                    <span class="title-button"><i class="material-icons">arrow_back</i>
+                        </span>
+                    </div>
+                    <input class="search_section" id="search_field"
+                           placeholder="Search ..." type="text" id="id_q" name="q">
+                    <input type="hidden" value="Search!">
+                    <div class="clear-search-bar"><i class="material-icons color_base" style="position: relative;
+                                            top:10px">close</i></div>
                 </form>
-                <div id="detail_profile">
-                    <form method="post">{% csrf_token %}
-                        {% if request.user.is_superuser %}
-                            <a class="admin-link" href="{% url 'admin:index' %}"><p class="user-type administrator">
-                                Administrator</p></a>
-                        {% elif request.user.is_staff %}
-                            <p class="user-type staff">Staff User</p>
-                        {% else %}
-                            <p class="user-type normal">Basic User</p>
-                        {% endif %}
-                    </form>
-                    <p class="username">
-                        {% if request.user.get_full_name %}
-                            {{ request.user.get_full_name.title }}
-                        {% else %}
-                            {{ request.user.username.title }}
-                        {% endif %}
-                    </p>
-                    {#                    <p class="badge">{{ request.user.points }}</p>#}
-                </div>
             </div>
-        </div>
-    {% endblock %}
-
-    {% block menu_sidebar %}
-        <div class="widget widget-menus">
-            <div class="menu-left-menu-container">
-                <ul id="menu-left-menu-1" class="menu base_menu static"></ul>
-                <ul class="mega-shorcuts variable"></ul>
-                <ul class="shorcuts variable"></ul>
-                <ul class="pastilles variable"></ul>
-            </div>
-        </div>
-
-        <div class="copyright static">
-            <form method="post">{% csrf_token %}
-                {% if request.user.is_staff %}
-                    <a href="{% url 'admin:article_category_add' %}" class="add-button">Add Shortcut<i
-                            class="add-logo material-icons md-18 width18 color_base">add</i></a>
-                    <a href="{% url 'admin:article_category_changelist' %}" class="add-button">Manage Shortcuts</a>
-                {% endif %}
-            </form>
-            {#            ©2016 Teledirect Pte Ltd <br>#}
-            {#            <a href="#">Terms & Privacy</a>#}
         </div>
 
     {% endblock %}
 
-    {% block content %}
-        <div class="">
-        <div class="master-feed">
+    {% block feed %}
+        <div class="main-content">
+            <div class="feed">
 
-            {#        Search Module        #}
-            <div class="search-section" style="">
-                <div id="search-section-inner-content">
-                    <button class="search_section" type="button" id="search_categories"><i
-                            class="material-icons color_base md-36 first-item">more_horiz</i></button>
-                    <button class="search_section" type="button" id="search_sorting"><i
-                            class="sorting material-icons color_base md-36 first-item">sort</i></button>
-                    <form id="search_bar" method="post" action="{% url 'articles:articles_search_view' %}"
-                          class="autocomplete-me">
-                        {% csrf_token %}
-                        <input class="search_section" id="search_field"
-                               placeholder="What are you looking for ?" type="text" id="id_q" name="q">
-                        <input type="hidden" value="Search!">
-                        <div class="clear-search-bar"><i class="material-icons color_base" style="position: relative;
-                        top:10px">close</i></div>
-                    </form>
-                </div>
-            </div>
 
-            {#        Results Module        #}
-            <div class="results">
-                <table class="table-article table table-condensed table-hover table-striped"
-                       id="result_list grid-data">
-                    <thead style="display: none">
-                    <tr>
-                        <th id="title" data-column-id="title" scope="col"
-                            class="column padding-left-list column-title"
-                            style="padding: 10px 5px; border-radius: 2px 0 0 0;"><a>Title</a>
-                        </th>
-                        <th data-column-id="publish_date" class="column column-publish_date"
-                            style="padding: 10px 5px;width: 115px;"><a>Published</a>
-                        </th>
-                        {#                        <th data-column-id="modified" class="column column-modified"#}
-                        {#                            style="padding: 10px 5px;width: 115px;">#}
-                        {#                            <a>Modified</a>#}
-                        {#                        </th>#}
-                        <th data-column-id="big_up" data-type="numeric" scope="col"
-                            class="column column-useful_counter" style="padding: 10px 30px 6px 2px; width: 30px;"><a><i
-                                class="table-icon useful-active material-icons md-18 width18 color_bigup">thumb_up</i></a>
-                        </th>
-                        <th data-column-id="favorites" data-type="numeric" scope="col"
-                            class="column column-favorite_counter" style="padding: 10px 30px 6px 2px; width: 30px;">
-                            <a><i
-                                    class="table-icon material-icons md-18 width18 color_base_favorite">favorite</i></a>
-                        </th>
-                        <th data-column-id="views" data-type="numeric" scope="col"
-                            class="column column-view_counter"
-                            style="padding: 10px 30px 6px 2px;border-radius: 0 2px 0 0;width: 30px;"><a><i
-                                class="table-icon material-icons remove_red_eye color_base md-18 width18">remove_red_eye</i></a>
-                        </th>
-                    </tr>
-                    </thead>
-
-                    <tbody></tbody>
-                </table>
-            </div>
-
-            {#        Manager Module For Administrator Only        #}
-            <div class="manager-module">
                 <form method="post">{% csrf_token %}
                     {% if request.user.is_staff %}
                         {% load admin_urls %}
@@ -143,122 +102,67 @@
                 </form>
             </div>
         </div>
+    {% endblock %}
 
-        <div class="card right-sidebar">
-            <div class="front">
-                {################  MODULE DAILY RECAPS ################}
-                <div class="module daily-recap">
-                    <div class="module daily-recap">
-                        <div class="header-modules-fisrt mdl-card__actions mdl-card--border">
-                            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                                DAILY RECAPS
-                            </a>
-                            <div class="wrapper">
-                                <form method="post" style="float: left">{% csrf_token %}
-                                    {% if request.user.is_staff %}
-                                        {% load admin_urls %}
-                                        <a href="{% url 'admin:article_dailyrecap_add' %}" class=""><i
-                                                class="material-icons md-18 width18 color_base add_item_button">add</i></a>
-                                        <a href="{% url 'admin:article_dailyrecap_changelist' %}" class="">
-                                            <i class="material-icons md-18 width18 color_base edit_button">edit</i>
-                                        </a>
-                                    {% endif %}
-                                </form>
-                                <button id="daily-recap-menu-lower-right"
-                                        class="mdl-button mdl-js-button mdl-button--icon" style="color: #C2C2CA;">
-                                    <i class="material-icons">sort</i>
-                                </button>
+    {% block daily_recap_module %}
+        <div class="content-module">
 
-                                <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
-                                    for="daily-recap-menu-lower-right">
-                                    <li class="mdl-menu__item any_date">Any date</li>
-                                    <li class="mdl-menu__item today">Today</li>
-                                    <li class="mdl-menu__item past_7_days">Past 7 days</li>
-                                    <li class="mdl-menu__item this_month">This month</li>
-                                    <li class="mdl-menu__item this_year">This years</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="content-list content-list-daily-recap">
+        </div>
+    {% endblock %}
 
-                        </div>
-                    </div>
-
-                    {################  MODULE POLLS ################}
-                    <div class="module poll">
-                        <div class="header-modules mdl-card__actions mdl-card--border">
-                            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                                POLLS
-                            </a>
-                            <div class="wrapper">
-                                <form method="post" style="float: left">{% csrf_token %}
-                                    {% if request.user.is_staff %}
-                                        {% load admin_urls %}
-                                        <a href="{% url 'admin:poll_poll_add' %}" class=""><i
-                                                class="material-icons md-18 width18 color_base add_item_button">add</i></a>
-                                        <a href="{% url 'admin:poll_poll_changelist' %}" class="">
-                                            <i class="material-icons md-18 width18 color_base edit_button">edit</i>
-                                        </a>
-                                    {% endif %}
-                                </form>
-                                <button id="poll-menu-lower-right"
-                                        class="mdl-button mdl-js-button mdl-button--icon" style="color: #C2C2CA;">
-                                    <i class="material-icons">sort</i>
-                                </button>
-
-                                <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
-                                    for="poll-menu-lower-right">
-                                    <li class="mdl-menu__item any_date_p">Any date</li>
-                                    <li class="mdl-menu__item today_p">Today</li>
-                                    <li class="mdl-menu__item past_7_days_p">Past 7 days</li>
-                                    <li class="mdl-menu__item this_month_p">This month</li>
-                                    <li class="mdl-menu__item this_year_p">This years</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="content-list content-list-poll">
-
-                        </div>
-                    </div>
-
-                    {################  MODULE MOST ASKED QUESTIONS ################}
-                    {################  MODULE POLLS ################}
-                    <div class="module poll">
-                        <div class="header-modules mdl-card__actions mdl-card--border">
-                            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                                MOST ASKED QUESTIONS
-                            </a>
-                            <div class="wrapper">
-                                <form method="post" style="float: left">{% csrf_token %}
-                                    {% if request.user.is_staff %}
-                                        {% load admin_urls %}
-                                        <a href="{% url 'admin:poll_poll_add' %}" class=""><i
-                                                class="material-icons md-18 width18 color_base add_item_button">add</i></a>
-                                        <a href="{% url 'admin:poll_poll_changelist' %}" class="">
-                                            <i class="material-icons md-18 width18 color_base edit_button">edit</i>
-                                        </a>
-                                    {% endif %}
-                                </form>
-                            </div>
-                        </div>
-                        <div class="content-list content-list-question">
-                            <div class="poll-item 4" id="4"><a data-toggle="modal" class="link-poll" href="#">What starsign does that make it ?</a></div>
-                            <div class="poll-item 4" id="4"><a data-toggle="modal" class="link-poll" href="#">Whats your favourite colour ?</a></div>
-                            <div class="poll-item 4" id="4"><a data-toggle="modal" class="link-poll" href="#">Whats your lucky number ?</a></div>
-                            <div class="poll-item 4" id="4"><a data-toggle="modal" class="link-poll" href="#">Do you have any pets ?</a></div>
-                        </div>
-                    </div>
-                </div>
+    {% block survey_module %}
+        <div class="content-module">
+            <div class="mini-survey">
+                <div class="survey-title">Survey lorem ipsum iplor at domi</div>
+                <div class="nb_questions_completed completed_survey">30/30</div>
             </div>
-            <div class="back">
-                <div class="">
-                    <div class="big-module">
-                        <p>Filter</p>
-                    </div>
-                </div>
+            <div class="mini-survey">
+                <div class="survey-title">Survey lorem ipsum iplor at domi</div>
+                <div class="nb_questions_completed">0/30</div>
+            </div>
+            <div class="mini-survey">
+                <div class="survey-title">Survey lorem ipsum iplor at domi</div>
+                <div class="nb_questions_completed">0/30</div>
             </div>
         </div>
     {% endblock %}
+
+    {% block most_popular_articles_module %}
+        <div class="content-module">
+            <div class="mini-daily-recap">
+                <div class="daily-recap-title">Daily recap lorem ipsum iplor at domi</div>
+                <div class="daily-recap-pubdate">20 June 2016</div>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block module_most_popular_tags_module %}
+        <div class="content-module">
+            <div class="mini-daily-recap">
+                <div class="daily-recap-title">Daily recap lorem ipsum iplor at domi</div>
+                <div class="daily-recap-pubdate">20 June 2016</div>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block module_templates_module %}
+        <div class="content-module">
+            <div class="mini-daily-recap">
+                <div class="daily-recap-title">Daily recap lorem ipsum iplor at domi</div>
+                <div class="daily-recap-pubdate">20 June 2016</div>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block most_asked_questions_module %}
+        <div class="content-module">
+            <div class="mini-daily-recap">
+                <div class="daily-recap-title">Daily recap lorem ipsum iplor at domi</div>
+                <div class="daily-recap-pubdate">20 June 2016</div>
+            </div>
+        </div>
+    {% endblock %}
+
 {% endif %}
 
 

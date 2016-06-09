@@ -205,11 +205,6 @@ h1, h2, h3, h4, h5, h6, p {
     color: #5F5F5F;
 }
 
-@font-face {
-    font-family: mediumc;
-    src: url('fonts/CHARI.ttf');
-}
-
 .daily-recap .header {
     width: 100%;
     padding: 13px;

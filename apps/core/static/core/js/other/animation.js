@@ -2,8 +2,6 @@
  * Created by maxbook on 27/04/16.
  */
 
-
-
 function OnClickShortcutsSetSelected() {
     $('body').on('click', '.widget-menus ul li a', function (e) {
         $('.widget-menus ul li a').removeAttr('style');
@@ -50,23 +48,6 @@ function OnAttachment() {
                 elem.stop().slideUp(300);
         }
     }, '.attachment-section');
-}
-
-
-function OnClickShortcutsShowTrees() {
-    $('body').on('click', '.shortcuts-link', function (e) {
-        var selector = $(this).parent().children('.children');
-        var is_selected = ( $(this).css('background-color') == 'rgb(238, 238, 238)' );
-
-        if (selector.text() != '' && is_selected)
-            $(this).parent().children('.children').slideUp(200, function () {
-                $(this).empty();
-            });
-        else {
-            get_shortcuts($(this));
-        }
-        window.Manager.getListArticle($(this).attr('id'));
-    });
 }
 
 function ActionRightBar(element, section) {

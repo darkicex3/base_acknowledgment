@@ -10,18 +10,18 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
-
+import copy
+import logging
+import os
 import os
 import sys
-import logging
-import copy
-from django.utils.log import DEFAULT_LOGGING
-from django.core.management import execute_from_command_line
-from apps import registration
-import dj_database_url
-import os
 from urllib.parse import urlparse
 
+import dj_database_url
+from django.core.management import execute_from_command_line
+from django.utils.log import DEFAULT_LOGGING
+
+from apps import registration
 
 LOGGING = copy.deepcopy(DEFAULT_LOGGING)
 LOGGING['filters']['suppress_deprecated'] = {
@@ -81,6 +81,7 @@ INSTALLED_APPS = [
 
     'notifications',
     'django_mptt_admin',
+    'mptt',
     'elasticsearch',
     'urllib3',
     'haystack',
@@ -94,7 +95,7 @@ INSTALLED_APPS = [
     'apps.manager.apps.ManagerConfig',
 ]
 
-INSTALLED_APPS += ('django_summernote', )
+INSTALLED_APPS += ('django_summernote',)
 
 es = urlparse(os.environ.get('SEARCHBOX_URL') or 'http://127.0.0.1:9200/')
 port = es.port or 80
@@ -118,7 +119,6 @@ LOGIN_URL = '/registration/login/' \
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'subdomains.middleware.SubdomainURLRoutingMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -128,15 +128,6 @@ MIDDLEWARE_CLASSES = [
 ]
 
 ROOT_URLCONF = 'project.urls'
-
-SITE_ID = 1
-
-# A dictionary of urlconf module paths, keyed by their subdomain.
-SUBDOMAIN_URLCONFS = {
-    None: 'project.urls',  # no subdomain, e.g. ``example.com``
-    'www': 'project.urls',
-    'api': 'project.urls',
-}
 
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'site_media', 'media')
 MEDIA_URL = '/site_media/media/'
@@ -175,7 +166,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators

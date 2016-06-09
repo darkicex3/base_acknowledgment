@@ -116,7 +116,7 @@ class Article(models.Model):
     url_article = models.CharField(max_length=255, default='', blank=True)
     file_content = models.FileField(upload_to='article_pdf/%Y/%m/%d',
                                     blank=True)
-    publish_date = models.DateTimeField(help_text=publish_date_help, default=timezone.now())
+    publish_date = models.DateTimeField(help_text=publish_date_help, auto_now_add=True)
     modified = models.DateTimeField(editable=False)
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default=STATUS_CHOICES[0])
     tags = models.ManyToManyField(Tag, help_text=tags_help)
@@ -127,6 +127,7 @@ class Article(models.Model):
     view_counter = models.IntegerField(default=0, editable=False)
 
     # OPTIONNAL
+    essential = models.BooleanField(default=False, help_text=ess_help)
     related_questions = models.ManyToManyField('poll.Question', help_text=tags_help, blank=True)
     feedback_manager = models.ForeignKey(FeedbackManager, on_delete=models.CASCADE, default=DEFAULT_FEEDBACK_ID,
                                          editable=False)
@@ -192,7 +193,7 @@ class Category(MPTTModel):
         verbose_name = 'Category'
         verbose_name_plural = 'Categories'
 
-    name = models.CharField(max_length=300, unique=True, null=True)
+    name = models.CharField(max_length=300, unique=True)
     icon = models.CharField(max_length=500, default="", help_text="Add an icon to your category ! <a href=\"ht"
                                                                            "tps://design.google.com/ico"
                                                                            "ns/\">Click Here !</a>", null=True,
@@ -200,6 +201,7 @@ class Category(MPTTModel):
     articles = models.ManyToManyField(Article, help_text=tags_help, blank=True)
     activated = models.BooleanField(default=True)
     click_counter = models.IntegerField(default=0)
+    static = models.BooleanField(default=False)
     parent = TreeForeignKey('self', null=True, blank=True, related_name='children')
 
     def get_previous_parent(self):

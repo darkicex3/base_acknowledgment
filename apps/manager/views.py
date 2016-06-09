@@ -1,38 +1,37 @@
 from django.http import JsonResponse
-from apps.article.models import Category
 from django.views.generic import View
+
+from apps.article.models import Category
 
 
 class ManageSidebarShortcutsShowingView(View):
     def get(self, *args, **kwargs):
-
         context = {}
-        node_id = self.request.GET.get('node_id')
-        previous = self.request.GET.get('previous')
+        is_child = False
 
-        if node_id is None:
-            try:
-                shortcuts = Category.objects.all().filter(level=0)
-                q = shortcuts[0]
-            except IndexError:
-                context.update({'msg': '<p style="padding: 16px;">No shortcuts available, please add new ones '
-                                       'or contact an administrator.</p>'})
+        try:
+            categories = Category.objects.all().filter(activated=True)
+            q = categories[0]
+        except IndexError:
+            context.update({'msg': '<p style="padding: 16px;">No shortcuts available, please add new ones '
+                                   'or contact an administrator.</p>'})
+            return JsonResponse(context)
 
-                return JsonResponse(context)
-        else:
-            node_shortcut = Category.objects.all().get(pk=node_id)
-            if previous == 'false':
-                shortcuts = node_shortcut.get_children()
-            else:
-                shortcuts = node_shortcut.get_previous_parent().get_children()
+        for category in categories:
+            children = {}
+            has_children = False
+            for child in category.get_children():
+                children.update({child.id: {'child_name': child.name}})
+                has_children = True
 
-        for category in shortcuts:
-            if category.activated:
-                context.update({category.id: {
-                    'name': category.name,
-                    'state': category.activated,
-                    'icon': category.icon
-                }})
+            print('CATEGORIES', category.name, children, has_children)
+            context.update({category.id: {
+                'name': category.name,
+                'static': category.static,
+                'icon': category.icon,
+                'children': children,
+                'has_children': has_children
+            }})
 
         return JsonResponse(context)
 

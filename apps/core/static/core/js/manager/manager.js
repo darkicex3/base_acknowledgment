@@ -5,24 +5,25 @@
 /****************      ARTICLE MANAGER    ******************/
 
 var ArticleManager = function (options) {
-    var results_selector = '.table-article tbody';
-    var results_daily_selector = '.content-list-daily-recap';
+    var results_selector = '.main-content';
+    var results_daily_selector = '.daily-recap-module .content-module';
     var results_poll_selector = '.content-list-poll';
     var link_article_selector = '.link-title-article';
-    var daily_recap_selector = '.daily-recap-item';
+    var daily_recap_selector = '.daily-recap-title';
+    var daily_recap_feed_selector = '.main-content-daily-recap';
     var poll_selector = '.poll-item';
     var attachment_selector = '';
+    var result = 0;
+    var progress = 0;
+    var current_article = null;
+    var current_daily_recap = null;
+    var current_poll = null;
     this.display = 'list';
     this.counter = 20;
     this.category = 'Home';
     this.autoquery = null;
     this.autocomplete = false;
     this.sorting = 'publish_date';
-    var result = 0;
-    var progress = 0;
-    var current_article = null;
-    var current_daily_recap = null;
-    var current_poll = null;
 
     this.getListArticle = function (category, tags, sorting, counter, autocomplete, autoquery) {
         var count = counter || this.counter;
@@ -32,6 +33,10 @@ var ArticleManager = function (options) {
         var autoq = autoquery || this.autoquery;
 
         query(cat, tags, count, sort, auto, autoq);
+    };
+
+    this.getSearchSuggestions = function () {
+
     };
 
     this.getListDailyRecap = function (sorting, from_date) {
@@ -119,7 +124,7 @@ var ArticleManager = function (options) {
     };
 
     var daily_recap = function (object) {
-        var daily_recap = new DailyRecap(object.attr("id"), object);
+        var daily_recap = new DailyRecap(object.parent().attr("id"), object);
         current_daily_recap = daily_recap;
         daily_recap.setView();
         daily_recap.show();
@@ -208,6 +213,10 @@ var ArticleManager = function (options) {
         else if (current_poll)
             current_poll.element = object;
 
+        // SEARCH
+        if (object.attr('id').indexOf('search') >= 0)
+            window.Manager.getSearchSuggestions(); 
+
         // ACTION ARTICLE
         if (object.attr('class').indexOf('favorite') >= 0)
             current_article.setLike();
@@ -215,6 +224,60 @@ var ArticleManager = function (options) {
             nextQuestion(object);
         else if (object.attr('class').indexOf('useful') >= 0)
             current_article.setBigup();
+
+        // ARTICLES TEMPLATE FILTER
+        else if (object.attr('id').indexOf('home') >= 0) {
+            window.Manager.getListArticle();
+            design_top_menu(object);
+        }
+        else if (object.attr('id').indexOf('essentials') >= 0) {
+            window.Manager.getListArticle('Essential');
+            design_top_menu(object);
+        }
+        else if (object.attr('id').indexOf('most_popular') >= 0) {
+            window.Manager.getListArticle('Most Viewed');
+            design_top_menu(object);
+        }
+        else if (object.attr('id').indexOf('new') >= 0) {
+            window.Manager.getListArticle('Recent');
+            design_top_menu(object);
+        }
+
+        //DAILY_RECAPS_TEMPLATES
+        else if (object.attr('class').indexOf('more_daily_recap') >= 0) {
+            window.Manager.getListDailyRecap('any_date');
+            window.Manager.display = 'card';
+        }
+        else if (object.attr('id').indexOf('all_daily_recaps') >= 0) {
+            window.Manager.getListDailyRecap('any_date');
+            window.Manager.display = 'card';
+            design_top_menu_daily_recaps(object);
+        }
+        else if (object.attr('id').indexOf('last_7_days') >= 0) {
+            window.Manager.getListDailyRecap('past_7_days');
+            window.Manager.display = 'card';
+            design_top_menu_daily_recaps(object);
+        }
+        else if (object.attr('id').indexOf('today') >= 0) {
+            window.Manager.getListDailyRecap('today');
+            window.Manager.display = 'card';
+            design_top_menu_daily_recaps(object);
+        }
+        else if (object.attr('id').indexOf('unread') >= 0) {
+            window.Manager.getListDailyRecap('unread');
+            window.Manager.display = 'card';
+            design_top_menu_daily_recaps(object);
+        }
+        else if (object.attr('id').indexOf('read') >= 0) {
+            window.Manager.getListDailyRecap('read');
+            window.Manager.display = 'card';
+            design_top_menu_daily_recaps(object);
+        }
+        else if (object.attr('id').indexOf('most_view') >= 0) {
+            window.Manager.getListDailyRecap('most_view');
+            window.Manager.display = 'card';
+            design_top_menu_daily_recaps(object);
+        }
 
         // FEEDBACK ARTICLE
         else if (object.attr('class').indexOf('button-next-step-feedback') >= 0)
@@ -264,7 +327,7 @@ var ArticleManager = function (options) {
             result += list(data[key]['id'], data[key]['title'], data[key]['desc'], data[key]['pub_date'],
                 data[key]['loved'], data[key]['tags'], data[key]['favorites'], data[key]['read'],
                 data[key]['useful'], data[key]['bigup'], data[key]['modified'], data[key]['views'],
-                data[key]['url_option'], data[key]['url'], data[key]['attachments'], data[key]['newart']);
+                data[key]['url_option'], data[key]['url'], data[key]['attachments'], data[key]['newart'], data[key]['essential']);
 
 
         $(results_selector).empty().append(result).parent().parent().parent().show();
@@ -285,16 +348,26 @@ var ArticleManager = function (options) {
         $(results_poll_selector).empty().append(result);
     };
 
-    var results_daily_recap = function (data, display) {
+    var results_daily_recap = function (data) {
         var result = '';
 
         for (var key in data) if (data.hasOwnProperty(key))
-            result += list_daily_recap(data[key]['id'], data[key]['title'], data[key]['desc'], data[key]['pub_date'],
-                data[key]['loved'], data[key]['tags'], data[key]['favorites'], data[key]['read'],
-                data[key]['useful'], data[key]['bigup'], data[key]['modified'], data[key]['views'],
-                data[key]['url_option'], data[key]['url']);
+            if (window.Manager.display == 'card')
+                result += list_daily_recap_card(data[key]['id'], data[key]['title'], data[key]['desc'], data[key]['pub_date'],
+                    data[key]['loved'], data[key]['tags'], data[key]['favorites'], data[key]['read'],
+                    data[key]['useful'], data[key]['bigup'], data[key]['modified'], data[key]['views'],
+                    data[key]['url_option'], data[key]['url']);
+            else
+                result += list_daily_recap(data[key]['id'], data[key]['title'], data[key]['desc'], data[key]['pub_date'],
+                    data[key]['loved'], data[key]['tags'], data[key]['favorites'], data[key]['read'],
+                    data[key]['useful'], data[key]['bigup'], data[key]['modified'], data[key]['views'],
+                    data[key]['url_option'], data[key]['url']);
 
-        $(results_daily_selector).empty().append(result);
+        if (window.Manager.display == 'card')
+            $(daily_recap_feed_selector).empty().append(result);
+        else
+            $(results_daily_selector).empty().append(result);
+
     };
 
     var list_polls = function (poll_id, poll_title, pub_date) {
@@ -307,33 +380,78 @@ var ArticleManager = function (options) {
     var list_daily_recap = function (key, title, description, date_publish, favorite_counter, tags, favorites, read_article,
                                      useful_counter, bigup_article, last_update, view_counter, url_option, url) {
 
-        return '<div class="daily-recap-item ' + key + '" id="' + key + '">' +
-            '<a data-toggle="modal" class="link-daily-recap" href="#display-daily-recap">' + title + '</a>' +
-            '<a class="date-daily-recap schedule-txt-dialy-recap-list txt">' + date_publish + '</a>' +
+        return '<div class="mini-daily-recap" id="' + key + '">' +
+            '<a class="daily-recap-title" data-toggle="modal" href="#display-daily-recap">' +
+            title + '</a>' +
+            '<div class="daily-recap-pubdate">' + date_publish + '</div>' +
+            '</div>';
+    };
+
+    var list_daily_recap_card = function (key, title, description, date_publish, favorite_counter, tags, favorites, read_article,
+                                          useful_counter, bigup_article, last_update, view_counter, url_option, url, newdaily) {
+
+        return '<div class="card mini-daily-recap-card" id="' + key + '">' +
+            '<div class="card-illustration"></div>' +
+            '<div class="card-header padding">' + title + '</div>' +
+            '<div class="card-stat">' +
+            '<div class="like-wrapper stat-wrapper">' +
+            '<i id="like-icon" class="color-base material-icons icon-mini-article">schedule</i>' +
+            '<span id="like-counter" class="counter-wrapper">' + date_publish + '</span>' +
+            '</div>' +
+            '<div class="bigup-wrapper stat-wrapper">' +
+            '<i id="bigup-icon" class="color-base material-icons icon-mini-article">thumb_up</i>' +
+            '<span id="bigup-counter" class="counter-wrapper">' + useful_counter + '</span>' +
+            '</div>' +
+            '<div class="view-wrapper stat-wrapper">' +
+            '<i id="view-icon" class="color-base material-icons icon-mini-article">visibility</i>' +
+            '<span id="view-counter" class="counter-wrapper">' + view_counter + '</span>' +
+            '</div>' +
+            '</div>' +
+            '<div class="card-action padding" style="display: none">ACTION</div>' +
+            '<div class="card-status">' +
+            (newdaily ? '<i class="color-new material-icons">fiber_new</i>' : '') +
+            '</div>' +
             '</div>';
     };
 
     var list = function (key, title, description, date_publish, favorite_counter, tags, favorites, read_article,
-                         useful_counter, bigup_article, last_update, view_counter, url_option, url, att, newart) {
-        var attr_new = (newart == 'new' ? '<span class="id-article" style="">New</span><span class="id-article-ess" style="">Essential</span></td>' : '');
-        var attr_att = (att != '' ? ' attr_att' : '');
+                         useful_counter, bigup_article, last_update, view_counter, url_option, url, att, newart, essential) {
+        // var attr_new = (newart == 'new' ? '<span class="id-article" style="">New</span><span class="id-article-ess" style="">Essential</span></td>' : '');
+        // var attr_att = (att != '' ? ' attr_att' : '');
+        //
+        // var href = (url_option == 'ok' ? url : '#display-article');
+        // var redirect = (url_option == 'ok' ? '_blank' : '');
+        // var classattr = (url_option == 'ok' ? 'link-title-article-url' : 'link-title-article');
 
-        var href = (url_option == 'ok' ? url : '#display-article');
-        var redirect = (url_option == 'ok' ? '_blank' : '');
-        var classattr = (url_option == 'ok' ? 'link-title-article-url' : 'link-title-article');
+        console.log(newart);
+        return '<div class="card mini-article" id="' + key + '">' +
+            '<div class="card-illustration"></div>' +
+            '<div class="card-header padding">' + title + '</div>' +
+            '<div class="card-stat">' +
+            '<div class="like-wrapper stat-wrapper">' +
+            '<i id="like-icon" class="color-base material-icons icon-mini-article">favorites</i>' +
+            '<span id="like-counter" class="counter-wrapper">' + favorite_counter + '</span>' +
+            '</div>' +
+            '<div class="bigup-wrapper stat-wrapper">' +
+            '<i id="bigup-icon" class="color-base material-icons icon-mini-article">thumb_up</i>' +
+            '<span id="bigup-counter" class="counter-wrapper">' + useful_counter + '</span>' +
+            '</div>' +
+            '<div class="view-wrapper stat-wrapper">' +
+            '<i id="view-icon" class="color-base material-icons icon-mini-article">visibility</i>' +
+            '<span id="view-counter" class="counter-wrapper">' + view_counter + '</span>' +
+            '</div>' +
+            '</div>' +
+            '<div class="tags-mini-article">' +
+            'tags' +
+            '</div>' +
+            '<div class="card-action padding" style="display: none">ACTION</div>' +
+            '<div class="card-status">' +
+            (essential ? '<i class="color-explicit material-icons">explicit</i>' : '') +
+            (newart ? '<i class="color-new material-icons">fiber_new</i>' : '') +
+            '</div>' +
+            '</div>';
 
-        return '<tr class="row' + key + '" id="' + key + '" style="position: relative">' +
-            '<th class="field-title font-list padding-list">' +
-            '<span class="'+newart+'"></span><a data-toggle="modal" href="' + href + '" target="' + redirect + '" class="padding-bottom-list ' + classattr + attr_att + '">' +
-            '' + title +
-            '</a>' +
-            '<br>' + tags + '</th>' +
-            '<td class="field-publish_date padding-top-list nowrap">' + date_publish + '</td>' +
-            // '<td class="field-modified padding-top-list nowrap">' + last_update + '</td>' +
-            '<td class="center field-useful_counter padding-top-list">' + useful_counter + '</td>' +
-            '<td class="center field-favorite_counter padding-top-list">' + favorite_counter + '</td>' +
-            '<td class="center field-view_counter padding-top-list" style="position: relative">' + view_counter + attr_new +
-            '</tr>'
+
     };
 
     var urls = {
@@ -368,7 +486,25 @@ var ArticleManager = function (options) {
 
         'choice': '.choice',
         'restart-poll': '.restart-poll',
-        'show-results-poll': '.show-results-poll'
+        'show-results-poll': '.show-results-poll',
+
+        // HOME TEMPLATES
+        'home': '#home',
+        'essentials': '#essentials',
+        'most_popular': '#most_popular',
+        'new': '#new',
+
+        // DAILY RECAPS TEMPLATE
+        'more_daily_recap': '.more_daily_recap',
+        'all_daily_recaps': '#all_daily_recaps',
+        'last_7_days': '#last_7_days',
+        'today_daily_recaps': '#today',
+        'unread_daily_recaps': '#unread',
+        'read_daily_recaps': '#read',
+        'most_view': '#most_view',
+
+        // SEARCH
+        'search_button': '#search'
     };
 
     var selector = {
@@ -380,4 +516,23 @@ var ArticleManager = function (options) {
     }
 };
 
+function design_top_menu(object) {
+    $('.top-menu .material-icons').removeAttr('style');
+    $('.top-button').removeAttr('style');
+    $('.top-menu .txt').removeAttr('style');
+
+    $(object).css('background', '#ea4335')
+        .find('.material-icons').css('color', '#fff');
+    $(object).find('.txt').css('color', '#fff');
+}
+
+function design_top_menu_daily_recaps(object) {
+    $('.top-menu-daily-recap .material-icons').removeAttr('style');
+    $('.top-button').removeAttr('style');
+    $('.top-menu-daily-recap .txt').removeAttr('style');
+
+    $(object).css('background', 'rgb(8, 207, 152)')
+        .find('.material-icons').css('color', '#fff');
+    $(object).find('.txt').css('color', '#fff');
+}
 

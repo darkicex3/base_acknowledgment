@@ -18,7 +18,7 @@ help_option_url = "Check this box if you want to create an article from a websit
                   "the article he will be directly redirect to the url you entered."
 by_users_info = "Check this box if you want to authorized specific users."
 by_groups_info = "And this one if you want to authorized specific groups."
-
+ess_help = "Do you think this article is extremly IMPORTANT ?"
 
 INJURIES = ""
 NEGATIVE_WORDS = ""

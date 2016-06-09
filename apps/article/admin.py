@@ -60,7 +60,7 @@ class ArticleAdmin(SummernoteModelAdmin, admin.ModelAdmin):
             'fields': ('author', 'title', 'content', 'tags')
         }),
         ('Advanced options', {
-            'fields': ('is_public', 'by_groups', 'authorized_groups', 'authorized_users',
+            'fields': ('essential', 'is_public', 'by_groups', 'authorized_groups', 'authorized_users',
                        'file_content_option', 'file_content', 'url_content_option',
                        'url_article', 'publish_date', 'related_questions', 'polls'),
         }),
@@ -70,7 +70,7 @@ class ArticleAdmin(SummernoteModelAdmin, admin.ModelAdmin):
                     'useful_counter', 'favorite_counter', 'view_counter', 'status', 'is_public']
 
     list_editable = ['status', 'is_public']
-    list_filter = ['authorized_groups', 'status', 'publish_date', 'file_content_option',
+    list_filter = ['authorized_groups', 'status', 'publish_date', 'essential', 'file_content_option',
                    'url_content_option']
     search_fields = ['title', 'id']
     inlines = (AttachmentInlines,)
@@ -103,8 +103,8 @@ class LogEntryAdmin(admin.ModelAdmin):
 
 
 class ShortcutAdmin(DjangoMpttAdmin, admin.ModelAdmin):
-    list_display = ['name', 'click_counter', 'activated', 'icon']
-    list_editable = ['activated']
+    list_display = ['name', 'static', 'activated', 'click_counter', 'icon']
+    list_editable = ['activated', 'static']
     ordering = ['name']
     actions = [make_desactivated, make_activated, duplicate_event]
 
