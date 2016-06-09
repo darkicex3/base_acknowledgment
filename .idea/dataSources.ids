@@ -87,7 +87,6 @@
     </table>
     <table name="article_category" schema="" catalog="" type="TABLE">
       <column name="id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
-      <column name="name" sqlType="VARCHAR(300)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
       <column name="lft" sqlType="INTEGER UNSIGNED" precision="0" scale="-1" nullable="false" jdbcType="4"/>
       <column name="rght" sqlType="INTEGER UNSIGNED" precision="0" scale="-1" nullable="false" jdbcType="4"/>
       <column name="tree_id" sqlType="INTEGER UNSIGNED" precision="0" scale="-1" nullable="false" jdbcType="4"/>
@@ -96,6 +95,7 @@
       <column name="click_counter" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
       <column name="icon" sqlType="VARCHAR(500)" precision="0" scale="-1" nullable="true" jdbcType="12"/>
       <column name="static" sqlType="BOOL" precision="0" scale="-1" nullable="false" jdbcType="4"/>
+      <column name="name" sqlType="VARCHAR(300)" precision="0" scale="-1" nullable="false" jdbcType="12"/>
       <column name="parent_id" sqlType="INTEGER" precision="0" scale="-1" nullable="true" jdbcType="4"/>
       <primary-key columns="id"/>
       <foreign-key name="#FAKE_article_category_1" columns="parent_id" ref-table="article_category" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
@@ -302,11 +302,6 @@
       <index name="auth_user_user_permissions_8373b171" unique="true" columns="permission_id"/>
       <index name="auth_user_user_permissions_e8701ad4" unique="true" columns="user_id"/>
       <index name="auth_user_user_permissions_user_id_14a6b632_uniq" unique="true" columns="user_id,permission_id"/>
-    </table>
-    <table name="core_userprofile" schema="" catalog="" type="TABLE">
-      <column name="id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>
-      <column name="avatar" sqlType="VARCHAR(100)" precision="0" scale="-1" nullable="false" jdbcType="12"/>
-      <primary-key columns="id"/>
     </table>
     <table name="django_admin_log" schema="" catalog="" type="TABLE">
       <column name="id" sqlType="INTEGER" precision="0" scale="-1" nullable="false" jdbcType="4"/>

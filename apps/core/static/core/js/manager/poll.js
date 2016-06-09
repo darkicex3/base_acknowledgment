@@ -7,7 +7,29 @@
 var Poll = function (id, element) {
     this.element = element;
     this.id = id;
+    var current_question = null;
 
+    this.getCurrentQuestion = function (id, current_id) {
+        queryCurrentQuestion(id);
+        return current_question;
+    };
+
+    this.setCurrentQuestion = function (current_id) {
+        queryCurrentQuestion(this.id, current_id, 'w');
+    };
+
+    var queryCurrentQuestion = function (id, current_id, mode) {
+        $.get(GET_CURRENT_QUESTION, {
+            'id': id,
+            'mode': mode || null,
+            'current_id': current_id || null
+        }, function (data) {
+            if (mode == 'r')
+                current_question = data['current_question'];
+        })
+    };
+
+    
     // GET POLL JSON FROM DATABASE
     var query = function (id) {
         $.get(urls.show_poll,
@@ -65,6 +87,7 @@ var Poll = function (id, element) {
 
     // SHOW POLL
     this.show = function () {
+        console.log(this.id);
         query(this.id);
     };
 

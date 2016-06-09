@@ -24,6 +24,22 @@ jQuery(document).ready(function ($) {
         window.Manager.getSearchSuggestions();
     });
 
+    $('#display-poll').on('hide.bs.modal', function (e) {
+        var poll = new Poll($(this).find('.poll').attr('id')), counter = 0, counter_question = 0;
+        $(this).find('.body-poll').find('.question-poll').each(function () {
+            counter_question++;
+            if ($(this).attr('style') != 'display: none;') {
+                counter++;
+                poll.setCurrentQuestion($(this).attr('id').replace('question', '') - 1);
+            }
+        });
+
+        if (counter == 0)
+            poll.setCurrentQuestion(counter_question);
+
+        window.Manager.getListPolls();
+    });
+
     $('#back_search').click(function () {
         $('.top-menu').flip(false);
     });

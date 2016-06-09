@@ -10,7 +10,6 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.views.generic import View
 from haystack.query import SearchQuerySet
-
 from apps.article.models import Tag, Article, Category, UserArticle, Feedback, DailyRecap, UserDailyRecap
 from apps.poll.models import Poll, Choice
 
@@ -684,14 +683,14 @@ class GetArticlesByStaticShortcutsView(View):
                 'url_option': url_option,
                 'url': url,
                 'attachments': attachments,
+                'nb_attachment': nb_attachment,
                 'newart': newart,
                 'essential': art.essential,
-
-                'author': str(art.author),
                 'bigup': bigup,
-                'tags': tags,
-                'last_update': update,
-                'modified': art.modified.strftime("%d %B %Y %H:%M"),
+                # 'author': str(art.author),
+                # 'tags': tags,
+                # 'last_update': update,
+                # 'modified': art.modified.strftime("%d %B %Y %H:%M"),
             }})
 
         return JsonResponse(context)
@@ -885,7 +884,9 @@ class GetPollsView(View):
             polls = Poll.objects.all().order_by('-publish_date')
 
         for poll in polls:
+            nb_question = 0
             for question in poll.questions.all():
+                nb_question += 1
                 questions.update({question.title: {}})
                 for choice in question.choices.all():
                     questions[question.title].update({choice.id: {'choice_id': choice.id, 'choice_title': choice.title,
@@ -894,7 +895,10 @@ class GetPollsView(View):
             context.update({poll.id: {
                 'poll_title': poll.title,
                 'questions': questions,
-                'pub_date': poll.publish_date.strftime("%d %B %Y")
+                'pub_date': poll.publish_date.strftime("%d %B %Y"),
+                'nb_question': nb_question,
+                'current_question': poll.id_current_question
+
             }})
 
         return JsonResponse(context)
@@ -914,15 +918,22 @@ class WrongOrRightView(View):
         return JsonResponse(context)
 
 
+class GetAttachmentsView(View):
+    def get(self, *args, **kwargs):
+        context = {}
+        id = self.request.GET.get('id')
+        art = Article.objects.get(id=id)
+        attachments = ''
+        nb_attachment = 0
+        for a in Attachment.objects.attachments_for_object(art):
+            nb_attachment += 1
+            filename = a.attachment_file.name.split("/")
+            attachments += '<a class="attachment-file" href = "' + a.attachment_file.url + '" target="_blank">' \
+                           + str(filename[len(filename) - 1]) + '</a>'
 
+        context.update({'attachments': attachments})
 
-
-
-
-
-
-
-
+        return JsonResponse(context)
 
 
 

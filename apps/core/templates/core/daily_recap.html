@@ -1,10 +1,45 @@
 {% extends "core/base.html" %}
-
+{% load mptt_tags %}
 
 {% if user.is_authenticated %}
 
     {% block title %}KB - Daily Recaps{% endblock %}
 
+    {% block side_menu %}
+        <ul id="static-menu" class="menu-side-bar">
+            {% recursetree nodes_static %}
+                <li>
+                    <span id="{{ node.name }}">
+                        <i class="material-icons md-18.width18 link_menu_color">{{ node.icon }}</i>{{ node.name }}
+                    </span>
+                    {% if not nodes_static.is_leaf_node %}
+                        <ul class="children" style="display: none">
+                            {{ children }}
+                        </ul>
+                    {% endif %}
+                    {% if not nodes_static.is_leaf_node %}
+                        <ul class="children">
+                            {{ children }}
+                        </ul>
+                    {% endif %}
+                </li>
+            {% endrecursetree %}
+        </ul>
+        <ul id="variable-menu" class="menu-side-bar">
+            {% recursetree nodes_variable %}
+                <li>
+                    <span id="{{ node.name }}">
+                        <i class="material-icons md-18.width18 link_menu_color">{{ node.icon }}</i>{{ node.name }}
+                    </span>
+                    {% if not nodes_static.is_leaf_node %}
+                        <ul class="children" style="display: none">
+                            {{ children }}
+                        </ul>
+                    {% endif %}
+                </li>
+            {% endrecursetree %}
+        </ul>
+    {% endblock %}
 
     {% block search_bar %}
         <form id="search_bar" method="post" action="{% url 'articles:articles_search_view' %}"

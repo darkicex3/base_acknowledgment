@@ -14,7 +14,7 @@ class QuestionChoicesInline(admin.TabularInline):
 class PollAdmin(admin.ModelAdmin):
     inlines = (PollQuestionsInline,)
     exclude = ('questions',)
-    list_display = ['title', 'id', 'publish_date']
+    list_display = ['title', 'id', 'publish_date', 'id_current_question']
     list_filter = ['publish_date']
     ordering = ['id']
 

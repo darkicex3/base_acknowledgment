@@ -7,17 +7,18 @@
 var ArticleManager = function (options) {
     var results_selector = '.main-content';
     var results_daily_selector = '.daily-recap-module .content-module';
-    var results_poll_selector = '.content-list-poll';
+    var results_poll_selector = '.survey-module .content-module';
     var link_article_selector = '.link-title-article';
     var daily_recap_selector = '.daily-recap-title';
     var daily_recap_feed_selector = '.main-content-daily-recap';
-    var poll_selector = '.poll-item';
+    var poll_selector = '.link-poll';
     var attachment_selector = '';
     var result = 0;
     var progress = 0;
     var current_article = null;
     var current_daily_recap = null;
     var current_poll = null;
+    this.current_id = null;
     this.display = 'list';
     this.counter = 20;
     this.category = 'Home';
@@ -131,7 +132,7 @@ var ArticleManager = function (options) {
     };
 
     var poll = function (object) {
-        var poll = new Poll(object.attr("id"), object);
+        var poll = new Poll(object.parent().attr("id"), object);
         result = 0;
         progress = 0;
         current_poll = poll;
@@ -205,7 +206,7 @@ var ArticleManager = function (options) {
         });
     };
 
-    action = function (object) {
+    var action = function (object) {
         if (current_article)
             current_article.element = object;
         else if (current_daily_recap)
@@ -230,7 +231,13 @@ var ArticleManager = function (options) {
             window.Manager.getListArticle();
             design_top_menu(object);
         }
+        else if (object.attr('class').indexOf('color-explicit') >= 0) {
+            console.log('gros seins');
+            window.Manager.getListArticle('Essential');
+            design_top_menu('.essentials-button');
+        }
         else if (object.attr('id').indexOf('essentials') >= 0) {
+            console.log('gros seins');
             window.Manager.getListArticle('Essential');
             design_top_menu(object);
         }
@@ -327,22 +334,33 @@ var ArticleManager = function (options) {
             result += list(data[key]['id'], data[key]['title'], data[key]['desc'], data[key]['pub_date'],
                 data[key]['loved'], data[key]['tags'], data[key]['favorites'], data[key]['read'],
                 data[key]['useful'], data[key]['bigup'], data[key]['modified'], data[key]['views'],
-                data[key]['url_option'], data[key]['url'], data[key]['attachments'], data[key]['newart'], data[key]['essential']);
+                data[key]['url_option'], data[key]['url'], data[key]['attachments'], data[key]['newart'],
+                data[key]['essential'], data[key]['nb_attachment']);
 
 
         $(results_selector).empty().append(result).parent().parent().parent().show();
-        $('.attr_att').append('<i class="center-icon-attach attachment-button-list ' +
-                'material-icons color_base md-24">attach_file</i>');
 
-        $("#grid-data").bootgrid();
-        $("table").trigger("update");
+        $('.att').click(function () {
+            var e = $(this);
+            $.get(GET_ATTACHMENTS, {'id': e.parent().parent().attr('id')}, function (data) {
+                console.log(e);
+                e.webuiPopover({
+                    width: '300',
+                    title: 'Attachments',
+                    content: data['attachments'],
+                    animation: 'pop',
+                    closeable: 'true'
+                }).webuiPopover('show');
+            });
+        });
     };
 
     var results_polls = function (data, display) {
         var result = '';
         for (var key in data) if (data.hasOwnProperty(key)) {
             var questions = data[key]['questions'];
-            result += list_polls(key, data[key]['poll_title'], data[key]['pub_date']);
+            result += list_polls(key, data[key]['poll_title'], data[key]['nb_question'],
+                data[key]['current_question']);
         }
 
         $(results_poll_selector).empty().append(result);
@@ -370,10 +388,10 @@ var ArticleManager = function (options) {
 
     };
 
-    var list_polls = function (poll_id, poll_title, pub_date) {
-        return '<div class="poll-item ' + poll_id + '" id="' + poll_id + '">' +
+    var list_polls = function (poll_id, poll_title, nb_questions, current_question) {
+        return '<div class="mini-survey" id="' + poll_id + '">' +
             '<a data-toggle="modal" class="link-poll" href="#display-poll">' + poll_title + '</a>' +
-            '<a class="date-poll schedule-txt-poll-list txt">' + pub_date + '</a>' +
+            '<div class="nb_questions_completed '+(current_question == nb_questions ? 'completed_survey' : '')+'">'+current_question+'/'+nb_questions+'</div>' +
             '</div>';
     };
 
@@ -415,7 +433,8 @@ var ArticleManager = function (options) {
     };
 
     var list = function (key, title, description, date_publish, favorite_counter, tags, favorites, read_article,
-                         useful_counter, bigup_article, last_update, view_counter, url_option, url, att, newart, essential) {
+                         useful_counter, bigup_article, last_update, view_counter, url_option, url, att, newart,
+                         essential, nb_attachment) {
         // var attr_new = (newart == 'new' ? '<span class="id-article" style="">New</span><span class="id-article-ess" style="">Essential</span></td>' : '');
         // var attr_att = (att != '' ? ' attr_att' : '');
         //
@@ -423,7 +442,9 @@ var ArticleManager = function (options) {
         // var redirect = (url_option == 'ok' ? '_blank' : '');
         // var classattr = (url_option == 'ok' ? 'link-title-article-url' : 'link-title-article');
 
-        console.log(newart);
+        if (nb_attachment > 0) {
+
+        }
         return '<div class="card mini-article" id="' + key + '">' +
             '<div class="card-illustration"></div>' +
             '<div class="card-header padding">' + title + '</div>' +
@@ -446,12 +467,11 @@ var ArticleManager = function (options) {
             '</div>' +
             '<div class="card-action padding" style="display: none">ACTION</div>' +
             '<div class="card-status">' +
-            (essential ? '<i class="color-explicit material-icons">explicit</i>' : '') +
-            (newart ? '<i class="color-new material-icons">fiber_new</i>' : '') +
+            (essential ? '<i id="" class="color-explicit material-icons">explicit</i>' : '') +
+            (newart ? '<i id="" class="color-new material-icons">fiber_new</i>' : '') +
+            (nb_attachment > 0 ? '<i id="" class="material-icons att">attachments</i>' : '') +
             '</div>' +
             '</div>';
-
-
     };
 
     var urls = {
@@ -462,6 +482,8 @@ var ArticleManager = function (options) {
     };
 
     var selector_action = {
+        'att': '.att',
+        'color-explicit': '.color-explicit',
         'like_selector': '.favorite',
         'read_selector': '.read-button',
         'bigup_selector': '.useful',
@@ -520,6 +542,7 @@ function design_top_menu(object) {
     $('.top-menu .material-icons').removeAttr('style');
     $('.top-button').removeAttr('style');
     $('.top-menu .txt').removeAttr('style');
+
 
     $(object).css('background', '#ea4335')
         .find('.material-icons').css('color', '#fff');

@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^set_visited/', views.SetVisitedView.as_view(), name='set_visited_view'),
     url(r'^set_searched/', views.SetSearchedView.as_view(), name='set_searched_view'),
     url(r'^get_categories/', views.GetCategoriesView.as_view(), name='get_categories_view'),
+    url(r'^get_attachments/', views.GetAttachmentsView.as_view(), name='get_attachments_view'),
 
     url(r'^get_daily_recap/', views.GetDailyRecapView.as_view(), name='get_daily_recap'),
     url(r'^show_daily_recap/', views.ShowDailyRecapView.as_view(), name='show_daily_recap'),

@@ -1,5 +1,5 @@
-from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
 from django.template import RequestContext
 
 from apps.article.models import Category
@@ -21,7 +21,9 @@ def card(request):
 
 
 def daily_recap(request):
-    return render(request, 'core/daily_recap.html')
+    return render(request, 'core/daily_recap.html', {'nodes_static': Category.objects.all().filter(static=True),
+                                                     'nodes_variable': Category.objects.all().filter(static=False)},
+                  context_instance=RequestContext(request))
 
 
 def flex(request):

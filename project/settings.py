@@ -77,7 +77,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sessions',
-    'django.contrib.sites',
 
     'notifications',
     'django_mptt_admin',

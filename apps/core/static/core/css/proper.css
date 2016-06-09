@@ -48,9 +48,61 @@ nav {
     src: url('fonts/CHARI.ttf');
 }
 
-.color-explicit {
-    color: rgb(234, 67, 53);
+.color-explicit, .att {
+    color: rgba(37, 37, 37, 0.74);
     align-self: center;
+    width: 24px;
+
+    -webkit-transition: all 300ms;
+    -moz-transition: all 300ms;
+    -ms-transition: all 300ms;
+    -o-transition: all 300ms;
+    transition: all 300ms;
+}
+
+.webui-popover {
+    word-break: break-all;
+}
+
+.color-explicit:active {
+    -webkit-transform: scale(0.85);
+    -moz-transform: scale(0.85);
+    -ms-transform: scale(0.85);
+    -o-transform: scale(0.85);
+    transform: scale(0.85);
+
+    -webkit-transition: all 300ms;
+    -moz-transition: all 300ms;
+    -ms-transition: all 300ms;
+    -o-transition: all 300ms;
+    transition: all 300ms;
+}
+
+.attachment-file {
+    display: block;
+    padding-bottom: 5px;
+    margin: 10px;
+    border-bottom: #428bca 1px solid;
+}
+
+.att {
+    transform: rotate(314deg);
+    font-size: 18pt;
+    position: relative;
+}
+
+.att:active {
+    -webkit-transform: rotate(270deg) scale(0.85);
+    -moz-transform: rotate(270deg) scale(0.85);
+    -ms-transform: rotate(270deg) scale(0.85);
+    -o-transform: rotate(270deg) scale(0.85);
+    transform: rotate(270deg) scale(0.85);
+
+    -webkit-transition: all 300ms;
+    -moz-transition: all 300ms;
+    -ms-transition: all 300ms;
+    -o-transition: all 300ms;
+    transition: all 300ms;
 }
 
 .color-new {
@@ -427,6 +479,7 @@ nav {
     position: relative;
     display: flex;
     flex-direction: row;
+    align-items: center;
     padding: 14px 12px;
     color: #C2C2CA;
     font-size: 9pt !important;
@@ -512,37 +565,38 @@ a.add-button {
     font-weight: 800;
 }
 
-.profile-auth-user {
-    width: 170px;
-}
 
 .user_profile {
+    width: 260px;
     display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
     justify-content: space-between;
 }
 
-.user-profile-link {
-    display: inline !important;
+.header-icon {
+    font-size: 15pt;
+}
+
+.form-base, .form-admin {
+    display: flex;
+}
+
+.form-base {
+    justify-content: flex-end;
+}
+
+.form-admin {
+    width: 55px;
+    justify-content: space-between;
 }
 
 #img_profile {
-    height: 40px;
-    width: 40px;
+    height: 30px;
+    width: 30px;
     border-radius: 3px;
     background-image: url('https://cdn-images-1.medium.com/fit/c/200/200/1*bJ68_kBzvNrJjipJs1GLuA.jpeg') !important;
     background-size: cover;
-}
-
-#detail_profile {
-
-}
-
-.username {
-    height: 19px;
-    color: #fff;
-    text-align: right;
-    font-size: 8pt;
-    font-family: "Lucida Grande";
 }
 
 p {
@@ -550,7 +604,24 @@ p {
 }
 
 .admin-link {
-    width: 100%;
+    color: #252525;
+}
+
+.admin-link:hover {
+    color: #252525;
+    text-decoration: none;
+}
+
+.admin-link:hover {
+
+}
+
+.admin-link:active > i {
+    -webkit-transform: scale(0.85);
+    -moz-transform: scale(0.85);
+    -ms-transform: scale(0.85);
+    -o-transform: scale(0.85);
+    transform: scale(0.85);
 }
 
 .administrator, .visitor, .normal, .staff {

@@ -63,47 +63,61 @@
         </div>
 
     </div>
-        </div>
+</div>
 
 <div class="header">
     <div class="profile">
         {% block profile %}
-            <div class="profile-auth-user">
-                <div class="user_profile">
-                    <form method="post">{% csrf_token %}
-                        {% if request.user.is_superuser %}
-                            <a class="user-profile-link" href="{% url 'admin:auth_user_change' request.user.id %}">
-                                <div id="img_profile"></div>
-                            </a>
-                        {% elif request.user.is_staff %}
-                            <a class="user-profile-link" href="{% url 'admin:auth_user_change' request.user.id %}">
-                                <div id="img_profile"></div>
-                            </a>
-                        {% else %}
+            <div class="user_profile">
+                <form class="form-base" method="post">{% csrf_token %}
+                    {% if request.user.is_superuser %}
+                        <a class="user-profile-link" href="{% url 'admin:auth_user_change' request.user.id %}">
                             <div id="img_profile"></div>
-                        {% endif %}
-                    </form>
-                    <div id="detail_profile">
-                        <form method="post">{% csrf_token %}
-                            {% if request.user.is_superuser %}
-                                <a class="admin-link" href="{% url 'admin:index' %}"><p class="user-type administrator">
-                                    Administrator</p></a>
-                            {% elif request.user.is_staff %}
-                                <p class="user-type staff">Staff User</p>
-                            {% else %}
-                                <p class="user-type normal">Basic User</p>
-                            {% endif %}
-                        </form>
-                        <p class="username">
-                            {% if request.user.get_full_name %}
-                                {{ request.user.get_full_name.title }}
-                            {% else %}
-                                {{ request.user.username.title }}
-                            {% endif %}
-                        </p>
-                        <p class="badge">{{ request.user.points }}</p>
-                    </div>
-                </div>
+                        </a>
+                    {% elif request.user.is_staff %}
+                        <a class="user-profile-link" href="{% url 'admin:auth_user_change' request.user.id %}">
+                            <div id="img_profile"></div>
+                        </a>
+                    {% else %}
+                        <div id="img_profile"></div>
+                    {% endif %}
+                </form>
+                <form class="form-admin" method="post">{% csrf_token %}
+                    {% if request.user.is_superuser %}
+                        <span class="material-icons">
+                           <a class="admin-link" href="{% url 'admin:index' %}"><i
+                                   class="material-icons header-icon">timeline</i></a>
+                        </span>
+                        <span class="material-icons">
+                        <a class="admin-link" href="{% url 'admin:index' %}"><i
+                                class="material-icons header-icon">dvr</i></a>
+                        </span>
+                    {% elif request.user.is_staff %}
+                        <p class="user-type staff">Staff User</p>
+                    {% else %}
+                        <p class="user-type normal">Basic User</p>
+                    {% endif %}
+                </form>
+                <span class="material-icons">
+                    <a class="admin-link" href="#">
+                        <i class="material-icons header-icon">help</i>
+                    </a>
+                </span>
+                <span class="material-icons">
+                    <a class="admin-link" href="#">
+                        <i class="material-icons header-icon">settings</i>
+                    </a>
+                </span>
+                <span class="material-icons">
+                    <a class="admin-link" href="#">
+                        <i class="material-icons header-icon">notifications</i>
+                    </a>
+                </span>
+                <span class="material-icons">
+                    <a class="admin-link" href="http://127.0.0.1:8000">
+                        <i class="material-icons header-icon">home</i>
+                    </a>
+                </span>
             </div>
         {% endblock %}
     </div>
@@ -245,6 +259,8 @@
     GET_ARTICLES_FROM_SHORTCUT = "{% url 'articles:show_article_from_shorcuts'               %}"; //OK
     GET_ARTICLE = "{% url 'articles:ShowArticle'                              %}"; //OK
     GET_SHORTCUTS = "{% url 'contents:manage_sidebar_shortcuts_showing_view'    %}"; //OK
+    GET_ATTACHMENTS = "{% url 'articles:get_attachments_view'    %}"; //OK
+    GET_CURRENT_QUESTION = "{% url 'polls:get_current_question'    %}"; //OK
 
     {#    ADD_ARTICLE_TO_SHORTCUT             =   "{% url 'articles:add_article_to_shortcut' %}";#}
     {#    CREATE_SHORTCUT                     =   "{% url 'articles:create_shortcut' %}";#}
