@@ -83,7 +83,7 @@ class DailyRecap(models.Model):
     authorized_groups = models.ManyToManyField(Group, help_text=group_help, blank=True)
     content = models.TextField(default='')
     modified = models.DateTimeField(editable=False)
-    publish_date = models.DateTimeField(help_text=publish_date_help)
+    publish_date = models.DateTimeField(help_text=publish_date_help, auto_now_add=True, editable=False)
     view_counter = models.IntegerField(default=0, editable=False)
     useful_counter = models.IntegerField(default=0, editable=False)
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default=STATUS_CHOICES[0])
@@ -116,7 +116,7 @@ class Article(models.Model):
     url_article = models.CharField(max_length=255, default='', blank=True)
     file_content = models.FileField(upload_to='article_pdf/%Y/%m/%d',
                                     blank=True)
-    publish_date = models.DateTimeField(help_text=publish_date_help, auto_now_add=True)
+    publish_date = models.DateTimeField(help_text=publish_date_help, auto_now_add=True, editable=False)
     modified = models.DateTimeField(editable=False)
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default=STATUS_CHOICES[0])
     tags = models.ManyToManyField(Tag, help_text=tags_help)
@@ -133,17 +133,6 @@ class Article(models.Model):
                                          editable=False)
     polls = models.ManyToManyField('poll.Poll', help_text=tags_help, blank=True)
     expiration_date = models.DateTimeField(blank=True, null=True, help_text=expiration_date)
-
-    def active_article(self):
-        if self.publish_date >= timezone.now() and timezone.now() < self.expiration_date:
-            self.IS_ACTIVE = True
-
-    # def delete(self, *args, **kwargs):
-    #     userarticles = UserArticle.objects.all().filter(article_id=self.id)
-    #     for userarticle in userarticles:
-    #         userarticle.delete()
-    #
-    #     return super(Article, self).delete(*args, **kwargs)
 
     def save(self, *args, **kwargs):
         if not self.id:
