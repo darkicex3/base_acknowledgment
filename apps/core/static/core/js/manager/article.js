@@ -136,6 +136,7 @@ var Article = function (id, element) {
 
         render_article();
         resize_iframe();
+        initColors(window.Manager.getColorKB());
 
     }; // OK
 

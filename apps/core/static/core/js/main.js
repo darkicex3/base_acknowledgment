@@ -15,6 +15,8 @@ jQuery(document).ready(function ($) {
     window.Manager.getListDailyRecap(null, null, window.nb_dr_displayed);
     window.Manager.getListPolls(null, null, window.nb_polls_displayed);
     window.Manager.getPopularTags();
+    window.Manager.setColorKB('rgb(71, 66, 244)');
+    initColors(window.Manager.getColorKB());
 
 
     $('.top-menu').flip({

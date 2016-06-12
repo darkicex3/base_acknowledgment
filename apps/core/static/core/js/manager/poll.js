@@ -96,6 +96,7 @@ var Poll = function (id, element) {
             $(selector.body_selector).empty().append(result);
             $('.body-poll').children('div:not(#question1)').hide();
         });
+        initColors(window.Manager.getColorKB());
     };
 
     // SHOW POLL

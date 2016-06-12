@@ -64,6 +64,7 @@ var DailyRecap = function (id, element) {
         // RENDER HTML or PDF
         render_article();
         resize_iframe();
+        initColors(window.Manager.getColorKB());
 
     }; // OK
 

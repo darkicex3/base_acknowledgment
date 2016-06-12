@@ -27,7 +27,16 @@ var ArticleManager = function (options) {
     this.autoquery = null;
     this.autocomplete = false;
     this.sorting = 'publish_date';
+    var colorKB = '';
 
+    this.setColorKB = function (color) {
+        colorKB = color;
+    };
+
+    this.getColorKB = function () {
+        return colorKB;
+    };
+    
     this.getListArticle = function (category, tags, sorting, counter, autocomplete, autoquery) {
         query(category || this.category, tags, counter || this.counter, sorting || this.sorting,
             autocomplete || this.autocomplete, autoquery || this.autoquery);
@@ -137,6 +146,7 @@ var ArticleManager = function (options) {
 
     var article = function (object) {
         var article = new Article(object.parent().parent().attr("id"), object.parent().parent());
+        console.log(object.parent().attr("id"), object.parent());
         current_article = article;
         article.setView();
         article.show();
@@ -279,9 +289,14 @@ var ArticleManager = function (options) {
         else if (current_poll)
             current_poll.element = object;
 
+        if (typeof object.attr('id') == 'undefined')
+            object.attr('id', " ");
+
+
+
         // SEARCH
         if (object.attr('id').indexOf('search') >= 0)
-            window.Manager.getSearchSuggestions(); 
+            window.Manager.getSearchSuggestions();
 
         // ACTION ARTICLE
         if (object.attr('class').indexOf('favorite') >= 0)
@@ -406,6 +421,7 @@ var ArticleManager = function (options) {
 
 
         $(results_selector).empty().append(result).parent().parent().parent().show();
+        initColors(window.Manager.getColorKB());
 
         $('.att').click(function () {
             var e = $(this);
@@ -431,6 +447,7 @@ var ArticleManager = function (options) {
         }
 
         $(results_poll_selector).empty().append(result);
+        initColors(window.Manager.getColorKB());
     };
 
     var results_daily_recap = function (data) {
@@ -452,7 +469,7 @@ var ArticleManager = function (options) {
             $(daily_recap_feed_selector).empty().append(result);
         else
             $(results_daily_selector).empty().append(result);
-
+        initColors(window.Manager.getColorKB());
     };
 
     var list_polls = function (poll_id, poll_title, nb_questions, current_question) {
@@ -505,16 +522,16 @@ var ArticleManager = function (options) {
         // var attr_new = (newart == 'new' ? '<span class="id-article" style="">New</span><span class="id-article-ess" style="">Essential</span></td>' : '');
         // var attr_att = (att != '' ? ' attr_att' : '');
         //
-        // var href = (url_option == 'ok' ? url : '#display-article');
-        // var redirect = (url_option == 'ok' ? '_blank' : '');
-        // var classattr = (url_option == 'ok' ? 'link-title-article-url' : 'link-title-article');
+        var href = (url_option == 'ok' ? url : '#display-article');
+        var redirect = (url_option == 'ok' ? '_blank' : '');
+        var classattr = (url_option == 'ok' ? 'link-title-article-url' : 'link-title-article');
 
         if (nb_attachment > 0) {
 
         }
         return '<div class="card mini-article" id="' + key + '">' +
             '<div class="card-illustration"></div>' +
-            '<div class="card-header padding">' + title + '</div>' +
+            '<div class="card-header padding"><a data-toggle="modal" href="' + href + '" target="' + redirect + '" class="padding-bottom-list ' + classattr + '">' + title + '</a></div>' +
             '<div class="card-stat">' +
             '<div class="like-wrapper stat-wrapper">' +
             '<i id="like-icon" class="color-base material-icons icon-mini-article">favorites</i>' +

@@ -87,3 +87,16 @@ $(document).ready(function () {
     });
     window.autocomplete.setup();
 });
+
+function initColors(color) {
+    $('#static-menu').attr('style','border-bottom:'+ color + ' 1px solid !important');
+    $('.daily-recap-pubdate').attr('style','background-color:' + color + ' !important');
+    $('.header').attr('style','background-color:'+ color+ ' !important');
+    $('.schedule-txt').attr('style','background-color:'+ color+ ' !important');
+    $('.bottom-article').attr('style','border: '+ color + ' 1px solid'+ ' !important; background: '+color+' !important');
+    $('.favorite').attr('style','color:'+ color+ '!important');
+    $('.material-icons.selected').attr('style','background-color:'+ color+ ' !important');
+    $('.nextq').attr('style','background:'+ color+ ' !important');
+    $('.header_poll').attr('style','background:'+ color+ ' !important');
+    $('.completed_survey').attr('style','color:'+ color+ ' !important');
+};
