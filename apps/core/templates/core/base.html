@@ -15,21 +15,24 @@
     {#    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">#}
     {#    <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.indigo-pink.min.css">#}
     {#    <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>#}
-
     <link href='https://fonts.googleapis.com/css?family=PT+Sans+Caption:400,700' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=EB+Garamond' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Roboto+Mono:400,300,500,700,100' rel='stylesheet'
           type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,300' rel='stylesheet' type='text/css'>
     <link href="{% static 'core/css/vendor/pace.css' %}" rel="stylesheet"/>
 
     <link rel="stylesheet" href="{% static 'core/css/vendor/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
     <link rel="stylesheet" href="{% static 'core/css/vendor/jquery.webui-popover.css' %}">
     <link rel="stylesheet" href="{% static 'core/css/vendor/perfect-scrollbar.min.css' %}">
     <link rel="stylesheet" href="{% static 'core/css/vendor/text_layer_builder.css' %}">
 
     <link rel="stylesheet" href="{% static 'core/css/proper.css' %}">
-    <link rel="stylesheet" href="{% static 'core/css/proper-mobile.css' %}">
+    {# <link rel="stylesheet" href="{% static 'core/css/proper-mobile.css' %}"> #}
     <link rel="stylesheet" href="{% static 'core/css/proper-responsive.css' %}">
 
     <title>Teledirect - {% block title %}{% endblock %}</title>
@@ -83,39 +86,40 @@
                     {% endif %}
                 </form>
                 <form class="form-admin" method="post">{% csrf_token %}
-                    {% if request.user.is_superuser %}
-                        <span class="material-icons">
+                    {% if request.user.is_superuser or request.user.is_staff %}
+                        <span class="material-icons margin-header">
                            <a class="admin-link" href="{% url 'admin:index' %}"><i
                                    class="material-icons header-icon">timeline</i></a>
                         </span>
-                        <span class="material-icons">
+                        <span class="material-icons margin-header">
                         <a class="admin-link" href="{% url 'admin:index' %}"><i
                                 class="material-icons header-icon">dvr</i></a>
                         </span>
-                    {% elif request.user.is_staff %}
-                        <p class="user-type staff">Staff User</p>
-                    {% else %}
-                        <p class="user-type normal">Basic User</p>
                     {% endif %}
                 </form>
-                <span class="material-icons">
-                    <a class="admin-link" href="#">
-                        <i class="material-icons header-icon">help</i>
-                    </a>
-                </span>
-                <span class="material-icons">
-                    <a class="admin-link" href="#">
-                        <i class="material-icons header-icon">settings</i>
-                    </a>
-                </span>
-                <span class="material-icons">
+                {#                <span class="material-icons margin-header">#}
+                {#                    <a class="admin-link" href="#">#}
+                {#                        <i class="material-icons header-icon">help</i>#}
+                {#                    </a>#}
+                {#                </span>#}
+                {#                <span class="material-icons margin-header settings-header">#}
+                {#                    <a class="admin-link" href="#">#}
+                {#                        <i class="material-icons header-icon">settings</i>#}
+                {#                    </a>#}
+                {#                </span>#}
+                <span class="material-icons margin-header">
                     <a class="admin-link" href="#">
                         <i class="material-icons header-icon">notifications</i>
                     </a>
                 </span>
-                <span class="material-icons">
+                <span class="material-icons margin-header">
                     <a class="admin-link" href="http://127.0.0.1:8000">
                         <i class="material-icons header-icon">home</i>
+                    </a>
+                </span>
+                <span class="material-icons margin-header">
+                    <a class="admin-link" href="{% url 'registration:logout' %}">
+                        <i class="material-icons header-icon">power_settings_new</i>
                     </a>
                 </span>
             </div>
@@ -123,8 +127,8 @@
     </div>
     <div class="logo"></div>
     <div class="menu-button" id="menu">
-                    <span class="title-button"><i class="material-icons">menu</i>
-                        <span class="txt">MENU</span></span>
+                    <span class="title-button"><i class="menu-icon material-icons">menu</i>
+                        <span class="txt">Home</span></span>
     </div>
 </div>
 
@@ -146,9 +150,28 @@
             <div class="daily-recap-module module card">
                 <div class="module-header">
                     <span class="title-module">DAILY RECAPS</span>
-                    <i class="color-base material-icons edit-icon margin-icon white">edit</i>
-                    <i class="color-base material-icons margin-icon white">add</i>
-                    <i class="color-base material-icons white">sort</i>
+                    <form class="form-admin" method="post">{% csrf_token %}
+                        {% if request.user.is_superuser or request.user.is_staff %}
+                            {% load admin_urls %}
+                            <a class="module-icons" href="{% url 'admin:article_dailyrecap_changelist' %}"><i
+                                    class="material-icons color-base material-icons edit-icon margin-icon">edit</i></a>
+                            <a class="module-icons" href="{% url 'admin:article_dailyrecap_add' %}"><i
+                                    class="material-icons color-base material-icons margin-icon">add</i></a>
+                        {% endif %}
+                    </form>
+                    <button id="daily-fltr"
+                            class="mdl-button mdl-js-button mdl-button--icon" style="color: #C2C2CA;">
+                        <a><i class="color-base material-icons">sort</i></a>
+                    </button>
+
+                    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                        for="daily-fltr">
+                        <li id="" class="mdl-menu__item any_date">All</li>
+                        <li id="" class="mdl-menu__item today">Today</li>
+                        <li id="" class="mdl-menu__item past_7_days">Past 7 days</li>
+                        <li id="" class="mdl-menu__item this_month">This month</li>
+                        {#                        <li class="mdl-menu__item this_year_p">This years</li>#}
+                    </ul>
                 </div>
                 {% block daily_recap_module %}
 
@@ -158,13 +181,34 @@
                 </div>
             </div>
 
+
+
             {#   MOST POPULAR SURVEY   #}
             <div class="survey-module module card">
                 <div class="module-header">
                     <span class="title-module">SURVEY</span>
-                    <i class="color-base material-icons edit-icon margin-icon">edit</i>
-                    <i class="color-base material-icons margin-icon">add</i>
-                    <i class="color-base material-icons">sort</i>
+                    <form class="form-admin" method="post">{% csrf_token %}
+                        {% if request.user.is_superuser or request.user.is_staff %}
+                            {% load admin_urls %}
+                            <a class="module-icons" href="{% url 'admin:poll_poll_changelist' %}"><i
+                                    class="material-icons color-base material-icons edit-icon margin-icon">edit</i></a>
+                            <a class="module-icons" href="{% url 'admin:poll_poll_add' %}"><i
+                                    class="material-icons color-base material-icons margin-icon">add</i></a>
+                        {% endif %}
+                    </form>
+                    <button id="survey-fltr"
+                            class="mdl-button mdl-js-button mdl-button--icon" style="color: #C2C2CA;">
+                        <a><i class="color-base material-icons">sort</i></a>
+                    </button>
+
+                    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                        for="survey-fltr">
+                        <li id="" class="mdl-menu__item any_date_p">All</li>
+                        <li id="" class="mdl-menu__item today_p">Today</li>
+                        <li id="" class="mdl-menu__item past_7_days_p">Past 7 days</li>
+                        <li id="" class="mdl-menu__item this_month_p">This month</li>
+                        {#                        <li class="mdl-menu__item this_year_p">This years</li>#}
+                    </ul>
                 </div>
                 {% block survey_module %}
 
@@ -173,6 +217,8 @@
                     <a href="#">more survey ...</a>
                 </div>
             </div>
+
+
 
             {#   MOST POPULAR ARTICLES   #}
             <div class="most-popular-articles-module module card" style="display: none">
@@ -189,7 +235,7 @@
             </div>
 
             {#    POPULAR TAGS    #}
-            <div class="most-popular-tags-module module card" style="display: none">
+            <div class="most-popular-tags-module module card" style="">
                 <div class="module-header">
                     <span class="title-module">MOST POPULAR TAGS</span>
                     <i class="color-base material-icons">sort</i>
@@ -218,7 +264,7 @@
             </div>
 
             {#    MOST ASKED QUESTIONS    #}
-            <div class="most_asked_questions module card">
+            <div class="most_asked_questions module card" style="display: none">
                 <div class="module-header">
                     <span class="title-module">MOST ASKED QUESTIONS</span>
                 </div>
@@ -237,6 +283,8 @@
 {% load staticfiles %}
 
 <script>
+    GET_POPULAR_TAGS_VIEW = "{% url 'articles:get_popular_tags_view' %}";
+    JS = "{% static 'core/js/vendor/animation/material.min.js' %}";
     USEFUL_MANAGER_DR = "{% url 'articles:set_useful_daily_recap' %}";
     READ_MANAGER_DR = "{% url 'articles:set_read_daily_recap' %}";
     SHOW_DAILY_RECAP = "{% url 'articles:show_daily_recap' %}";

@@ -7,6 +7,7 @@
 var ArticleManager = function (options) {
     var results_selector = '.main-content';
     var results_daily_selector = '.daily-recap-module .content-module';
+    var results_tags_selector = '.most-popular-tags-module .content-module';
     var results_poll_selector = '.survey-module .content-module';
     var link_article_selector = '.link-title-article';
     var daily_recap_selector = '.daily-recap-title';
@@ -15,6 +16,7 @@ var ArticleManager = function (options) {
     var attachment_selector = '';
     var result = 0;
     var progress = 0;
+    var current_score_survey = 0;
     var current_article = null;
     var current_daily_recap = null;
     var current_poll = null;
@@ -27,31 +29,31 @@ var ArticleManager = function (options) {
     this.sorting = 'publish_date';
 
     this.getListArticle = function (category, tags, sorting, counter, autocomplete, autoquery) {
-        var count = counter || this.counter;
-        var cat = category || this.category;
-        var sort = sorting || this.sorting;
-        var auto = autocomplete || this.autocomplete;
-        var autoq = autoquery || this.autoquery;
-
-        query(cat, tags, count, sort, auto, autoq);
+        query(category || this.category, tags, counter || this.counter, sorting || this.sorting,
+            autocomplete || this.autocomplete, autoquery || this.autoquery);
     };
 
     this.getSearchSuggestions = function () {
 
     };
 
-    this.getListDailyRecap = function (sorting, from_date) {
-        var sort = sorting || null;
-        var date_fr = from_date || null;
-
-        query_daily_recap(sort, date_fr);
+    this.getPopularTags = function () {
+        var html = '';
+        $.get(urls.get_popular_tags, {}, function (data) {
+            for (var key in data) if (data.hasOwnProperty(key)) {
+                html += '<span class="bookmarkBadge"><a id="#' + data[key] + '" class="bookmarkLink" href="#">' + data[key] +
+                    '</a></span>'
+            }
+            $(results_tags_selector).empty().append(html);
+        });
     };
 
-    this.getListPolls = function (sorting, id) {
-        var sort = sorting || null;
-        var art_id = id || null;
+    this.getListDailyRecap = function (sorting, from_date, nb) {
+        query_daily_recap(sorting || null, from_date || null, nb || 100);
+    };
 
-        query_polls(sort, art_id);
+    this.getListPolls = function (sorting, id, nb) {
+        query_polls(sorting || null, id || null, nb || 100);
     };
 
     this.initEvents = function () {
@@ -74,47 +76,63 @@ var ArticleManager = function (options) {
             });
     };
 
-    var query_polls = function (sorting, id) {
-        $.get(urls.get_polls,
-            {
-                'sorting': sorting,
-                'id': id
+    var query_polls = function (sorting, id, nb) {
+        $.ajax({
+            url: urls.get_polls,
+            beforeSend: function () {
+                $(results_poll_selector).empty().append('<div class="loading mdl-spinner mdl-js-spinner is-active"></div>');
             },
-            function (data) {
-                console.log(data);
+            data: {
+                'sorting': sorting,
+                'id': id,
+                'nb': nb
+            },
+            success: function (data) {
                 results_polls(data);
                 Pace.restart();
+            },
+            error: function () {
+                $(results_poll_selector).empty().append('<i class="error_xhr material-icons">flash_off</i>');
             }
-        );
+        });
     };
 
-    var query_daily_recap = function (sorting, from_date) {
-        $.get(urls.get_list_daily_recap,
-            {
-                'sorting': sorting,
-                'from': from_date
+    var query_daily_recap = function (sorting, from_date, nb) {
+        $.ajax({
+            url: urls.get_list_daily_recap,
+            beforeSend: function () {
+                $(results_daily_selector).empty().append('<div class="loading mdl-spinner mdl-js-spinner is-active"></div>');
             },
-            function (data) {
+            data: {
+                'sorting': sorting,
+                'from': from_date,
+                'nb': nb
+            },
+            success: function (data) {
                 results_daily_recap(data);
                 Pace.restart();
             }
-        );
+        });
     };
 
     var query = function (category, tags, sorting, counter, autocomplete, autoquery) {
-        $.get(urls.get_list_articles,
-            {
+        $.ajax({
+            url: urls.get_list_articles,
+            beforeSend: function () {
+                $(results_selector).empty().append('<div class="loading mdl-spinner mdl-js-spinner is-active"></div>');
+            },
+            data: {
                 'by': category,
                 'counter': counter,
                 'sorting': sorting,
                 'autocomplete': autocomplete,
                 'autoquery': autoquery
             },
-            function (data) {
+            success: function (data) {
                 results(data);
                 Pace.restart();
             }
-        );
+        });
     };
 
     var article = function (object) {
@@ -135,6 +153,7 @@ var ArticleManager = function (options) {
         var poll = new Poll(object.parent().attr("id"), object);
         result = 0;
         progress = 0;
+        current_score_survey = 0;
         current_poll = poll;
         poll.show();
     };
@@ -162,49 +181,95 @@ var ArticleManager = function (options) {
         });
     };
 
-    var nextQuestion = function (object) {
-        var classNextQuestion = 'question' + (parseInt(object.parent().parent().attr('id').replace('question', '')) + 1);
-        $(object.parent().parent()).fadeOut(200, function () {
-            var nextQuestion = $('#' + classNextQuestion);
-            var choice_id = object.attr('id');
-            var number_of_question = object.parent().parent().parent().parent().find('.nb_questions').attr('id');
-            var progress_bar_speed = 100 / number_of_question;
-            var progress_bar = $('.progress-bar-poll');
-
-            $.get(urls.wrong_or_right, {'choice_id': choice_id}, function (data) {
-                var pts_per_question = 20;
-                console.log(data['ok']);
-                if (data['ok'] == 'ok') {
-                    result += pts_per_question;
-                }
-
-                console.log(result);
-
-                if (typeof nextQuestion.attr('id') == 'undefined') {
-                    progress_bar.css('width', '100%');
-                    console.log(number_of_question, result, pts_per_question);
-                    var score = (result / (number_of_question * pts_per_question)) * 20;
-
-                    if (score == 20) {
-                        $('<div class="result-poll">Perfect</div>' +
-                            '<div class="restart-poll mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent res">Restart</div>' +
-                            '<div class="show-results-poll mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect res">Show Results</div>'
-                        ).insertBefore("#question1");
-                    } else {
-                        $('<div class="result-poll">' + parseInt(score) + '/20</div>' +
-                            '<div class="restart-poll mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent res">Restart</div>' +
-                            '<div class="show-results-poll mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect res">Show Results</div>'
-                        ).insertBefore("#question1");
-                    }
-                } else {
-                    progress += progress_bar_speed;
-                    progress_bar.css('width', progress + '%');
-                }
-            });
-
-            nextQuestion.show(100);
-        });
+    var styleChoice = function (obj) {
+        style_choice(obj);
     };
+
+    var nextQuestion = function (object) {
+
+        var next_question = parseInt(object.parent().parent().children('.body-poll').children('div:visible').attr('id').replace('question', '')) + 1;
+        var question_number = object.parent().find('.nb_questions').attr('id');
+
+        var active_right_choices = $('#question' + (next_question - 1)).fadeOut(0, function () {
+            $('#question' + next_question).fadeIn(200);
+        }).find('.choice.active-choice.wc0');
+
+        var right_choice_number = parseInt(object.parent().find('.nb_choice_right').attr('id'));
+
+        current_score_survey += active_right_choices.length;
+
+        console.log('pollFinalResult: ', current_score_survey, right_choice_number);
+
+
+        if (next_question - 1 == question_number) {
+            $('#question' + next_question).hide();
+            $('.nextq').hide();
+            pollFinalResult(current_score_survey, right_choice_number);
+        }
+    };
+
+    var pollFinalResult = function (active_right_choices, right_choice_number) {
+        var mark = ( active_right_choices / right_choice_number ) * 20;
+
+        if (mark == 20) {
+            $('<div class="result-poll">Perfect</div>' +
+                '<div class="restart-poll mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent res">Restart</div>' +
+                '<div class="show-results-poll mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect res">Show Results</div>'
+            ).insertBefore("#question1");
+        } else {
+            $('<div class="result-poll">' + mark + '/20</div>' +
+                '<div class="restart-poll mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent res">Restart</div>' +
+                '<div class="show-results-poll mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect res">Show Results</div>'
+            ).insertBefore("#question1");
+        }
+    };
+
+
+    // .children('.choice').each(function () {
+    //     console.log($(this).attr('class'));
+    // }));
+    // var classNextQuestion = 'question' + (parseInt(object.parent().parent().attr('id').replace('question', '')) + 1);
+
+    // $(object.parent().parent()).fadeOut(200, function () {
+    //     var nextQuestion = $('#' + classNextQuestion);
+    //     var choice_id = object.attr('id');
+    //     var number_of_question = object.parent().parent().parent().parent().find('.nb_questions').attr('id');
+    //     var progress_bar_speed = 100 / number_of_question;
+    //     var progress_bar = $('.progress-bar-poll');
+    //
+    //     $.get(urls.wrong_or_right, {'choice_id': choice_id}, function (data) {
+    //         var pts_per_question = 20;
+    //         console.log(data['ok']);
+    //         if (data['ok'] == 'ok') {
+    //             result += pts_per_question;
+    //         }
+    //
+    //         console.log(result);
+    //
+    //         if (typeof nextQuestion.attr('id') == 'undefined') {
+    //             progress_bar.css('width', '100%');
+    //             console.log(number_of_question, result, pts_per_question);
+    //             var score = (result / (number_of_question * pts_per_question)) * 20;
+    //
+    //             if (score == 20) {
+    //                 $('<div class="result-poll">Perfect</div>' +
+    //                     '<div class="restart-poll mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent res">Restart</div>' +
+    //                     '<div class="show-results-poll mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect res">Show Results</div>'
+    //                 ).insertBefore("#question1");
+    //             } else {
+    //                 $('<div class="result-poll">' + parseInt(score) + '/20</div>' +
+    //                     '<div class="restart-poll mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent res">Restart</div>' +
+    //                     '<div class="show-results-poll mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect res">Show Results</div>'
+    //                 ).insertBefore("#question1");
+    //             }
+    //         } else {
+    //             progress += progress_bar_speed;
+    //             progress_bar.css('width', progress + '%');
+    //         }
+    //     });
+    //
+    //     nextQuestion.show(100);
+    // });
 
     var action = function (object) {
         if (current_article)
@@ -222,6 +287,8 @@ var ArticleManager = function (options) {
         if (object.attr('class').indexOf('favorite') >= 0)
             current_article.setLike();
         else if (object.attr('class').indexOf('choice') >= 0)
+            styleChoice(object);
+        else if (object.attr('class').indexOf('nextq') >= 0)
             nextQuestion(object);
         else if (object.attr('class').indexOf('useful') >= 0)
             current_article.setBigup();
@@ -390,7 +457,7 @@ var ArticleManager = function (options) {
 
     var list_polls = function (poll_id, poll_title, nb_questions, current_question) {
         return '<div class="mini-survey" id="' + poll_id + '">' +
-            '<a data-toggle="modal" class="link-poll" href="#display-poll">' + poll_title + '</a>' +
+            '<a data-toggle="modal" class="link-poll survey-title" href="#display-poll">' + poll_title + '</a>' +
             '<div class="nb_questions_completed '+(current_question == nb_questions ? 'completed_survey' : '')+'">'+current_question+'/'+nb_questions+'</div>' +
             '</div>';
     };
@@ -478,7 +545,8 @@ var ArticleManager = function (options) {
         'get_list_articles': GET_LIST_ARTICLES,
         'get_list_daily_recap': GET_DAILY_RECAP,
         'get_polls': GET_POLLS,
-        'wrong_or_right': W_O_R
+        'wrong_or_right': W_O_R,
+        'get_popular_tags': GET_POPULAR_TAGS_VIEW
     };
 
     var selector_action = {
@@ -524,6 +592,7 @@ var ArticleManager = function (options) {
         'unread_daily_recaps': '#unread',
         'read_daily_recaps': '#read',
         'most_view': '#most_view',
+        'nextq': '.nextq',
 
         // SEARCH
         'search_button': '#search'
@@ -544,9 +613,8 @@ function design_top_menu(object) {
     $('.top-menu .txt').removeAttr('style');
 
 
-    $(object).css('background', '#ea4335')
-        .find('.material-icons').css('color', '#fff');
-    $(object).find('.txt').css('color', '#fff');
+    $(object).find('.material-icons').css('color', 'rgb(93, 93, 93)');
+    $(object).find('.txt').css('color', 'rgb(93, 93, 93)');
 }
 
 function design_top_menu_daily_recaps(object) {
@@ -554,8 +622,7 @@ function design_top_menu_daily_recaps(object) {
     $('.top-button').removeAttr('style');
     $('.top-menu-daily-recap .txt').removeAttr('style');
 
-    $(object).css('background', 'rgb(8, 207, 152)')
-        .find('.material-icons').css('color', '#fff');
-    $(object).find('.txt').css('color', '#fff');
+    $(object).find('.material-icons').css('color', 'rgb(93, 93, 93)');
+    $(object).find('.txt').css('color', 'rgb(93, 93, 93)');
 }
 

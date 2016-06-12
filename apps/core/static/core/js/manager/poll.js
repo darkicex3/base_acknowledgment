@@ -7,6 +7,7 @@
 var Poll = function (id, element) {
     this.element = element;
     this.id = id;
+    this.current_number_of_right_choice = 0;
     var current_question = null;
 
     this.getCurrentQuestion = function (id, current_id) {
@@ -32,14 +33,18 @@ var Poll = function (id, element) {
     
     // GET POLL JSON FROM DATABASE
     var query = function (id) {
-        $.get(urls.show_poll,
-            {'id': id},
-            function (data) {
-                console.log('POLL : ', data);
+        $.ajax({
+            url: urls.show_poll,
+            beforeSend: function () {
+                $(selector.body_selector).empty().append('<div class="loading mdl-spinner mdl-js-spinner is-active"></div>');
+            },
+            data: {
+                'id': id
+            },
+            success: function (data) {
                 results(data);
-                Pace.restart();
             }
-        );
+        });
     };
 
     // GET POLL HTML
@@ -47,27 +52,36 @@ var Poll = function (id, element) {
         var body = '<div class="body-poll">';
         var header = '<div class="poll" id="' + poll_id + '">' +
             '<div class="header_poll">' +
-
+            '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
             '<div class="title_poll">' + poll_title + '</div>' +
             '</div><div class="progress-bar-poll"></div>';
         var counter_question = 0;
+        var counter_choice_right = 0;
         for (var question in questions) if (questions.hasOwnProperty(question)) {
             var counter = 0;
             counter_question++;
             var choices = questions[question];
-            console.log('QUESTION_IMG_URL : ', question['url_img']);
             body += '<div class="question-poll" id="question'+ counter_question +'">' +
                 '<div class="img_poll"><img style="display: none;" src="#"></div>' +
                 '<div class="title-question">' + question + '</div><div class="choices">';
             for (var choice in choices) if (choices.hasOwnProperty(choice)) {
                 counter++;
-                body += '<div id="'+choices[choice]['choice_id']+'" class="wc'+ choices[choice]['type'] +' mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent choice ' + counter + '">' + choices[choice]['choice_title'] + '</div>';
+                if (choices[choice]['type'] == 0) {
+                    counter_choice_right++;
+                }
+                body += '<div id="' + choices[choice]['choice_id'] + '" class="wc' + choices[choice]['type']
+                    + '' +
+                    ' choice ' + counter + '">' + choices[choice]['choice_title'] + '</div>';
             }
             body += '</div></div>';
         }
         body += '</div>';
-        var footer = '<span class="nb_questions" id="'+counter_question+'" style="display: none"></span></div>';
+        var footer = '<footer><button id="" class="nextq">' +
+            'Next > ' +
+            '</button><span class="nb_questions" id="' + counter_question + '" style="display: none"></span>' +
+            '<span class="nb_choice_right" id="' + counter_choice_right + '" style="display: none"></span></div></footer>';
 
+        console.log(counter_choice_right);
         return header + body + footer;
     };
 
@@ -78,11 +92,10 @@ var Poll = function (id, element) {
             var questions = data[key]['questions'];
             result = poll(key, data[key]['poll_title'], questions);
         }
-
-        $(selector.body_selector).empty().append(result);
-        $('.body-poll').children('div:not(#question1)').hide();
-
-
+        $(selector.body_selector).load(JS, function () {
+            $(selector.body_selector).empty().append(result);
+            $('.body-poll').children('div:not(#question1)').hide();
+        });
     };
 
     // SHOW POLL
@@ -136,4 +149,23 @@ var Poll = function (id, element) {
     //             break;
     //     }
     // };
+
+    function loadScript(url, callback) {
+        var docHeadObj = document.getElementsByTagName("head")[0];
+        var dynamicScript = document.createElement("script");
+        dynamicScript.type = "text/javascript";
+        dynamicScript.src = url;
+
+        // bind the event to the callback function
+        dynamicScript.onreadystatechange = callback; //for ie<9
+        dynamicScript.onload = callback;
+
+        // Fire the loading
+        docHeadObj.appendChild(dynamicScript);
+    }
+
+
+    var testJQuery = function () {
+        console.log($(this));
+    };
 };

@@ -3,6 +3,27 @@ body, html {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    color: white !important;
+}
+
+/** {*/
+/*-webkit-transition: all 250ms;*/
+/*-moz-transition: all 250ms;*/
+/*-ms-transition: all 250ms;*/
+/*-o-transition: all 250ms;*/
+/*transition: all 250ms;*/
+/*}*/
+
+.user_profile a:hover, .user_profile a:active, .user_profile a:visited {
+    text-decoration: none;
+}
+
+.error_xhr {
+    font-size: 70pt;
+    width: 82px;
+    display: block;
+    margin: auto;
+    color: #bdc3c7;
 }
 
 .nav-wrapper, .app {
@@ -14,7 +35,7 @@ body, html {
 }
 
 h1, h2, h3, h4, h5, h6, .card-header {
-    font-family: "Roboto Mono", Roboto, sans-serif;
+    font-family: "Source Sans Pro", Roboto, sans-serif;
 }
 
 .header {
@@ -27,7 +48,7 @@ h1, h2, h3, h4, h5, h6, .card-header {
     padding-right: 5%;
     top: 0;
     height: 48px;
-    background: rgb(66, 133, 244);
+    background: rgb(71, 66, 244);
     box-shadow: 0 3px 4px 0 rgba(0, 0, 0, .14), 0 3px 3px -2px rgba(0, 0, 0, .2), 0 1px 8px 0 rgba(0, 0, 0, .12);
 }
 
@@ -51,6 +72,7 @@ nav {
 .color-explicit, .att {
     color: rgba(37, 37, 37, 0.74);
     align-self: center;
+    font-size: 15pt;
     width: 24px;
 
     -webkit-transition: all 300ms;
@@ -87,7 +109,8 @@ nav {
 
 .att {
     transform: rotate(314deg);
-    font-size: 18pt;
+    font-size: 15pt;
+    bottom: 1px;
     position: relative;
 }
 
@@ -125,10 +148,15 @@ nav {
 .card-status {
     display: flex;
     position: absolute;
-    bottom: 32px;
-    left: 21px;
+    bottom: 26px;
+    left: 13px;
     width: 0;
     height: 0;
+}
+
+.card-status-list {
+    bottom: 19px;
+    left: 8px;
 }
 
 .chat-box {
@@ -166,17 +194,22 @@ nav {
     margin: 10px;
     margin-right: 25px;
     min-width: 256px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
 }
 
 .front {
     display: flex;
     margin-right: 25px;
     min-width: 256px;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+.back {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
 }
 
 .completed_survey {
-    color: rgb(66, 133, 244) !important;
+    color: rgb(71, 66, 244) !important;
 }
 
 .top-button {
@@ -187,20 +220,6 @@ nav {
     text-align: left;
     padding: 10px;
     cursor: pointer;
-}
-
-.top-button:active {
-    /*-webkit-transform: scale(0.9);*/
-    /*-moz-transform: scale(0.9);*/
-    /*-ms-transform: scale(0.9);*/
-    /*-o-transform: scale(0.9);*/
-    /*transform: scale(0.9);*/
-
-    /*-webkit-transition: transform 350ms;*/
-    /*-moz-transition: transform 350ms;*/
-    /*-ms-transition: transform 350ms;*/
-    /*-o-transition: transform 350ms;*/
-    /*transition: transform 350ms;*/
 }
 
 .first {
@@ -239,7 +258,7 @@ nav {
 
 .title-module {
     font-size: 12pt;
-    font-family: "Roboto Mono";
+    font-family: "Source Sans Pro", Roboto, sans-serif;
     color: #7e7e7e;
 }
 
@@ -279,7 +298,6 @@ nav {
     z-index: 999;
     position: fixed;
     width: 234px;
-    background: #252525;
     height: 100%;
     top: 48px;
     left: 0;
@@ -329,6 +347,10 @@ nav {
     align-self: center;
     padding-right: 5px;
     color: #222222;
+    font-family: "Source Sans Pro", Roboto, sans-serif;
+    font-size: 9pt;
+    max-width: 150px;
+    font-weight: 400;
 }
 
 .daily-recap-title:hover, .survey-title:hover {
@@ -336,15 +358,16 @@ nav {
 }
 
 .daily-recap-pubdate {
-    padding: 5px 10px;
-    width: 124px;
+    padding: 3px 5px;
+    width: 101px;
     text-align: center;
     font-size: 8pt;
+    border-radius: 2px;
     color: #ffffff;
-    background: #4285f4;
+    background: #4742f4;
     align-self: center;
-    min-width: 124px;
-    font-family: "Roboto Mono";
+    /* min-width: 124px; */
+    font-family: "Source Sans Pro", Roboto, sans-serif;
 }
 
 .module {
@@ -364,31 +387,41 @@ nav {
 .content-module {
     padding: 25px 25px 0 25px;
     flex-grow: 1;
-    font-family: "Lucida Grande";
+    font-family: "Source Sans Pro", Roboto, sans-serif;
     font-size: 9pt;
     color: black;
+    min-height: 147px;
 }
 
 .footer-module {
     text-align: right;
     font-size: 9pt;
     color: #4285f4;
-    font-family: "Roboto Mono";
+    font-family: "Source Sans Pro", Roboto, sans-serif;
     padding: 7px 28px 21px 15px;
 }
 
 .footer-module a {
     color: #4285f4;
+    font-weight: 400;
 }
 
 .edit-icon {
     font-size: 14pt;
-    position: relative;
-    top: 3px;
 }
 
 .margin-icon {
     margin-right: 5px;
+}
+
+.module-icons {
+    align-items: center;
+    display: flex;
+    width: 28px;
+}
+
+.module-icons:hover {
+    text-decoration: none;
 }
 
 .white {
@@ -399,9 +432,9 @@ nav {
     width: 250px;
     flex-grow: 1;
     margin: 10px;
-    padding: 25px;
+    padding: 15px;
     cursor: pointer;
-    font-family: "Roboto Mono", Roboto, sans-serif;
+    font-family: "Source Sans Pro", Roboto, sans-serif;
 
     -webkit-transition: box-shadow 300ms;
     -moz-transition: box-shadow 300ms;
@@ -430,14 +463,12 @@ nav {
 
 .card-header {
     flex-grow: 1;
-    font-size: 10pt;
+    font-size: 11pt;
     text-align: left;
+    color: #5d5d5d;
     padding-bottom: 20px;
-    margin-bottom: 20px;
-    color: #000;
-    font-weight: 300;
     transition: 125ms color ease-in;
-    border-bottom: 1px solid #e9e9e9;
+    font-family: "Source Sans Pro", Roboto, sans-serif;
 }
 
 .card-stat {
@@ -457,6 +488,12 @@ nav {
     font-size: 10pt;
     display: flex;
     justify-content: center;
+}
+
+.stat-wrapper-list {
+    flex-direction: column-reverse !important;
+    justify-content: space-around !important;
+    margin-right: 30px !important;
 }
 
 .counter-wrapper {
@@ -482,9 +519,9 @@ nav {
     align-items: center;
     padding: 14px 12px;
     color: #C2C2CA;
-    font-size: 9pt !important;
+    font-size: 10pt !important;
     font-weight: 400 !important;
-    font-family: "Lucida Grande";
+    font-family: "Source Sans Pro", Roboto, sans-serif;
 }
 
 .menu ul li i {
@@ -498,13 +535,22 @@ nav {
 .name-category {
     align-items: center;
     font-size: 10pt;
-    font-family: "Lucida Grande";
+    font-family: "Source Sans Pro", Roboto, sans-serif;
 }
 
 .menu li {
     display: flex;
     cursor: pointer;
-    padding: 5px 0;
+    margin: 5px 0;
+}
+
+.cat-header {
+    color: #fff;
+}
+
+.cat-header:hover {
+    color: #fff;
+    text-decoration: underline;
 }
 
 #static-menu {
@@ -515,8 +561,7 @@ nav {
 }
 
 #variable-menu {
-    margin: 0 15px;
-    padding: 7px 0 0 0;
+    padding: 7px 0 0 15px;
 }
 
 .menu a:hover {
@@ -525,6 +570,8 @@ nav {
 }
 
 .menu {
+    width: 234px;
+    background: #252525;
     padding-left: 0;
     display: flex;
     flex-direction: column;
@@ -567,7 +614,6 @@ a.add-button {
 
 
 .user_profile {
-    width: 260px;
     display: flex;
     align-items: center;
     flex-direction: row-reverse;
@@ -575,7 +621,12 @@ a.add-button {
 }
 
 .header-icon {
-    font-size: 15pt;
+    font-size: 14pt;
+    color: white;
+}
+
+.margin-header {
+    margin: 0 8px;
 }
 
 .form-base, .form-admin {
@@ -587,13 +638,13 @@ a.add-button {
 }
 
 .form-admin {
-    width: 55px;
     justify-content: space-between;
 }
 
 #img_profile {
     height: 30px;
     width: 30px;
+    margin-left: 10px;
     border-radius: 3px;
     background-image: url('https://cdn-images-1.medium.com/fit/c/200/200/1*bJ68_kBzvNrJjipJs1GLuA.jpeg') !important;
     background-size: cover;
@@ -605,6 +656,7 @@ p {
 
 .admin-link {
     color: #252525;
+    display: flex;
 }
 
 .admin-link:hover {
@@ -631,7 +683,7 @@ p {
     font-size: 8pt !important;
     font-weight: normal !important;
     cursor: pointer;
-    font-family: "Roboto Mono";
+    font-family: "Source Sans Pro", Roboto, sans-serif;
 }
 
 .profile {
@@ -671,13 +723,16 @@ p {
     transition: all 250ms;
 }
 
-.menu-button .title-button:active {
+.menu-icon {
+    transition: all 250ms;
+}
+
+.menu-icon:active {
     -webkit-transform: scale(0.85);
     -moz-transform: scale(0.85);
     -ms-transform: scale(0.85);
     -o-transform: scale(0.85);
     transform: scale(0.85);
-
     transition: all 250ms;
 }
 
@@ -689,7 +744,7 @@ p {
     color: white;
     font-size: 10pt;
     font-weight: 400;
-    font-family: "Roboto Mono";
+    font-family: "Source Sans Pro", Roboto, sans-serif;
 }
 
 .legal {
@@ -699,14 +754,197 @@ p {
 
 .legal span {
     color: white;
-    font-family: "Lucida Grande";
+    font-family: "Source Sans Pro", Roboto, sans-serif;
 }
 
 .legal a {
-    font-family: "Roboto Mono";
+    font-family: "Source Sans Pro", Roboto, sans-serif;
+    color: #4742f4;
 }
 
+/*************POLL**************/
 
+.header_poll {
+    font-size: 16pt;
+    background: rgb(71, 66, 244);
+    padding: 24px;
+    color: #fff;
+    width: 100%;
+}
 
+.loading {
+    margin: 40px auto 40px auto;
+    display: block;
+}
+
+.outside {
+    width: 740px;
+    margin: auto;
+    overflow: hidden;
+}
+
+.result-poll {
+    text-align: center;
+    font-size: 35pt;
+    border-bottom: 1px solid #ff4081;
+    padding-bottom: 45px;
+    margin-bottom: 50px;
+}
+
+.img_poll {
+    text-align: center;
+}
+
+.progress-bar-poll {
+    height: 2px;
+    background-color: #ff4081;
+    width: 0;
+    -webkit-transition: all 200ms;
+    -moz-transition: all 200ms;
+    -ms-transition: all 200ms;
+    -o-transition: all 200ms;
+    transition: all 200ms;
+}
+
+.modal-dialog {
+    width: 750px;
+    overflow-x: hidden;
+    padding-right: 20px;
+    padding-bottom: 30px;
+}
+
+.modal-content {
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+}
+
+.modal-body {
+    padding: 0;
+}
+
+.body-poll {
+    padding: 50px;
+    min-height: 230px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-body-poll footer {
+    display: flex;
+    margin: 20px;
+    flex-direction: column;
+}
+
+.nextq {
+    align-self: flex-end;
+}
+
+.title-question {
+    text-align: center;
+    margin: 0 10px 24px 10px;
+    font-size: 20pt;
+}
+
+.choice {
+    text-align: center;
+    transition: all 200ms;
+    margin: 0 10px 10px 10px;
+}
+
+.choices {
+    text-align: center;
+}
+
+.close, .close:hover {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+    outline: none;
+    opacity: .5;
+    filter: alpha(opacity=50);
+    float: right;
+    font-size: 35px;
+    position: relative;
+    top: -13px;
+    font-weight: normal;
+}
+
+.close:active, button:active, .choice:active {
+    -webkit-transform: scale(0.85);
+    -moz-transform: scale(0.85);
+    -ms-transform: scale(0.85);
+    -o-transform: scale(0.85);
+    transform: scale(0.85);
+}
+
+.nextq, .choice {
+    border-radius: 2px;
+    font-family: "Source Sans Pro", Roboto, sans-serif;
+    font-size: 14px;
+
+    font-weight: 500;
+    border: none;
+    outline: none;
+}
+
+.nextq {
+    background: #4742f4;
+    align-self: flex-end;
+    color: #fff;
+    height: 36px;
+    padding: 0 16px;
+}
+
+.choice {
+    border: 2px solid #000;
+    color: #000;
+    padding: 15px;
+    cursor: pointer;
+}
+
+.active-choice {
+    background: #000 !important;
+    color: #fff !important;
+}
+
+.question-poll {
+    word-break: break-all;
+}
+
+/**LIST DISPLAY**/
+
+.mini-article-list, .mini-daily-recap-card-list {
+    width: 100%;
+    flex-direction: row;
+}
+
+.card-header-list {
+    border-bottom: none;
+}
+
+.children {
+    display: none;
+    position: absolute;
+    background: #5d5d5d;
+    z-index: 999;
+    padding: 0;
+    left: 0;
+    width: 234px;
+    margin: 0;
+}
+
+span.bookmarkBadge {
+    background: rgba(189, 195, 199, 0.25);
+    padding: 1px 5px 1px 5px;
+    margin: 5px;
+    flex-wrap: wrap;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+.bookmarkLink {
+    color: rgb(37, 37, 37);
+}
 
 

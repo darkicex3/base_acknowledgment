@@ -10,6 +10,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.views.generic import View
 from haystack.query import SearchQuerySet
+
 from apps.article.models import Tag, Article, Category, UserArticle, Feedback, DailyRecap, UserDailyRecap
 from apps.poll.models import Poll, Choice
 
@@ -379,31 +380,25 @@ class GetDailyRecapView(View):
         context = {}
         from_date = self.request.GET.get('from_date')
         sorting = self.request.GET.get('sorting')
+        nb = self.request.GET.get('nb')
         user = self.request.user
         groups = self.request.user.groups.values_list('name', flat=True)
         today = datetime.now()
+        daily_recaps = DailyRecap.objects.all().filter(status='p').order_by('-publish_date')
 
         if sorting == 'today':
-            daily_recaps = DailyRecap.objects.all().filter(publish_date__year=today.year,
-                                                           publish_date__month=today.month,
-                                                           publish_date__day=today.day).order_by('-publish_date')
+            daily_recaps.filter(publish_date__year=today.year, publish_date__month=today.month,
+                                publish_date__day=today.day)
         elif sorting == 'past_7_days':
-            daily_recaps = DailyRecap.objects.all().exclude(status='d').exclude(status='w') \
-                .filter(publish_date__gte=datetime.now() - timedelta(days=7)).order_by('-publish_date')
+            daily_recaps.filter(publish_date__gte=datetime.now() - timedelta(days=7))
         elif sorting == 'this_month':
-            daily_recaps = DailyRecap.objects.all().exclude(status='d').exclude(status='w') \
-                .filter(publish_date__year=today.year, publish_date__month=today.month).order_by('-publish_date')
+            daily_recaps.filter(publish_date__year=today.year, publish_date__month=today.month)
         elif sorting == 'this_year':
-            daily_recaps = DailyRecap.objects.all().exclude(status='d').exclude(status='w') \
-                .filter(publish_date__year=today.year).order_by('-publish_date')
-            print('YEAR : ', today.year)
-        else:
-            daily_recaps = DailyRecap.objects.all().exclude(status='d').exclude(status='w') \
-                .order_by('-publish_date')
+            daily_recaps.filter(publish_date__year=today.year)
 
         key = 0
 
-        for daily_recap in daily_recaps:
+        for daily_recap in daily_recaps[:int(nb)]:
 
             art = DailyRecap.objects.get(id=daily_recap.pk)
 
@@ -482,21 +477,13 @@ class GetArticlesByStaticShortcutsView(View):
             else:
                 articles = [result for result in sqs]
 
-            print(articles)
-
-        # DAILY RECAP MODE
-        elif daily_recap == 'true':
-            print('J\'ai faim')
-            articles = SearchQuerySet().models(Article).exclude(status='d').exclude(status='w').filter(daily_recap=True)
-
         # ARTICLE MODE
         else:
 
             if "#" not in get_by:
 
                 try:
-                    p = SearchQuerySet().models(Article).exclude(status='d').exclude(status='w').exclude(
-                        daily_recap=True)
+                    p = SearchQuerySet().models(Article).exclude(status='d').exclude(status='w')
 
                     if not Article.objects.all().filter(status='p') or not p:
                         raise ObjectDoesNotExist
@@ -843,6 +830,9 @@ class GetPollsView(View):
         questions = {}
         poll_id = self.request.GET.get('id')
         sorting = self.request.GET.get('sorting')
+        nb = self.request.GET.get('nb')
+        if nb is None:
+            nb = 100
         user = self.request.user
         groups = self.request.user.groups.values_list('name', flat=True)
         today = datetime.now()
@@ -883,7 +873,7 @@ class GetPollsView(View):
         else:
             polls = Poll.objects.all().order_by('-publish_date')
 
-        for poll in polls:
+        for poll in polls[:int(nb)]:
             nb_question = 0
             for question in poll.questions.all():
                 nb_question += 1
@@ -936,14 +926,15 @@ class GetAttachmentsView(View):
         return JsonResponse(context)
 
 
+class GetMostPopularTags(View):
+    def get(self, *args, **kwargs):
+        context = {}
+        popular_tags = []
 
+        popular_articles = Article.objects.all().order_by('view_counter')[:10]
 
+        for articles in popular_articles:
+            for tag in articles.tags.all().order_by('click_counter')[:20]:
+                context.update({tag.name: tag.name})
 
-
-
-
-
-
-
-
-
+        return JsonResponse(context)

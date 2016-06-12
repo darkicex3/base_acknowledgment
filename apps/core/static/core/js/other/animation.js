@@ -2,28 +2,19 @@
  * Created by maxbook on 27/04/16.
  */
 
-function OnClickShortcutsSetSelected() {
-    $('body').on('click', '.widget-menus ul li a', function (e) {
-        $('.widget-menus ul li a').removeAttr('style');
-        $('.widget-menus ul li a i').removeAttr('style');
-        $(this).css({'background-color': '#1C1C25', 'border-left-color': '#A48CD2', 'color': '#FFFFFF !important'});
-        $(this).children('i').css('color', '#ffffff !important');
-    });
-}
-
-function OnMouseEnterMouseLeaveTags() {
-    $('body').on({
-        mouseenter: function () {
-            if ($('#search_bar input[name=\'csrfmiddlewaretoken\']').attr('value') != getCookie('csrftoken')) {
-                var width = ($(this).width() / 2) - 9;
-                $(this).find('.add-tags').css({'left': width}).show(100);
-            }
-        },
-        mouseleave: function () {
-            $(this).find('.add-tags').hide();
-        }
-    }, '.bookmarkBadge');
-}
+// function OnMouseEnterMouseLeaveTags() {
+//     $('body').on({
+//         mouseenter: function () {
+//             if ($('#search_bar input[name=\'csrfmiddlewaretoken\']').attr('value') != getCookie('csrftoken')) {
+//                 var width = ($(this).width() / 2) - 9;
+//                 $(this).find('.add-tags').css({'left': width}).show(100);
+//             }
+//         },
+//         mouseleave: function () {
+//             $(this).find('.add-tags').hide();
+//         }
+//     }, '.bookmarkBadge');
+// }
 
 function OnAttachment() {
     function rotate(elem, degree) {
@@ -50,29 +41,26 @@ function OnAttachment() {
     }, '.attachment-section');
 }
 
-function ActionRightBar(element, section) {
-    $('body').on('click', element, function (e) {
-        if (section.css('right') == '0px')
-            section.css('right', section.width() * (-1));
-        else
-            section.css('right', '0');
-    });
-}
-
 function OnClickBookmarkGetArticlesByBookmark() {
     $('body').on('click', '.bookmarkLink', function (e) {
+        $('.top-menu').flip(true);
+
         var cleaner = $('.clear-search-bar');
+
         console.log(cleaner.children().first());
-        cleaner.children().first().css('color', 'white');
+        cleaner.children().first().css('color', '#5d5d5d');
         if (!cleaner.is(":visible")) {
             cleaner.show().transition({width: '50px'});
         }
-        $('#search_bar input').attr('placeholder', '').empty().css('background', '#3498db').css('font-size', '17pt').css('color', '#fff !important').val('#' + $(this).text());
+
+
+
+        $('#search_bar input').attr('placeholder', '').empty().css('font-size', '14pt').css('color', '#5d5d5d !important').val('#' + $(this).text());
         $('#search_categories').empty().css('background', '#3498db');
         $('#search_sorting').css('background', '#3498db').find('.sorting').attr('class', 'sorting material-icons color_white md-36 first-item');
         console.log($(this).attr('id'));
         increment_tag_counter($(this).attr('id').slice(1));
-        
+
         window.Manager.getListArticle($(this).attr('id'));
     });
 }
@@ -158,4 +146,54 @@ function resize_left_menu() {
     var hres = hbar - hman;
     $('.menu-left-menu-container').css('height', hres);
 }
+
+function style_choice(choice) {
+    if (choice.attr('class').indexOf('active') >= 0)
+        choice.removeClass('active-choice');
+    else
+        choice.addClass('active-choice');
+}
+
+function on_mouseover_li_show_children() {
+    var nav_wrapper = $('.nav-wrapper');
+
+    if (!window.is_mobile) {
+        $('body').on({
+            mouseenter: function () {
+                if ($(this).children('.children').children('li').length > 0) {
+                    event.stopPropagation();
+                    nav_wrapper.css('width', '468px');
+                    $('.ps-scrollbar-y-rail').hide();
+                    $('.ps-scrollbar-y').hide();
+                    $(this).css('background', '#5d5d5d').children('.children').css('left', '234px').css('display', 'block');
+                    console.log('NAV WRAPPER :', nav_wrapper.width(), ' CHILDREN :', $(this).children('.children').width(), ' CHILDREN :', $('.menu').width());
+                }
+            },
+            mouseleave: function () {
+                event.stopPropagation();
+                nav_wrapper.removeAttr('style').show();
+                $(this).removeAttr('style').children('.children').css('left', '0').css('display', 'none');
+            }
+        }, '#variable-menu > li');
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

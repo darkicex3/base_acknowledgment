@@ -183,7 +183,7 @@ class Category(MPTTModel):
         verbose_name_plural = 'Categories'
 
     name = models.CharField(max_length=300, unique=True)
-    icon = models.CharField(max_length=500, default="", help_text="Add an icon to your category ! <a href=\"ht"
+    icon = models.CharField(max_length=500, default="radio_button_checked", help_text="Add an icon to your category ! <a href=\"ht"
                                                                            "tps://design.google.com/ico"
                                                                            "ns/\">Click Here !</a>", null=True,
                             blank=True)

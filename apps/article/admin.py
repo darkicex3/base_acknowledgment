@@ -33,7 +33,7 @@ class DailyRecapAdmin(SummernoteModelAdmin, admin.ModelAdmin):
             'fields': ('title', 'content')
         }),
         ('Advanced options', {
-            'fields': ('is_public', 'by_groups', 'authorized_groups', 'authorized_users_dr', 'publish_date'),
+            'fields': ('is_public', 'by_groups', 'authorized_groups', 'authorized_users_dr'),
         }),
     )
 
