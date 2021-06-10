@@ -1,5 +1,5 @@
 dj-database-url==0.4.0
-Django==1.9.6
+Django==2.2.24
 django-attachments==1.0
 django-colorfield==0.1.10
 django-haystack==2.4.1
